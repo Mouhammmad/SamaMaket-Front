@@ -1,0 +1,59 @@
+<div class="shop-container">
+
+    <!--1. Menu Gauche: les catégories-->
+    <aside class="sidebar">
+        <h3>Catégories</h3>
+        <ul class="category-list">
+            <!-- Boucle sur le tableau des catégories-->
+            <li *ngFor="let cat of categories" 
+                [class.activate]="cat.nom===categorieSelectionnee"
+                (click)="changerCategorie(cat.nom)">
+                <span class="Category-name"> {{cat.nom}} </span>
+                <span class="category-count"> ({{cat.count}}) </span>
+            
+            </li>
+        </ul>
+    </aside>
+    <!--2. La zone principale-->
+    <main class="products-zone">
+        <h2> {{categorieSelectionnee}} </h2>
+        <div class="products-grid">
+            <!--Boucle sur le getter qui retourne lesproduits filtrés-->
+            <div class="products-card" *ngFor="let produit of produitsFilters()">
+                <!--Badge (promo, nouveau, etc)-->
+                <span class="badge" *ngIf="produit.badge" [ngClass]="produit.badge.toLowerCase()">
+                    {{produit.badge}} <span *ngIf="produit.reduction">{{produit.reduction}}</span> 
+                </span>
+                <!--Image du produit-->
+                <div class="product-image">
+                    <img src="produit.image" alt="produit.nom">
+                </div>
+
+                <!--Detail du produit-->
+                <div class="product-info">
+                    <p class="product-category"> {{produit.categorie}} </p>
+                    <h4 class="product-title"> {{produit.nom}} </h4>
+
+                    <!-- Notes / Etoiles-->
+                    <div class="product-rating">
+                        <span class="star" *ngFor="let star of [].constructor(produit.note)">★</span>
+                    </div>
+
+                    <!--Prix (Actuel et original)-->
+                    <div class="product-price-box">
+                        <span class="current-price"> {{produit.prix}} FCFA </span>
+                        <del class="original-price" *ngIf="produit.prixOriginal">
+                            {{ produit.prixOriginal }} FCFA
+                        </del>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message si aucun produit n'est trouvé dans cette catégorie-->
+        <div class="no products" *ngIf="produitsFilters().length === 0 ">
+            Aucun produit disponible dans cette catégorie
+        </div>  
+    </main>
+</div>
+
