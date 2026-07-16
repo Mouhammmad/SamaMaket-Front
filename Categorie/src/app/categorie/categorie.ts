@@ -52,7 +52,7 @@ export class CategorieComponent implements OnInit {
 produits: any[] = [
   {
     id:1,
-    nom: 'Echarpe Bas=zin Riche',
+    nom: ' Bazin Riche',
     badge:'Promo',
     image:'https://placeholder.com',
     categorie: 'Mode et Tissu',
@@ -126,4 +126,10 @@ changerCategorie(nom: string): void {
   }
   return this.produits.filter(item => item.categorie === this.categorieSelectionnee);
 } 
+
+ajouterAuPanier(produit: any) {
+  console.log('Produit ajouté :' ,produit);
+  alert(` ${produit.nom} a été ajouté au panier !`);
+  
+}
 }  

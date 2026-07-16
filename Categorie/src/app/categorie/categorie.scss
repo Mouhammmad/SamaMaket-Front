@@ -4,7 +4,7 @@ $text-dark: #2c3e50;
 $text-light: #7f8c8d;
 $bg-light: #f8f9fa;
 $border-color: #eaeded;
-$promo-color: #e74c3c; // Rouge pour les réductions 
+$promo-color: #0ff34c; // Rouge pour les réductions 
 
 
 .shop-container{
@@ -20,7 +20,7 @@ $promo-color: #e74c3c; // Rouge pour les réductions
     .sidebar{
 
         flex: 0 0 250px; //largeur fixe pour le menu
-        background: #fa4705dc;
+        background: #f86e04dc;
         padding: 20px;
         border-radius: 8px;
         border: 1px solid  $border-color;
@@ -110,6 +110,11 @@ $promo-color: #e74c3c; // Rouge pour les réductions
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     
 
 
@@ -125,7 +130,7 @@ $promo-color: #e74c3c; // Rouge pour les réductions
             top: 10px;
             left: 10px;
             background-color: $promo-color;
-            color: white;
+            color: rgb(254, 6, 6);
             padding: 4px 8px;
             font-size: 0.75rem;
             font-weight: bold;
@@ -148,6 +153,8 @@ $promo-color: #e74c3c; // Rouge pour les réductions
                     max-height: 100%;
                     object-fit: contain;
                 }
+
+
             }    
 
     
@@ -212,6 +219,31 @@ $promo-color: #e74c3c; // Rouge pour les réductions
                     }
                 } // Fin de .product-price-box   
             } // Fin de .product-info
+
+            .product-action {
+               margin-top: 15px;
+               width: 100%;
+            }
+
+            .btn-add-to-cart {
+                width: 100%;
+                padding: 10px;
+                background-color: #e67e22;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.1s ease;
+            }
+            .btn-add-to-cart:hover {
+                background-color: #d35400;
+            }
+
+            .btn-add-to-cart:active {
+                transform: scale(0.98);
+            }
         } //Fin de .products card
 
         .products-zone{
