@@ -9,7 +9,7 @@
                 [class.activate]="cat.nom===categorieSelectionnee"
                 (click)="changerCategorie(cat.nom)">
                 <span class="Category-name"> {{cat.nom}} </span>
-                <span class="category-count"> ({{cat.count}}) </span>
+                <span class="category-count" *ngIf="cat.count"> ({{cat.count}}) </span>
             
             </li>
         </ul>
@@ -18,7 +18,7 @@
     <main class="products-zone">
         <h2> {{categorieSelectionnee}} </h2>
         <div class="products-grid">
-            <!--Boucle sur le getter qui retourne lesproduits filtrés-->
+             <!--Boucle sur le getter qui retourne lesproduits filtrés-->
             <div class="products-card" *ngFor="let produit of produitsFilters()">
                 <!--Badge (promo, nouveau, etc)-->
                 <span class="badge" *ngIf="produit.badge" [ngClass]="produit.badge.toLowerCase()">
@@ -26,7 +26,7 @@
                 </span>
                 <!--Image du produit-->
                 <div class="product-image">
-                    <img [src]="produit.image" [alt]="produit.nom">
+                    <img [src]="produit.image ? (produit.image.startsWith('http') ? produit.image :  'http://127.0.0.1:8000' + produit.image) :'https://placeholder.com'" [alt]="produit.nom" crossorigin="anonymous">
                 </div>
 
                 <!--Detail du produit-->
@@ -48,16 +48,16 @@
                     </div>
 
                     <div class="product-action">
-                        <button (click)="ajouterAuPanier(produit)" class="btn-to-cart">
+                        <button (click)="ajouterAuPanier(produit)" class="btn-add-to-cart">
                             ajouter au  panier
-                        </button>
+                        </button> 
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Message si aucun produit n'est trouvé dans cette catégorie-->
-        <div class="no products" *ngIf="produitsFilters().length === 0 ">
+        <div class="no products" *ngIf="produits.length === 0 ">
             Aucun produit disponible dans cette catégorie
         </div>  
     </main>

@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
-    private apiUrl = 'http://127.0.0.1:8000/categories/';
+    private apiCategoriesUrl = 'http://127.0.0.1:8000/categories/';
+    private apiProduitsUrl = 'http://127.0.0.1:8000/produits/';
 
     constructor(private http: HttpClient) {}
-
+    
+    getCategories(): Observable<any[]> {
+        return this.http.get<any[]>(this.apiCategoriesUrl)
+    }
 
     // Méthode pour récupérer les données
     getProduits(): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl);
+        return this.http.get<any[]>(this.apiProduitsUrl);
     }
 }
