@@ -14,8 +14,17 @@
             </li>
         </ul>
     </aside>
+    
+
+
     <!--2. La zone principale-->
     <main class="products-zone">
+        <div class="search-box">
+      <input type="text"  id="nom-categorie" name="nom-categorie"
+        placeholder="Rechercher un produit ou une catégorie..."
+        [(ngModel)]="searchText" 
+        (input)="filtrerProduits()" />
+    </div>
         <h2> {{categorieSelectionnee}} </h2>
         <div class="products-grid">
              <!--Boucle sur le getter qui retourne lesproduits filtrés-->

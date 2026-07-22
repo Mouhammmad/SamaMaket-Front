@@ -78,7 +78,27 @@ $promo-color: #0ff34c; // Rouge pour les réductions
 
         }
     }
+    .search-box {
+        position: sticky;
+        top:0;
+        z-index:100;
+        background-color: #ffffff;
+        width: 50%;
+        height: 2%;
+        padding: 10px 0;
+        justify-content: center;
+        display: flex;
+        margin: 0 auto;
 
+        input {
+            width: 75%;
+            height: 40px;
+            padding: 0 15px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+    }
 
     // 2. Style de la zone de droite
     .products-zone {
