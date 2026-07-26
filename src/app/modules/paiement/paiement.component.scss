@@ -1,0 +1,50 @@
+.paiement-page { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+.tunnel {
+  display: flex; gap: 20px; margin-bottom: 30px;
+  .etape { padding: 10px 20px; border-radius: 20px; background: #eee; color: #999;
+    &.active { background: #ff6b00; color: white; font-weight: bold; }
+    &.done { background: #1a1a2e; color: white; }
+  }
+}
+
+.contenu { display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+
+.section {
+  background: white; border: 1px solid #eee; border-radius: 12px; padding: 25px; margin-bottom: 20px;
+  h3 { margin: 0 0 20px; }
+  .row { margin-bottom: 15px;
+    input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+    &.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  }
+}
+
+.methode {
+  display: flex; align-items: center; gap: 15px; padding: 15px; border: 2px solid #eee;
+  border-radius: 10px; margin-bottom: 10px; cursor: pointer;
+  &.active { border-color: #1a1a2e; background: #f8f9ff; }
+  .badge { background: #e8f5e9; color: green; padding: 3px 10px; border-radius: 10px; font-size: 0.8rem; margin-left: 10px;
+    &.orange { background: #fff3e0; color: #e65100; }
+  }
+}
+
+.numero-input {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 15px; padding: 0 15px;
+  span { background: #1a1a2e; color: white; padding: 12px; border-radius: 8px; }
+  input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+}
+
+.recapitulatif {
+  background: white; border: 1px solid #eee; border-radius: 12px; padding: 25px; height: fit-content;
+  h3 { margin: 0 0 20px; }
+  .article { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #555; }
+  .ligne { display: flex; justify-content: space-between; margin-bottom: 10px;
+    &.total { font-weight: bold; border-top: 1px solid #eee; padding-top: 10px;
+      span:last-child { color: #ff6b00; font-size: 1.2rem; }
+    }
+  }
+  .btn-payer { width: 100%; background: #1a1a2e; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-top: 15px; }
+  .securise { text-align: center; color: green; font-size: 0.85rem; margin-top: 10px; }
+}
+
+.erreur { color: red; }

@@ -1,0 +1,78 @@
+<div class="panier-page" *ngIf="panier">
+  <nav class="breadcrumb">Accueil / <span>Mon panier</span></nav>
+
+  <!-- Tunnel -->
+  <div class="tunnel">
+    <div class="etape active">1 Panier</div>
+    <div class="etape">2 Livraison</div>
+    <div class="etape">3 Paiement</div>
+    <div class="etape">4 Confirmation</div>
+  </div>
+
+  <div class="contenu">
+    <!-- Articles -->
+    <div class="articles">
+      <div class="articles-header">
+        <h2>Mon panier {{ panier.articles.length }} articles</h2>
+        <button class="btn-vider" (click)="viderPanier()">Vider le panier</button>
+      </div>
+
+      <div class="article" *ngFor="let article of panier.articles">
+        <img [src]="article.produit.image || 'assets/placeholder.png'" [alt]="article.produit.nom" />
+        <div class="article-info">
+          <h4>{{ article.produit.nom }}</h4>
+          <p class="prix">{{ article.sous_total | number }} F</p>
+          <p class="prix-unitaire">{{ article.produit.prix | number }} F / unité</p>
+          <div class="quantite">
+            <button (click)="modifierQuantite(article.id, article.quantite - 1)">-</button>
+            <span>{{ article.quantite }}</span>
+            <button (click)="modifierQuantite(article.id, article.quantite + 1)">+</button>
+          </div>
+        </div>
+        <button class="btn-supprimer" (click)="supprimerArticle(article.id)">x</button>
+      </div>
+
+      <!-- Code promo -->
+      <div class="promo">
+        <h4>Code promotionnel</h4>
+        <div class="promo-input">
+          <input [(ngModel)]="codePromo" placeholder="Entrez votre code promo" />
+          <button (click)="appliquerPromo()">Appliquer</button>
+        </div>
+        <p class="promo-succes" *ngIf="promoAppliquee">
+          Code {{ promoAppliquee.code }} appliqué — {{ promoAppliquee.taux_remise }}
+          {{ promoAppliquee.type_remise === 'pourcentage' ? '%' : 'F' }} de réduction !
+        </p>
+        <p class="promo-erreur" *ngIf="erreurPromo">{{ erreurPromo }}</p>
+      </div>
+    </div>
+
+    <!-- Récapitulatif -->
+    <div class="recapitulatif">
+      <h3>Récapitulatif de commande</h3>
+      <div class="ligne">
+        <span>Sous-total ({{ panier.articles.length }} articles)</span>
+        <span>{{ panier.total | number }} F</span>
+      </div>
+      <div class="ligne reduction" *ngIf="promoAppliquee">
+        <span>Réduction promo</span>
+        <span>-{{ promoAppliquee.taux_remise }}{{ promoAppliquee.type_remise === 'pourcentage' ? '%' : 'F' }}</span>
+      </div>
+      <div class="ligne total">
+        <span>Total TTC</span>
+        <span>{{ calculerTotal() | number }} F</span>
+      </div>
+      <button class="btn-commander" (click)="passerCommande()">Passer la commande</button>
+      <button class="btn-continuer">Continuer mes achats</button>
+      <div class="moyens-paiement">
+        <span>Wave</span>
+        <span>Orange Money</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panier-vide" *ngIf="panier && panier.articles.length === 0">
+  <p>Votre panier est vide</p>
+  <button routerLink="/">Continuer mes achats</button>
+</div>

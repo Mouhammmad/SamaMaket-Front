@@ -1,0 +1,31 @@
+.avis-page { max-width: 800px; margin: 40px auto; padding: 20px; }
+
+.section {
+  background: white; border: 1px solid #eee; border-radius: 12px; padding: 25px; margin-bottom: 20px;
+  h3 { margin: 0 0 20px; }
+}
+
+.form-group {
+  margin-bottom: 15px;
+  label { display: block; color: #666; font-size: 0.85rem; margin-bottom: 5px; }
+  input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+}
+
+.etoiles {
+  span { font-size: 1.5rem; color: #ddd; cursor: pointer;
+    &.active { color: #ff6b00; }
+  }
+}
+
+button { background: #ff6b00; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; }
+
+.recherche { display: flex; gap: 10px; margin-bottom: 20px;
+  input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+}
+
+.avis-item { border-bottom: 1px solid #eee; padding: 15px 0;
+  .avis-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  p { color: #555; margin: 0; }
+}
+
+.message { color: green; margin-top: 10px; }

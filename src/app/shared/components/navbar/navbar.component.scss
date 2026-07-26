@@ -1,0 +1,38 @@
+.navbar {
+  background: #1a1a2e;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+    .sama { color: white; }
+    .market { color: #ff6b00; }
+  }
+
+  .liens {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.95rem;
+      &.active { color: #ff6b00; }
+      &:hover { color: white; }
+    }
+
+    .btn-logout {
+      background: #ff6b00;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+}

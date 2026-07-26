@@ -1,0 +1,14 @@
+<nav class="navbar">
+  <div class="logo" routerLink="/catalogue">
+    <span class="sama">SAMA</span><span class="market">MARKET</span>
+  </div>
+  <div class="liens" *ngIf="isLoggedIn()">
+    <a routerLink="/catalogue" routerLinkActive="active">Catalogue</a>
+    <a routerLink="/panier" routerLinkActive="active">Panier</a>
+    <a routerLink="/favoris" routerLinkActive="active">Favoris</a>
+    <a routerLink="/livraison" routerLinkActive="active">Livraison</a>
+    <a routerLink="/avis" routerLinkActive="active">Avis</a>
+    <a routerLink="/profil" routerLinkActive="active">Mon compte</a>
+    <button class="btn-logout" (click)="logout()">Déconnexion</button>
+  </div>
+</nav>

@@ -1,0 +1,40 @@
+<div class="avis-page">
+  <h2>Avis & Notes</h2>
+  <div class="section">
+    <h3>Laisser un avis</h3>
+    <div class="form-group">
+      <label>ID Produit</label>
+      <input [(ngModel)]="produitId" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Note</label>
+      <div class="etoiles">
+        <span *ngFor="let i of [1,2,3,4,5]" (click)="note = i" [class.active]="i <= note">★</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Commentaire</label>
+      <textarea [(ngModel)]="commentaire" rows="4" placeholder="Votre avis..."></textarea>
+    </div>
+    <button (click)="soumettre()">Soumettre</button>
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </div>
+
+  <div class="section">
+    <h3>Voir les avis d'un produit</h3>
+    <div class="recherche">
+      <input [(ngModel)]="produitId" type="number" placeholder="ID produit" />
+      <button (click)="chargerAvis()">Charger</button>
+    </div>
+    <div class="avis-liste">
+      <div class="avis-item" *ngFor="let a of avis">
+        <div class="avis-header">
+          <strong>{{ a.utilisateur }}</strong>
+          <span class="etoiles">{{ '★'.repeat(a.note) }}</span>
+        </div>
+        <p>{{ a.commentaire }}</p>
+      </div>
+      <p *ngIf="avis.length === 0 && produitId">Aucun avis approuvé.</p>
+    </div>
+  </div>
+</div>

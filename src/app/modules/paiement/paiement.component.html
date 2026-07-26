@@ -1,0 +1,66 @@
+<div class="paiement-page">
+  <div class="tunnel">
+    <div class="etape done">✓ Panier</div>
+    <div class="etape done">✓ Livraison</div>
+    <div class="etape active">3 Paiement</div>
+    <div class="etape">4 Confirmation</div>
+  </div>
+
+  <div class="contenu">
+    <div class="formulaire">
+      <div class="section">
+        <h3>Adresse de livraison</h3>
+        <div class="row">
+          <input [(ngModel)]="adresse" placeholder="Adresse complète" />
+        </div>
+        <div class="row deux">
+          <input [(ngModel)]="ville" placeholder="Ville" />
+          <input [(ngModel)]="telephone" placeholder="Téléphone" />
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Choisir un moyen de paiement</h3>
+        <div class="methode" [class.active]="methodePaiement === 'wave'" (click)="methodePaiement = 'wave'">
+          <input type="radio" [checked]="methodePaiement === 'wave'" />
+          <div>
+            <strong>💙 Paiement instantané par mobile Wave</strong>
+            <span class="badge">Rapide</span>
+          </div>
+        </div>
+        <div class="numero-input" *ngIf="methodePaiement === 'wave'">
+          <span>+221</span>
+          <input [(ngModel)]="numeroPaiement" placeholder="7X XXX XX XX" />
+        </div>
+
+        <div class="methode" [class.active]="methodePaiement === 'orange_money'" (click)="methodePaiement = 'orange_money'">
+          <input type="radio" [checked]="methodePaiement === 'orange_money'" />
+          <div>
+            <strong>🟠 Orange Money</strong>
+            <span class="badge orange">Populaire</span>
+          </div>
+        </div>
+        <div class="numero-input" *ngIf="methodePaiement === 'orange_money'">
+          <span>+221</span>
+          <input [(ngModel)]="numeroPaiement" placeholder="7X XXX XX XX" />
+        </div>
+      </div>
+
+      <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+    </div>
+
+    <div class="recapitulatif" *ngIf="panier">
+      <h3>Récapitulatif</h3>
+      <div class="article" *ngFor="let article of panier.articles">
+        <span>{{ article.produit.nom }}</span>
+        <span>{{ article.sous_total | number }} F</span>
+      </div>
+      <div class="ligne"><span>Sous-total</span><span>{{ panier.total | number }} F</span></div>
+      <div class="ligne total"><span>Total</span><span>{{ panier.total | number }} F</span></div>
+      <button class="btn-payer" (click)="valider()">
+        Payer {{ panier.total | number }} F avec {{ methodePaiement === 'wave' ? 'Wave' : 'Orange Money' }}
+      </button>
+      <p class="securise">🔒 Paiement 100% sécurisé · SSL</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="livraison-page">
+  <h2>Suivi de livraison</h2>
+  <div class="recherche">
+    <input [(ngModel)]="numeroSuivi" placeholder="Entrez votre numéro de suivi" />
+    <button (click)="suivre()">Suivre</button>
+  </div>
+  <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+
+  <div class="resultat" *ngIf="livraison">
+    <h3>Commande #{{ livraison.id }}</h3>
+    <p>Numéro de suivi : <strong>{{ livraison.numero_suivi }}</strong></p>
+    <p>Adresse : {{ livraison.adresse }}</p>
+    <p>Date prévue : {{ livraison.date_prevue }}</p>
+
+    <div class="progression">
+      <div class="etape" [class.active]="getStatutIndex(livraison.statut) >= 0">
+        <div class="cercle">📦</div>
+        <span>En préparation</span>
+      </div>
+      <div class="ligne" [class.active]="getStatutIndex(livraison.statut) >= 1"></div>
+      <div class="etape" [class.active]="getStatutIndex(livraison.statut) >= 1">
+        <div class="cercle">🚚</div>
+        <span>Expédié</span>
+      </div>
+      <div class="ligne" [class.active]="getStatutIndex(livraison.statut) >= 2"></div>
+      <div class="etape" [class.active]="getStatutIndex(livraison.statut) >= 2">
+        <div class="cercle">🛣️</div>
+        <span>En transit</span>
+      </div>
+      <div class="ligne" [class.active]="getStatutIndex(livraison.statut) >= 3"></div>
+      <div class="etape" [class.active]="getStatutIndex(livraison.statut) >= 3">
+        <div class="cercle">✅</div>
+        <span>Livré</span>
+      </div>
+    </div>
+  </div>
+</div>

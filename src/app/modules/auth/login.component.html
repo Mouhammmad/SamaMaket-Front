@@ -1,0 +1,14 @@
+<div class="login-page">
+  <div class="login-card">
+    <h2>SAMA MARKET</h2>
+    <h3>Connexion</h3>
+    <div class="form-group">
+      <input [(ngModel)]="username" placeholder="Nom d'utilisateur" />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="password" type="password" placeholder="Mot de passe" />
+    </div>
+    <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+    <button (click)="login()">Se connecter</button>
+  </div>
+</div>

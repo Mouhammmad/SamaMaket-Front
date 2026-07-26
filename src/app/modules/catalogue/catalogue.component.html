@@ -1,0 +1,25 @@
+<div class="catalogue-page">
+  <h2>Catalogue</h2>
+  <p class="message-succes" *ngIf="message">{{ message }}</p>
+
+  <div class="grille" *ngIf="produits.length > 0; else vide">
+    <div class="carte" *ngFor="let produit of produits">
+      <img [src]="produit.image || 'assets/placeholder.png'" [alt]="produit.nom" />
+      <div class="carte-info">
+        <h4>{{ produit.nom }}</h4>
+        <p class="description">{{ produit.description }}</p>
+        <p class="prix">{{ produit.prix | number }} F</p>
+        <p class="stock">Stock : {{ produit.quantite_stock }}</p>
+        <button (click)="ajouterAuPanier(produit.id)">+ Ajouter au panier</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #vide>
+    <p class="vide">Aucun produit disponible.</p>
+  </ng-template>
+
+  <button class="btn-panier" (click)="allerAuPanier()" *ngIf="produits.length > 0">
+    Voir mon panier
+  </button>
+</div>

@@ -1,0 +1,41 @@
+<div class="profil-page" *ngIf="profil">
+  <nav class="breadcrumb">Accueil / <span>Mon profil</span></nav>
+  <div class="contenu">
+    <div class="sidebar">
+      <div class="avatar">{{ profil.username[0].toUpperCase() }}</div>
+      <h3>{{ profil.username }}</h3>
+      <p>{{ profil.email }}</p>
+      <ul>
+        <li class="active">Mon profil</li>
+        <li routerLink="/panier">Mon panier</li>
+        <li routerLink="/favoris">Mes favoris</li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="section">
+        <div class="section-header">
+          <h3>Informations personnelles</h3>
+          <button (click)="enregistrer()">✎ Enregistrer</button>
+        </div>
+        <div class="form-grid">
+          <div><label>Nom d'utilisateur</label><input [(ngModel)]="profil.username" /></div>
+          <div><label>Email</label><input [(ngModel)]="profil.email" /></div>
+          <div><label>Téléphone</label><input [(ngModel)]="profil.telephone" /></div>
+          <div><label>Adresse</label><input [(ngModel)]="profil.adresse" /></div>
+        </div>
+        <p class="succes" *ngIf="messageSucces">{{ messageSucces }}</p>
+      </div>
+
+      <div class="section">
+        <h3>Changer le mot de passe</h3>
+        <div class="form-grid">
+          <div><label>Ancien mot de passe</label><input [(ngModel)]="ancienMdp" type="password" /></div>
+          <div><label>Nouveau mot de passe</label><input [(ngModel)]="nouveauMdp" type="password" /></div>
+        </div>
+        <button class="btn-mdp" (click)="changerMdp()">Changer</button>
+        <p class="succes" *ngIf="messageMdp">{{ messageMdp }}</p>
+      </div>
+    </div>
+  </div>
+</div>

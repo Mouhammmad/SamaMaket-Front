@@ -1,0 +1,30 @@
+<div class="favoris-page">
+  <nav class="breadcrumb">Accueil / <span>Mes favoris</span></nav>
+  <div class="contenu">
+    <div class="sidebar">
+      <div class="avatar">MS</div>
+      <ul>
+        <li routerLink="/profil">Mon profil</li>
+        <li routerLink="/panier">Mon panier</li>
+        <li class="active">Mes favoris</li>
+      </ul>
+    </div>
+    <div class="main">
+      <div class="header">
+        <h2>Mes favoris <span>{{ favoris.length }} produits</span></h2>
+      </div>
+      <div class="grille" *ngIf="favoris.length > 0; else vide">
+        <div class="carte" *ngFor="let favori of favoris">
+          <button class="btn-coeur active" (click)="supprimer(favori.id)">♥</button>
+          <img [src]="favori.produit.image || 'assets/placeholder.png'" [alt]="favori.produit.nom" />
+          <h4>{{ favori.produit.nom }}</h4>
+          <p class="prix">{{ favori.produit.prix | number }} F</p>
+          <button class="btn-voir">Voir</button>
+        </div>
+      </div>
+      <ng-template #vide>
+        <p class="vide">Aucun favori pour le moment.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
