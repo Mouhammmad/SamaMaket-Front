@@ -1,38 +1,76 @@
+<header class="main-navbar">
+    <div class="navbar-container">
+        <!--logo à gauche-->
+        <div class="logo-area">
+            <a routerLink="/" class="logo-text"> <span class="logo-white">SAMA</span> <span class="logo-orange">MARKET</span></a>
+        </div>
+
+        <!-- Nouveau : Barre de recherche au milieu -->
+        <div class="search-area">
+            <div class="search-box">
+                <input  type="text"  id="search" name="search" autocomplete="off"
+                [(ngModel)]="searchText" 
+                (input)="filtrerProduits()"                
+                placeholder="Rechercher un produit, une catégorie..."
+                class="search-input"                
+                />
+                <button class="search-btn">
+                    
+                </button>
+
+            </div>
+        </div>
+
+
+        <!--Zone de droite(Mon Compte)-->
+        <div class="User-area">
+            <a routerLink="/commandes" class="account-btn">
+                <span>Connexion</span>
+            </a>
+        </div>
+
+    </div>
+</header>
 <div class="shop-container">
 
     <!--1. Menu Gauche: les catégories-->
     <aside class="sidebar">
-        <h3>Catégories</h3>
+        <h2>Catégories</h2>
         <ul class="category-list">
             <!-- Boucle sur le tableau des catégories-->
-            <li *ngFor="let cat of categories" 
-                [class.activate]="cat.nom===categorieSelectionnee"
-                (click)="changerCategorie(cat.nom)">
-                <span class="Category-name"> {{cat.nom}} </span>
-                <span class="category-count" *ngIf="cat.count"> ({{cat.count}}) </span>
-            
-            </li>
+                @for (cat of categories; track cat.nom) {
+                  <li [class.activate]="cat.nom === categorieSelectionnee"
+                    (click)="changerCategorie(cat.nom)">
+                    <span class="Category-name"> {{cat.nom}} </span>
+                    @if (cat.count) {
+                         <span class="category-count"> ({{cat.count}}) </span>
+
+                    }
+                  </li>
+
+                } @empty {  
+                    <li>Aucune catégorie disponible</li>
+                }
         </ul>
     </aside>
-    
-
-
+     
     <!--2. La zone principale-->
     <main class="products-zone">
-        <div class="search-box">
+   <!-- <div class="search-box">
       <input type="text"  id="nom-categorie" name="nom-categorie"
         placeholder="Rechercher un produit ou une catégorie..."
         [(ngModel)]="searchText" 
         (input)="filtrerProduits()" />
-    </div>
+    </div> -->
         <h2> {{categorieSelectionnee}} </h2>
         <div class="products-grid">
              <!--Boucle sur le getter qui retourne lesproduits filtrés-->
             <div class="products-card" *ngFor="let produit of produitsFilters()">
-                <!--Badge (promo, nouveau, etc)-->
+                <!--Badge (promo, nouveau, etc)
                 <span class="badge" *ngIf="produit.badge" [ngClass]="produit.badge.toLowerCase()">
                     {{produit.badge}} <span *ngIf="produit.reduction">{{produit.reduction}}</span> 
                 </span>
+                -->
                 <!--Image du produit-->
                 <div class="product-image">
                     <img [src]="produit.image ? (produit.image.startsWith('http') ? produit.image :  'http://127.0.0.1:8000' + produit.image) :'https://placeholder.com'" [alt]="produit.nom" crossorigin="anonymous">
@@ -45,7 +83,7 @@
 
                     <!-- Notes / Etoiles-->
                     <div class="product-rating">
-                        <span class="star" *ngFor="let star of [].constructor(produit.note)">★</span>
+                        <span class="star" *ngFor="let star of [].constructor(produit.note)">★★</span>
                     </div>
 
                     <!--Prix (Actuel et original)-->
@@ -58,7 +96,7 @@
 
                     <div class="product-action">
                         <button (click)="ajouterAuPanier(produit)" class="btn-add-to-cart">
-                            ajouter au  panier
+                           <img src="https://www.google.com/imgres?q=icone%20%20panier%20de%20site%20e-commerce&imgurl=https%3A%2F%2Fpng.pngtree.com%2Fpng-vector%2F20231019%2Fourmid%2Fpngtree-d-shopping-cart-with-empty-space-isolated-concept-3d-render-illustration-png-image_10215942.png&imgrefurl=https%3A%2F%2Ffr.pngtree.com%2Fso%2Fdachat&docid=wpyz5KrfXIqGLM&tbnid=dK1ypzJyG5Yu7M&vet=12ahUKEwjN3by9wfWVAxWVTUEAHeOJGB4QnPAOegQIIhAA..i&w=360&h=360&hcb=2&itg=1&ved=2ahUKEwjN3by9wfWVAxWVTUEAHeOJGB4QnPAOegQIIhAA" alt="'Icone panier" >
                         </button> 
                     </div>
                 </div>

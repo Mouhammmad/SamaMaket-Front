@@ -61,7 +61,7 @@ export class CategorieComponent implements OnInit {
 
    });
   }
-
+ 
   filtrerProduits(): void {
     const formatText = this.searchText ? this.searchText.toLowerCase().trim(): '';
 
@@ -73,13 +73,37 @@ export class CategorieComponent implements OnInit {
     this.produits = this.tousLesProduits.filter((item: any) => {
       const matchNom = item.nom ? item.nom.toLowerCase().includes(formatText):false;
       const matchDescription = item.description ? item.description.toLowerCase().includes(formatText): false;
-      return matchNom || matchDescription;
+      
+      //Recherche dans le nom de la categorie 
+      const matchCategorie = item.categorie && item.categorie.nom
+      ? item.categorie.nom.toLocaleLowerCase().includes(formatText)
+      : false;
+
+      return matchNom || matchDescription ||matchCategorie;
+        
     });
   }
    
-  changerCategorie(nom: string): void {
-    this.categorieSelectionnee = nom;
+  changerCategorie(nomCat: string): void {
+    this.categorieSelectionnee = nomCat;
+    this.searchText = '';
   }   
+  
+
+  get filtrerproduits(): Produit[] {
+    let resultat = this.tousLesProduits;
+
+    if(this.categorieSelectionnee && this.categorieSelectionnee !== 'Toutes') {
+      resultat = resultat.filter((p: Produit) => p.categorie.nom   ===this.categorieSelectionnee);
+    }
+    
+    if (this.searchText && this.searchText.trim() !== '') {
+      const recherche = this.searchText.toLocaleLowerCase().trim();
+      resultat = resultat.filter((p: Produit) =>p.nom.toLocaleLowerCase().includes(recherche));
+    }
+
+    return resultat;
+  }
 
    
   calculerTotalProduits(categoriesList: any[]): number {

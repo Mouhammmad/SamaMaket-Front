@@ -6,6 +6,101 @@ $bg-light: #f8f9fa;
 $border-color: #eaeded;
 $promo-color: #0ff34c; // Rouge pour les réductions 
 
+.main-navbar {
+    background-color: #02042b;
+    color: #ffffff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .logo-white {
+        color: #ffffff;
+    }
+
+    .logo-orange {
+        color: #ff6600;
+    }
+}
+
+// Conteneur pour aligner les éléments aux extrémités
+.navbar-container {
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.search-area {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+}
+
+.search-box {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    outline: none;
+
+    &::placeholder{
+        color: #94a3b8;
+    }
+}
+
+.search-btn {
+    background-color: #f1f5f9;
+    border: none;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: #e2e8f0;
+    }
+}
+
+
+// Style du bouton "Mon Compte"
+.account-btn {
+    background-color: #ffffff;
+    color: #0b1329;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+        background-color: #f1f5f9;
+    }
+}
+
+// Espace pour le contenu en dessous du menu
+.page-content {
+    background-color: #f8fafc;
+    min-height: calc(100vh - 60px);
+}
 
 .shop-container{
     display: flex;
@@ -20,14 +115,11 @@ $promo-color: #0ff34c; // Rouge pour les réductions
     .sidebar{
 
         flex: 0 0 250px; //largeur fixe pour le menu
-        background: #f86e04dc;
+        background: #eaeaf0;
         padding: 20px;
         border-radius: 8px;
         border: 1px solid  $border-color;
         height: fit-content;
-
-        
-
 
         h3 {
 
@@ -78,27 +170,7 @@ $promo-color: #0ff34c; // Rouge pour les réductions
 
         }
     }
-    .search-box {
-        position: sticky;
-        top:0;
-        z-index:100;
-        background-color: #ffffff;
-        width: 50%;
-        height: 2%;
-        padding: 10px 0;
-        justify-content: center;
-        display: flex;
-        margin: 0 auto;
-
-        input {
-            width: 75%;
-            height: 40px;
-            padding: 0 15px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-            border-radius: 4px;
-        }
-    }
+   
 
     // 2. Style de la zone de droite
     .products-zone {

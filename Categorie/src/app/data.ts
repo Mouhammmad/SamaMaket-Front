@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
  export interface Categorie {
     id: number;
     nom: string;
+    count?: number;
  }
 
  export interface Produit {
@@ -14,6 +15,19 @@ import { Observable } from 'rxjs';
     categorie: Categorie;
  }
 
+ export interface  LigneCommande {
+
+ }
+
+ export interface Commande {
+    id: number;
+    client: number;
+    cree_le: string;
+    statut: string;
+    total: number | string;
+    lignes: LigneCommande[];
+ } 
+
  
 @Injectable({
     providedIn: 'root'
@@ -21,6 +35,7 @@ import { Observable } from 'rxjs';
 export class DataService {
     private apiCategoriesUrl = 'http://127.0.0.1:8000/categories/';
     private apiProduitsUrl = 'http://127.0.0.1:8000/produits/';
+    private apiCommandesUrl = 'http://127.0.0.1:8000/commandes/';
 
     constructor(private http: HttpClient) {}
     
@@ -31,5 +46,10 @@ export class DataService {
     // Méthode pour récupérer les données
     getProduits(): Observable<any[]> {
         return this.http.get<any[]>(this.apiProduitsUrl);
+    }
+
+    //Méthode pour récupérer les données
+    getCommandes(): Observable<any[]> {
+        return this.http.get<any[]>(this.apiCommandesUrl);
     }
 }

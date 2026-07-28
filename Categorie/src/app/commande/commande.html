@@ -1,0 +1,55 @@
+<header class="main-navbar">
+    <div class="navbar-container">
+        <!--logo à gauche-->
+        <div class="logo-area">
+            <a routerLink="/" class="logo-text"> <span class="logo-white">SAMA</span> <span class="logo-orange">MARKET</span></a>
+        </div>
+
+        <!-- Nouveau : Barre de recherche au milieu -->
+        <div class="search-area">
+            <div class="search-box">
+                <input type="text" id="username" name="username" autocomplete="username"
+                placeholder="Rechercher un produit, une catégorie..."
+                class="search-input"                
+                />
+                <button class="search-btn">
+                    
+                </button>
+
+            </div>
+        </div>
+
+
+        <!--Zone de droite(Mon Compte)-->
+        <div class="User-area">
+            <a routerLink="/commandes" class="account-btn">
+                <span>Mon Compte</span>
+            </a>
+        </div>
+
+    </div>
+</header>
+
+<!--ZONE DE CONTENU DYNAMIQUE-->
+<!--C'est ici qu'angular affichera vos pages ("Mes commandes")-->
+<div class="page-content">
+</div>
+
+
+<div class="container">
+    <h2>Gestion des commandes</h2>
+
+    <!--@if (listCommandes && listCommandes.length > 0) { -->
+    <ul>
+      @for (cmd of listCommandes; track cmd.id) {
+        <li>
+            ID: {{cmd.id}} - Client: {{cmd.client}}- Total: {{cmd.total}}
+        </li>
+      }
+         
+    
+        @empty {
+    <div>Aucune commande trouvée.</div>
+  }
+</ul>
+</div>
