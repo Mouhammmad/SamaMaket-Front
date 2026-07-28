@@ -1,0 +1,9 @@
+.profil-content{
+
+    width:100%;
+
+}
+section {
+    scroll-margin-top: 90px; /* évite que la section soit cachée sous la topbar */
+    margin-bottom: 30px;
+}

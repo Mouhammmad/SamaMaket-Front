@@ -1,0 +1,78 @@
+<form  [formGroup]="produitForm" (ngSubmit)="enregistrer()">
+
+  <div class="grid">
+
+    <div class="field">
+      <label>Nom du produit</label>
+      
+      <input
+    type="text"
+    formControlName="nom">
+    <small class="error" *ngIf="produitForm.get('nom')?.invalid && produitForm.get('nom')?.touched">
+        Le nom du produit est obligatoire.
+    </small>
+    </div>
+
+    <div class="field">
+      <label>Catégorie</label>
+      <select formControlName="categorie">
+        <option value="">Choisir...</option>
+        <ng-container *ngFor="let categorie of categories">
+          <option [value]="categorie.id">{{ categorie.nom }}</option>
+        </ng-container>
+      </select>
+      <small class="error" *ngIf="produitForm.get('categorie')?.invalid && produitForm.get('categorie')?.touched">
+        La catégorie est obligatoire.
+      </small>
+    </div>
+
+    <div class="field">
+      <label>Prix (FCFA)</label>
+      <input
+    type="number"
+    formControlName="prix">
+    </div>
+
+    <div class="field">
+      <label>Stock</label>
+      <input
+    type="number"
+    formControlName="stock">
+    </div>
+
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <textarea
+rows="6"
+formControlName="description">
+</textarea>
+  </div>
+  <div class="field">
+    <label>Statut</label>
+    <select formControlName="est_actif">
+      <option value="true">Actif</option>
+      <option value="false">Inactif</option>
+    </select>
+</div>
+
+  <div class="field">
+    <label>Images</label>
+    <input
+    type="file"
+    multiple
+    (change)="onFilesSelected($event)">
+  </div>
+
+  <div class="actions">
+    <button
+type="submit"
+class="save">
+
+Enregistrer
+
+</button>
+  </div>
+
+</form>

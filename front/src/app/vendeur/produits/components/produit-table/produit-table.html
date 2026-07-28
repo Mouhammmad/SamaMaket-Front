@@ -1,0 +1,46 @@
+<div class="table-card">
+
+  <table>
+
+    <tr>
+      <th>Image</th>
+      <th>Nom</th>
+      <th>Prix</th>
+      <th>Stock</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let produit of produits">
+      <td>
+    <img
+        *ngIf="produit.image_url"
+        [src]="produit.image_url"
+        [alt]="produit.nom"
+        class="product-image">
+
+    <span *ngIf="!produit.image_url">
+        📦
+    </span>
+</td>
+      <td>{{ produit.nom }}</td>
+      <td>{{ produit.prix }} FCFA</td>
+      <td>{{ produit.quantite_stock }}</td>
+      <td>
+        <span [class.active]="produit.est_actif" [class.inactive]="!produit.est_actif">
+          {{ produit.est_actif ? 'Actif' : 'Inactif' }}
+        </span>
+      </td>
+      <td>
+        <button class="edit">Modifier</button>
+        <button class="delete">Supprimer</button>
+      </td>
+    </tr>
+
+    <tr *ngIf="produits.length === 0">
+      <td colspan="6" class="empty-state">Aucun produit disponible.</td>
+    </tr>
+
+  </table>
+
+</div>

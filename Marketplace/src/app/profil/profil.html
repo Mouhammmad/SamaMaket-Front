@@ -1,0 +1,157 @@
+<header class="top-navbar">
+    <div class="logo">
+      <span class="logo-white">SAMA</span><span class="logo-orange">MARKET</span>
+    </div>
+
+    <div class="navbar-right">
+      <div class="nav-icons">
+        <span></span>
+        <span></span>
+      </div>
+      <button class="account-btn">Mon compte</button>
+    </div>
+  </header>
+<div class="page">
+
+  <app-sidebar [activeItem]="activeSidebarItem"></app-sidebar>
+
+  <!-- Contenu -->
+
+  <main class="content">
+
+    <div class="card">
+
+      <div class="card-header">
+        <h2>Informations personnelles</h2>
+
+        <button class="btn-primary" type="button" (click)="sauvegarderProfil()">
+          Enregistrer
+        </button>
+
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" type="text" [(ngModel)]="profil.prenom" aria-label="Prénom">
+        </div>
+
+        <div class="field">
+          <label for="nom">Nom</label>
+          <input id="nom" type="text" [(ngModel)]="profil.nom" aria-label="Nom">
+        </div>
+
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input id="email" type="email" [(ngModel)]="profil.email" aria-label="Adresse email">
+        </div>
+
+        <div class="field">
+          <label for="telephone">Téléphone</label>
+          <input id="telephone" type="text" [(ngModel)]="profil.telephone" aria-label="Téléphone">
+        </div>
+
+        <div class="field full">
+          <label for="ville">Ville</label>
+          <input id="ville" type="text" [(ngModel)]="profil.ville" aria-label="Ville">
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <h2>Mes adresses</h2>
+
+        <button class="btn-primary">
+          + Ajouter
+        </button>
+
+      </div>
+
+      <div class="address active-address">
+
+        <strong>Rue 10, Cité Keur Gorgui, Dakar</strong>
+
+        <span>Adresse par défaut</span>
+
+      </div>
+
+      <div class="address">
+
+        <strong>Bureau</strong>
+
+        <p>Avenue Cheikh Anta Diop, Université de Dakar</p>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Sécurité du compte</h2>
+
+      <div class="row">
+        <span>Mot de passe</span>
+        <a href="javascript:void(0)" (click)="changerMotDePasse()">Modifier →</a>
+      </div>
+
+      <div class="row">
+        <span>Double authentification (2FA)</span>
+        <a>Activer →</a>
+      </div>
+
+      <div class="row">
+        <span>Sessions actives</span>
+        <a>Gérer →</a>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Préférences de notification</h2>
+
+      <div class="row">
+        <span>Commandes & livraisons</span>
+        <input id="notif-commandes" type="checkbox" [(ngModel)]="notifications.commandes" aria-label="Commandes & livraisons">
+      </div>
+
+      <div class="row">
+        <span>Promotions & offres</span>
+        <input id="notif-promos" type="checkbox" [(ngModel)]="notifications.promos" aria-label="Promotions & offres">
+      </div>
+
+      <div class="row">
+        <span>Alertes favoris</span>
+        <input id="notif-favoris" type="checkbox" [(ngModel)]="notifications.favoris" aria-label="Alertes favoris">
+      </div>
+
+      <div class="row">
+        <span>Newsletter</span>
+        <input id="notif-newsletter" type="checkbox" [(ngModel)]="notifications.newsletter" aria-label="Newsletter">
+      </div>
+
+    </div>
+
+    <div class="danger">
+
+      <h3>⚠ Zone de danger</h3>
+
+      <p>
+        La suppression de votre compte est irréversible.
+      </p>
+
+      <button class="btn-danger" type="button" (click)="supprimerCompte()">
+        Supprimer mon compte
+      </button>
+
+    </div>
+
+  </main>
+
+</div>

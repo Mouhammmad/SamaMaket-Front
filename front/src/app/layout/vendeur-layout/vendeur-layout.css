@@ -1,0 +1,44 @@
+.vendeur-layout{
+    display:flex;
+    min-height:100vh;
+    background:#eef3f9;
+}
+
+.main-content{
+    flex:1;
+}
+
+.topbar{
+    height:80px;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 35px;
+    border-bottom:1px solid #ddd;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:700;
+}
+
+.green{
+    color:#ffffff;
+}
+
+.orange{
+    color:#ff7b22;
+}
+
+.back-btn{
+    text-decoration:none;
+    background:#1f2d56;
+    color:white;
+    padding:12px 22px;
+    border-radius:10px;
+}
+
+.page-content{
+    padding:30px;
+}

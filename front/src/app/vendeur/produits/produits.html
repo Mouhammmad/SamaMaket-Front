@@ -1,0 +1,24 @@
+<div class="produits-page">
+
+    <app-produit-header
+        (addProduct)="ouvrir()">
+    </app-produit-header>
+
+    <app-produit-filter></app-produit-filter>
+
+   <ng-container *ngIf="loading; else produitTable">
+    <p>Chargement des produits...</p>
+  </ng-container>
+  <ng-template #produitTable>
+    <app-produit-table [produits]="produits"></app-produit-table>
+  </ng-template>
+    <app-modal
+        title="Ajouter un produit"
+        [isOpen]="ouvrirModal"
+        (close)="fermer()">
+
+        <app-produit-from (produitAjoute)="onProduitAjoute()"></app-produit-from>
+
+    </app-modal>
+
+</div>

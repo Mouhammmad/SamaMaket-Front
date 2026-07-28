@@ -1,0 +1,60 @@
+<div class="card-profile">
+
+    <h2>
+
+        Sécurité
+
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-12 mb-3">
+
+            <label for="ancien-mot-de-passe">Ancien mot de passe</label>
+
+            <input
+                id="ancien-mot-de-passe"
+                type="password"
+                class="form-control"
+                [(ngModel)]="ancienMotDePasse"
+                placeholder="Ancien mot de passe">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="nouveau-mot-de-passe">Nouveau mot de passe</label>
+
+            <input
+                id="nouveau-mot-de-passe"
+                type="password"
+                class="form-control"
+                [(ngModel)]="nouveauMotDePasse"
+                placeholder="Nouveau mot de passe">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="confirmation-mot-de-passe">Confirmer le mot de passe</label>
+
+            <input
+                id="confirmation-mot-de-passe"
+                type="password"
+                class="form-control"
+                [(ngModel)]="confirmation"
+                placeholder="Confirmez le mot de passe">
+
+        </div>
+
+    </div>
+
+    <button
+        class="btn btn-primary"
+        (click)="modifierMotDePasse()">
+
+        Modifier le mot de passe
+
+    </button>
+
+</div>

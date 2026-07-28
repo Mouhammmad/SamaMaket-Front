@@ -1,0 +1,174 @@
+.sidebar{
+
+    width:270px;
+    height:100vh;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    background:#223d6b;
+
+    color:white;
+
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.logo{
+
+    text-align:center;
+
+    font-size:32px;
+
+    font-weight:800;
+
+    margin-bottom:30px;
+
+}
+
+.green{
+
+    color:white;
+
+}
+
+.orange{
+
+    color:#ff9d1f;
+
+}
+
+.user{
+
+    text-align:center;
+
+}
+
+.avatar{
+
+    width:85px;
+    height:85px;
+
+    border-radius:50%;
+
+    background:#ff7b1d;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+.badge{
+
+    background:#29c765;
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    padding:6px 15px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+}
+
+.user h3{
+
+    margin-top:18px;
+
+    margin-bottom:6px;
+
+}
+
+.user p{
+
+    color:#cfd8e5;
+
+    font-size:14px;
+
+}
+
+hr{
+
+    margin:25px 0;
+
+    border-color:rgba(255,255,255,.1);
+
+}
+
+nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+nav a{
+
+    color:#d9d9d9;
+
+    text-decoration:none;
+
+    padding:13px 15px;
+
+    border-radius:10px;
+
+    transition:.25s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+nav a:hover{
+
+    background:#31518c;
+
+}
+
+nav a.active{
+
+    background:#31518c;
+
+    color:white;
+
+}
+
+.logout{
+
+    margin-top:auto;
+
+    background:none;
+
+    border:none;
+
+    color:#ff6b6b;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    text-align:left;
+
+}

@@ -1,0 +1,100 @@
+<div class="boutique-page">
+
+    <div class="card">
+
+        <h1>Ma boutique</h1>
+
+        <p>
+            Personnalisez votre boutique avant de publier vos produits.
+        </p>
+
+        <form
+            [formGroup]="boutiqueForm"
+            (ngSubmit)="enregistrer()">
+
+            <div class="field">
+
+                <label>Nom de la boutique</label>
+
+                <input
+                    type="text"
+                    formControlName="nom">
+
+            </div>
+
+            <div class="field">
+
+                <label>Description</label>
+
+                <textarea
+                    rows="5"
+                    formControlName="description">
+                </textarea>
+
+            </div>
+
+            <div class="grid">
+
+                <div class="field">
+
+                    <label>Ville</label>
+
+                    <input
+                        type="text"
+                        formControlName="ville">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Téléphone</label>
+
+                    <input
+                        type="text"
+                        formControlName="telephone">
+
+                </div>
+
+            </div>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    formControlName="email">
+
+            </div>
+
+            <div class="grid">
+
+                <div class="field">
+
+                    <label>Logo</label>
+
+                    <input type="file">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Bannière</label>
+
+                    <input type="file">
+
+                </div>
+
+            </div>
+
+            <button type="submit">
+
+                Enregistrer la boutique
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

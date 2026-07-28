@@ -1,0 +1,27 @@
+.panel{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.panel h3{
+    margin-bottom:20px;
+    color:#102a43;
+}
+
+ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+li{
+    padding:15px 0;
+    border-bottom:1px solid #ececec;
+    font-size:15px;
+}
+
+li:last-child{
+    border:none;
+}

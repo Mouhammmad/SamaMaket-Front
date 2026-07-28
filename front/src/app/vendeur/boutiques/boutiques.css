@@ -1,0 +1,92 @@
+.boutique-page{
+
+    padding:30px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.card h1{
+
+    margin-bottom:10px;
+
+    color:#102a43;
+
+}
+
+.card p{
+
+    color:#6b7280;
+
+    margin-bottom:30px;
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+}
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:20px;
+
+}
+
+.field label{
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.field input,
+.field textarea{
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+}
+
+button{
+
+    background:#102a43;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}

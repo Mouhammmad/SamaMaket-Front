@@ -1,0 +1,138 @@
+/* ===========================
+   ETAPES
+=========================== */
+
+.checkout-steps{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:50px;
+}
+
+.step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.circle{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:2px solid #d9d9d9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    background:white;
+    color:#888;
+}
+
+.step.done .circle{
+    background:#198754;
+    color:white;
+    border-color:#198754;
+}
+
+.step.active .circle{
+    background:#0d6efd;
+    color:white;
+    border-color:#0d6efd;
+}
+
+.step span{
+    margin-top:8px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.line{
+    width:90px;
+    height:2px;
+    background:#d9d9d9;
+    margin:0 12px;
+}
+
+/* ===========================
+   CARTE
+=========================== */
+
+.checkout-card{
+
+    max-width:850px;
+
+    margin:auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+}
+
+.checkout-card h2{
+
+    margin-bottom:35px;
+
+    font-weight:bold;
+
+    color:#163b85;
+
+}
+
+label{
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+.form-control{
+
+    height:50px;
+
+    border-radius:10px;
+
+}
+
+textarea.form-control{
+
+    height:120px;
+
+}
+
+.btn-primary{
+
+    padding:14px 40px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    font-size:17px;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+    .checkout-card{
+
+        padding:25px;
+
+    }
+
+    .checkout-steps{
+
+        display:none;
+
+    }
+
+}

@@ -1,0 +1,53 @@
+<div class="profil-content">
+
+  @if (sectionActive === 'profil') {
+
+    <app-informations></app-informations>
+
+    <app-adresses></app-adresses>
+
+    <app-securite></app-securite>
+
+    <app-notifications></app-notifications>
+
+    <app-zone-danger></app-zone-danger>
+
+  }
+
+  @else if (sectionActive === 'commandes') {
+
+    <app-commandes></app-commandes>
+
+  }
+
+  @else if (sectionActive === 'favoris') {
+
+    <app-favoris></app-favoris>
+
+  }
+
+  @else if (sectionActive === 'adresses') {
+
+    <app-adresses></app-adresses>
+
+  }
+
+  @else if (sectionActive === 'avis') {
+
+    <app-avis></app-avis>
+
+  }
+
+  @else if (sectionActive === 'notifications') {
+
+    <app-notifications></app-notifications>
+
+  }
+
+  @else if (sectionActive === 'securite') {
+
+    <app-securite></app-securite>
+
+  }
+
+</div>

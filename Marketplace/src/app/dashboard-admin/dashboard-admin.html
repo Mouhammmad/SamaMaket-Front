@@ -1,0 +1,170 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>SAMA <span>MARKET</span></h2>
+      <p>Espace Administration</p>
+    </div>
+
+    <ul class="menu">
+      <li
+        *ngFor="let tab of tabs"
+        [class.active]="activeTab === tab.key"
+        (click)="setActiveTab(tab.key)">
+        {{ tab.label }}
+      </li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <div>
+        <h1>Tableau de bord Admin</h1>
+        <p>Vue globale de la plateforme et de l’activité récente</p>
+      </div>
+      <button (click)="logout()">Déconnexion</button>
+    </div>
+
+    <div class="tab-switcher" role="tablist" aria-label="Navigation du tableau de bord">
+      <button
+        *ngFor="let tab of tabs"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="activeTab === tab.key"
+        [class.active]="activeTab === tab.key"
+        (click)="setActiveTab(tab.key)">
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="state-card">
+      <p>Chargement des données...</p>
+    </div>
+
+    <div *ngIf="error" class="state-card error">
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="activeTab === 'overview'">
+      <div *ngIf="stats && !loading" class="cards">
+        <div class="card">
+          <div class="top blue"></div>
+          <h2>{{ stats?.utilisateurs_total || 0 }}</h2>
+          <h4>Utilisateurs total</h4>
+          <span>+{{ stats?.nouveaux_utilisateurs_ce_mois || 0 }} ce mois</span>
+        </div>
+
+        <div class="card">
+          <div class="top purple"></div>
+          <h2>{{ stats?.vendeurs_actifs || 0 }}</h2>
+          <h4>Vendeurs actifs</h4>
+          <span>{{ stats?.vendeurs_en_attente || 0 }} en attente</span>
+        </div>
+
+        <div class="card">
+          <div class="top orange"></div>
+          <h2>{{ stats?.produits_total || 0 }}</h2>
+          <h4>Produits publiés</h4>
+        </div>
+
+        <div class="card">
+          <div class="top green"></div>
+          <h2>{{ stats?.commandes_du_jour || 0 }}</h2>
+          <h4>Commandes du jour</h4>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Actions rapides</h2>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-card">
+            <strong>Gérer les vendeurs</strong>
+            <p>Valider ou refuser les boutiques en attente.</p>
+          </div>
+          <div class="quick-card">
+            <strong>Voir les commandes</strong>
+            <p>Suivre les achats et le statut des livraisons.</p>
+          </div>
+          <div class="quick-card">
+            <strong>Produits</strong>
+            <p>Publier, modifier ou retirer des annonces.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section *ngIf="activeTab === 'vendeurs'" class="section">
+      <div class="section-header">
+        <h2>Vendeurs en attente d’approbation</h2>
+      </div>
+
+      <div *ngIf="vendeurs.length === 0" class="state-card">
+        <p>Aucun vendeur en attente pour le moment.</p>
+      </div>
+
+      <div class="vendeur-card" *ngFor="let vendeur of vendeurs">
+        <div class="vendeur-info">
+          <div class="avatar">🏪</div>
+          <div>
+            <h3>{{ vendeur.nom }}</h3>
+            <p>{{ vendeur.proprietaire }} • {{ vendeur.categorie }}</p>
+            <span class="badge">{{ vendeur.email }}</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-ok" type="button" (click)="approuverVendeur(vendeur)">✔ Approuver</button>
+          <button class="btn-no" type="button" (click)="refuserVendeur(vendeur)">✖ Refuser</button>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeTab === 'utilisateurs'" class="section">
+      <div class="section-header">
+        <h2>Utilisateurs récents</h2>
+      </div>
+
+      <div *ngIf="utilisateurs.length === 0" class="state-card">
+        <p>Aucun utilisateur récent à afficher.</p>
+      </div>
+
+      <table *ngIf="utilisateurs.length > 0">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of utilisateurs">
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td><span class="status-pill">Actif</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section *ngIf="activeTab === 'produits'" class="section">
+      <div class="state-card">
+        <p>La gestion des produits sera disponible ici prochainement.</p>
+      </div>
+    </section>
+
+    <section *ngIf="activeTab === 'commandes'" class="section">
+      <div class="state-card">
+        <p>Le suivi des commandes sera intégré dans cette vue.</p>
+      </div>
+    </section>
+
+    <section *ngIf="activeTab === 'rapports'" class="section">
+      <div class="state-card">
+        <p>Les rapports et analyses seront ajoutés ici.</p>
+      </div>
+    </section>
+  </main>
+</div>

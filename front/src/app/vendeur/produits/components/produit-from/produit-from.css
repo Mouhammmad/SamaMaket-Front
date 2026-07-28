@@ -1,0 +1,60 @@
+.product-form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    font-weight:600;
+    margin-bottom:8px;
+    color:#102a43;
+}
+
+.field input,
+.field select,
+.field textarea{
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.field textarea{
+    resize:vertical;
+}
+
+.actions{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.save{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.save:hover{
+    background:#15803d;
+}
+
+.error{
+    color:#dc2626;
+    font-size:13px;
+    margin-top:5px;
+}

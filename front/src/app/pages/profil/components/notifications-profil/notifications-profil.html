@@ -1,0 +1,93 @@
+<div class="card-profile">
+
+    <h2>
+
+        Notifications
+
+    </h2>
+
+    <div class="notification-item">
+
+        <div>
+
+            <h5>Commandes</h5>
+
+            <small>Recevoir les notifications concernant vos commandes.</small>
+
+        </div>
+
+        <input
+            id="notif-commandes"
+            type="checkbox"
+            [(ngModel)]="commandes"
+            aria-label="Notifications commandes"
+            title="Notifications commandes">
+
+    </div>
+
+    <div class="notification-item">
+
+        <div>
+
+            <h5>Promotions</h5>
+
+            <small>Recevoir les offres promotionnelles.</small>
+
+        </div>
+
+        <input
+            id="notif-promotions"
+            type="checkbox"
+            [(ngModel)]="promotions"
+            aria-label="Notifications promotions"
+            title="Notifications promotions">
+
+    </div>
+
+    <div class="notification-item">
+
+        <div>
+
+            <h5>Favoris</h5>
+
+            <small>Être averti lorsqu'un produit favori est en promotion.</small>
+
+        </div>
+
+        <input
+            id="notif-favoris"
+            type="checkbox"
+            [(ngModel)]="favoris"
+            aria-label="Notifications favoris"
+            title="Notifications favoris">
+
+    </div>
+
+    <div class="notification-item">
+
+        <div>
+
+            <h5>Newsletter</h5>
+
+            <small>Recevoir les nouveautés SamaMarket.</small>
+
+        </div>
+
+        <input
+            id="notif-newsletter"
+            type="checkbox"
+            [(ngModel)]="newsletter"
+            aria-label="Notifications newsletter"
+            title="Notifications newsletter">
+
+    </div>
+
+    <button
+        class="btn btn-primary mt-4"
+        (click)="enregistrer()">
+
+        Enregistrer les préférences
+
+    </button>
+
+</div>

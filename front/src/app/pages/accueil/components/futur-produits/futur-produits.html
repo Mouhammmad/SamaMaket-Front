@@ -1,0 +1,20 @@
+<section class="products-section">
+  <div class="section-header">
+    <h2>Produits à découvrir</h2>
+    <p>Découvrez les meilleurs produits disponibles sur la plateforme.</p>
+  </div>
+
+  @if (estEnChargement) {
+    <p>Chargement des produits...</p>
+  }
+
+  @if (!estEnChargement && produits.length === 0) {
+    <p>Aucun produit disponible pour le moment.</p>
+  }
+
+  <div class="products-grid">
+    @for (produit of produits; track produit.id) {
+      <app-carte-produit [produit]="produit"></app-carte-produit>
+    }
+  </div>
+</section>

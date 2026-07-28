@@ -1,0 +1,111 @@
+<div class="container py-5">
+
+    <div class="checkout-steps">
+
+        <div class="step done">
+            <div class="circle">✓</div>
+            <span>Panier</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step done">
+            <div class="circle">✓</div>
+            <span>Livraison</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step active">
+            <div class="circle">3</div>
+            <span>Paiement</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+            <div class="circle">4</div>
+            <span>Confirmation</span>
+        </div>
+
+    </div>
+
+    <div class="payment-card">
+
+        <h2>Choisissez votre mode de paiement</h2>
+
+        <div class="payment-methods">
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="methode"
+                    [(ngModel)]="methode"
+                    value="wave">
+
+                🌊 Wave
+
+            </label>
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="methode"
+                    [(ngModel)]="methode"
+                    value="orange">
+
+                🟠 Orange Money
+
+            </label>
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="methode"
+                    [(ngModel)]="methode"
+                    value="free">
+
+                🔵 Free Money
+
+            </label>
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="methode"
+                    [(ngModel)]="methode"
+                    value="carte">
+
+                💳 Carte bancaire
+
+            </label>
+
+        </div>
+
+        <div class="mt-4">
+
+            <label for="numero-paiement">Numéro de téléphone / Carte</label>
+
+            <input
+                id="numero-paiement"
+                class="form-control"
+                [(ngModel)]="numero"
+                placeholder="Entrez votre numéro ou carte">
+
+        </div>
+
+        <button
+            class="btn btn-success mt-4"
+            (click)="payer()">
+
+            Confirmer le paiement
+
+        </button>
+
+    </div>
+
+</div>

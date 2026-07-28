@@ -1,0 +1,175 @@
+<header class="auth-header">
+
+  <div class="logo">
+    <span class="logo-sama">SAMA</span>
+    <span class="logo-market">MARKET</span>
+  </div>
+
+  <a routerLink="/" class="back-home">
+    ← Retour à l'accueil
+  </a>
+
+</header>
+<div class="auth-intro">
+
+    <h1>Rejoignez SAMA MARKET</h1>
+
+    <p>
+        Créez votre compte gratuitement et profitez
+        d'une marketplace moderne dédiée aux vendeurs
+        et acheteurs sénégalais.
+    </p>
+
+</div>
+<div class="register-page">
+  <div class="register-wrapper">
+    <div class="left-panel">
+      <div class="brand">
+        <span class="brand-sama">SAMA</span>
+        <span class="brand-market">MARKET</span>
+      </div>
+
+    <div class="left-content">
+      <p class="bienvenue">Rejoins la communauté</p>
+      <h1>des acheteurs<br />locaux</h1>
+      <p class="description">
+        Crée ton compte gratuitement et accède à des milliers de produits locaux.
+      </p>
+
+      <div class="role-section">
+        <div class="role-card">
+          <p class="role-label">Ton rôle</p>
+          <div class="role-buttons">
+            <button
+              type="button"
+              [class.active]="role === 'CUSTOMER'"
+              (click)="role = 'CUSTOMER'"
+            >
+              👤 Client
+            </button>
+            <button
+              type="button"
+              [class.active]="role === 'VENDOR'"
+              (click)="role = 'VENDOR'"
+            >
+              🏪 Vendeur
+            </button>
+          </div>
+          <p class="role-hint">Tu pourras changer certaines informations plus tard.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="slogan">“Achète local, soutiens ta communauté”</p>
+  </div>
+
+  <div class="right-panel">
+    <div class="form-shell">
+      <div class="top-line"></div>
+
+      <h2>Créer un compte</h2>
+      <p class="sous-titre">Rejoins SAMA MARKET — c'est gratuit !</p>
+
+      <div class="social-login">
+        <button type="button" class="social-btn">G Google</button>
+        <button type="button" class="social-btn">f Facebook</button>
+      </div>
+
+      <div class="separator">
+        <span>ou</span>
+      </div>
+
+      <div *ngIf="erreur" class="erreur-msg">{{ erreur }}</div>
+
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <div class="champ-row">
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input
+              id="prenom"
+              type="text"
+              [(ngModel)]="prenom"
+              name="prenom"
+              placeholder="Votre prénom"
+              required
+            />
+          </div>
+
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input
+              id="nom"
+              type="text"
+              [(ngModel)]="nom"
+              name="nom"
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Votre adresse email"
+            required
+          />
+        </div>
+
+        <div class="champ">
+          <label for="phone">Téléphone</label>
+          <input
+            id="phone"
+            type="tel"
+            [(ngModel)]="phone"
+            name="phone"
+            placeholder="Votre numéro"
+          />
+        </div>
+
+        <div class="champ-row">
+          <div class="champ">
+            <label for="password">Mot de passe</label>
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Créer un mot de passe"
+              required
+            />
+          </div>
+
+          <div class="champ">
+            <label for="confirmation">Confirmation</label>
+            <input
+              id="confirmation"
+              type="password"
+              [(ngModel)]="confirmation"
+              name="confirmation"
+              placeholder="Confirmer"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-register" [disabled]="chargement">
+          {{ chargement ? 'Création en cours...' : 'Créer un compte' }}
+        </button>
+      </form>
+
+      <p class="lien-login">
+        Tu as déjà un compte ?
+        <a routerLink="/login">Se connecter</a>
+      </p>
+    </div>
+  </div>
+  </div>
+</div>
+<footer class="auth-footer">
+  © 2026 <strong>SAMA MARKET</strong> — Marketplace locale du Sénégal
+</footer>

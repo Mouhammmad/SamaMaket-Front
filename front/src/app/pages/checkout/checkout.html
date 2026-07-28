@@ -1,0 +1,140 @@
+<div class="container py-5">
+
+    <div class="checkout-steps">
+
+        <div class="step done">
+            <div class="circle">✓</div>
+            <span>Panier</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step active">
+            <div class="circle">2</div>
+            <span>Livraison</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+            <div class="circle">3</div>
+            <span>Paiement</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+            <div class="circle">4</div>
+            <span>Confirmation</span>
+        </div>
+
+    </div>
+
+    <div class="checkout-card">
+
+        <h2>
+
+            Informations de livraison
+
+        </h2>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <label for="prenom">Prénom</label>
+
+                <input
+                    id="prenom"
+                    [(ngModel)]="prenom"
+                    class="form-control"
+                    placeholder="Entrez votre prénom">
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label for="nom">Nom</label>
+
+                <input
+                    id="nom"
+                    [(ngModel)]="nom"
+                    class="form-control"
+                    placeholder="Entrez votre nom">
+
+            </div>
+
+            <div class="col-md-6 mt-3">
+
+                <label for="telephone">Téléphone</label>
+
+                <input
+                    id="telephone"
+                    [(ngModel)]="telephone"
+                    class="form-control"
+                    placeholder="Entrez votre numéro de téléphone">
+
+            </div>
+
+            <div class="col-md-6 mt-3">
+
+                <label for="email">Email</label>
+
+                <input
+                    id="email"
+                    [(ngModel)]="email"
+                    class="form-control"
+                    type="email"
+                    placeholder="Entrez votre email">
+
+            </div>
+
+            <div class="col-12 mt-3">
+
+                <label for="adresse">Adresse</label>
+
+                <input
+                    id="adresse"
+                    [(ngModel)]="adresse"
+                    class="form-control"
+                    placeholder="Entrez votre adresse">
+
+            </div>
+
+            <div class="col-md-6 mt-3">
+
+                <label for="ville">Ville</label>
+
+                <input
+                    id="ville"
+                    [(ngModel)]="ville"
+                    class="form-control"
+                    placeholder="Entrez votre ville">
+
+            </div>
+
+            <div class="col-md-6 mt-3">
+
+                <label for="region">Région</label>
+
+                <input
+                    id="region"
+                    [(ngModel)]="region"
+                    class="form-control"
+                    placeholder="Entrez votre région">
+
+            </div>
+
+        </div>
+
+        <button
+            class="btn btn-primary mt-4"
+            (click)="continuer()">
+
+            Continuer vers le paiement →
+
+        </button>
+
+    </div>
+
+</div>

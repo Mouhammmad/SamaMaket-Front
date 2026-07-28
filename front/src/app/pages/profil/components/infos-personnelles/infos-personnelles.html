@@ -1,0 +1,112 @@
+<section class="card-section">
+  <h5>Informations personnelles</h5>
+  <p>Nom, prénom, email et téléphone du compte utilisateur.</p>
+</section>
+<div class="profile-card">
+
+    <div class="profile-header">
+
+        <div class="avatar">
+
+            IA
+
+        </div>
+
+        <div>
+
+            <h2>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h2>
+
+            <p>{{ utilisateur.email }}</p>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-prenom">Prénom</label>
+
+            <input
+                id="utilisateur-prenom"
+                class="form-control"
+                [(ngModel)]="utilisateur.prenom"
+                placeholder="Entrez votre prénom">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-nom">Nom</label>
+
+            <input
+                id="utilisateur-nom"
+                class="form-control"
+                [(ngModel)]="utilisateur.nom"
+                placeholder="Entrez votre nom">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-email">Email</label>
+
+            <input
+                id="utilisateur-email"
+                type="email"
+                class="form-control"
+                [(ngModel)]="utilisateur.email"
+                placeholder="Entrez votre email">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-telephone">Téléphone</label>
+
+            <input
+                id="utilisateur-telephone"
+                class="form-control"
+                [(ngModel)]="utilisateur.telephone"
+                placeholder="Entrez votre téléphone">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-ville">Ville</label>
+
+            <input
+                id="utilisateur-ville"
+                class="form-control"
+                [(ngModel)]="utilisateur.ville"
+                placeholder="Entrez votre ville">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <label for="utilisateur-adresse">Adresse</label>
+
+            <input
+                id="utilisateur-adresse"
+                class="form-control"
+                [(ngModel)]="utilisateur.adresse"
+                placeholder="Entrez votre adresse">
+
+        </div>
+
+    </div>
+
+    <button
+        class="btn btn-primary"
+        (click)="enregistrer()">
+
+        Enregistrer les modifications
+
+    </button>
+
+</div>
