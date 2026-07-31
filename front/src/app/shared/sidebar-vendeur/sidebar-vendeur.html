@@ -4,7 +4,7 @@
 
         <h2>SAMA <span>MARKET</span></h2>
 
-        <small>Espace vendeur</small>
+        <small>{{ displayName }}</small>
 
     </div>
 
@@ -16,7 +16,7 @@
 
         <div>
 
-            <h4>Boutique Fatou</h4>
+            <h4>{{ displayName }}</h4>
 
             <p>Boutique active</p>
 
@@ -62,6 +62,10 @@
     Statistiques
 
 </a>
+<a routerLink="/vendeur/promotions">
+    <i class="bi bi-percent"></i>
+    Promotions
+</a>
 
 </nav>
 
@@ -69,22 +73,26 @@
 
 <nav>
 
-    <a>
+    <a routerLink="/vendeur/boutiques"
+       routerLinkActive="active">
         <i class="bi bi-shop"></i>
         Ma boutique
     </a>
 
-    <a>
+    <a routerLink="/vendeur/livraisons"
+       routerLinkActive="active">
         <i class="bi bi-truck"></i>
         Livraisons
     </a>
 
-    <a>
+    <a routerLink="/vendeur/avis"
+       routerLinkActive="active">
         <i class="bi bi-star"></i>
         Avis clients
     </a>
 
-    <a>
+    <a routerLink="/vendeur/paiements"
+       routerLinkActive="active">
         <i class="bi bi-credit-card"></i>
         Paiements
     </a>
@@ -95,7 +103,8 @@
 
 <nav>
 
-    <a>
+    <a routerLink="/vendeur/parametre"
+       routerLinkActive="active">
         <i class="bi bi-gear"></i>
         Paramètres
     </a>

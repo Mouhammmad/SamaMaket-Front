@@ -64,6 +64,50 @@ formControlName="description">
     multiple
     (change)="onFilesSelected($event)">
   </div>
+ <div
+    class="preview-container"
+    *ngIf="imagePreviews.length">
+
+    <div
+        class="preview"
+        *ngFor="let image of imagePreviews; let i = index">
+
+        <img
+            [src]="image">
+
+        <span
+            class="main-badge"
+            *ngIf="i === mainImageIndex">
+
+            ⭐ Principale
+
+        </span>
+
+        <div class="preview-actions">
+
+            <button
+                type="button"
+                class="primary-btn"
+                (click)="setMainImage(i)">
+
+                Définir
+
+            </button>
+
+            <button
+                type="button"
+                class="delete-image"
+                (click)="supprimerImage(i)">
+
+                ✕
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
   <div class="actions">
     <button

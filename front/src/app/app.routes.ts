@@ -25,6 +25,7 @@ import { Paiement as PaiementVendeur } from './vendeur/paiement/paiement';
 import { Parametre } from './vendeur/parametre/parametre';
 import { vendeurGuard } from './core/guards/vendeur-guard';
 import { authGuard } from './core/guards/auth-guard';
+import { Promotions } from './vendeur/promotions/promotions';
 export const routes: Routes = [
 
   {
@@ -106,6 +107,10 @@ export const routes: Routes = [
     {
       path: 'statistiques',
       component: Statistiques
+    },
+    {
+      path: 'promotions',
+      component: Promotions
     },
 
     {

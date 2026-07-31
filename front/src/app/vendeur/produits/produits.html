@@ -1,24 +1,33 @@
 <div class="produits-page">
 
     <app-produit-header
-        (addProduct)="ouvrir()">
+        [total]="produits.length"
+        (ajouter)="ouvrirFormulaire()">
     </app-produit-header>
 
-    <app-produit-filter></app-produit-filter>
+    <app-produit-filter
+        [categories]="categories"
+        (recherche)="filtrerRecherche($event)"
+        (categorie)="filtrerCategorie($event)"
+        (statut)="filtrerStatut($event)">
+    </app-produit-filter>
 
-   <ng-container *ngIf="loading; else produitTable">
-    <p>Chargement des produits...</p>
-  </ng-container>
-  <ng-template #produitTable>
-    <app-produit-table [produits]="produits"></app-produit-table>
-  </ng-template>
-    <app-modal
-        title="Ajouter un produit"
-        [isOpen]="ouvrirModal"
-        (close)="fermer()">
+    <app-produit-table
+      [produits]="produitsFiltres"
+      (modifier)="modifierProduit($event)"
+      (supprimer)="supprimerProduit($event)"
+      (dupliquer)="dupliquerProduit($event)"
+      (apercu)="ouvrirPreview($event)"
+      (augmenter)="augmenterStock($event)"
+      (diminuer)="diminuerStock($event)"
+      (statut)="changerStatut($event)">
+    </app-produit-table>
 
-        <app-produit-from (produitAjoute)="onProduitAjoute()"></app-produit-from>
-
-    </app-modal>
+    <app-produit-from
+      *ngIf="afficherFormulaire"
+      [produit]="produitSelectionne"
+      (fermer)="fermerFormulaire()"
+      (produitAjoute)="chargerProduits()">
+    </app-produit-from>
 
 </div>

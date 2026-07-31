@@ -1,0 +1,196 @@
+<form
+    [formGroup]="form"
+    (ngSubmit)="enregistrerPromotion()">
+
+    <div class="field">
+
+        <label>Code promotion</label>
+
+        <input
+            formControlName="code">
+
+    </div>
+
+    <div class="field">
+
+        <label>Type de remise</label>
+
+        <select
+            formControlName="type_remise">
+
+            <option value="pourcentage">
+
+                Pourcentage
+
+            </option>
+
+            <option value="montant_fixe">
+
+                Montant fixe
+
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="field">
+
+        <label>Valeur</label>
+
+        <input
+            type="number"
+            formControlName="taux_remise">
+
+    </div>
+    <div class="grid">
+
+    <div class="field">
+
+        <label>Date début</label>
+
+        <input
+            type="date"
+            formControlName="date_debut">
+
+    </div>
+
+    <div class="field">
+
+        <label>Date fin</label>
+
+        <input
+            type="date"
+            formControlName="date_fin">
+
+    </div>
+
+</div>
+<div class="field">
+
+    <label>Rechercher un produit</label>
+
+    <input
+        type="text"
+        placeholder="Nom du produit..."
+        (input)="rechercherProduit($event)">
+
+</div>
+<div class="products-toolbar">
+
+    <button
+        type="button"
+        class="select-all"
+        (click)="toutSelectionner()">
+
+        Tout sélectionner
+
+    </button>
+
+    <button
+        type="button"
+        class="select-all"
+        (click)="toutDeselectionner()">
+
+        Tout désélectionner
+
+    </button>
+
+    <span>
+
+        {{ form.value.produits_ids.length }}
+
+        produit(s) sélectionné(s)
+
+    </span>
+
+</div>
+<div class="products-grid">
+
+    <div
+        class="product-card"
+        *ngFor="let produit of produitsFiltres">
+
+        <label>
+
+            <input
+                type="checkbox"
+                [checked]="estSelectionne(produit.id)"
+                (change)="toggleProduit($event, produit.id)">
+
+            <img
+                [src]="produit.image_url || 'assets/images/default-product.png'">
+
+            <div>
+
+                <strong>
+
+                    {{ produit.nom }}
+
+                </strong>
+
+                <div class="prices">
+
+    <div class="old-price">
+
+        {{ produit.prix }} FCFA
+
+    </div>
+
+    <div class="new-price">
+
+        {{ calculerPrixPromo(produit) | number:'1.0-0' }} FCFA
+
+    </div>
+
+</div>
+<div class="discount-badge">
+
+    -{{ form.value.taux_remise }}
+
+    {{ form.value.type_remise === 'pourcentage' ? '%' : ' FCFA' }}
+
+</div>
+
+            </div>
+
+        </label>
+
+    </div>
+
+</div>
+<div class="field">
+
+    <label>
+
+        <input
+            type="checkbox"
+            formControlName="est_active">
+
+        Promotion active
+
+    </label>
+
+</div>
+<div class="actions">
+
+    <button
+        type="button"
+        class="cancel"
+        (click)="fermer.emit()">
+
+        Annuler
+
+    </button>
+
+    <button
+        type="button"
+        class="save"
+        (click)="enregistrerPromotion()">
+
+        {{ promotion ? 'Modifier' : 'Créer' }}
+
+    </button>
+
+</div>
+</form>

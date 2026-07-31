@@ -1,0 +1,42 @@
+<div class="filter-bar">
+
+    <input
+        type="text"
+        placeholder="Rechercher une promotion..."
+        (input)="rechercheChange($event)">
+
+    <select
+        (change)="statutChange($event)">
+
+        <option value="">
+            Tous les statuts
+        </option>
+
+        <option value="active">
+            Active
+        </option>
+
+        <option value="inactive">
+            Inactive
+        </option>
+
+    </select>
+
+    <select
+        (change)="typeChange($event)">
+
+        <option value="">
+            Tous les types
+        </option>
+
+        <option value="pourcentage">
+            Pourcentage
+        </option>
+
+        <option value="montant_fixe">
+            Montant fixe
+        </option>
+
+    </select>
+
+</div>

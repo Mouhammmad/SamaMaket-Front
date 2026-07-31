@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class VendeurProduits {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/produits/vendeur/produits/';
+  private apiUrl = '/api/produits/vendeur/produits/';
 
   constructor(private http: HttpClient) {}
 

@@ -1,0 +1,37 @@
+<div class="loading-state" *ngIf="isLoading; else content">
+    <p>Chargement des produits...</p>
+</div>
+
+<ng-template #content>
+<div class="products" *ngIf="produits.length; else emptyState">
+
+    <div
+        class="product"
+        *ngFor="let produit of produits">
+
+        <img
+            [src]="produit.image_url || 'assets/images/default-shop.svg'"
+            [alt]="produit.nom">
+
+        <h4>
+
+            {{ produit.nom }}
+
+        </h4>
+
+        <strong>
+
+            {{ produit.prix }} FCFA
+
+        </strong>
+
+    </div>
+
+</div>
+
+<ng-template #emptyState>
+    <div class="empty-state">
+        <p>Aucun produit n’a encore été ajouté à cette boutique.</p>
+    </div>
+</ng-template>
+</ng-template>

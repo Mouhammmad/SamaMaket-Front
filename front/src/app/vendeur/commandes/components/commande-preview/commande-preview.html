@@ -1,0 +1,208 @@
+<div
+class="overlay"
+*ngIf="commande">
+
+<div class="preview-card">
+
+<button
+class="close"
+(click)="fermer.emit()">
+
+✕
+
+</button>
+
+<h2>
+
+Commande #{{ commande.numero }}
+
+</h2>
+
+<span
+class="badge"
+[ngClass]="commande.statut">
+
+{{ commande.statut }}
+
+</span>
+
+<hr>
+
+<h3>
+
+👤 Client
+
+</h3>
+
+<div class="section">
+
+<p><strong>Nom :</strong> {{ commande.client }}</p>
+
+<p><strong>Email :</strong> {{ commande.email }}</p>
+
+<p><strong>Téléphone :</strong> {{ commande.telephone }}</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+📦 Produits
+
+</h3>
+
+<div
+class="product"
+*ngFor="let produit of commande.produits">
+
+<img
+[src]="produit.image">
+
+<div>
+
+<strong>
+
+{{ produit.nom }}
+
+</strong>
+
+<p>
+
+Qté : {{ produit.quantite }}
+
+</p>
+
+<p>
+
+{{ produit.prix }} FCFA
+
+</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<h3>
+
+🚚 Livraison
+
+</h3>
+
+<div class="section">
+
+<p>{{ commande.adresse }}</p>
+
+<p>{{ commande.ville }}</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+💳 Paiement
+
+</h3>
+
+<div class="section">
+
+<p>
+
+{{ commande.mode_paiement }}
+
+</p>
+
+<p>
+
+{{ commande.paiement }}
+
+</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+Résumé
+
+</h3>
+
+<div class="resume">
+
+<div>
+
+Sous-total
+
+<span>
+
+{{ commande.sous_total }} FCFA
+
+</span>
+
+</div>
+
+<div>
+
+Livraison
+
+<span>
+
+{{ commande.livraison }} FCFA
+
+</span>
+
+</div>
+
+<div>
+
+Réduction
+
+<span>
+
+{{ commande.reduction }} FCFA
+
+</span>
+
+</div>
+
+<div class="total">
+
+TOTAL
+
+<span>
+
+{{ commande.total }} FCFA
+
+</span>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<button
+class="status"
+(click)="modifierStatut.emit(commande)">
+
+Changer le statut
+
+</button>
+
+<button
+class="close-btn"
+(click)="fermer.emit()">
+
+Fermer
+
+</button>
+
+</div>
+
+</div>
+
+</div>

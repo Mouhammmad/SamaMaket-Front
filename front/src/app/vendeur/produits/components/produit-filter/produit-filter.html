@@ -1,18 +1,31 @@
-<div class="filter">
+<div class="filter-bar">
 
     <input
         type="text"
-        placeholder="Rechercher un produit...">
+        placeholder="Rechercher un produit..."
+        (input)="rechercheChange($event)">
 
-    <select>
+    <select
+        (change)="categorieChange($event)">
 
-        <option>Toutes les catégories</option>
+        <option value="">Toutes les catégories</option>
 
-        <option>Électronique</option>
+        <option
+            *ngFor="let categorie of categories"
+            [value]="categorie.id">
 
-        <option>Mode</option>
+            {{ categorie.nom }}
 
-        <option>Beauté</option>
+        </option>
+
+    </select>
+
+    <select
+        (change)="statutChange($event)">
+
+        <option value="">Tous les statuts</option>
+        <option value="actif">Actif</option>
+        <option value="inactif">Inactif</option>
 
     </select>
 

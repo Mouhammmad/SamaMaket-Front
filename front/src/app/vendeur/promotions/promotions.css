@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.promo-summary-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.promo-summary-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.promo-summary-row > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .promo-summary-row {
+    grid-template-columns: 1fr;
+  }
+}

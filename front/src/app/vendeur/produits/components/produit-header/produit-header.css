@@ -1,25 +1,35 @@
 .header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
 
-.header h1{
-    margin:0;
-    color:#102a43;
-}
+display:flex;
 
-.header p{
-    margin-top:5px;
-    color:#777;
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
 }
 
 button{
-    background:#ff9d1f;
-    color:white;
-    border:none;
-    padding:14px 22px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:600;
+
+background:#1f4f95;
+
+color:white;
+
+border:none;
+
+padding:12px 22px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
+
+button:hover{
+
+background:#173d75;
+
 }

@@ -2,15 +2,18 @@
 
     <div>
 
-        <h1>Mes produits</h1>
+        <h2>Mes produits</h2>
 
-        <p>Gérez tous vos produits.</p>
+        <p>{{ total }} produit(s)</p>
 
     </div>
 
-    <button (click)="ouvrir()">
-    <i class="bi bi-plus-circle"></i>
-    Ajouter un produit
-</button>
+    <button
+        type="button"
+        (click)="ajouter.emit()">
+
+        + Nouveau produit
+
+    </button>
 
 </div>

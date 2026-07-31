@@ -1,8 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  NgZone,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { VendeurProduits } from '../../../../core/services/vendeur-produits';
-import { CategorieService } from '../../../../core/services/categorie';
-import { Categorie } from '../../../../core/models/categorie';
 
 import {
   FormBuilder,
@@ -10,6 +17,10 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+
+import { VendeurProduits } from '../../../../core/services/vendeur-produits';
+import { CategorieService } from '../../../../core/services/categorie';
+import { Categorie } from '../../../../core/models/categorie';
 
 @Component({
   selector: 'app-produit-from',
@@ -21,42 +32,98 @@ import {
   templateUrl: './produit-from.html',
   styleUrl: './produit-from.css'
 })
-export class ProduitFrom {
+export class ProduitFrom implements OnChanges {
+
+  @Input() produit: any = null;
+
   @Output() produitAjoute = new EventEmitter<void>();
 
+  @Output() fermer = new EventEmitter<void>();
+
   produitForm: FormGroup;
+
   categories: Categorie[] = [];
+
   selectedFiles: File[] = [];
+  imagePreviews: string[] = [];
+  mainImageIndex = 0;
 
   constructor(
     private fb: FormBuilder,
     private produitService: VendeurProduits,
-    private categorieService: CategorieService
+    private categorieService: CategorieService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
+
     this.produitForm = this.fb.group({
+
       nom: ['', Validators.required],
+
       categorie: ['', Validators.required],
+
       prix: [0, Validators.required],
+
       stock: [0, Validators.required],
+
       description: ['', Validators.required],
-      est_actif: [true],
-      images: [null]
+
+      est_actif: [true]
+
     });
 
     this.loadCategories();
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (changes['produit'] && this.produit) {
+
+      this.produitForm.patchValue({
+
+        nom: this.produit.nom,
+
+        categorie: this.produit.categorie_id ? this.produit.categorie_id : this.findCategoryIdByName(this.produit.categorie),
+
+        prix: this.produit.prix,
+
+        stock: this.produit.quantite_stock,
+
+        description: this.produit.description,
+
+        est_actif: this.produit.est_actif
+
+      });
+
+    }
+
+  }
+
+    private findCategoryIdByName(nom: string): any {
+      if (!nom) return '';
+    const found = this.categories.find(c => c.nom === nom);
+      return found ? (found as any).id : '';
   }
 
   loadCategories(): void {
-    console.log('ProduitFrom.loadCategories()');
+
     this.categorieService.getCategories().subscribe({
+
       next: (categories) => {
-        console.log('ProduitFrom categories loaded', categories);
+
         this.categories = categories;
+
       },
+
       error: (error) => {
-        console.error('Impossible de charger les catégories', error);
+
+        console.error(error);
+
       }
+
     });
+
   }
 
   onFilesSelected(event: Event): void {
@@ -64,7 +131,71 @@ export class ProduitFrom {
     if (!input.files) {
       return;
     }
+
     this.selectedFiles = Array.from(input.files);
+    this.imagePreviews = [];
+    this.mainImageIndex = 0;
+
+    const loads = this.selectedFiles.map(file => this.readFileAsDataURL(file));
+    Promise.all(loads).then((previews) => {
+      this.ngZone.run(() => {
+        this.imagePreviews = previews;
+        this.cdr.detectChanges();
+      });
+    }).catch((error) => {
+      console.error('Erreur lecture images :', error);
+    });
+  }
+
+  private readFileAsDataURL(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          resolve(result);
+        } else {
+          reject(new Error('Invalid file data'));
+        }
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  setMainImage(index: number): void {
+    if (index === this.mainImageIndex) {
+      return;
+    }
+
+    const selectedFile = this.selectedFiles[index];
+    this.selectedFiles[index] = this.selectedFiles[this.mainImageIndex];
+    this.selectedFiles[this.mainImageIndex] = selectedFile;
+
+    const preview = this.imagePreviews[index];
+    this.imagePreviews[index] = this.imagePreviews[this.mainImageIndex];
+    this.imagePreviews[this.mainImageIndex] = preview;
+
+    this.mainImageIndex = 0;
+  }
+
+  supprimerImage(index: number): void {
+    this.selectedFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+
+    if (this.selectedFiles.length === 0) {
+      this.mainImageIndex = 0;
+      return;
+    }
+
+    if (index === this.mainImageIndex) {
+      this.mainImageIndex = 0;
+      return;
+    }
+
+    if (index < this.mainImageIndex) {
+      this.mainImageIndex -= 1;
+    }
   }
 
   enregistrer(): void {
@@ -80,22 +211,45 @@ export class ProduitFrom {
     formData.append('quantite_stock', this.produitForm.value.stock);
     formData.append('description', this.produitForm.value.description);
     formData.append('est_actif', this.produitForm.value.est_actif);
-    
+
     if (this.selectedFiles.length > 0) {
-      formData.append('image', this.selectedFiles[0]);
+      formData.append('image', this.selectedFiles[this.mainImageIndex]);
     }
 
-    this.produitService.ajouterProduit(formData).subscribe({
-      next: (response: any) => {
-        console.log('Produit enregistré :', response);
-        this.produitForm.reset({ est_actif: true });
-        this.selectedFiles = [];
-        this.produitAjoute.emit();
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
+    this.selectedFiles.forEach((file) => {
+      formData.append('images', file);
     });
-  }
 
+    const requete = this.produit
+      ? this.produitService.modifierProduit(this.produit.id, formData)
+      : this.produitService.ajouterProduit(formData);
+
+    requete.subscribe({
+
+      next: () => {
+
+        this.produitForm.reset({
+
+          est_actif: true
+
+        });
+
+        this.selectedFiles = [];
+
+        this.produitAjoute.emit();
+
+        this.fermer.emit();
+
+      },
+
+      error: (error) => {
+
+        console.error(error);
+
+      }
+
+    });
+
+  }
+  
 }

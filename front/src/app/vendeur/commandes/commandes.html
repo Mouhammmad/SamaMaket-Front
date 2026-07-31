@@ -1,1 +1,32 @@
-<p>commandes works!</p>
+<app-commande-header
+
+    (actualiser)="chargerCommandes()">
+
+</app-commande-header>
+<app-commande-filter
+
+    (filtreChange)="appliquerFiltres($event)">
+
+</app-commande-filter>
+<app-commande-table
+
+    [commandes]="commandes"
+
+    (apercu)="ouvrirApercu($event)"
+
+    (statut)="changerStatut($event)"
+
+    (facture)="ouvrirFacture($event)">
+
+</app-commande-table>
+<app-commande-status
+
+*ngIf="afficherStatut"
+
+[commande]="commandeSelectionnee"
+
+(fermer)="fermerStatut()"
+
+(enregistrer)="enregistrerStatut($event)">
+
+</app-commande-status>

@@ -1,1 +1,139 @@
-<p>commande-table works!</p>
+<div class="table-container" *ngIf="commandes.length; else vide">
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>N°</th>
+
+        <th>Client</th>
+
+        <th>Produits</th>
+
+        <th>Total</th>
+
+        <th>Paiement</th>
+
+        <th>Statut</th>
+
+        <th>Date</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let commande of commandes">
+
+        <td>
+
+          <strong>#{{ commande.numero }}</strong>
+
+        </td>
+
+        <td>
+
+          {{ commande.client }}
+
+        </td>
+
+        <td>
+
+          {{ commande.nombre_produits }}
+
+        </td>
+
+        <td>
+
+          {{ commande.total }} FCFA
+
+        </td>
+
+        <td>
+
+          {{ commande.mode_paiement }}
+
+        </td>
+
+        <td>
+
+          <span
+            class="badge"
+            [ngClass]="commande.statut">
+
+            {{ commande.statut }}
+
+          </span>
+
+        </td>
+
+        <td>
+
+          {{ commande.date }}
+
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            <button
+              class="view"
+              (click)="apercu.emit(commande)">
+
+              👁
+
+            </button>
+
+            <button
+              class="status"
+              (click)="statut.emit(commande)">
+
+              📦
+
+            </button>
+
+            <button
+              class="facture"
+              (click)="facture.emit(commande)">
+
+              🧾
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<ng-template #vide>
+
+<div class="empty">
+
+    <h3>
+
+        Aucune commande
+
+    </h3>
+
+    <p>
+
+        Les nouvelles commandes apparaîtront ici.
+
+    </p>
+
+</div>
+
+</ng-template>

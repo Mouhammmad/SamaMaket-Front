@@ -41,4 +41,11 @@
 
 .page-content{
     padding:30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.page-content > * {
+    display: block;
+    width: 100%;
 }

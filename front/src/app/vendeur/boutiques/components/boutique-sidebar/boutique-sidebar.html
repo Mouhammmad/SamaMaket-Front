@@ -1,0 +1,47 @@
+<div class="card">
+
+    <h3>Informations</h3>
+
+    <div class="item">
+
+        📍 {{ boutique?.ville || 'Ville non renseignée' }}
+
+    </div>
+
+    <div class="item">
+
+        ⭐ {{ boutique?.note || 0 }}/5
+
+    </div>
+
+    <div class="item">
+
+        📦 {{ boutique?.total_produits || 0 }} produits
+
+    </div>
+
+    <div class="item">
+
+        ❤️ {{ boutique?.followers || 0 }} abonnés
+
+    </div>
+
+    <div class="item">
+
+        🛒 {{ boutique?.ventes || 0 }} ventes
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>Description</h3>
+
+    <p>
+
+        {{ boutique?.description || 'Aucune description.' }}
+
+    </p>
+
+</div>

@@ -1,46 +1,167 @@
-<div class="table-card">
+<div class="table-container" *ngIf="produits.length; else vide">
 
-  <table>
+    <table>
 
-    <tr>
-      <th>Image</th>
-      <th>Nom</th>
-      <th>Prix</th>
-      <th>Stock</th>
-      <th>Statut</th>
-      <th>Actions</th>
-    </tr>
+        <thead>
 
-    <tr *ngFor="let produit of produits">
-      <td>
-    <img
-        *ngIf="produit.image_url"
-        [src]="produit.image_url"
-        [alt]="produit.nom"
-        class="product-image">
+            <tr>
 
-    <span *ngIf="!produit.image_url">
-        📦
-    </span>
+                <th>Image</th>
+                <th>Produit</th>
+                <th>Catégorie</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Statut</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let produit of produits">
+
+                <td>
+
+                    <img
+                        class="photo"
+                        [src]="produit.image_url || 'assets/images/default-product.png'"
+                        alt="Produit">
+
+                </td>
+
+                <td>
+
+                    <div class="product">
+
+                        <strong>{{ produit.nom }}</strong>
+
+                        <small>
+                            #{{ produit.id }}
+                        </small>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    {{ produit.categorie }}
+
+                </td>
+
+                <td>
+
+                    <strong>{{ produit.prix }}</strong> FCFA
+
+                </td>
+
+                <td>
+
+                    <span
+                        class="stock"
+                        [class.stock-zero]="produit.quantite_stock <= 0">
+
+                        {{ produit.quantite_stock }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+    <label class="switch">
+
+        <input
+            type="checkbox"
+            [checked]="produit.est_actif"
+            (change)="changerStatut(produit)">
+
+        <span class="slider"></span>
+
+    </label>
+
 </td>
-      <td>{{ produit.nom }}</td>
-      <td>{{ produit.prix }} FCFA</td>
-      <td>{{ produit.quantite_stock }}</td>
-      <td>
-        <span [class.active]="produit.est_actif" [class.inactive]="!produit.est_actif">
-          {{ produit.est_actif ? 'Actif' : 'Inactif' }}
-        </span>
-      </td>
-      <td>
-        <button class="edit">Modifier</button>
-        <button class="delete">Supprimer</button>
-      </td>
-    </tr>
 
-    <tr *ngIf="produits.length === 0">
-      <td colspan="6" class="empty-state">Aucun produit disponible.</td>
-    </tr>
+                <td>
 
-  </table>
+    <div class="action-menu">
 
-</div>
+        <button
+            class="menu-btn"
+            (click)="toggleMenu(produit.id)">
+
+            <i class="bi bi-three-dots-vertical"></i>
+
+        </button>
+
+        <div
+            class="menu"
+            *ngIf="menuOuvert === produit.id">
+
+            <button (click)="modifier.emit(produit)">
+
+                <i class="bi bi-pencil"></i>
+
+                Modifier
+
+            </button>
+
+            <button (click)="openPreviewLocal(produit)">
+
+    <i class="bi bi-eye"></i>
+
+    Aperçu
+
+</button>
+
+            <button (click)="dupliquer.emit(produit)">
+
+                <i class="bi bi-copy"></i>
+
+                Dupliquer
+
+            </button>
+
+            <button
+                class="danger"
+                (click)="supprimer.emit(produit)">
+
+                <i class="bi bi-trash"></i>
+
+                Supprimer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+    <ng-template #vide>
+
+    <div class="empty-state">
+
+        <i class="bi bi-box-seam"></i>
+
+        <h3>Aucun produit</h3>
+
+        <p>
+
+            Vous n'avez encore ajouté aucun produit.
+
+        </p>
+
+    </div>
+
+</ng-template>

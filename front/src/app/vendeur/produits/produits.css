@@ -1,6 +1,5 @@
 .produits-page{
-    display:flex;
-    flex-direction:column;
-    gap:25px;
-    padding:25px;
+
+padding:30px;
+
 }

@@ -1,0 +1,128 @@
+<div class="header">
+
+    <section class="hero-card">
+
+        <div class="banner-area">
+
+            <img
+                [src]="boutique?.banniere_url || 'assets/images/default-banner.svg'"
+                alt="Bannière">
+
+            <label class="upload-btn banner-btn">
+
+                Changer la bannière
+
+                <input
+                    type="file"
+                    hidden
+                    (change)="onBanniereSelected($event)">
+
+            </label>
+
+        </div>
+
+        <div class="overlay">
+
+            <div class="left">
+
+                <img
+                    class="logo"
+                    [src]="boutique?.logo_url || 'assets/images/default-shop.svg'"
+                    alt="Logo">
+
+                <div class="infos">
+
+                    <h1>
+
+                        {{ boutique?.nom || 'Ma Boutique' }}
+
+                    </h1>
+
+                    <p>
+
+                        {{ boutique?.ville || 'Ville non renseignée' }}
+
+                    </p>
+
+                    <div class="stats">
+
+                        <div>
+
+                            <strong>
+
+                                {{ boutique?.total_produits || 0 }}
+
+                            </strong>
+
+                            <span>Produits</span>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+
+                                {{ boutique?.note || 0 }}/5
+
+                            </strong>
+
+                            <span>Note</span>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+
+                                {{ boutique?.followers || 0 }}
+
+                            </strong>
+
+                            <span>Abonnés</span>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+
+                                {{ boutique?.ventes || 0 }}
+
+                            </strong>
+
+                            <span>Ventes</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <label class="upload-btn">
+
+                    Changer le logo
+
+                    <input
+                        type="file"
+                        hidden
+                        (change)="onLogoSelected($event)">
+
+                </label>
+
+                <button>
+
+                    Modifier
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>

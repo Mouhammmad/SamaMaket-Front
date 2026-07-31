@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BoutiqueService {
+export class Boutique {
 
-  private api = 'http://127.0.0.1:8000/api/boutiques/';
+  private api = '/api/boutiques/';
 
   constructor(private http: HttpClient) {}
 
@@ -22,4 +22,5 @@ export class BoutiqueService {
   modifierBoutique(id: number, data: FormData): Observable<any> {
     return this.http.put(this.api + id + '/', data);
   }
+
 }

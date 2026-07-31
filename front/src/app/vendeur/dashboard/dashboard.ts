@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { AuthService } from '../../core/services/auth';
 import { StatsCards } from './components/stats-cards/stats-cards';
 import { SalesChart } from './components/sales-chart/sales-chart';
 import { RecentOrders } from './components/recent-orders/recent-orders';
@@ -21,4 +22,12 @@ import { RecentActivity } from './components/recent-activity/recent-activity';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class Dashboard {}
+export class Dashboard implements OnInit {
+  displayName = 'Vendeur';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.displayName = this.authService.getDisplayName();
+  }
+}
