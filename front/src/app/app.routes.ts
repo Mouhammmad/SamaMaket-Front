@@ -23,6 +23,8 @@ import { Livraisons } from './vendeur/livraisons/livraisons';
 import { Avis } from './vendeur/avis/avis';
 import { Paiement as PaiementVendeur } from './vendeur/paiement/paiement';
 import { Parametre } from './vendeur/parametre/parametre';
+import { vendeurGuard } from './core/guards/vendeur-guard';
+import { authGuard } from './core/guards/auth-guard';
 export const routes: Routes = [
 
   {
@@ -70,12 +72,14 @@ export const routes: Routes = [
 
   {
       path: 'client',
-    component: ClientLayout
+    component: ClientLayout,
+    canActivate: [authGuard]
   },
 
   {
   path: 'vendeur',
   component: VendeurLayout,
+  canActivate: [vendeurGuard],
   children: [
 
     {
@@ -105,8 +109,14 @@ export const routes: Routes = [
     },
 
     {
-      path: 'boutique',
+      path: 'boutiques',
       component: Boutiques
+    },
+
+    {
+      path: 'boutique',
+      redirectTo: 'boutiques',
+      pathMatch: 'full'
     },
 
     {
