@@ -1,0 +1,110 @@
+<div class="breadcrumb">
+
+    Accueil
+
+    <span>/</span>
+
+    <strong>
+
+        Produits
+
+    </strong>
+
+</div>
+
+<!-- Barre de recherche -->
+
+<div class="search-bar">
+
+    <input
+        type="text"
+        [(ngModel)]="texte"
+        (keyup)="chercher()"
+        placeholder="Rechercher un produit, une catégorie ou une boutique...">
+
+</div>
+
+<div class="header">
+
+    <div class="resultats">
+
+        {{ total }}
+
+        produits trouvés
+
+    </div>
+
+    <div class="tri">
+
+        <label>
+
+            Trier :
+
+        </label>
+
+        <select
+            [(ngModel)]="tri"
+            (change)="onTriChange()">
+
+            <option value="pertinence">
+
+                Pertinence
+
+            </option>
+
+            <option value="prix">
+
+                Prix croissant
+
+            </option>
+
+            <option value="-prix">
+
+                Prix décroissant
+
+            </option>
+
+            <option value="-date_creation">
+
+                Nouveautés
+
+            </option>
+
+            <option value="-note_moyenne">
+
+                Mieux notés
+
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<div
+    class="active-filters"
+    *ngIf="filtres.length">
+
+    <span>
+
+        Filtres actifs :
+
+    </span>
+
+    <div
+        class="tag"
+        *ngFor="let filtre of filtres">
+
+        {{ filtre.label }}
+
+        <button
+            (click)="supprimerFiltre.emit(filtre.key)">
+
+            ✕
+
+        </button>
+
+    </div>
+
+</div>

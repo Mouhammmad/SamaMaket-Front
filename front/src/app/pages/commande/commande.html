@@ -1,0 +1,36 @@
+<div class="commandes-page">
+
+    <app-commande-header
+        (actualiser)="chargerCommandes()">
+    </app-commande-header>
+
+    <app-commande-filter
+        (filtrer)="appliquerFiltres($event)">
+    </app-commande-filter>
+
+    <app-commande-dashboard
+        [stats]="stats">
+    </app-commande-dashboard>
+    <app-commande-empty
+        *ngIf="!commandes.length"
+        (decouvrir)="continuerAchats()">
+    </app-commande-empty>
+
+
+    <app-commande-card
+        *ngFor="let commande of commandes"
+        [commande]="commande"
+        (voir)="ouvrirApercu($event)">
+    </app-commande-card>
+
+    <app-commande-preview
+
+    *ngIf="commandeSelectionnee"
+
+    [commande]="commandeSelectionnee"
+
+    (fermer)="fermerApercu()">
+
+</app-commande-preview>
+
+</div>

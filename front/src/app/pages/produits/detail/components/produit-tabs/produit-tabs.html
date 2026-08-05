@@ -1,0 +1,103 @@
+<div class="tabs-card">
+
+    <div class="tabs-header">
+
+        <button
+            [class.active]="onglet==='description'"
+            (click)="ouvrir('description')">
+
+            Description
+
+        </button>
+
+        <button
+            [class.active]="onglet==='caracteristiques'"
+            (click)="ouvrir('caracteristiques')">
+
+            Caractéristiques
+
+        </button>
+
+        <button
+            [class.active]="onglet==='livraison'"
+            (click)="ouvrir('livraison')">
+
+            Livraison
+
+        </button>
+
+    </div>
+
+    <div
+        class="tab-content"
+        *ngIf="onglet==='description'">
+
+        <p>
+
+            {{ produit.description }}
+
+        </p>
+
+    </div>
+
+    <div
+        class="tab-content"
+        *ngIf="onglet==='caracteristiques'">
+
+        <table>
+
+            <tr>
+
+                <td>Catégorie</td>
+
+                <td>{{ produit.categorie }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Vendeur</td>
+
+                <td>{{ produit.boutique }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Stock</td>
+
+                <td>{{ produit.quantite_stock ?? 0 }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Prix</td>
+
+                <td>{{ produit.prix_promo ?? produit.prix }} FCFA</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div
+        class="tab-content"
+        *ngIf="onglet==='livraison'">
+
+        <ul>
+
+            <li>🚚 Livraison entre 24 h et 72 h.</li>
+
+            <li>📦 Emballage sécurisé.</li>
+
+            <li>💳 Paiement sécurisé.</li>
+
+            <li>↩ Retour sous 7 jours selon les conditions du vendeur.</li>
+
+        </ul>
+
+    </div>
+
+</div>

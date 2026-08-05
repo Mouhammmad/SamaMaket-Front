@@ -7,8 +7,8 @@ import { Accueil } from './pages/accueil/accueil';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Produits } from './pages/produits/produits';
-import { ProduitDetail } from './pages/produit-detail/produit-detail';
-import { Checkout } from './pages/checkout/checkout';
+import { Detail as ProduitDetail } from './pages/produits/detail/detail';
+import { Livraison } from './pages/livraison/livraison';
 import { Paiement } from './pages/paiement/paiement';
 import { Confirmation } from './pages/confirmation/confirmation';
 
@@ -55,7 +55,7 @@ export const routes: Routes = [
 
       {
         path: 'checkout',
-        component: Checkout
+        component: Livraison
       },
 
       {
@@ -64,7 +64,7 @@ export const routes: Routes = [
       },
 
       {
-        path: 'confirmation',
+        path: 'confirmation/:id',
         component: Confirmation
       }
 

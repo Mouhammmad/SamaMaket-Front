@@ -1,0 +1,91 @@
+<div class="summary">
+
+    <h3>Récapitulatif de commande</h3>
+
+    <div class="ligne">
+
+        <span>Sous-total</span>
+
+        <strong>{{ sousTotal }} FCFA</strong>
+
+    </div>
+
+    <div
+        class="ligne reduction"
+        *ngIf="reduction > 0">
+
+        <span>Réduction</span>
+
+        <strong>- {{ reduction }} FCFA</strong>
+
+    </div>
+
+    <div
+        class="promo"
+    *ngIf="afficherCodePromo">
+
+
+        <span>Code promo</span>
+
+        <strong>{{ codePromo }}</strong>
+
+    </div>
+
+    <div class="ligne">
+
+        <span>Livraison</span>
+
+        <strong>{{ livraison }} FCFA</strong>
+
+    </div>
+
+    <hr>
+
+    <div class="ligne total">
+
+        <span>Total TTC</span>
+
+        <strong>{{ total }} FCFA</strong>
+
+    </div>
+
+    <button
+    class="checkout"
+    (click)="commander.emit()">
+
+    {{ titreBouton }}
+
+</button>
+
+    <button
+    class="continue"
+    *ngIf="afficherContinuer"
+    (click)="continuer.emit()">
+
+    Continuer les achats
+
+</button>
+
+    <div class="payments">
+
+        <p>Moyens de paiement acceptés</p>
+
+        <div class="badges">
+
+            <span>Wave</span>
+
+            <span>Orange Money</span>
+
+            <span>Cash</span>
+
+        </div>
+
+        <small>
+
+            Paiement 100% sécurisé
+
+        </small>
+
+    </div>
+
+</div>

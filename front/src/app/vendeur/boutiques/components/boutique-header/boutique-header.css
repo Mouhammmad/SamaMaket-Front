@@ -1,97 +1,207 @@
 .header{
 
-    background:#25508f;
+display:flex;
 
-    border-radius:18px;
+justify-content:space-between;
 
-    color:white;
+align-items:flex-start;
 
-    overflow:hidden;
+padding:35px;
 
-}
+background:#1f4b8f;
 
-.overlay{
+color:white;
 
-    padding:35px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
+border-radius:18px 18px 0 0;
 
 }
 
 .left{
 
-    display:flex;
+display:flex;
 
-    gap:25px;
-
-    align-items:center;
+gap:20px;
 
 }
 
 .logo{
 
-    width:110px;
+width:110px;
 
-    height:110px;
+height:110px;
 
-    border-radius:20px;
+border-radius:18px;
 
-    object-fit:cover;
+background:white;
 
-    background:white;
+padding:10px;
+
+object-fit:cover;
+
+}
+
+.infos h1{
+
+margin:0;
+
+font-size:42px;
+
+font-weight:700;
+
+}
+
+.infos p{
+
+margin:8px 0 20px;
+
+opacity:.9;
+
+font-size:18px;
 
 }
 
 .stats{
 
-    display:flex;
+display:flex;
 
-    gap:40px;
+gap:45px;
 
-    margin-top:18px;
+margin-bottom:20px;
 
 }
 
 .stats div{
 
-    display:flex;
+display:flex;
 
-    flex-direction:column;
+flex-direction:column;
 
 }
 
 .stats strong{
 
-    font-size:22px;
+font-size:30px;
 
 }
 
 .stats span{
 
-    opacity:.85;
+font-size:14px;
 
-    font-size:14px;
+opacity:.85;
 
 }
 
-.right button{
+.badge{
 
-    background:white;
+display:inline-block;
 
-    color:#25508f;
+padding:10px 20px;
 
-    border:none;
+background:#d9fbe4;
 
-    border-radius:10px;
+color:#1c7a46;
 
-    padding:14px 28px;
+border-radius:30px;
 
-    cursor:pointer;
+font-weight:600;
 
-    font-weight:600;
+}
+
+.actions{
+
+display:flex;
+
+gap:16px;
+
+}
+
+.actions button{
+
+padding:14px 28px;
+
+border-radius:12px;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.suivre{
+
+background:white;
+
+border:none;
+
+font-weight:600;
+
+color:#102a43;
+
+}
+
+.suivre:hover{
+
+transform:translateY(-2px);
+
+}
+
+.contacter{
+
+background:transparent;
+
+border:1px solid white;
+
+color:white;
+
+}
+
+.contacter:hover{
+
+background:rgba(255,255,255,.15);
+
+}
+
+@media(max-width:992px){
+
+.header{
+
+flex-direction:column;
+
+gap:30px;
+
+}
+
+.left{
+
+flex-direction:column;
+
+align-items:center;
+
+text-align:center;
+
+}
+
+.stats{
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+.actions{
+
+width:100%;
+
+}
+
+.actions button{
+
+flex:1;
+
+}
 
 }

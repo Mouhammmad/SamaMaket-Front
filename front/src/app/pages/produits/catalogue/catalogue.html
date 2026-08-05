@@ -1,0 +1,65 @@
+<app-catalogue-header
+
+    [total]="totalProduits"
+
+    [tri]="tri"
+
+    [filtres]="filtresActifs"
+
+    (changerTri)="changerTri($event)"
+
+    (supprimerFiltre)="supprimerFiltre($event)"
+    (recherche)="rechercher($event)">
+
+</app-catalogue-header>
+
+<div class="catalogue-layout">
+
+    <app-catalogue-filter
+
+    [categories]="categories"
+
+    [filtres]="filtres"
+
+    (filtrer)="appliquerFiltres($event)">
+
+</app-catalogue-filter>
+    <div class="catalogue-content">
+
+    <div *ngIf="messagePanier" class="message-panier">
+        {{ messagePanier }}
+    </div>
+
+    <app-produit-card
+
+*ngFor="let produit of produits"
+
+[produit]="produit"
+
+(voir)="voirProduit($event)"
+
+(ajouter)="ajouterAuPanier($event)"
+
+(favori)="toggleFavori($event)">
+
+</app-produit-card>
+    <app-catalogue-empty
+
+    *ngIf="!produits.length"
+
+    (reinitialiser)="reinitialiserFiltres()">
+
+</app-catalogue-empty>
+
+    <app-pagination
+
+        [page]="page"
+
+        [pages]="pages"
+
+        (changer)="changerPage($event)">
+
+    </app-pagination>
+
+    </div>
+</div>

@@ -1,186 +1,61 @@
-<div class="container py-5">
+<div class="panier-page">
 
-    <div class="row">
+    <app-panier-header
+        [nombreArticles]="panier?.articles?.length || 0"
+        (vider)="viderPanier()">
+    </app-panier-header>
 
-        <div class="col-lg-8">
+    <app-panier-stepper></app-panier-stepper>
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+    <app-panier-empty
+        *ngIf="!panier?.articles?.length"
+        (continuer)="continuerAchats()">
+    </app-panier-empty>
 
-                <h2 class="fw-bold">
-                    Mon panier
-                    <small class="text-muted fs-6">
-                        {{ panier.length }} article(s)
-                    </small>
-                </h2>
+    <ng-container *ngIf="panier?.articles?.length">
 
-                <button
-                    class="btn btn-outline-danger"
-                    (click)="viderPanier()">
+        <div class="content">
 
-                    Vider le panier
+            <div class="left">
 
-                </button>
+                <app-panier-list
+                    [articles]="panier.articles"
+                    (augmenter)="augmenterQuantite($event)"
+                    (diminuer)="diminuerQuantite($event)"
+                    (supprimer)="supprimerArticle($event)">
+                </app-panier-list>
 
-            </div>
-
-            @if (panier.length === 0) {
-
-                <div class="alert alert-info">
-
-                    Votre panier est vide.
-
-                </div>
-
-            }
-
-            @for (item of panier; track item.produitId) {
-
-            <div class="card shadow-sm mb-4">
-
-                <div class="card-body">
-
-                    <div class="row align-items-center">
-
-                        <div class="col-md-3">
-
-                            <img
-                                [src]="item.image"
-                                class="img-fluid rounded"
-                                [alt]="item.nom"
-                                [title]="item.nom"
-                                title="{{ item.nom }}">
-
-                        </div>
-
-                        <div class="col-md-5">
-
-                            <h5 class="fw-bold">
-
-                                {{ item.nom }}
-
-                            </h5>
-
-                            <h4 class="text-primary">
-
-                                {{ convertirPrix(item.prix) | number }} FCFA
-
-                            </h4>
-
-                        </div>
-
-                        <div class="col-md-2">
-
-                            <div class="d-flex">
-
-                                <button
-                                    class="btn btn-outline-secondary"
-                                    (click)="diminuer(item.produitId)">
-
-                                    -
-
-                                </button>
-
-                                <span
-                                    class="mx-3 align-self-center">
-
-                                    {{ item.quantite }}
-
-                                </span>
-
-                                <button
-                                    class="btn btn-outline-secondary"
-                                    (click)="augmenter(item.produitId)">
-
-                                    +
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-2 text-end">
-
-                            <button
-                                class="btn btn-outline-danger"
-                                (click)="supprimer(item.produitId)">
-
-                                Supprimer
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <app-promo-code
+                    [codeApplique]="codePromo"
+                    (appliquer)="appliquerCode($event)">
+                </app-promo-code>
 
             </div>
 
-            }
+            <div class="right">
 
-        </div>
-
-        <div class="col-lg-4">
-
-            <div class="card shadow sticky-top">
-
-                <div class="card-body">
-
-                    <h3 class="mb-4">
-
-                        Résumé
-
-                    </h3>
-
-                    <div class="d-flex justify-content-between">
-
-                        <span>Sous-total</span>
-
-                        <strong>
-
-                            {{ total() | number }} FCFA
-
-                        </strong>
-
-                    </div>
-
-                    <div class="d-flex justify-content-between mt-2">
-
-                        <span>Livraison</span>
-
-                        <strong>Gratuite</strong>
-
-                    </div>
-
-                    <hr>
-
-                    <div class="d-flex justify-content-between">
-
-                        <h4>Total</h4>
-
-                        <h4 class="text-success">
-
-                            {{ total() | number }} FCFA
-
-                        </h4>
-
-                    </div>
-
-                    <a
-                        routerLink="/checkout"
-                        class="btn btn-primary w-100 mt-4">
-
-                        Passer la commande
-
-                    </a>
-
-                </div>
+                <app-panier-summary
+                    [sousTotal]="sousTotal"
+                    [reduction]="reduction"
+                    [livraison]="livraison"
+                    [codePromo]="codePromo"
+                    [total]="total"
+                    (commander)="passerCommande()"
+                    (continuer)="continuerAchats()">
+                </app-panier-summary>
 
             </div>
 
         </div>
 
-    </div>
+        <app-suggestions
+            [produits]="suggestions"
+            (ajouter)="ajouterSuggestion($event)">
+        </app-suggestions>
+
+    </ng-container>
+    <app-checkout-stepper
+    [etapeActive]="1">
+</app-checkout-stepper>
 
 </div>

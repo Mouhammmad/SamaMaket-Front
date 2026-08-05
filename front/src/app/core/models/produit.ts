@@ -4,34 +4,38 @@ export interface Produit {
 
   nom: string;
 
-  description?: string;
+  description: string;
 
-  prix: number | string;
+  prix: number;
+
+  prix_promo: number;
+
+  promotion_active: any;
+
+  image: string;
+
+  image_url: string;
+
+  categorie: string;
+
+  boutique: string;
+
+  boutique_id: number;
 
   quantite_stock: number;
 
-  image?: string;
+  est_actif: boolean;
 
-  image_url?: string;
+  nombre_favoris: number;
 
-  categorie?: string;
+  nombre_avis: number;
 
-  boutique?: string;
+  note_moyenne: number;
 
-  boutique_id?: number;
+  images: any[];
 
-  est_actif?: boolean;
+  variantes: any[];
 
-  date_creation?: string;
-
-  /* --------- FUTUR --------- */
-
-  note?: number;
-
-  nombreAvis?: number;
-
-  estPromo?: boolean;
-
-  estNouveau?: boolean;
+  est_favori?: boolean;
 
 }

@@ -1,0 +1,73 @@
+.navigation{
+
+display:flex;
+
+gap:40px;
+
+padding:0 25px;
+
+background:#fff;
+
+border-bottom:1px solid #e2e8f0;
+
+overflow-x:auto;
+
+}
+
+.navigation button{
+
+background:none;
+
+border:none;
+
+padding:18px 0;
+
+font-size:17px;
+
+font-weight:500;
+
+color:#64748b;
+
+cursor:pointer;
+
+position:relative;
+
+transition:.3s;
+
+white-space:nowrap;
+
+}
+
+.navigation button:hover{
+
+color:#f97316;
+
+}
+
+.navigation button.active{
+
+color:#f97316;
+
+font-weight:700;
+
+}
+
+.navigation button.active::after{
+
+content:'';
+
+position:absolute;
+
+left:0;
+
+bottom:0;
+
+width:100%;
+
+height:3px;
+
+background:#f97316;
+
+border-radius:10px;
+
+}

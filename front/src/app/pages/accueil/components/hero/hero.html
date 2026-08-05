@@ -20,16 +20,27 @@
 
       <input
         type="text"
-        placeholder="Rechercher un produit...">
+        placeholder="Rechercher un produit..."
+        [(ngModel)]="query"
+        (keyup.enter)="rechercher()">
 
       <select aria-label="Sélectionner une catégorie">
         <option value="">Toutes les catégories</option>
+        <option value="mode">Mode</option>
+        <option value="electronique">Électronique</option>
+        <option value="maison">Maison</option>
+        <option value="alimentation">Alimentation</option>
       </select>
 
-      <button>
+      <button type="button" (click)="rechercher()">
         Rechercher
       </button>
 
+    </div>
+
+    <div class="hero-actions">
+      <a routerLink="/produits" class="btn-primary">Découvrir les produits</a>
+      <a routerLink="/register" class="btn-secondary">Créer un compte</a>
     </div>
 
   </div>

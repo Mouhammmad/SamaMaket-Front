@@ -1,0 +1,61 @@
+<div
+    class="overlay"
+    *ngIf="commande">
+
+    <div class="modal">
+
+        <button
+            class="close"
+            (click)="fermer.emit()">
+
+            ✕
+
+        </button>
+
+        <h2>
+
+            Commande #SM-{{ commande.id }}
+
+        </h2>
+
+        <app-confirmation-summary
+
+            [commande]="commande">
+
+        </app-confirmation-summary>
+
+        <app-confirmation-products
+
+            [lignes]="commande.lignes">
+
+        </app-confirmation-products>
+
+        <app-confirmation-tracking
+
+            [statut]="commande.statut">
+
+        </app-confirmation-tracking>
+
+        <div class="footer">
+
+            <button
+                class="invoice"
+                (click)="telechargerFacture()">
+
+                📄 Télécharger la facture
+
+            </button>
+
+            <button
+                class="cancel"
+                (click)="fermer.emit()">
+
+                Fermer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

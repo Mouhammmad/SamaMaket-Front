@@ -1,62 +1,45 @@
-<div class="container py-5">
+<div class="confirmation-page">
 
-    <div class="confirmation-card">
+    <app-checkout-stepper
 
-        <div class="success-icon">
+        [etapeActive]="4">
 
-            ✔
+    </app-checkout-stepper>
 
-        </div>
+    <app-confirmation-header>
 
-        <h1>
+    </app-confirmation-header>
 
-            Merci pour votre commande !
+    <div *ngIf="chargement" class="loading">
 
-        </h1>
-
-        <p>
-
-            Votre paiement a été effectué avec succès.
-
-        </p>
-
-        <div class="numero">
-
-            Commande N°
-            <strong>{{ numeroCommande }}</strong>
-
-        </div>
-
-        <div class="info">
-
-            Votre vendeur prépare votre commande.
-
-            <br>
-
-            Vous recevrez une notification dès son expédition.
-
-        </div>
-
-        <div class="actions">
-
-            <a
-                routerLink="/"
-                class="btn btn-primary">
-
-                Retour à l'accueil
-
-            </a>
-
-            <a
-                routerLink="/profil"
-                class="btn btn-outline-primary">
-
-                Mes commandes
-
-            </a>
-
-        </div>
+        Chargement de la commande...
 
     </div>
+
+    <ng-container *ngIf="!chargement && commande">
+
+        <app-confirmation-summary
+
+            [commande]="commande">
+
+        </app-confirmation-summary>
+
+        <app-confirmation-products
+
+            [lignes]="commande.lignes || []">
+
+        </app-confirmation-products>
+
+        <app-confirmation-tracking
+            [statut]="commande.statut">
+        </app-confirmation-tracking>
+
+        <app-confirmation-actions
+            (facture)="telechargerFacture()"
+            (suivi)="suivreCommande()"
+            (accueil)="retourAccueil()">
+        </app-confirmation-actions>
+
+    </ng-container>
 
 </div>

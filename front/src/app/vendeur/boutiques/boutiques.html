@@ -1,69 +1,51 @@
-<div class="boutique-page">
+<app-boutique-header
+    [boutique]="boutique">
+</app-boutique-header>
 
-    <app-boutique-header
-        [boutique]="maBoutique"
-        (logoSelected)="onLogoSelected($event)"
-        (banniereSelected)="onBanniereSelected($event)">
-    </app-boutique-header>
+<app-boutique-navigation
+    [onglet]="onglet"
+    [boutique]="boutique"
+    (changer)="changerOnglet($event)">
+</app-boutique-navigation>
+<div class="contenu">
 
-    <app-boutique-tabs
-        (tabChanged)="changerOnglet($event)">
-    </app-boutique-tabs>
+    <div class="sidebar">
 
-    <div
-        class="layout"
-        *ngIf="ongletActif === 'produits'">
+        <app-boutique-infos
+            [boutique]="boutique">
+        </app-boutique-infos>
 
-        <div class="left">
+        <app-boutique-note
+            [boutique]="boutique">
+        </app-boutique-note>
 
-            <app-boutique-sidebar
-                [boutique]="maBoutique">
-            </app-boutique-sidebar>
-
-        </div>
-
-        <div class="right">
-
-            <app-boutique-products
-                [produits]="produits"
-                [chargementProduits]="chargementProduits">
-            </app-boutique-products>
-
-        </div>
+        <app-boutique-categories
+            [boutique]="boutique">
+        </app-boutique-categories>
 
     </div>
 
-    <div
-        class="content-card"
-        *ngIf="ongletActif === 'apropos'">
+    <div class="main">
 
-        <h3>À propos de la boutique</h3>
+        <app-boutique-produits
+            *ngIf="onglet==='produits'"
+            [produits]="produits">
+        </app-boutique-produits>
 
-        <p>
+        <app-boutique-apropos
+            *ngIf="onglet==='apropos'"
+            [boutique]="boutique">
+        </app-boutique-apropos>
 
-            {{ maBoutique?.description || 'Aucune description disponible.' }}
+        <app-boutique-avis
+            *ngIf="onglet==='avis'"
+            [avis]="avis">
+        </app-boutique-avis>
 
-        </p>
-
-    </div>
-
-    <div
-        class="content-card"
-        *ngIf="ongletActif === 'avis'">
-
-        <h3>Avis clients</h3>
-
-        <p>Les avis clients apparaîtront ici.</p>
-
-    </div>
-
-    <div
-        class="content-card"
-        *ngIf="ongletActif === 'promotions'">
-
-        <h3>Promotions</h3>
-
-        <p>Les promotions seront affichées ici.</p>
+        <app-boutique-promotions
+            *ngIf="onglet==='promotions'"
+            [promotions]="promotions">
+        </app-boutique-promotions>
 
     </div>
 

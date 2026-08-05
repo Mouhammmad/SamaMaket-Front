@@ -1,0 +1,49 @@
+<div class="card">
+
+    <h2>
+
+        Mode de livraison
+
+    </h2>
+
+    <div
+        class="mode"
+        *ngFor="let mode of modes"
+        [class.active]="modeSelectionne.id===mode.id"
+        (click)="choisir(mode)">
+
+        <div class="left">
+
+            <div class="icon">
+
+                {{mode.icone}}
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    {{mode.nom}}
+
+                </h4>
+
+                <small>
+
+                    {{mode.description}}
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="price">
+
+            {{mode.prix}} FCFA
+
+        </div>
+
+    </div>
+
+</div>

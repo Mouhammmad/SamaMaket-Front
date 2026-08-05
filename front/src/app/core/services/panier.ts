@@ -1,127 +1,62 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { PanierItem } from '../models/panier';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PanierService {
 
-  panier: PanierItem[] = [];
+  private api = 'http://127.0.0.1:8000/api/commandes/panier/';
+  private nombreArticlesSubject = new BehaviorSubject<number>(0);
+  readonly nombreArticles$ = this.nombreArticlesSubject.asObservable();
 
-  private nombreArticles = new BehaviorSubject<number>(0);
-  nombreArticles$ = this.nombreArticles.asObservable();
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-
-    const data = localStorage.getItem('panier');
-
-    if (data) {
-      this.panier = JSON.parse(data);
-    }
-
-    this.mettreAJourCompteur();
-
+  getPanier(): Observable<any> {
+    return this.http.get(this.api + 'mon_panier/');
   }
 
-  private sauvegarder() {
-
-    localStorage.setItem(
-      'panier',
-      JSON.stringify(this.panier)
-    );
-
+  ajouterProduit(produitId: number, quantite: number = 1): Observable<any> {
+    return this.http.post(this.api + 'ajouter/', {
+      produit_id: produitId,
+      quantite
+    });
   }
 
-  private mettreAJourCompteur() {
-
-    this.nombreArticles.next(this.getNombreArticles());
-
+  ajouter(item: any): Observable<any> {
+    return this.ajouterProduit(item.id, item.quantite || 1);
   }
 
-  ajouter(produit: PanierItem) {
-
-    const existe = this.panier.find(
-      p => p.produitId === produit.produitId
-    );
-
-    if (existe) {
-      existe.quantite++;
-    } else {
-      this.panier.push(produit);
-    }
-
-    this.sauvegarder();
-    this.mettreAJourCompteur();
-
+  modifierQuantite(articleId: number, quantite: number): Observable<any> {
+    return this.http.patch(this.api + 'modifier_quantite/', {
+      article_id: articleId,
+      quantite
+    });
   }
 
-  getPanier() {
-    return this.panier;
+  supprimerArticle(articleId: number): Observable<any> {
+    return this.http.delete(this.api + 'supprimer_article/', { body: { article_id: articleId } });
   }
 
-  augmenter(id: number) {
-
-    const produit = this.panier.find(
-      p => p.produitId === id
-    );
-
-    if (produit) {
-      produit.quantite++;
-    }
-
-    this.sauvegarder();
-    this.mettreAJourCompteur();
-
+  viderPanier(): Observable<any> {
+    return this.http.delete(this.api + 'vider/');
   }
 
-  diminuer(id: number) {
-
-    const produit = this.panier.find(
-      p => p.produitId === id
-    );
-
-    if (!produit) return;
-
-    produit.quantite--;
-
-    if (produit.quantite <= 0) {
-      this.supprimer(id);
-      return;
-    }
-
-    this.sauvegarder();
-    this.mettreAJourCompteur();
-
+  mettreAJourNombreArticles(nombre: number): void {
+    this.nombreArticlesSubject.next(nombre);
   }
 
-  supprimer(id: number) {
-
-    this.panier = this.panier.filter(
-      p => p.produitId !== id
-    );
-
-    this.sauvegarder();
-    this.mettreAJourCompteur();
-
-  }
-
-  viderPanier() {
-
-    this.panier = [];
-
-    this.sauvegarder();
-    this.mettreAJourCompteur();
-
-  }
-
-  getNombreArticles(): number {
-
-    return this.panier.reduce(
-      (total, item) => total + item.quantite,
-      0
-    );
-
+  chargerNombreArticles(): void {
+    this.getPanier().subscribe({
+      next: (panier: any) => {
+        const nombre = panier?.articles?.length || 0;
+        this.mettreAJourNombreArticles(nombre);
+      },
+      error: () => {
+        this.mettreAJourNombreArticles(0);
+      }
+    });
   }
 
 }

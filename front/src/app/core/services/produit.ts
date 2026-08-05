@@ -1,24 +1,70 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-import { Produit } from '../models/produit';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProduitService {
 
+  private http = inject(HttpClient);
+
   private api = '/api/produits/';
 
-  constructor(private http: HttpClient) {}
+  getProduits(params?: any): Observable<any> {
 
-  getProducts(): Observable<Produit[]> {
-    return this.http.get<Produit[]>(this.api);
+    let httpParams = new HttpParams();
+
+    if (params) {
+
+      Object.keys(params).forEach(key => {
+
+        if (
+          params[key] !== null &&
+          params[key] !== undefined &&
+          params[key] !== ''
+        ) {
+
+          httpParams = httpParams.set(key, params[key]);
+
+        }
+
+      });
+
+    }
+
+    return this.http.get<any>(
+      this.api,
+      {
+        params: httpParams
+      }
+    );
+
   }
 
-  getProduct(id: number): Observable<Produit> {
-    return this.http.get<Produit>(`${this.api}${id}/`);
+  getProduit(id:number):Observable<any>{
+
+    return this.http.get<any>(`${this.api}${id}/`);
+
   }
+rechercher(texte: string) {
+
+    return this.http.get<any>(
+
+        this.api,
+
+        {
+
+            params: {
+
+                recherche: texte
+
+            }
+
+        }
+
+    );
+
+}
 
 }

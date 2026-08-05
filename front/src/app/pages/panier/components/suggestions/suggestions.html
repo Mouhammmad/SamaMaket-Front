@@ -1,0 +1,49 @@
+<div class="suggestions">
+
+    <h2>
+
+        Vous aimerez aussi
+
+    </h2>
+
+    <div class="products">
+
+        <div
+            class="product"
+            *ngFor="let produit of produits">
+
+            <div class="image">
+
+                <img
+                    [src]="produit.image_url || 'assets/images/default-product.png'">
+
+            </div>
+
+            <div class="body">
+
+                <h4>
+
+                    {{ produit.nom }}
+
+                </h4>
+
+                <div class="price">
+
+                    {{ produit.prix }} FCFA
+
+                </div>
+
+            </div>
+
+            <button
+                (click)="ajouter.emit(produit)">
+
+                + Ajouter
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

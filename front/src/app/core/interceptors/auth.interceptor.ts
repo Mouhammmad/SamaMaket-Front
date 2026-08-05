@@ -3,10 +3,14 @@ import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 
 const TOKEN_REFRESH_URL = '/api/token/refresh/';
-const PUBLIC_AUTH_SKIP_PATHS = ['/api/produits/categories/'];
+const PUBLIC_AUTH_SKIP_PATHS = [
+  '/api/produits/categories/',
+  '/api/categories/'
+];
 
 function shouldSkipAuth(url: string): boolean {
-  return PUBLIC_AUTH_SKIP_PATHS.some((path) => url.includes(path));
+  const normalizedUrl = url.toLowerCase();
+  return PUBLIC_AUTH_SKIP_PATHS.some((path) => normalizedUrl === path || normalizedUrl.startsWith(path));
 }
 
 function parseJwt(token: string): { exp?: number } | null {
@@ -40,7 +44,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const skipAuth = shouldSkipAuth(normalizedUrl);
   const isApiRequest = normalizedUrl.includes('/api/') || normalizedUrl.includes('127.0.0.1:8000') || normalizedUrl.includes('localhost:8000');
   const tokenExpired = token ? isTokenExpired(token) : false;
-  const attachAuth = !!token && !isAuthRequest && !skipAuth && isApiRequest && !tokenExpired;
+  const hasValidJwt = !!token && !tokenExpired && parseJwt(token) !== null;
+  const attachAuth = hasValidJwt && !isAuthRequest && !skipAuth && isApiRequest;
   const authReq = attachAuth
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     : req;

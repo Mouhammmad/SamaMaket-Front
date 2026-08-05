@@ -50,7 +50,7 @@ export class Login {
 
     } else if (response.user.role === 'CUSTOMER') {
 
-      this.router.navigate(['/client']);
+      this.router.navigate(['/']);
 
     } else if (response.user.role === 'ADMIN') {
 

@@ -1,0 +1,68 @@
+<div class="liste">
+
+    <div
+        class="card"
+        *ngFor="let avis of avis">
+
+        <div class="top">
+
+            <div>
+
+                <h3>
+
+                    {{ avis.produit.nom }}
+
+                </h3>
+
+                <span>
+
+                    {{ avis.utilisateur }}
+
+                </span>
+
+            </div>
+
+            <div class="date">
+
+                {{ avis.date_creation | date:'dd/MM/yyyy' }}
+
+            </div>
+
+        </div>
+
+        <div class="note">
+
+            <span
+                class="etoile"
+                *ngFor="let e of etoiles(avis.note)">
+
+                ★
+
+            </span>
+
+            <span
+                class="etoile-vide"
+                *ngFor="let e of etoilesVides(avis.note)">
+
+                ☆
+
+            </span>
+
+        </div>
+
+        <p>
+
+            {{ avis.commentaire }}
+
+        </p>
+
+        <button
+            (click)="ouvrirAvis(avis)">
+
+            Voir les détails
+
+        </button>
+
+    </div>
+
+</div>

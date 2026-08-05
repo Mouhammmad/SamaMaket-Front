@@ -1,0 +1,13 @@
+<div class="filter-card">
+
+    <button
+        *ngFor="let filtre of filtres"
+        class="filter-btn"
+        [class.active]="filtreActif === filtre.valeur"
+        (click)="selectionner(filtre.valeur)">
+
+        {{ filtre.libelle }}
+
+    </button>
+
+</div>

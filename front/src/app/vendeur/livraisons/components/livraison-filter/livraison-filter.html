@@ -1,0 +1,59 @@
+<div class="filter-bar">
+
+    <div class="search">
+
+        <input
+            type="text"
+            [(ngModel)]="recherche"
+            (keyup)="rechercher()"
+            placeholder="Rechercher par numéro de commande ou suivi...">
+
+    </div>
+
+    <div class="status">
+
+        <select
+            [(ngModel)]="statut"
+            (change)="changerStatut()">
+
+            <option value="">
+
+                Toutes les livraisons
+
+            </option>
+
+            <option value="en_preparation">
+
+                En préparation
+
+            </option>
+
+            <option value="expedie">
+
+                Expédiées
+
+            </option>
+
+            <option value="en_transit">
+
+                En transit
+
+            </option>
+
+            <option value="livre">
+
+                Livrées
+
+            </option>
+
+            <option value="echoue">
+
+                Échouées
+
+            </option>
+
+        </select>
+
+    </div>
+
+</div>

@@ -1,0 +1,124 @@
+<div class="card">
+
+    <h2>
+
+        Adresse de livraison
+
+    </h2>
+
+    <form
+        [formGroup]="form">
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>Prénom</label>
+
+                <input
+                    formControlName="prenom">
+
+            </div>
+
+            <div class="field">
+
+                <label>Nom</label>
+
+                <input
+                    formControlName="nom">
+
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>Téléphone</label>
+
+                <input
+                    formControlName="telephone">
+
+            </div>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    formControlName="email">
+
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>Pays</label>
+
+                <input
+                    formControlName="pays">
+
+            </div>
+
+            <div class="field">
+
+                <label>Ville</label>
+
+                <input
+                    formControlName="ville">
+
+            </div>
+
+        </div>
+
+        <div class="field">
+
+            <label>Quartier</label>
+
+            <input
+                formControlName="quartier">
+
+        </div>
+
+        <div class="field">
+
+            <label>Adresse complète</label>
+
+            <textarea
+                rows="4"
+                formControlName="adresse">
+            </textarea>
+
+        </div>
+
+        <div class="field">
+
+            <label>
+
+                Instructions de livraison
+
+            </label>
+
+            <textarea
+                rows="3"
+                formControlName="instructions">
+            </textarea>
+
+        </div>
+
+        <button
+            type="button"
+            class="continue"
+            (click)="continuer()">
+
+            Continuer vers le paiement
+
+        </button>
+
+    </form>
+
+</div>

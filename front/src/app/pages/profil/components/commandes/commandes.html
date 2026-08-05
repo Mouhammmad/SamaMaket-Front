@@ -20,13 +20,11 @@
 
     </div>
 
-    <!-- Statistiques -->
-
     <div class="stats">
 
         <div class="card-stat">
 
-            <h3>12</h3>
+            <h3>{{ stats.total }}</h3>
 
             <span>Total</span>
 
@@ -34,7 +32,7 @@
 
         <div class="card-stat">
 
-            <h3>2</h3>
+            <h3>{{ stats.enCours }}</h3>
 
             <span>En cours</span>
 
@@ -42,7 +40,7 @@
 
         <div class="card-stat">
 
-            <h3>8</h3>
+            <h3>{{ stats.livrees }}</h3>
 
             <span>Livrées</span>
 
@@ -50,7 +48,7 @@
 
         <div class="card-stat">
 
-            <h3>2</h3>
+            <h3>{{ stats.annulees }}</h3>
 
             <span>Annulées</span>
 
@@ -58,17 +56,15 @@
 
     </div>
 
-    <!-- Recherche -->
-
     <div class="toolbar">
 
         <input
             type="text"
             placeholder="Rechercher une commande..."
-            aria-label="Recherche commande">
+            aria-label="Recherche commande"
+            disabled>
 
-        <label for="statut-commande" class="visually-hidden">Filtrer par statut</label>
-        <select id="statut-commande" aria-label="Filtrer les statuts" title="Filtrer les statuts">
+        <select id="statut-commande" aria-label="Filtrer les statuts" title="Filtrer les statuts" disabled>
 
             <option>Tous les statuts</option>
 
@@ -82,11 +78,40 @@
 
     </div>
 
-    <!-- Les cartes de commandes -->
-
     <div class="orders">
 
-        <!-- Les cartes viendront ici -->
+        <div *ngIf="chargement" class="empty-state">
+            Chargement de vos commandes...
+        </div>
+
+        <div *ngIf="!chargement && message" class="empty-state">
+            {{ message }}
+        </div>
+
+        <div *ngIf="!chargement && !commandes.length && !message" class="empty-state">
+            Vous n'avez pas encore de commande.
+        </div>
+
+        <div *ngFor="let commande of commandes" class="order-card">
+            <div class="order-summary">
+                <div>
+                    <strong>Commande #{{ commande.numero || commande.id }}</strong>
+                    <p>{{ commande.date_creation | date:'dd/MM/yyyy' }}</p>
+                </div>
+                <span class="order-status">{{ libelleStatut(commande.statut) }}</span>
+            </div>
+            <div class="order-details">
+                <p><strong>Montant :</strong> {{ commande.sous_total }} FCFA</p>
+                <p><strong>Livraison :</strong> {{ commande.adresse_livraison }}</p>
+                <p><strong>Article(s) :</strong> {{ commande.lignes?.length || 0 }}</p>
+            </div>
+            <div class="order-lines" *ngIf="commande.lignes?.length">
+                <div *ngFor="let ligne of commande.lignes" class="order-line">
+                    <span>{{ ligne.produit?.nom }}</span>
+                    <span>{{ ligne.quantite }} × {{ ligne.prix_unitaire }} FCFA</span>
+                </div>
+            </div>
+        </div>
 
     </div>
 

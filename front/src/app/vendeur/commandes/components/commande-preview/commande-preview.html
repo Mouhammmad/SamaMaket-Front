@@ -51,31 +51,31 @@ class="badge"
 📦 Produits
 
 </h3>
-
 <div
 class="product"
-*ngFor="let produit of commande.produits">
+*ngFor="let ligne of commande.lignes">
 
 <img
-[src]="produit.image">
+[src]="ligne.produit.image"
+[alt]="ligne.produit.nom">
 
 <div>
 
 <strong>
 
-{{ produit.nom }}
+{{ ligne.produit.nom }}
 
 </strong>
 
 <p>
 
-Qté : {{ produit.quantite }}
+Qté : {{ ligne.quantite }}
 
 </p>
 
 <p>
 
-{{ produit.prix }} FCFA
+{{ ligne.prix_unitaire }} FCFA
 
 </p>
 
@@ -111,13 +111,17 @@ Qté : {{ produit.quantite }}
 
 <p>
 
-{{ commande.mode_paiement }}
+Mode :
+
+{{ commande.paiement?.methode }}
 
 </p>
 
 <p>
 
-{{ commande.paiement }}
+Statut :
+
+{{ commande.paiement?.statut }}
 
 </p>
 
@@ -151,7 +155,7 @@ Livraison
 
 <span>
 
-{{ commande.livraison }} FCFA
+{{ commande.adresse_livraison }}
 
 </span>
 

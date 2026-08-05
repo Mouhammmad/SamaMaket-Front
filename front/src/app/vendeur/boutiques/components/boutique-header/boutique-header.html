@@ -1,128 +1,132 @@
 <div class="header">
 
-    <section class="hero-card">
+    <div class="left">
 
-        <div class="banner-area">
+        <img
+            class="logo"
+            [src]="boutique?.logo || 'assets/images/boutique.png'"
+            alt="Boutique">
 
-            <img
-                [src]="boutique?.banniere_url || 'assets/images/default-banner.svg'"
-                alt="Bannière">
+        <div class="infos">
 
-            <label class="upload-btn banner-btn">
+            <h1>
 
-                Changer la bannière
+                {{ boutique?.nom }}
 
-                <input
-                    type="file"
-                    hidden
-                    (change)="onBanniereSelected($event)">
+            </h1>
 
-            </label>
+            <p>
 
-        </div>
+                {{ boutique?.categorie }}
 
-        <div class="overlay">
+                •
 
-            <div class="left">
+                {{ boutique?.ville }},
 
-                <img
-                    class="logo"
-                    [src]="boutique?.logo_url || 'assets/images/default-shop.svg'"
-                    alt="Logo">
+                {{ boutique?.pays }}
 
-                <div class="infos">
+            </p>
 
-                    <h1>
+            <div class="stats">
 
-                        {{ boutique?.nom || 'Ma Boutique' }}
+                <div>
 
-                    </h1>
+                    <strong>
 
-                    <p>
+                        {{ boutique?.nombre_produits }}
 
-                        {{ boutique?.ville || 'Ville non renseignée' }}
+                    </strong>
 
-                    </p>
+                    <span>
 
-                    <div class="stats">
+                        produits
 
-                        <div>
+                    </span>
 
-                            <strong>
+                </div>
 
-                                {{ boutique?.total_produits || 0 }}
+                <div>
 
-                            </strong>
+                    <strong>
 
-                            <span>Produits</span>
+                        {{ boutique?.note }}
 
-                        </div>
+                        /5
 
-                        <div>
+                    </strong>
 
-                            <strong>
+                    <span>
 
-                                {{ boutique?.note || 0 }}/5
+                        ({{ boutique?.nombre_avis }} avis)
 
-                            </strong>
+                    </span>
 
-                            <span>Note</span>
+                </div>
 
-                        </div>
+                <div>
 
-                        <div>
+                    <strong>
 
-                            <strong>
+                        {{ boutique?.abonnes }}
 
-                                {{ boutique?.followers || 0 }}
+                    </strong>
 
-                            </strong>
+                    <span>
 
-                            <span>Abonnés</span>
+                        abonnés
 
-                        </div>
+                    </span>
 
-                        <div>
+                </div>
 
-                            <strong>
+                <div>
 
-                                {{ boutique?.ventes || 0 }}
+                    <strong>
 
-                            </strong>
+                        {{ boutique?.ventes }}
 
-                            <span>Ventes</span>
+                    </strong>
 
-                        </div>
+                    <span>
 
-                    </div>
+                        ventes
+
+                    </span>
 
                 </div>
 
             </div>
 
-            <div class="right">
+            <span
+                class="badge"
+                *ngIf="boutique?.verifie">
 
-                <label class="upload-btn">
+                ✔ Vendeur vérifié
 
-                    Changer le logo
-
-                    <input
-                        type="file"
-                        hidden
-                        (change)="onLogoSelected($event)">
-
-                </label>
-
-                <button>
-
-                    Modifier
-
-                </button>
-
-            </div>
+            </span>
 
         </div>
 
-    </section>
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="suivre"
+            (click)="suivre.emit()">
+
+            + Suivre
+
+        </button>
+
+        <button
+            class="contacter"
+            (click)="contacter.emit()">
+
+            Contacter
+
+        </button>
+
+    </div>
 
 </div>

@@ -4,11 +4,18 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BoutiqueTabs } from './components/boutique-tabs/boutique-tabs';
-import { BoutiqueHeader } from './components/boutique-header/boutique-header';
-import { BoutiqueSidebar } from './components/boutique-sidebar/boutique-sidebar';
-import { BoutiqueProducts } from './components/boutique-products/boutique-products';
+
 import { VendeurProduits } from '../../core/services/vendeur-produits';
+import { PromotionService } from '../../core/services/promotion';
+import { BoutiqueHeader } from './components/boutique-header/boutique-header';
+import { BoutiqueNavigation } from './components/boutique-navigation/boutique-navigation';
+import { BoutiqueInfos } from './components/boutique-infos/boutique-infos';
+import { BoutiqueNote } from './components/boutique-note/boutique-note';
+import { BoutiqueCategories } from './components/boutique-categories/boutique-categories';
+import { BoutiqueProduits } from './components/boutique-produits/boutique-produits';
+import { BoutiqueApropos } from './components/boutique-apropos/boutique-apropos';
+import { BoutiqueAvis } from './components/boutique-avis/boutique-avis';
+import { BoutiquePromotions } from './components/boutique-promotions/boutique-promotions';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,22 +42,38 @@ export class Boutique {
 @Component({
   selector: 'app-boutiques',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BoutiqueTabs, BoutiqueSidebar, BoutiqueProducts, BoutiqueHeader],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    BoutiqueHeader,
+    BoutiqueNavigation,
+    BoutiqueInfos,
+    BoutiqueNote,
+    BoutiqueCategories,
+    BoutiqueProduits,
+    BoutiqueApropos,
+    BoutiqueAvis,
+    BoutiquePromotions
+  ],
   templateUrl: './boutiques.html',
   styleUrl: './boutiques.css'
 })
 export class Boutiques implements OnInit {
   boutiqueForm: FormGroup;
-  maBoutique: any = null;
-  ongletActif = 'produits';
+  boutique: any = null;
+  onglet = 'produits';
   produits: any[] = [];
+  promotions: any[] = [];
+  avis: any[] = [];
   chargementProduits = true;
+  chargementPromotions = true;
   selectedBanniere?: File;
   selectedLogo?: File;
   constructor(
     private fb: FormBuilder,
     private boutiqueService: Boutique,
-    private produitService: VendeurProduits
+    private produitService: VendeurProduits,
+    private promotionService: PromotionService
   ) {
     this.boutiqueForm = this.fb.group({
       nom: ['', Validators.required],
@@ -62,11 +85,10 @@ export class Boutiques implements OnInit {
   }
 
   ngOnInit(): void {
-
-  this.chargerBoutique();
-  this.chargerProduits();
-
-}
+    this.chargerBoutique();
+    this.chargerProduits();
+    this.chargerPromotions();
+  }
   enregistrer(): void {
     if (this.boutiqueForm.invalid) {
       this.boutiqueForm.markAllAsTouched();
@@ -91,17 +113,16 @@ export class Boutiques implements OnInit {
       data.append('banniere', this.selectedBanniere);
     }
 
-    const request = this.maBoutique
+    const request = this.boutique
       ? this.boutiqueService.modifierBoutique(data)
       : this.boutiqueService.creerBoutique(data);
 
     request.subscribe({
       next: () => {
-
         this.chargerBoutique();
-
-          alert('Boutique enregistrée avec succès.');
-
+        this.chargerProduits();
+        this.chargerPromotions();
+        alert('Boutique enregistrée avec succès.');
       },
       error: () => {
         alert('Impossible d’enregistrer la boutique pour le moment.');
@@ -109,10 +130,8 @@ export class Boutiques implements OnInit {
     });
   }
   changerOnglet(tab: string){
-
-  this.ongletActif = tab;
-
-}
+    this.onglet = tab;
+  }
 onBanniereSelected(event: Event): void {
 
   const input = event.target as HTMLInputElement;
@@ -143,7 +162,7 @@ chargerBoutique(): void {
 
       console.log(response);
 
-      this.maBoutique = response;
+      this.boutique = response;
 
       this.boutiqueForm.patchValue({
         nom: response.nom || '',
@@ -157,7 +176,7 @@ chargerBoutique(): void {
 
     error: () => {
 
-      this.maBoutique = null;
+      this.boutique = null;
 
     }
 
@@ -170,7 +189,6 @@ chargerProduits(): void {
 
   this.produitService.getProduits().subscribe({
     next: (response: any) => {
-      console.log('Produits API response', response);
       const payload = Array.isArray(response)
         ? response
         : response?.results || response?.data || [];
@@ -185,6 +203,30 @@ chargerProduits(): void {
       this.produits = [];
       window.setTimeout(() => {
         this.chargementProduits = false;
+      });
+    }
+  });
+}
+
+chargerPromotions(): void {
+  this.chargementPromotions = true;
+
+  this.promotionService.getPromotions().subscribe({
+    next: (response: any) => {
+      const payload = Array.isArray(response)
+        ? response
+        : response?.results || response?.data || [];
+
+      this.promotions = Array.isArray(payload) ? payload : [];
+      window.setTimeout(() => {
+        this.chargementPromotions = false;
+      });
+    },
+    error: (error) => {
+      console.error('Promotions API error', error);
+      this.promotions = [];
+      window.setTimeout(() => {
+        this.chargementPromotions = false;
       });
     }
   });

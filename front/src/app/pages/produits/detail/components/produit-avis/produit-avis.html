@@ -1,0 +1,61 @@
+<div class="avis-card">
+
+    <div class="resume">
+
+        <div class="note">
+
+            {{ moyenne }}
+
+            <span>/5</span>
+
+        </div>
+
+        <div>
+
+            ⭐⭐⭐⭐⭐
+
+            <p>
+
+                {{ avis.length }} avis clients
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div
+        class="commentaire"
+        *ngFor="let item of avis">
+
+        <div class="header">
+
+            <strong>
+
+                {{ item.utilisateur }}
+
+            </strong>
+
+            <span>
+
+                {{ item.date }}
+
+            </span>
+
+        </div>
+
+        <div class="etoiles">
+
+            {{ '⭐'.repeat(item.note) }}
+
+        </div>
+
+        <p>
+
+            {{ item.commentaire }}
+
+        </p>
+
+    </div>
+
+</div>

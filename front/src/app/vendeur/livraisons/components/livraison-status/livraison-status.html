@@ -1,0 +1,81 @@
+<div
+    class="card"
+    *ngIf="livraison">
+
+    <h3>
+
+        Modifier la livraison
+
+    </h3>
+
+    <div class="champ">
+
+        <label>
+
+            Statut
+
+        </label>
+
+        <select
+            [(ngModel)]="statut">
+
+            <option value="en_preparation">
+                En préparation
+            </option>
+
+            <option value="expedie">
+                Expédiée
+            </option>
+
+            <option value="en_transit">
+                En transit
+            </option>
+
+            <option value="livre">
+                Livrée
+            </option>
+
+            <option value="echoue">
+                Échouée
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="champ">
+
+        <label>
+
+            Numéro de suivi
+
+        </label>
+
+        <input
+            type="text"
+            [(ngModel)]="numeroSuivi">
+
+    </div>
+
+    <div class="champ">
+
+        <label>
+
+            Date prévue
+
+        </label>
+
+        <input
+            type="date"
+            [(ngModel)]="datePrevue">
+
+    </div>
+
+    <button
+        (click)="sauvegarder()">
+
+        Enregistrer
+
+    </button>
+
+</div>

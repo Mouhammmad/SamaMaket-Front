@@ -1,110 +1,43 @@
-<div class="container py-5">
 
-    <div class="checkout-steps">
+<app-paiement-header>
 
-        <div class="step done">
-            <div class="circle">✓</div>
-            <span>Panier</span>
-        </div>
+</app-paiement-header>
 
-        <div class="line"></div>
+<app-checkout-stepper
+    [etapeActive]="3">
+</app-checkout-stepper>
 
-        <div class="step done">
-            <div class="circle">✓</div>
-            <span>Livraison</span>
-        </div>
+<div class="content">
 
-        <div class="line"></div>
+    <div class="left">
 
-        <div class="step active">
-            <div class="circle">3</div>
-            <span>Paiement</span>
-        </div>
-
-        <div class="line"></div>
-
-        <div class="step">
-            <div class="circle">4</div>
-            <span>Confirmation</span>
-        </div>
+        <app-paiement-methods
+            (selection)="choisirMethode($event)">
+        </app-paiement-methods>
 
     </div>
 
-    <div class="payment-card">
+    <div class="right">
 
-        <h2>Choisissez votre mode de paiement</h2>
+        <app-panier-summary
 
-        <div class="payment-methods">
+            [sousTotal]="sousTotal"
 
-            <label class="payment-option">
+            [reduction]="reduction"
 
-                <input
-                    type="radio"
-                    name="methode"
-                    [(ngModel)]="methode"
-                    value="wave">
+            [livraison]="livraison"
 
-                🌊 Wave
+            [total]="total"
 
-            </label>
+            [titreBouton]="'Payer maintenant'"
 
-            <label class="payment-option">
+            [afficherContinuer]="false"
 
-                <input
-                    type="radio"
-                    name="methode"
-                    [(ngModel)]="methode"
-                    value="orange">
+            [afficherCodePromo]="false"
 
-                🟠 Orange Money
+            (commander)="payer()">
 
-            </label>
-
-            <label class="payment-option">
-
-                <input
-                    type="radio"
-                    name="methode"
-                    [(ngModel)]="methode"
-                    value="free">
-
-                🔵 Free Money
-
-            </label>
-
-            <label class="payment-option">
-
-                <input
-                    type="radio"
-                    name="methode"
-                    [(ngModel)]="methode"
-                    value="carte">
-
-                💳 Carte bancaire
-
-            </label>
-
-        </div>
-
-        <div class="mt-4">
-
-            <label for="numero-paiement">Numéro de téléphone / Carte</label>
-
-            <input
-                id="numero-paiement"
-                class="form-control"
-                [(ngModel)]="numero"
-                placeholder="Entrez votre numéro ou carte">
-
-        </div>
-
-        <button
-            class="btn btn-success mt-4"
-            (click)="payer()">
-
-            Confirmer le paiement
-
-        </button>
+        </app-panier-summary>
 
     </div>
 

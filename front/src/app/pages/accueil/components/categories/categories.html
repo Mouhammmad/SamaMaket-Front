@@ -7,44 +7,31 @@
       <h2>Parcourir par catégorie</h2>
 
       <p>
-        Découvrez les différentes catégories de produits disponibles.
+        Découvrez les catégories vendues par nos commerçants.
       </p>
 
     </div>
 
-    <div class="category-grid">
+    <div class="category-grid" *ngIf="categories.length; else emptyCategories">
 
-      <div class="category-card">
-        <div class="icon">👗</div>
-        <h4>Mode</h4>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">📱</div>
-        <h4>Électronique</h4>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🥭</div>
-        <h4>Alimentation</h4>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🎨</div>
-        <h4>Artisanat</h4>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🏠</div>
-        <h4>Maison</h4>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">💻</div>
-        <h4>Informatique</h4>
-      </div>
+      <a
+        *ngFor="let categorie of categories"
+        class="category-card"
+        [routerLink]="['/produits']"
+        [queryParams]="{ categorie: categorie.id }"
+        [title]="categorie.nom">
+        <div class="icon">{{ getIcon(categorie.nom) }}</div>
+        <h4>{{ categorie.nom }}</h4>
+        <span>Explorer</span>
+      </a>
 
     </div>
+
+    <ng-template #emptyCategories>
+      <div class="empty-categories">
+        <p>Les catégories seront affichées ici dès qu’elles seront disponibles.</p>
+      </div>
+    </ng-template>
 
   </div>
 

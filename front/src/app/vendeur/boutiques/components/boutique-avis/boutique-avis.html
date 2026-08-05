@@ -1,0 +1,45 @@
+<div
+
+class="avis"
+
+*ngFor="let avis of avis">
+
+    <div class="avatar">
+
+        {{ avis.utilisateur[0] }}
+
+    </div>
+
+    <div class="contenu">
+
+        <h4>
+
+            {{ avis.utilisateur }}
+
+        </h4>
+
+        <div class="note">
+
+            ⭐ {{ avis.note }}/5
+
+        </div>
+
+        <p>
+
+            {{ avis.commentaire }}
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+
+class="empty"
+
+*ngIf="!avis.length">
+
+Aucun avis.
+
+</div>

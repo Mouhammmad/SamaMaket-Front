@@ -1,0 +1,81 @@
+<div class="card">
+
+    <div class="header">
+
+        <h3>
+
+            Statistiques des clients
+
+        </h3>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="item">
+
+            <span class="label">
+
+                Nouveaux clients
+
+            </span>
+
+            <strong>
+
+                {{ stats?.clients?.nouveaux || 0 }}
+
+            </strong>
+
+        </div>
+
+        <div class="item">
+
+            <span class="label">
+
+                Clients fidèles
+
+            </span>
+
+            <strong>
+
+                {{ stats?.clients?.fideles || 0 }}
+
+            </strong>
+
+        </div>
+
+        <div class="item">
+
+            <span class="label">
+
+                Acheteurs uniques
+
+            </span>
+
+            <strong>
+
+                {{ stats?.clients?.uniques || 0 }}
+
+            </strong>
+
+        </div>
+
+        <div class="item">
+
+            <span class="label">
+
+                Panier moyen
+
+            </span>
+
+            <strong>
+
+                {{ stats?.clients?.panier_moyen || 0 }} FCFA
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>

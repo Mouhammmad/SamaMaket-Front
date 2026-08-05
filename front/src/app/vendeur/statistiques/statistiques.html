@@ -1,1 +1,45 @@
-<p>statistiques works!</p>
+<section class="stats-page">
+  <div class="stats-header">
+    <h2>Statistiques</h2>
+    <p>Vue d’ensemble des performances de votre boutique.</p>
+  </div>
+
+  <div class="stats-actions">
+    <label for="periode">Période</label>
+    <select id="periode" (change)="changerPeriode($any($event.target).value)">
+      <option value="mois" [selected]="periode === 'mois'">Ce mois</option>
+      <option value="semaine" [selected]="periode === 'semaine'">Cette semaine</option>
+      <option value="annee" [selected]="periode === 'annee'">Cette année</option>
+    </select>
+  </div>
+
+  <div *ngIf="chargement" class="stats-loading">
+    Chargement des statistiques...
+  </div>
+
+  <div *ngIf="!chargement && !statistiques" class="stats-empty">
+    Aucune statistique disponible pour le moment.
+  </div>
+
+  <div *ngIf="statistiques" class="stats-content">
+    <div class="stats-card">
+      <h3>Ventes</h3>
+      <p>{{ statistiques?.ventes ?? 0 }}</p>
+    </div>
+    <div class="stats-card">
+      <h3>Commandes</h3>
+      <p>{{ statistiques?.commandes ?? 0 }}</p>
+    </div>
+    <div class="stats-card">
+      <h3>Produits</h3>
+      <p>{{ statistiques?.produits ?? 0 }}</p>
+    </div>
+    <div class="stats-card">
+      <h3>Clients</h3>
+      <p>{{ statistiques?.clients ?? 0 }}</p>
+    </div>
+  </div>
+  <app-statistiques-chart
+    [ventes]="statistiques?.ventes">
+</app-statistiques-chart>
+</section>

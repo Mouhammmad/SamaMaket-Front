@@ -1,0 +1,66 @@
+<div *ngIf="chargement">
+
+    Chargement...
+
+</div>
+
+<div
+    class="detail-page"
+    *ngIf="!chargement && produit">
+
+    <div class="top">
+
+        <app-galerie-produit
+
+            [produit]="produit">
+
+        </app-galerie-produit>
+
+        <div class="right">
+
+            <app-produit-info
+
+                [produit]="produit">
+
+            </app-produit-info>
+
+            <app-achat-rapide
+
+                [produit]="produit"
+                (ajouterPanier)="ajouterAuPanier($event)"
+                (acheterMaintenant)="acheterMaintenant($event)">
+
+            </app-achat-rapide>
+
+            <div class="detail-message-panier" *ngIf="messagePanier">
+                {{ messagePanier }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <app-produit-tabs
+
+        [produit]="produit">
+
+    </app-produit-tabs>
+
+    <app-produit-avis
+
+        [produit]="produit">
+
+    </app-produit-avis>
+
+    <app-produits-similaires
+
+        [produit]="produit">
+
+    </app-produits-similaires>
+
+</div>
+
+<div *ngIf="!chargement && !produit" class="detail-empty">
+    <p>Le produit demandé est indisponible ou n’a pas pu être chargé.</p>
+    <p *ngIf="erreur" class="detail-error">{{ erreur }}</p>
+</div>

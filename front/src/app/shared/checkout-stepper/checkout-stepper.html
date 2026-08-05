@@ -1,0 +1,34 @@
+<div class="stepper">
+
+    <div
+        class="step"
+        *ngFor="let etape of etapes">
+
+        <div
+            class="circle"
+            [class.active]="etape.numero === etapeActive"
+            [class.done]="etape.numero < etapeActive">
+
+            <span *ngIf="etape.numero < etapeActive">
+
+                ✓
+
+            </span>
+
+            <span *ngIf="etape.numero >= etapeActive">
+
+                {{ etape.numero }}
+
+            </span>
+
+        </div>
+
+        <div class="title">
+
+            {{ etape.titre }}
+
+        </div>
+
+    </div>
+
+</div>

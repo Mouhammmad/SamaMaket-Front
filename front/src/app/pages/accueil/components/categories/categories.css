@@ -26,25 +26,48 @@
 }
 
 .category-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
     background:white;
     border-radius:20px;
-    padding:35px;
+    padding:35px 20px;
     text-align:center;
     transition:.3s;
     cursor:pointer;
     box-shadow:0 8px 20px rgba(0,0,0,.08);
+    color:#123b85;
+    text-decoration:none;
 }
 
 .category-card:hover{
     transform:translateY(-8px);
+    box-shadow:0 14px 30px rgba(17,59,133,.12);
 }
 
 .icon{
     font-size:45px;
-    margin-bottom:15px;
+    margin-bottom:5px;
 }
 
 .category-card h4{
     font-size:18px;
     font-weight:700;
+    margin:0;
+}
+
+.category-card span{
+    font-size:13px;
+    font-weight:600;
+    color:#ff9d1f;
+}
+
+.empty-categories{
+    text-align:center;
+    padding:24px;
+    background:white;
+    border-radius:16px;
+    color:#666;
 }

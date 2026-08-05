@@ -1,66 +1,109 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
-import { Commande } from '../models/commande';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
+
   providedIn: 'root'
+
 })
 export class CommandeService {
 
-  getMesCommandes(): Observable<Commande[]> {
+  api = 'http://127.0.0.1:8000/api/commandes/';
 
-    return of([
+  constructor(
 
-      {
+    private http: HttpClient
 
-        id: 1,
+  ) {}
 
-        numero: 'SM-2026-000001',
+  getCommandes(): Observable<any> {
 
-        date: '25 juillet 2026',
-
-        statut: 'PREPARATION',
-
-        total: 45250,
-
-        produits: [
-
-          {
-
-            produitId: 2,
-
-            nom: 'SAVON SANTEX',
-
-            image: 'http://127.0.0.1:8000/media/produits/téléchargement.jpg',
-
-            prix: 1250,
-
-            quantite: 2
-
-          },
-
-          {
-
-            produitId: 1,
-
-            nom: 'Smartphone Demo',
-
-            image: 'http://127.0.0.1:8000/media/produits/demo.jpg',
-
-            prix: 29999,
-
-            quantite: 1
-
-          }
-
-        ]
-
-      }
-
-    ]);
+    return this.http.get(this.api + 'commandes/mes_commandes/');
 
   }
 
+  getMesCommandes(): Observable<any> {
+
+    return this.http.get(this.api + 'commandes/mes_commandes/');
+
+  }
+    getMesCommandesVendeur(): Observable<any> {
+      return this.http.get(this.api + 'vendeur/commandes/mes_commandes/');
+    }
+
+    getCommandeVendeur(id: number): Observable<any> {
+      return this.http.get(this.api + 'vendeur/commandes/' + id + '/detail_commande/');
+    }
+
+  detailCommande(id: number): Observable<any> {
+
+    return this.getCommande(id);
+
+  }
+
+  changerStatut(id: number, statut: string): Observable<any> {
+
+    return this.http.patch(
+      this.api + 'vendeur/commandes/' + id + '/mettre_a_jour_statut/',
+      { statut }
+    );
+
+  }
+
+  dashboard(): Observable<any> {
+
+    return this.http.get(this.api + 'dashboard/');
+
+  }
+
+  validerPanier(data: any): Observable<any> {
+
+    return this.http.post(
+      this.api + 'commandes/valider_panier/',
+      data
+    );
+
+  }
+
+  creerCommande(data: any): Observable<any> {
+
+    return this.validerPanier(data);
+
+  }
+
+  modifierStatut(
+
+    id: number,
+
+    statut: string
+
+  ): Observable<any> {
+
+    return this.http.patch(
+
+      this.api + 'commandes/' + id + '/mettre_a_jour_statut/',
+
+      {
+
+        statut
+
+      }
+
+    );
+
+  }
+
+  getCommande(id: number): Observable<any> {
+
+    return this.getMesCommandes().pipe(
+      map((response: any) => {
+        const commandes = Array.isArray(response) ? response : response?.results || [];
+        return commandes.find((commande: any) => Number(commande.id) === Number(id)) || null;
+      })
+    );
+
+  }
 }

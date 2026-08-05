@@ -1,0 +1,37 @@
+<div class="actions-card">
+
+    <h2>
+
+        Que souhaitez-vous faire ?
+
+    </h2>
+
+    <div class="buttons">
+
+        <button
+            class="btn invoice"
+            (click)="facture.emit()">
+
+            📄 Télécharger la facture
+
+        </button>
+
+        <button
+            class="btn tracking"
+            (click)="suivi.emit()">
+
+            🚚 Suivre ma commande
+
+        </button>
+
+        <button
+            class="btn home"
+            (click)="accueil.emit()">
+
+            🏠 Retour à l'accueil
+
+        </button>
+
+    </div>
+
+</div>

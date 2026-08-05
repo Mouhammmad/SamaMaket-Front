@@ -1,4 +1,8 @@
 <div class="page">
+  <app-promotion-header
+    [total]="promotions.length"
+    (ajouter)="ouvrirFormulaire()">
+  </app-promotion-header>
   <app-promotion-dashboard
     [promotions]="promotions">
 </app-promotion-dashboard>
@@ -22,10 +26,7 @@
 </app-promotion-timeline>
 </div>
 
-  <app-promotion-header
-    [total]="promotions.length"
-    (ajouter)="ouvrirFormulaire()">
-  </app-promotion-header>
+  
 
 
   <app-promotion-filter

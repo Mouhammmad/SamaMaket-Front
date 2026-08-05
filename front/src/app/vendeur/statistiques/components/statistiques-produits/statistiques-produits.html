@@ -1,0 +1,65 @@
+<div class="card">
+
+    <div class="header">
+
+        <h3>
+
+            Top produits les plus vendus
+
+        </h3>
+
+    </div>
+
+    <table *ngIf="stats?.top_produits?.length">
+
+        <thead>
+
+            <tr>
+
+                <th>Produit</th>
+
+                <th>Ventes</th>
+
+                <th>Chiffre d'affaires</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let produit of stats.top_produits">
+
+                <td>
+
+                    {{ produit.nom }}
+
+                </td>
+
+                <td>
+
+                    {{ produit.quantite }}
+
+                </td>
+
+                <td>
+
+                    {{ produit.montant }} FCFA
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div
+        class="empty"
+        *ngIf="!stats?.top_produits?.length">
+
+        Aucun produit vendu pour cette période.
+
+    </div>
+
+</div>

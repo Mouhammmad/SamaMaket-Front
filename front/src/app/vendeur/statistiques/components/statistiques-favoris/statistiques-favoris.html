@@ -1,0 +1,45 @@
+<div class="card">
+
+    <h3>
+
+        Produits les plus ajoutés aux favoris
+
+    </h3>
+
+    <table *ngIf="stats?.favoris_produits?.length">
+
+        <thead>
+
+            <tr>
+
+                <th>Produit</th>
+
+                <th>Favoris</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let produit of stats.favoris_produits">
+
+                <td>{{ produit.nom }}</td>
+
+                <td>{{ produit.favoris }}</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div
+        class="empty"
+        *ngIf="!stats?.favoris_produits?.length">
+
+        Aucun favori enregistré.
+
+    </div>
+
+</div>

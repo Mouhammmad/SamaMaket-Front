@@ -11,7 +11,6 @@ import { VendeurProduits } from '../../core/services/vendeur-produits';
 import { CategorieService } from '../../core/services/categorie';
 import { PreviewService } from '../../core/services/preview.service';
 import { Categorie } from '../../core/models/categorie';
-import { ProduitPreview } from './components/produit-preview/produit-preview';
 @Component({
   selector: 'app-produits',
   standalone: true,
@@ -20,8 +19,7 @@ import { ProduitPreview } from './components/produit-preview/produit-preview';
     ProduitHeader,
     ProduitFilter,
     ProduitTable,
-    ProduitFrom,
-    ProduitPreview
+    ProduitFrom
   ],
   templateUrl: './produits.html',
   styleUrls: ['./produits.css']

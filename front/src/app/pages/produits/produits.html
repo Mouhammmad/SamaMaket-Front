@@ -1,5 +1,32 @@
-<div class="products">
-  @for (produit of produits; track produit.id) {
-    <app-carte-produit [produit]="produit"></app-carte-produit>
-  }
+<div class="produits-page">
+  <section class="catalogue-section">
+    <app-catalogue></app-catalogue>
+  </section>
+
+  <section class="vendeur-section">
+    <div class="section-header">
+      <div>
+        <h2>Produits des vendeurs</h2>
+        <p>Découvrez les articles publiés directement par les vendeurs.</p>
+      </div>
+    </div>
+
+    <div *ngIf="chargementVendeurs" class="loading">
+      Chargement...
+    </div>
+
+    <div *ngIf="!chargementVendeurs && produitsVendeurs.length === 0" class="empty-state">
+      Aucun produit vendeur n’est disponible pour le moment.
+    </div>
+
+    <div *ngIf="!chargementVendeurs && produitsVendeurs.length > 0" class="cards-grid">
+      <app-produit-card
+        *ngFor="let produit of produitsVendeurs"
+        [produit]="produit"
+        (voir)="voirProduit($event)"
+        (ajouter)="ajouterAuPanier($event)"
+        (favori)="toggleFavori($event)">
+      </app-produit-card>
+    </div>
+  </section>
 </div>

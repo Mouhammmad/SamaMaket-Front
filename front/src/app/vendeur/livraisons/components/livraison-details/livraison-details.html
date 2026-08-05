@@ -1,0 +1,138 @@
+<div
+    class="details"
+    *ngIf="livraison">
+
+    <h3>
+
+        Livraison
+
+    </h3>
+
+    <div class="bloc">
+
+        <label>
+
+            Commande
+
+        </label>
+
+        <strong>
+
+            {{ livraison.commande.numero }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Client
+
+        </label>
+
+        <strong>
+
+            {{ livraison.commande.utilisateur }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Adresse
+
+        </label>
+
+        <p>
+
+            {{ livraison.adresse }}
+
+        </p>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Numéro de suivi
+
+        </label>
+
+        <strong>
+
+            {{ livraison.numero_suivi }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Statut
+
+        </label>
+
+        <strong>
+
+            {{ livraison.statut }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Date prévue
+
+        </label>
+
+        <strong>
+
+            {{ livraison.date_prevue || '-' }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Livraison effectuée
+
+        </label>
+
+        <strong>
+
+            {{ livraison.date_livraison || '-' }}
+
+        </strong>
+
+    </div>
+
+    <button
+        (click)="changerStatut()">
+
+        Modifier le statut
+
+    </button>
+
+</div>
+
+<div
+    class="empty"
+    *ngIf="!livraison">
+
+    Sélectionnez une livraison pour voir les détails.
+
+</div>

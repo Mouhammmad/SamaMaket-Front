@@ -1,0 +1,25 @@
+<div
+    class="similaires"
+    *ngIf="produits.length">
+
+    <h2>
+
+        Produits similaires
+
+    </h2>
+
+    <div class="grid">
+
+        <app-produit-card
+
+            *ngFor="let item of produits"
+
+            [produit]="item"
+
+            (voir)="voir.emit($event)">
+
+        </app-produit-card>
+
+    </div>
+
+</div>

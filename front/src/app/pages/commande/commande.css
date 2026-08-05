@@ -1,0 +1,23 @@
+.commandes-page{
+
+display:flex;
+
+flex-direction:column;
+
+gap:24px;
+
+padding:24px;
+
+}
+
+@media (max-width:768px){
+
+.commandes-page{
+
+padding:16px;
+
+gap:16px;
+
+}
+
+}

@@ -1,0 +1,71 @@
+<div class="card">
+
+    <div class="header">
+
+        <h3>
+
+            Evolution des ventes
+
+        </h3>
+
+        <span>
+
+            {{ stats?.periode || 'Ce mois' }}
+
+        </span>
+
+    </div>
+
+    <table *ngIf="stats?.ventes?.length">
+
+        <thead>
+
+            <tr>
+
+                <th>Période</th>
+
+                <th>Commandes</th>
+
+                <th>Chiffre d'affaires</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let vente of stats.ventes">
+
+                <td>
+
+                    {{ vente.label }}
+
+                </td>
+
+                <td>
+
+                    {{ vente.commandes }}
+
+                </td>
+
+                <td>
+
+                    {{ vente.montant }} FCFA
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div
+        class="empty"
+        *ngIf="!stats?.ventes?.length">
+
+        Aucune donnée disponible.
+
+    </div>
+
+</div>

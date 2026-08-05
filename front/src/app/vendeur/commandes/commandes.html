@@ -3,6 +3,9 @@
     (actualiser)="chargerCommandes()">
 
 </app-commande-header>
+<app-commande-dashboard
+    [stats]="stats">
+</app-commande-dashboard>
 <app-commande-filter
 
     (filtreChange)="appliquerFiltres($event)">
@@ -30,3 +33,9 @@
 (enregistrer)="enregistrerStatut($event)">
 
 </app-commande-status>
+<app-commande-preview
+    *ngIf="afficherPreview"
+    [commande]="commandePreview"
+    (fermer)="fermerPreview()"
+    (modifierStatut)="changerStatut($event)">
+</app-commande-preview>

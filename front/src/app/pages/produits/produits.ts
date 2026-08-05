@@ -1,39 +1,60 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProduitService } from '../../core/services/produit';
+import { Router } from '@angular/router';
+import { Catalogue } from './catalogue/catalogue';
+import { ProduitCard } from './catalogue/components/produit-card/produit-card';
+import { VendeurProduits } from '../../core/services/vendeur-produits';
 import { Produit } from '../../core/models/produit';
-import { CarteProduit } from '../../shared/carte-produit/carte-produit';
 
 @Component({
   selector: 'app-produits',
   standalone: true,
-  imports: [CommonModule, CarteProduit],
+  imports: [CommonModule, Catalogue, ProduitCard],
   templateUrl: './produits.html',
   styleUrl: './produits.css'
 })
 export class Produits implements OnInit {
 
-  produits: Produit[] = [];
+  produitsVendeurs: Produit[] = [];
+  chargementVendeurs = false;
 
   constructor(
-    private produitService: ProduitService,
-    private cdr: ChangeDetectorRef
+    private vendeurProduitsService: VendeurProduits,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.produitService.getProducts().subscribe({
-      next: (data) => {
-        console.log('PAGE PRODUITS');
-        console.log(data);
+    this.chargerProduitsVendeurs();
+  }
 
-        const payload = Array.isArray(data) ? data : (data as { results?: Produit[] })?.results ?? [];
-        this.produits = [...payload];
-        this.cdr.detectChanges();
+  chargerProduitsVendeurs(): void {
+    this.chargementVendeurs = true;
+
+    this.vendeurProduitsService.getProduits().subscribe({
+      next: (response: any) => {
+        this.produitsVendeurs = Array.isArray(response?.results)
+          ? response.results
+          : Array.isArray(response)
+            ? response
+            : [];
+        this.chargementVendeurs = false;
       },
-      error: (err) => {
-        console.error('Erreur lors du chargement des produits', err);
+      error: () => {
+        this.produitsVendeurs = [];
+        this.chargementVendeurs = false;
       }
     });
   }
 
+  voirProduit(id: number): void {
+    this.router.navigate(['/produit', id]);
+  }
+
+  ajouterAuPanier(id: number): void {
+    console.log('Produit ajouté au panier', id);
+  }
+
+  toggleFavori(id: number): void {
+    console.log('Favori togglé', id);
+  }
 }

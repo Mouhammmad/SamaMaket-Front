@@ -14,11 +14,9 @@ export class Header {
   nombreArticles = 0;
 
   constructor(private panierService: PanierService) {
-
-    this.panierService.nombreArticles$.subscribe(nombre => {
+    this.panierService.nombreArticles$.subscribe((nombre: number) => {
       this.nombreArticles = nombre;
     });
-
   }
 
 }

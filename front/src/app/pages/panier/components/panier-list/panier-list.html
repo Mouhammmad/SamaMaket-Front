@@ -1,0 +1,97 @@
+<div
+    class="cart-item"
+    *ngFor="let article of articles">
+
+    <div class="image">
+
+        <img
+            [src]="article.produit.image_url || 'assets/images/default-product.png'">
+
+    </div>
+
+    <div class="infos">
+
+        <small class="shop">
+
+            {{ article.produit.boutique }}
+
+        </small>
+
+        <h3>
+
+            {{ article.produit.nom }}
+
+        </h3>
+
+        <p class="variant">
+
+            {{ article.produit.description }}
+
+        </p>
+
+        <div class="prices">
+
+            <span class="price">
+
+                {{ article.produit.prix_promo || article.produit.prix }}
+                FCFA
+
+            </span>
+
+            <span
+                class="old-price"
+                *ngIf="article.produit.prix_promo">
+
+                {{ article.produit.prix }} FCFA
+
+            </span>
+
+        </div>
+
+        <button
+            class="later"
+            (click)="sauvegarder.emit(article)">
+
+            Sauvegarder pour plus tard
+
+        </button>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="remove"
+            (click)="supprimer.emit(article)">
+
+            ✕
+
+        </button>
+
+        <div class="quantity">
+
+            <button
+                (click)="diminuer.emit(article)">
+
+                −
+
+            </button>
+
+            <span>
+
+                {{ article.quantite }}
+
+            </span>
+
+            <button
+                (click)="augmenter.emit(article)">
+
+                +
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
