@@ -1,0 +1,194 @@
+<div class="page">
+
+  <app-sidebar [activeItem]="activeSidebarItem"></app-sidebar>
+
+  <!-- Contenu -->
+
+  <main class="content">
+
+    <div class="breadcrumb">
+
+      Accueil /
+      <span>Mes favoris</span>
+
+    </div>
+
+    <div class="header">
+
+      <div>
+
+        <h1>Mes favoris</h1>
+
+        <small>{{ favoris.length }} produits</small>
+
+      </div>
+
+      <div class="actions">
+
+        <button class="btn-primary" (click)="toutAjouterAuPanier()">
+          Tout ajouter au panier
+        </button>
+
+        <button class="btn-light" (click)="viderFavoris()">
+          Vider les favoris
+        </button>
+
+        <select aria-label="Trier les favoris">
+
+          <option>Récemment ajoutés</option>
+          <option>Prix croissant</option>
+          <option>Prix décroissant</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <!-- Catégories -->
+
+    <div class="categories">
+
+      <button class="active">
+        Tous (12)
+      </button>
+
+      <button>
+        Mode & Tissu (5)
+      </button>
+
+      <button>
+        Alimentation (3)
+      </button>
+
+      <button>
+        Artisanat (4)
+      </button>
+
+    </div>
+
+    <!-- Produits favoris -->
+
+    <div class="products" *ngIf="favoris.length > 0; else emptyFavorites">
+
+      <div
+        class="card"
+        *ngFor="let produit of favoris">
+
+        <span
+          class="badge"
+          [ngClass]="produit.badgeClass">
+
+          {{ produit.badge }}
+
+        </span>
+
+        <button class="heart" type="button" (click)="supprimerFavori(produit.id)">
+
+          ❤
+
+        </button>
+
+        <img
+          [src]="produit.image"
+          alt="{{ produit.nom }}"
+          title="{{ produit.nom }}">
+
+        <small>
+
+          {{ produit.boutique }}
+
+        </small>
+
+        <h3>
+
+          {{ produit.nom }}
+
+        </h3>
+
+        <div class="stars">
+
+          ★★★★★
+
+        </div>
+
+        <div class="price">
+
+          <span class="current">
+
+            {{ produit.prix | number }} F
+
+          </span>
+
+          <span class="old" *ngIf="produit.ancienPrix">
+
+            {{ produit.ancienPrix | number }} F
+
+          </span>
+
+        </div>
+
+        <div class="buttons">
+
+          <button class="voir" [routerLink]="['/produit', produit.id]">
+
+            Voir
+
+          </button>
+
+          <button class="panier" type="button" (click)="ajouterAuPanier(produit)">
+
+            🛒
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <ng-template #emptyFavorites>
+      <div class="empty-state">
+        <p>Aucun produit favori pour le moment.</p>
+      </div>
+    </ng-template>
+
+    <!-- Suggestions -->
+
+    <h2 class="suggest-title">
+
+      Vous pourriez aussi aimer
+
+    </h2>
+
+    <div class="suggestions">
+
+      <div
+        class="mini-card"
+        *ngFor="let produit of suggestions">
+
+        <img
+          [src]="produit.image"
+          alt="{{ produit.nom }}"
+          title="{{ produit.nom }}">
+
+        <strong>
+
+          {{ produit.prix | number }} F
+
+        </strong>
+
+        <button class="btn-ligth" (click)="ajouterAuPanier(produit)">
+
+          + Ajouter
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

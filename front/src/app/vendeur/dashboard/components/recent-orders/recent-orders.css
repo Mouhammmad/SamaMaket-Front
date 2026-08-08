@@ -1,0 +1,47 @@
+.panel{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.panel h3{
+    margin-bottom:20px;
+    color:#102a43;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    padding:15px;
+    background:#f8fafc;
+    color:#102a43;
+}
+
+td{
+    padding:15px;
+}
+
+tr{
+    border-bottom:1px solid #ececec;
+}
+
+.success{
+    background:#198754;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.waiting{
+    background:#ff9d1f;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+}

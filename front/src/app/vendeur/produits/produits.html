@@ -1,0 +1,33 @@
+<div class="produits-page">
+
+    <app-produit-header
+        [total]="produits.length"
+        (ajouter)="ouvrirFormulaire()">
+    </app-produit-header>
+
+    <app-produit-filter
+        [categories]="categories"
+        (recherche)="filtrerRecherche($event)"
+        (categorie)="filtrerCategorie($event)"
+        (statut)="filtrerStatut($event)">
+    </app-produit-filter>
+
+    <app-produit-table
+      [produits]="produitsFiltres"
+      (modifier)="modifierProduit($event)"
+      (supprimer)="supprimerProduit($event)"
+      (dupliquer)="dupliquerProduit($event)"
+      (apercu)="ouvrirPreview($event)"
+      (augmenter)="augmenterStock($event)"
+      (diminuer)="diminuerStock($event)"
+      (statut)="changerStatut($event)">
+    </app-produit-table>
+
+    <app-produit-from
+      *ngIf="afficherFormulaire"
+      [produit]="produitSelectionne"
+      (fermer)="fermerFormulaire()"
+      (produitAjoute)="chargerProduits()">
+    </app-produit-from>
+
+</div>

@@ -1,0 +1,113 @@
+<div class="filter-card">
+
+    <div class="top">
+
+        <input
+            type="text"
+            placeholder="🔍 Numéro ou client..."
+            [(ngModel)]="recherche"
+            (input)="appliquerFiltres()">
+
+    </div>
+
+    <div class="filters">
+
+        <select
+            [(ngModel)]="statut"
+            (change)="appliquerFiltres()">
+
+            <option value="">
+
+                Tous les statuts
+
+            </option>
+
+            <option value="en_attente">
+
+                🟡 En attente
+
+            </option>
+
+            <option value="confirme">
+
+                🔵 Confirmée
+
+            </option>
+
+            <option value="expedie">
+
+                🚚 Expédiée
+
+            </option>
+
+            <option value="livre">
+
+                ✅ Livrée
+
+            </option>
+
+            <option value="annule">
+
+                ❌ Annulée
+
+            </option>
+
+        </select>
+
+        <select
+            [(ngModel)]="paiement"
+            (change)="appliquerFiltres()">
+
+            <option value="">
+
+                Tous les paiements
+
+            </option>
+
+            <option value="orange">
+
+                Orange Money
+
+            </option>
+
+            <option value="wave">
+
+                Wave
+
+            </option>
+
+            <option value="carte">
+
+                Carte bancaire
+
+            </option>
+
+            <option value="especes">
+
+                Paiement à la livraison
+
+            </option>
+
+        </select>
+
+        <input
+            type="date"
+            [(ngModel)]="dateDebut"
+            (change)="appliquerFiltres()">
+
+        <input
+            type="date"
+            [(ngModel)]="dateFin"
+            (change)="appliquerFiltres()">
+
+        <button
+            class="reset"
+            (click)="reinitialiser()">
+
+            Réinitialiser
+
+        </button>
+
+    </div>
+
+</div>

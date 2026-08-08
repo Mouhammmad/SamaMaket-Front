@@ -1,0 +1,53 @@
+<div class="livraison-page">
+
+    <app-livraison-header>
+
+    </app-livraison-header>
+
+    <app-checkout-stepper
+        [etapeActive]="2">
+
+    </app-checkout-stepper>
+
+    <div class="content">
+
+        <div class="left">
+
+            <app-adresse-form
+                (enregistrer)="enregistrerAdresse($event)">
+
+            </app-adresse-form>
+
+            <app-transport-selector
+                (selection)="choisirTransport($event)">
+
+            </app-transport-selector>
+
+        </div>
+
+        <div class="right">
+
+            <app-panier-summary
+
+[sousTotal]="sousTotal"
+
+[reduction]="reduction"
+
+[livraison]="livraison"
+
+[total]="total"
+
+[titreBouton]="'Continuer vers le paiement'"
+
+[afficherContinuer]="false"
+
+[afficherCodePromo]="false"
+
+(commander)="passerPaiement()">
+
+</app-panier-summary>
+        </div>
+
+    </div>
+
+</div>

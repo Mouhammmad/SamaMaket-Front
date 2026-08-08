@@ -1,0 +1,40 @@
+<div class="tracking-card">
+
+    <h2>
+
+        Suivi de votre commande
+
+    </h2>
+
+    <div class="timeline">
+
+        <div
+            class="step"
+            *ngFor="let etape of etapes; let i = index">
+
+            <div
+                class="circle"
+                [class.active]="estActive(i)">
+
+                {{ i + 1 }}
+
+            </div>
+
+            <div
+                class="line"
+                *ngIf="i < etapes.length - 1"
+                [class.active]="estActive(i + 1)">
+
+            </div>
+
+            <span>
+
+                {{ etape.titre }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>

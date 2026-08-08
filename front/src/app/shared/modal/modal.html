@@ -1,0 +1,25 @@
+<div *ngIf="isOpen" class="overlay" (click)="fermer()">
+
+    <div class="dialog" (click)="$event.stopPropagation()">
+
+        <div class="dialog-header">
+
+            <h2>{{ title }}</h2>
+
+            <button (click)="fermer()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <div class="dialog-body">
+
+            <ng-content></ng-content>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,41 @@
+<div class="promo-card">
+
+    <h3>
+
+        Code promotionnel
+
+    </h3>
+
+    <div class="promo-form">
+
+        <input
+            type="text"
+            [(ngModel)]="code"
+            placeholder="Entrez votre code promo">
+
+        <button
+            (click)="appliquerCode()">
+
+            Appliquer
+
+        </button>
+
+    </div>
+
+    <div
+        class="success"
+        *ngIf="codeApplique">
+
+        ✅ Code
+
+        <strong>
+
+            {{ codeApplique }}
+
+        </strong>
+
+        appliqué.
+
+    </div>
+
+</div>

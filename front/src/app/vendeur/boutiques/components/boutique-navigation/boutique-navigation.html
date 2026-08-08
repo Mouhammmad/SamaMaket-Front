@@ -1,0 +1,47 @@
+<nav class="navigation">
+
+    <button
+
+        [class.active]="onglet==='produits'"
+
+        (click)="selectionner('produits')">
+
+        Produits
+
+        ({{ boutique?.nombre_produits || 0 }})
+
+    </button>
+
+    <button
+
+        [class.active]="onglet==='apropos'"
+
+        (click)="selectionner('apropos')">
+
+        À propos
+
+    </button>
+
+    <button
+
+        [class.active]="onglet==='avis'"
+
+        (click)="selectionner('avis')">
+
+        Avis
+
+        ({{ boutique?.nombre_avis || 0 }})
+
+    </button>
+
+    <button
+
+        [class.active]="onglet==='promotions'"
+
+        (click)="selectionner('promotions')">
+
+        Promotions
+
+    </button>
+
+</nav>

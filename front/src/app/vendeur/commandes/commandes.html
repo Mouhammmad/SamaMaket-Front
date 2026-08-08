@@ -1,0 +1,44 @@
+<app-commande-header
+
+    (actualiser)="chargerCommandes()">
+
+</app-commande-header>
+<app-commande-dashboard
+    [stats]="stats">
+</app-commande-dashboard>
+<app-commande-filter
+
+    (filtreChange)="appliquerFiltres($event)">
+
+</app-commande-filter>
+<app-commande-table
+
+    [commandes]="commandes"
+
+    (apercu)="ouvrirApercu($event)"
+
+    (statut)="changerStatut($event)"
+
+    (facture)="ouvrirFacture($event)"
+
+    (supprimer)="supprimerCommande($event)">
+
+</app-commande-table>
+<app-commande-status
+
+*ngIf="afficherStatut"
+
+[commande]="commandeSelectionnee"
+
+(fermer)="fermerStatut()"
+
+(enregistrer)="enregistrerStatut($event)">
+
+</app-commande-status>
+<div *ngIf="statusMessage" class="status-message">{{ statusMessage }}</div>
+<app-commande-preview
+    *ngIf="afficherPreview"
+    [commande]="commandePreview"
+    (fermer)="fermerPreview()"
+    (modifierStatut)="changerStatut($event)">
+</app-commande-preview>

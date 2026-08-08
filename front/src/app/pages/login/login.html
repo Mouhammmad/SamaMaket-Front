@@ -1,0 +1,109 @@
+<header class="auth-header">
+  <div class="logo">
+    <span class="logo-white">SAMA</span>
+    <span class="logo-orange">MARKET</span>
+  </div>
+  
+  <a routerLink="/" class="back-home">
+    ← Retour à l'accueil
+  </a>
+</header>
+<div class="auth-intro">
+  <h1>Bienvenue sur SAMA MARKET</h1>
+  <p>
+    Connectez-vous pour accéder à votre panier,
+    suivre vos commandes et acheter auprès
+    des meilleurs vendeurs locaux du Sénégal. </p>
+</div>
+
+<div class="login-page">
+  <div class="login-wrapper">
+    
+    <div class="left-panel">
+      <div class="brand">
+        <span class="brand-sama">SAMA</span>
+        <span class="brand-market">MARKET</span>
+      </div>
+      
+      <div class="left-content">
+        <p class="bienvenue">Bienvenue sur</p>
+        <h1>la marketplace<br />locale du Sénégal</h1>
+        <p class="description">Des milliers de produits locaux livrés directement chez toi.</p>
+
+        <ul class="avantages">
+          <li><span>✓</span> Paiement Wave & Orange Money</li>
+          <li><span>✓</span> Vendeurs vérifiés locaux</li>
+          <li><span>✓</span> Livraison rapide</li>
+        </ul>
+      </div>
+
+      <p class="slogan">"Achète local, soutiens ta communauté"</p>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-shell">
+        <h2>Connexion</h2>
+        <p class="sous-titre">Heureux de te revoir !</p>
+
+        <div class="social-login">
+          <button type="button" class="social-btn google">G Google</button>
+          <button type="button" class="social-btn facebook">f Facebook</button>
+        </div>
+
+        <div class="separator"><span>ou</span></div>
+
+        <div *ngIf="erreur" class="erreur-msg">{{ erreur }}</div>
+
+        <form (ngSubmit)="onSubmit()" novalidate>
+          <div class="champ">
+            <label for="username">Adresse email ou nom d'utilisateur</label>
+            <input
+              id="username"
+              type="text"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="exemple@email.com ou username"
+              required
+            />
+          </div>
+
+          <div class="champ">
+            <label for="password">Mot de passe</label>
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="••••••••••"
+              required
+            />
+          </div>
+
+          <div class="actions-row">
+            <label class="remember">
+              <input type="checkbox" /> Se souvenir de moi
+            </label>
+            <a class="forgot-link" routerLink="/forgot-password">Mot de passe oublié ?</a>
+          </div>
+
+          <button type="submit" [disabled]="chargement" class="btn-connexion">
+            {{ chargement ? 'Connexion...' : 'Se connecter' }}
+          </button>
+        </form>
+        <div class="welcome-box">
+  👋 Heureux de vous revoir !
+</div>
+
+        <p class="lien-register">
+          Pas encore de compte ?
+          <a routerLink="/register">S'inscrire →</a>
+        </p>
+
+        <p class="conditions">En continuant, tu acceptes nos Conditions d'utilisation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="auth-footer">
+  © 2026 <strong>SAMA MARKET</strong> — Marketplace locale du Sénégal
+</footer>

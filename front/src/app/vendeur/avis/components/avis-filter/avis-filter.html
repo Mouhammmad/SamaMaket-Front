@@ -1,0 +1,47 @@
+<div class="filter-bar">
+
+    <div class="search">
+
+        <input
+            type="text"
+            [(ngModel)]="recherche"
+            (keyup)="rechercher()"
+            placeholder="Rechercher un client ou un produit...">
+
+    </div>
+
+    <div class="note">
+
+        <select
+            [(ngModel)]="note"
+            (change)="changerNote()">
+
+            <option value="">
+                Toutes les notes
+            </option>
+
+            <option value="5">
+                ⭐⭐⭐⭐⭐ 5 étoiles
+            </option>
+
+            <option value="4">
+                ⭐⭐⭐⭐ 4 étoiles
+            </option>
+
+            <option value="3">
+                ⭐⭐⭐ 3 étoiles
+            </option>
+
+            <option value="2">
+                ⭐⭐ 2 étoiles
+            </option>
+
+            <option value="1">
+                ⭐ 1 étoile
+            </option>
+
+        </select>
+
+    </div>
+
+</div>

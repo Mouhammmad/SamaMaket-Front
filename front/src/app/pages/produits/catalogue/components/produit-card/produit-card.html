@@ -1,0 +1,105 @@
+<div class="card">
+
+    <div class="image-container">
+
+        <div
+*ngIf="produit.promotion_active">
+
+-{{ produit.promotion_active.valeur }}%
+
+</div>
+        <span
+            class="badge new"
+            *ngIf="produit.est_nouveau">
+
+            Nouveau
+
+        </span>
+
+<button
+(click)="toggleFavori(produit)">
+
+<i
+class="fa-solid"
+
+[ngClass]="
+
+produit.est_favori
+
+?
+
+'fa-heart'
+
+:
+
+'fa-heart-o'
+
+">
+
+</i>
+
+</button>
+
+        <img
+
+[src]="produit.image_url"
+
+[alt]="produit.nom">
+    </div>
+
+    <div class="body">
+
+        <div class="rating">
+
+            ⭐ {{ produit.note || 0 }}
+
+            <span>
+
+                ({{ produit.nombre_avis || 0 }})
+
+            </span>
+
+        </div>
+
+        <h3>
+
+            {{ produit.nom }}
+
+        </h3>
+
+        <p class="vendeur">
+
+            {{ produit.boutique }}
+
+        </p>
+
+        <div class="prix">
+
+{{ produit.prix_promo || produit.prix }}
+
+FCFA
+
+</div>
+        <div class="actions">
+
+            <button
+                type="button"
+                class="voir"
+                (click)="voirProduit()">
+
+                Voir
+
+            </button>
+
+            <button
+(click)="ajouterPanier()">
+
+Ajouter au panier
+
+</button>
+
+        </div>
+
+    </div>
+
+</div>

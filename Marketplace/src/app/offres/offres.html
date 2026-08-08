@@ -1,0 +1,24 @@
+<div class="page-shell">
+  <header class="page-header">
+    <h1>Offres</h1>
+    <p>Retrouve les codes et promotions valides sur SAMA MARKET.</p>
+  </header>
+
+  <div *ngIf="loading" class="loading-state">Chargement des offres...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="offers-grid">
+    <article *ngFor="let promo of promotions" class="offer-card">
+      <div class="offer-top">
+        <span class="offer-code">{{ promo.code }}</span>
+        <span class="offer-boutique">{{ promo.boutique }}</span>
+      </div>
+      <p class="offer-type">{{ promo.type_remise === 'pourcentage' ? promo.taux_remise + '% de réduction' : promo.taux_remise + ' FCFA de réduction' }}</p>
+      <p class="offer-period">Valide du {{ promo.date_debut }} au {{ promo.date_fin }}</p>
+      <div *ngIf="promo.produits?.length" class="offer-products">
+        <strong>Produits concernés :</strong>
+        <span *ngFor="let produit of promo.produits">{{ produit.nom }}</span>
+      </div>
+    </article>
+  </div>
+</div>

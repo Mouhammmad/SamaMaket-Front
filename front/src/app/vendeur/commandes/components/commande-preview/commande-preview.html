@@ -1,0 +1,214 @@
+<div
+class="overlay"
+*ngIf="commande">
+
+<div class="preview-card">
+
+<button
+class="close"
+(click)="fermer.emit()">
+
+✕
+
+</button>
+
+<h2>
+
+Commande #{{ commande.numero }}
+
+</h2>
+
+<span
+class="badge"
+[ngClass]="commande.statut">
+
+{{ commande.statut }}
+
+</span>
+
+<hr>
+
+<h3>
+
+👤 Client
+
+</h3>
+
+<div class="section">
+
+<p><strong>Nom :</strong> {{ commande.client }}</p>
+
+<p><strong>Email :</strong> {{ commande.email }}</p>
+
+<p><strong>Téléphone :</strong> {{ commande.telephone }}</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+📦 Produits
+
+</h3>
+<div
+class="product"
+*ngFor="let ligne of commande.lignes">
+
+<img
+[src]="ligne.produit.image_url || ligne.produit.image || 'assets/images/default-product.png'"
+[alt]="ligne.produit.nom"
+[title]="ligne.produit.nom">
+
+<div>
+
+<strong>
+
+{{ ligne.produit.nom }}
+
+</strong>
+
+<p>
+
+Qté : {{ ligne.quantite }}
+
+</p>
+
+<p>
+
+{{ ligne.prix_unitaire }} FCFA
+
+</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<h3>
+
+🚚 Livraison
+
+</h3>
+
+<div class="section">
+
+<p>{{ commande.adresse_livraison }}</p>
+
+<p *ngIf="commande.mode_livraison"><strong>Mode :</strong> {{ commande.mode_livraison }}</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+💳 Paiement
+
+</h3>
+
+<div class="section">
+
+<p>
+
+Mode :
+
+{{ commande.paiement?.methode }}
+
+</p>
+
+<p>
+
+Statut :
+
+{{ commande.paiement?.statut }}
+
+</p>
+
+</div>
+
+<hr>
+
+<h3>
+
+Résumé
+
+</h3>
+
+<div class="resume">
+
+<div>
+
+Sous-total
+
+<span>
+
+{{ commande.sous_total }} FCFA
+
+</span>
+
+</div>
+
+<div>
+
+Livraison
+
+<span>
+
+{{ commande.frais_livraison }} FCFA
+
+</span>
+
+</div>
+
+<div>
+
+Réduction
+
+<span>
+
+{{ commande.reduction }} FCFA
+
+</span>
+
+</div>
+
+<div class="total">
+
+TOTAL
+
+<span>
+
+{{ commande.total }} FCFA
+
+</span>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<button
+            type="button"
+            class="status"
+            (click)="modifierStatut.emit(commande)">
+
+            Changer le statut
+
+        </button>
+
+        <button
+            type="button"
+(click)="fermer.emit()">
+
+Fermer
+
+</button>
+
+</div>
+
+</div>
+
+</div>

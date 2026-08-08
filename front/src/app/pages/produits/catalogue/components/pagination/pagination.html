@@ -1,0 +1,37 @@
+<nav
+    class="pagination"
+    *ngIf="pages > 1">
+
+    <button
+
+        (click)="precedent()"
+
+        [disabled]="page===1">
+
+        ← Précédent
+
+    </button>
+
+    <button
+
+        *ngFor="let numero of numeros"
+
+        [class.active]="numero===page"
+
+        (click)="aller(numero)">
+
+        {{ numero }}
+
+    </button>
+
+    <button
+
+        (click)="suivant()"
+
+        [disabled]="page===pages">
+
+        Suivant →
+
+    </button>
+
+</nav>

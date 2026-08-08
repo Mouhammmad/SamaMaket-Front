@@ -1,0 +1,38 @@
+<app-livraison-header
+    [total]="livraisons.length">
+</app-livraison-header>
+
+<app-livraison-filter
+    (rechercheChange)="rechercher($event)"
+    (statutChange)="filtrer($event)">
+</app-livraison-filter>
+<app-livraison-empty
+    *ngIf="!chargement && livraisons.length==0">
+</app-livraison-empty>
+
+<div
+    class="contenu"
+    *ngIf="livraisons.length">
+
+    <app-livraison-list
+
+        [livraisons]="livraisons"
+
+        (selection)="selectionner($event)">
+
+    </app-livraison-list>
+
+    <app-livraison-details
+
+        [livraison]="livraisonSelectionnee">
+
+    </app-livraison-details>
+
+</div>
+<app-livraison-status
+
+    [livraison]="livraisonSelectionnee"
+
+    (enregistrer)="modifierLivraison($event)">
+
+</app-livraison-status>

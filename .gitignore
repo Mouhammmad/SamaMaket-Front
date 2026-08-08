@@ -1,0 +1,12 @@
+node_modules/
+.angular/
+dist/
+.env
+__pycache__/
+*.py[cod]
+*.sqlite3
+env/
+.venv/
+.idea/
+.vscode/
+coverage/

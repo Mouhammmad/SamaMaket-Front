@@ -1,0 +1,82 @@
+<div class="achat-card">
+
+    <h3>
+
+        Acheter ce produit
+
+    </h3>
+
+    <div class="quantite">
+
+        <button
+            (click)="diminuer()">
+
+            −
+
+        </button>
+
+        <span>
+
+            {{ quantite }}
+
+        </span>
+
+        <button
+            (click)="augmenter()">
+
+            +
+
+        </button>
+
+    </div>
+
+    <button
+        class="btn panier"
+        (click)="ajouter()"
+        [disabled]="stock <= 0">
+
+        🛒 Ajouter au panier
+
+    </button>
+
+    <button
+        class="btn acheter"
+        (click)="acheter()"
+        [disabled]="stock <= 0">
+
+        ⚡ Acheter maintenant
+
+    </button>
+
+    <button
+        class="btn favori"
+        (click)="favori()">
+
+        ❤️ Ajouter aux favoris
+
+    </button>
+
+    <div class="resume">
+
+        <div>
+
+            Quantité :
+            <strong>{{ quantite }}</strong>
+
+        </div>
+
+        <div>
+
+            Total :
+
+            <strong>
+
+                {{ prixTotal }} FCFA
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>

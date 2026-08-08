@@ -1,0 +1,167 @@
+<div class="table-container" *ngIf="produits.length; else vide">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Image</th>
+                <th>Produit</th>
+                <th>Catégorie</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Statut</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let produit of produits">
+
+                <td>
+
+                    <img
+                        class="photo"
+                        [src]="produit.image_url || 'assets/images/default-product.png'"
+                        alt="Produit">
+
+                </td>
+
+                <td>
+
+                    <div class="product">
+
+                        <strong>{{ produit.nom }}</strong>
+
+                        <small>
+                            #{{ produit.id }}
+                        </small>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    {{ produit.categorie }}
+
+                </td>
+
+                <td>
+
+                    <strong>{{ produit.prix }}</strong> FCFA
+
+                </td>
+
+                <td>
+
+                    <span
+                        class="stock"
+                        [class.stock-zero]="produit.quantite_stock <= 0">
+
+                        {{ produit.quantite_stock }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+    <label class="switch">
+
+        <input
+            type="checkbox"
+            [checked]="produit.est_actif"
+            (change)="changerStatut(produit)">
+
+        <span class="slider"></span>
+
+    </label>
+
+</td>
+
+                <td>
+
+    <div class="action-menu">
+
+        <button
+            class="menu-btn"
+            (click)="toggleMenu(produit.id)">
+
+            <i class="bi bi-three-dots-vertical"></i>
+
+        </button>
+
+        <div
+            class="menu"
+            *ngIf="menuOuvert === produit.id">
+
+            <button (click)="modifier.emit(produit)">
+
+                <i class="bi bi-pencil"></i>
+
+                Modifier
+
+            </button>
+
+            <button (click)="openPreviewLocal(produit)">
+
+    <i class="bi bi-eye"></i>
+
+    Aperçu
+
+</button>
+
+            <button (click)="dupliquer.emit(produit)">
+
+                <i class="bi bi-copy"></i>
+
+                Dupliquer
+
+            </button>
+
+            <button
+                class="danger"
+                (click)="supprimer.emit(produit)">
+
+                <i class="bi bi-trash"></i>
+
+                Supprimer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+    <ng-template #vide>
+
+    <div class="empty-state">
+
+        <i class="bi bi-box-seam"></i>
+
+        <h3>Aucun produit</h3>
+
+        <p>
+
+            Vous n'avez encore ajouté aucun produit.
+
+        </p>
+
+    </div>
+
+</ng-template>

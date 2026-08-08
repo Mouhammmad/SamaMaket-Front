@@ -1,0 +1,28 @@
+<div class="dashboard">
+
+    <div class="welcome-card">
+        <div>
+            <h2>Bonjour, {{ displayName }} 👋</h2>
+            <p>Voici un aperçu de votre activité de vendeur aujourd’hui.</p>
+        </div>
+    </div>
+
+    <app-stats-cards></app-stats-cards>
+
+    <div class="dashboard-middle">
+
+        <app-sales-chart [ventes]="salesData"></app-sales-chart>
+
+        <app-recent-activity [activities]="activityMessages"></app-recent-activity>
+
+    </div>
+
+    <div class="dashboard-bottom">
+
+        <app-recent-orders [orders]="recentOrders"></app-recent-orders>
+
+        <app-top-products [products]="topProducts"></app-top-products>
+
+    </div>
+
+</div>

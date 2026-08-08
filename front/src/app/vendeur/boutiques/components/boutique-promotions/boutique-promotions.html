@@ -1,0 +1,37 @@
+<div
+
+class="promo"
+
+*ngFor="let promo of promotions">
+
+    <h3>
+
+        {{ promo.code }}
+
+    </h3>
+
+    <p>
+
+        {{ promo.taux_remise }} %
+
+    </p>
+
+    <small>
+
+        Jusqu'au
+
+        {{ promo.date_fin }}
+
+    </small>
+
+</div>
+
+<div
+
+class="empty"
+
+*ngIf="!promotions.length">
+
+Aucune promotion.
+
+</div>

@@ -1,0 +1,33 @@
+<div class="card">
+
+    <h3>
+
+        Catégories
+
+    </h3>
+
+    <div class="categories">
+
+        <span
+
+            class="badge"
+
+            *ngFor="let categorie of boutique?.categories">
+
+            {{ categorie.nom }}
+
+        </span>
+
+    </div>
+
+    <div
+
+        class="empty"
+
+        *ngIf="!boutique?.categories?.length">
+
+        Aucune catégorie.
+
+    </div>
+
+</div>

@@ -1,0 +1,45 @@
+<div class="confirmation-page">
+
+    <app-checkout-stepper
+
+        [etapeActive]="4">
+
+    </app-checkout-stepper>
+
+    <app-confirmation-header>
+
+    </app-confirmation-header>
+
+    <div *ngIf="chargement" class="loading">
+
+        Chargement de la commande...
+
+    </div>
+
+    <ng-container *ngIf="!chargement && commande">
+
+        <app-confirmation-summary
+
+            [commande]="commande">
+
+        </app-confirmation-summary>
+
+        <app-confirmation-products
+
+            [lignes]="commande.lignes || []">
+
+        </app-confirmation-products>
+
+        <app-confirmation-tracking
+            [statut]="commande.statut">
+        </app-confirmation-tracking>
+
+        <app-confirmation-actions
+            (facture)="telechargerFacture()"
+            (suivi)="suivreCommande()"
+            (accueil)="retourAccueil()">
+        </app-confirmation-actions>
+
+    </ng-container>
+
+</div>

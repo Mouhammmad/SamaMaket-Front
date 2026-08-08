@@ -1,0 +1,127 @@
+<div class="info-card">
+
+    <div class="categorie">
+
+        {{ produit.categorie }}
+
+    </div>
+
+    <h1>
+
+        {{ produit.nom }}
+
+    </h1>
+
+    <div class="meta">
+
+        <span>
+
+            ⭐ {{ produit.note_moyenne || 0 }}
+
+        </span>
+
+        <span>
+
+            ({{ produit.nombre_avis || 0 }} avis)
+
+        </span>
+
+    </div>
+
+    <div class="vendeur">
+
+        Boutique :
+
+        <strong>
+
+            {{ produit.boutique }}
+
+        </strong>
+
+    </div>
+
+    <div class="prix">
+
+        <span class="actuel">
+
+            {{ prixActuel }} FCFA
+
+        </span>
+
+        <span
+            class="ancien"
+            *ngIf="hasPromo && prixAvant > prixActuel">
+
+            {{ prixAvant }} FCFA
+
+        </span>
+
+        <span
+            class="reduction"
+            *ngIf="hasPromo && prixAvant > prixActuel">
+
+            -{{ reduction }}%
+
+        </span>
+
+    </div>
+
+    <div class="stock">
+
+        <span
+            class="ok"
+            *ngIf="stock > 0">
+
+            ✔ En stock
+
+        </span>
+
+        <span
+            class="ko"
+            *ngIf="stock <= 0">
+
+            Rupture de stock
+
+        </span>
+
+    </div>
+
+    <hr>
+
+    <div class="description">
+
+        {{ produit.description }}
+
+    </div>
+
+    <hr>
+
+    <div class="infos">
+
+        <div>
+
+            🚚 Livraison rapide
+
+        </div>
+
+        <div>
+
+            🔒 Paiement sécurisé
+
+        </div>
+
+        <div>
+
+            ↩ Retour sous 7 jours
+
+        </div>
+
+        <div>
+
+            ✔ Garantie vendeur
+
+        </div>
+
+    </div>
+
+</div>

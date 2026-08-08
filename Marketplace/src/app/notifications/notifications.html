@@ -1,0 +1,245 @@
+<div class="page">
+
+  <app-sidebar [activeItem]="activeSidebarItem"></app-sidebar>
+
+  <!-- Contenu -->
+
+  <main class="content">
+
+    <div class="breadcrumb">
+      Accueil / <span>Notifications</span>
+    </div>
+
+    <div class="header">
+
+      <div>
+        <h1>Notifications</h1>
+        <small>5 non lues</small>
+      </div>
+
+      <div class="actions">
+
+        <button type="button" (click)="marquerToutLu()">
+          ✓ Tout marquer lu
+        </button>
+
+        <button type="button" (click)="effacerToutes()">
+          🗑 Tout effacer
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Filtres -->
+
+    <div class="filters">
+
+      <button class="active">
+        Toutes
+        <span>(12)</span>
+      </button>
+
+      <button>
+        Commandes
+        <span>(4)</span>
+      </button>
+
+      <button>
+        Promos
+        <span>(3)</span>
+      </button>
+
+      <button>
+        Livraisons
+        <span>(3)</span>
+      </button>
+
+      <button>
+        Système
+        <span>(2)</span>
+      </button>
+
+    </div>
+
+    <!-- Aujourd'hui -->
+
+    <h3 class="section-title">
+      AUJOURD'HUI
+    </h3>
+
+    <div class="notification-card" *ngFor="let n of notificationsToday">
+
+      <div class="dot"></div>
+
+      <div class="icon">
+        {{n.icon}}
+      </div>
+
+      <div class="body">
+
+        <h4>{{n.title}}</h4>
+
+        <p>{{n.message}}</p>
+
+        <a>{{n.action}}</a>
+
+      </div>
+
+      <div class="time">
+        {{n.time}}
+      </div>
+
+    </div>
+
+    <!-- Hier -->
+
+    <h3 class="section-title">
+      HIER
+    </h3>
+
+    <div class="notification-card" *ngFor="let n of notificationsYesterday">
+
+      <div class="icon">
+        {{n.icon}}
+      </div>
+
+      <div class="body">
+
+        <h4>{{n.title}}</h4>
+
+        <p>{{n.message}}</p>
+
+        <a>{{n.action}}</a>
+
+      </div>
+
+      <div class="time">
+        {{n.time}}
+      </div>
+
+    </div>
+
+    <!-- Cette semaine -->
+
+    <h3 class="section-title">
+      CETTE SEMAINE
+    </h3>
+
+    <div class="notification-card" *ngFor="let n of notificationsWeek">
+
+      <div class="icon">
+        {{n.icon}}
+      </div>
+
+      <div class="body">
+
+        <h4>{{n.title}}</h4>
+
+        <p>{{n.message}}</p>
+
+        <a>{{n.action}}</a>
+
+      </div>
+
+      <div class="time">
+        {{n.time}}
+      </div>
+
+    </div>
+
+    <!-- Plus ancien -->
+
+    <h3 class="section-title">
+      PLUS ANCIEN
+    </h3>
+
+    <div class="notification-card" *ngFor="let n of notificationsOld">
+
+      <div class="icon">
+        {{n.icon}}
+      </div>
+
+      <div class="body">
+
+        <h4>{{n.title}}</h4>
+
+        <p>{{n.message}}</p>
+
+        <a>{{n.action}}</a>
+
+      </div>
+
+      <div class="time">
+        {{n.time}}
+      </div>
+
+    </div>
+
+    <!-- Paramètres -->
+
+    <div class="settings">
+
+      <h2>Paramètres de notification</h2>
+
+      <div class="setting">
+
+        <div>
+
+          <strong>Commandes & livraisons</strong>
+
+          <p>Suivi de vos commandes</p>
+
+        </div>
+
+        <input id="notif-commandes" type="checkbox" checked aria-label="Commandes & livraisons">
+
+      </div>
+
+      <div class="setting">
+
+        <div>
+
+          <strong>Promotions & offres</strong>
+
+          <p>Alertes sur les promotions</p>
+
+        </div>
+
+        <input id="notif-promos" type="checkbox" checked aria-label="Promotions & offres">
+
+      </div>
+
+      <div class="setting">
+
+        <div>
+
+          <strong>Alertes favoris</strong>
+
+          <p>Produits favoris</p>
+
+        </div>
+
+        <input id="notif-favoris" type="checkbox" checked aria-label="Alertes favoris">
+
+      </div>
+
+      <div class="setting">
+
+        <div>
+
+          <strong>Newsletter</strong>
+
+          <p>Actualités Sama Market</p>
+
+        </div>
+
+        <input id="notif-newsletter" type="checkbox" aria-label="Newsletter">
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

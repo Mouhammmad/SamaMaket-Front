@@ -1,0 +1,50 @@
+.produits-page {
+  max-width: 1450px;
+  margin: auto;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.catalogue-section {
+  display: block;
+}
+
+.vendeur-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-header h2 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  color: #111827;
+}
+
+.section-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.loading,
+.empty-state {
+  padding: 24px;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  color: #6b7280;
+  background: #f9fafb;
+}
+
+@media (max-width: 1100px) {
+  .produits-page {
+    padding: 20px;
+  }
+}

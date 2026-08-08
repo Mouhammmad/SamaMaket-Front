@@ -1,0 +1,115 @@
+<div *ngIf="boutique" class="card">
+
+<h2>
+
+🏪 {{ boutique.nom }}
+
+</h2>
+
+<hr>
+
+<p>
+
+<strong>Responsable :</strong>
+
+{{ boutique.proprietaire }}
+
+</p>
+
+<p>
+
+<strong>Email :</strong>
+
+{{ boutique.email }}
+
+</p>
+
+<p>
+
+<strong>Ville :</strong>
+
+{{ boutique.ville }}
+
+</p>
+
+<p>
+
+<strong>Description :</strong>
+
+{{ boutique.description }}
+
+</p>
+
+<p>
+
+<strong>Catégorie :</strong>
+
+{{ boutique.categorie }}
+
+</p>
+
+<p>
+
+<strong>Note :</strong>
+
+⭐ {{ boutique.note }}
+
+</p>
+
+<p>
+
+<strong>Statut :</strong>
+
+<span *ngIf="boutique['approuvé']; else attente" class="badge bg-success">
+
+Approuvée
+
+</span>
+
+<ng-template #attente>
+
+<span class="badge bg-warning">
+
+En attente
+
+</span>
+
+</ng-template>
+
+</p>
+
+<div class="mt-4">
+
+<div class="mt-4">
+
+<button *ngIf="!boutique['approuvé']; else retireBtn"
+class="btn btn-success me-2"
+(click)="approuver()">
+
+Approuver
+
+</button>
+
+<ng-template #retireBtn>
+
+<button
+class="btn btn-warning"
+(click)="refuser()">
+
+Retirer l'approbation
+
+</button>
+
+</ng-template>
+    <button
+        class="btn btn-danger"
+        (click)="refuser()">
+
+        ✖ Refuser
+
+    </button>
+
+</div>
+</div>
+
+</div>

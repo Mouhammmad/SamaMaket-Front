@@ -1,0 +1,51 @@
+<div class="card">
+
+    <h2>
+
+        Choisissez votre moyen de paiement
+
+    </h2>
+
+    <div
+        class="method"
+        *ngFor="let methode of methodes"
+        [class.active]="methodeSelectionnee === methode.id"
+        (click)="choisir(methode)">
+
+        <div class="left">
+
+            <div class="icon">
+
+                {{ methode.icone }}
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    {{ methode.nom }}
+
+                </h3>
+
+                <small>
+
+                    {{ methode.description }}
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div
+            class="check"
+            *ngIf="methodeSelectionnee === methode.id">
+
+            ✓
+
+        </div>
+
+    </div>
+
+</div>

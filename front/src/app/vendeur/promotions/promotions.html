@@ -1,0 +1,58 @@
+<div class="page">
+  <app-promotion-header
+    [total]="promotions.length"
+    (ajouter)="ouvrirFormulaire()">
+  </app-promotion-header>
+  <app-promotion-dashboard
+    [promotions]="promotions">
+</app-promotion-dashboard>
+
+<div class="promo-summary-block">
+  <div class="promo-summary-row">
+    <app-promotion-chart
+        [promotions]="promotions">
+    </app-promotion-chart>
+
+    <app-promotion-calendar
+        [promotions]="promotions">
+    </app-promotion-calendar>
+  </div>
+
+  <app-promotion-analytics
+    [promotions]="promotions">
+  </app-promotion-analytics>
+  <app-promotion-timeline
+    [promotions]="promotions">
+</app-promotion-timeline>
+</div>
+
+  
+
+
+  <app-promotion-filter
+    (recherche)="filtrerRecherche($event)"
+    (statut)="filtrerStatut($event)"
+    (type)="filtrerType($event)">
+  </app-promotion-filter>
+
+  <app-promotion-form
+    *ngIf="afficherFormulaire"
+    [promotion]="promotionSelectionnee"
+    (fermer)="fermerFormulaire()"
+    (enregistrer)="chargerPromotions(); fermerFormulaire()">
+  </app-promotion-form>
+
+  <app-promotion-table
+    [promotions]="promotionsFiltrees"
+    (modifier)="modifierPromotion($event)"
+    (supprimer)="supprimerPromotion($event)"
+    (apercu)="ouvrirPreview($event)"
+    (dupliquer)="dupliquerPromotion($event)">
+  </app-promotion-table>
+
+  <app-promotion-preview
+    *ngIf="afficherPreview"
+    [promotion]="promotionSelectionnee"
+    (fermer)="fermerPreview()">
+  </app-promotion-preview>
+</div>

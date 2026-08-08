@@ -1,0 +1,69 @@
+<div
+    class="card"
+    *ngIf="lignes.length">
+
+    <h2>
+
+        Produits commandés
+
+    </h2>
+
+    <div
+        class="product"
+        *ngFor="let ligne of lignes">
+
+        <img
+            [src]="getImage(ligne)"
+            [alt]="ligne.produit.nom">
+
+        <div class="infos">
+
+            <h3>
+
+                {{ ligne.produit.nom }}
+
+            </h3>
+
+            <p>
+
+                Quantité :
+
+                <strong>
+
+                    {{ ligne.quantite }}
+
+                </strong>
+
+            </p>
+
+            <p>
+
+                Prix unitaire :
+
+                <strong>
+
+                    {{ ligne.prix_unitaire }} FCFA
+
+                </strong>
+
+            </p>
+
+        </div>
+
+        <div class="subtotal">
+
+            {{ ligne.sous_total }} FCFA
+
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    class="empty"
+    *ngIf="!lignes.length">
+
+    Aucun produit trouvé.
+
+</div>

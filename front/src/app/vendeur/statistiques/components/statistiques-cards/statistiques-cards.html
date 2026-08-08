@@ -1,0 +1,115 @@
+<div class="cards">
+
+    <div class="card chiffre">
+
+        <div class="icon">💰</div>
+
+        <div class="content">
+
+            <span>Chiffre d'affaires</span>
+
+            <strong>{{ stats?.chiffre_affaires || 0 }} FCFA</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card commandes">
+
+        <div class="icon">📦</div>
+
+        <div class="content">
+
+            <span>Commandes</span>
+
+            <strong>{{ stats?.commandes || 0 }}</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card produits">
+
+        <div class="icon">🛒</div>
+
+        <div class="content">
+
+            <span>Produits</span>
+
+            <strong>{{ stats?.produits || 0 }}</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card clients">
+
+        <div class="icon">👥</div>
+
+        <div class="content">
+
+            <span>Clients</span>
+
+            <strong>{{ stats?.clients || 0 }}</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card avis">
+
+        <div class="icon">⭐</div>
+
+        <div class="content">
+
+            <span>Note moyenne</span>
+
+            <strong>{{ stats?.note_moyenne || 0 }}/5</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card panier">
+
+        <div class="icon">🧾</div>
+
+        <div class="content">
+
+            <span>Panier moyen</span>
+
+            <strong>{{ stats?.panier_moyen || 0 }} FCFA</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card favoris">
+
+        <div class="icon">❤️</div>
+
+        <div class="content">
+
+            <span>Favoris</span>
+
+            <strong>{{ stats?.favoris || 0 }}</strong>
+
+        </div>
+
+    </div>
+
+    <div class="card conversion">
+
+        <div class="icon">📈</div>
+
+        <div class="content">
+
+            <span>Taux de conversion</span>
+
+            <strong>{{ stats?.conversion || 0 }}%</strong>
+
+        </div>
+
+    </div>
+
+</div>

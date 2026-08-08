@@ -1,0 +1,118 @@
+<div class="table-container" *ngIf="promotions.length; else vide">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Remise</th>
+        <th>Produits</th>
+        <th>Période</th>
+        <th>Statut</th>
+        <th>Actions</th>
+        <th>Économie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let promo of promotions">
+        <td>
+
+    <div class="promo-code">
+
+        🎁
+
+        <strong>{{ promo.code }}</strong>
+
+    </div>
+
+</td>
+        <td>
+          <span *ngIf="promo.type_remise === 'pourcentage'">{{ promo.taux_remise }} %</span>
+          <span *ngIf="promo.type_remise === 'montant_fixe'">{{ promo.taux_remise }} FCFA</span>
+        </td>
+        <td>
+
+📦 {{ promo.produits?.length || 0 }}
+
+</td>
+        <td>
+          <div class="periode">
+            <span>{{ promo.date_debut || '—' }}</span>
+            <small>→ {{ promo.date_fin || '—' }}</small>
+          </div>
+        </td>
+        <td>
+          <span class="badge" [class.active]="estPromotionActive(promo)" [class.inactive]="!estPromotionActive(promo)">
+            {{ estPromotionActive(promo) ? '🟢 Active' : '🔴 Inactive' }}
+          </span>
+        </td>
+        <td>
+          <div class="actions">
+
+    <button
+        class="btn view"
+        (click)="apercu.emit(promo)">
+
+        👁
+
+    </button>
+
+    <button
+        class="btn edit"
+        (click)="modifier.emit(promo)">
+
+        ✏️
+
+    </button>
+
+    <button
+        class="btn copy"
+        (click)="dupliquer.emit(promo)">
+
+        📄
+
+    </button>
+
+    <button
+        class="btn delete"
+        (click)="supprimer.emit(promo)">
+
+        🗑
+
+    </button>
+
+</div>
+        </td>
+        <td>
+
+    <span class="discount">
+
+        {{ promo.taux_remise }}
+
+        {{ promo.type_remise === 'pourcentage' ? '%' : 'FCFA' }}
+
+    </span>
+
+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #vide>
+
+    <div class="empty-state">
+
+        <h3>
+
+            Aucune promotion
+
+        </h3>
+
+        <p>
+
+            Créez votre première promotion.
+
+        </p>
+
+    </div>
+
+</ng-template>

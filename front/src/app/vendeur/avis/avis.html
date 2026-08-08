@@ -1,0 +1,38 @@
+<app-avis-header
+    [total]="avis.length">
+</app-avis-header>
+
+<app-avis-stats
+    [avis]="avis">
+</app-avis-stats>
+
+<app-avis-filter
+
+    (rechercheChange)="rechercher($event)"
+
+    (noteChange)="filtrerParNote($event)">
+
+</app-avis-filter>
+<app-avis-empty
+    *ngIf="!chargement && avis.length===0">
+</app-avis-empty>
+
+<div
+    class="contenu"
+    *ngIf="avis.length">
+
+    <app-avis-list
+
+        [avis]="avis"
+
+        (selection)="selectionnerAvis($event)">
+
+    </app-avis-list>
+
+    <app-avis-details
+
+        [avis]="avisSelectionne">
+
+    </app-avis-details>
+
+</div>

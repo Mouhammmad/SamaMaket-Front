@@ -1,0 +1,38 @@
+<section class="categories">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <h2>Parcourir par catégorie</h2>
+
+      <p>
+        Découvrez les catégories vendues par nos commerçants.
+      </p>
+
+    </div>
+
+    <div class="category-grid" *ngIf="categories.length; else emptyCategories">
+
+      <a
+        *ngFor="let categorie of categories"
+        class="category-card"
+        [routerLink]="['/produits']"
+        [queryParams]="{ categorie: categorie.id }"
+        [title]="categorie.nom">
+        <div class="icon">{{ getIcon(categorie.nom) }}</div>
+        <h4>{{ categorie.nom }}</h4>
+        <span>Explorer</span>
+      </a>
+
+    </div>
+
+    <ng-template #emptyCategories>
+      <div class="empty-categories">
+        <p>Les catégories seront affichées ici dès qu’elles seront disponibles.</p>
+      </div>
+    </ng-template>
+
+  </div>
+
+</section>

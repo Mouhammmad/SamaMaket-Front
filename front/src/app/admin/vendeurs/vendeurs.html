@@ -1,0 +1,94 @@
+<h2>
+
+Gestion des vendeurs
+
+</h2>
+
+<table class="table table-hover">
+
+<thead>
+
+<tr>
+
+<th>Boutique</th>
+
+<th>Responsable</th>
+
+<th>Ville</th>
+
+<th>Email</th>
+
+<th>Statut</th>
+
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr *ngFor="let b of boutiques">
+
+<td>
+
+{{ b.nom }}
+
+</td>
+
+<td>
+
+{{ b.proprietaire }}
+
+</td>
+
+<td>
+
+{{ b.ville }}
+
+</td>
+
+<td>
+
+{{ b.email }}
+
+</td>
+
+<td>
+
+<span *ngIf="b['approuvé']; else attente" class="badge bg-success">
+
+Approuvée
+
+</span>
+
+<ng-template #attente>
+
+<span class="badge bg-warning">
+
+En attente
+
+</span>
+
+</ng-template>
+
+</td>
+
+<td>
+
+<button
+
+class="btn btn-primary"
+
+[routerLink]="['/admin/vendeurs', b.id]">
+
+Voir
+
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>

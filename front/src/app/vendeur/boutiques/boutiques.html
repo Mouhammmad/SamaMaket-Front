@@ -1,0 +1,52 @@
+<app-boutique-header
+    [boutique]="boutique">
+</app-boutique-header>
+
+<app-boutique-navigation
+    [onglet]="onglet"
+    [boutique]="boutique"
+    (changer)="changerOnglet($event)">
+</app-boutique-navigation>
+<div class="contenu">
+
+    <div class="sidebar">
+
+        <app-boutique-infos
+            [boutique]="boutique">
+        </app-boutique-infos>
+
+        <app-boutique-note
+            [boutique]="boutique">
+        </app-boutique-note>
+
+        <app-boutique-categories
+            [boutique]="boutique">
+        </app-boutique-categories>
+
+    </div>
+
+    <div class="main">
+
+        <app-boutique-produits
+            *ngIf="onglet==='produits'"
+            [produits]="produits">
+        </app-boutique-produits>
+
+        <app-boutique-apropos
+            *ngIf="onglet==='apropos'"
+            [boutique]="boutique">
+        </app-boutique-apropos>
+
+        <app-boutique-avis
+            *ngIf="onglet==='avis'"
+            [avis]="avis">
+        </app-boutique-avis>
+
+        <app-boutique-promotions
+            *ngIf="onglet==='promotions'"
+            [promotions]="promotions">
+        </app-boutique-promotions>
+
+    </div>
+
+</div>

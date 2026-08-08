@@ -1,0 +1,67 @@
+<div class="analytics-grid">
+
+    <div class="card">
+
+        <h4>
+
+            🔥 Promotion la plus forte
+
+        </h4>
+
+        <h2>
+
+            {{ getPromotionMax()?.code }}
+
+        </h2>
+
+        <p>
+
+            {{ getPromotionMax()?.taux_remise }}
+
+            {{ getPromotionMax()?.type_remise=='pourcentage'?'%':'FCFA' }}
+
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h4>
+
+            📉 Promotion la plus faible
+
+        </h4>
+
+        <h2>
+
+            {{ getPromotionMin()?.code }}
+
+        </h2>
+
+        <p>
+
+            {{ getPromotionMin()?.taux_remise }}
+
+            {{ getPromotionMin()?.type_remise=='pourcentage'?'%':'FCFA' }}
+
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h4>
+
+            📊 Remise moyenne
+
+        </h4>
+
+        <h1>
+
+            {{ moyenneRemise() }}
+
+        </h1>
+
+    </div>
+
+</div>

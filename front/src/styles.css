@@ -1,0 +1,12 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #102a43;
+}
+
+* {
+  box-sizing: border-box;
+}
+

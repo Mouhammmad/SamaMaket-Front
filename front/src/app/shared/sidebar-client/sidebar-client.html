@@ -1,0 +1,68 @@
+<aside class="sidebar">
+
+    <div class="user">
+
+        <div class="avatar">
+            {{ utilisateur.prenom?.charAt(0) || 'U' }}{{ utilisateur.nom?.charAt(0) || 'S' }}
+        </div>
+
+        <div class="badge">
+            ✓ Compte vérifié
+        </div>
+
+        <h3>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h3>
+
+        <p>{{ utilisateur.email }}</p>
+
+    </div>
+
+    <hr>
+
+    <nav>
+
+    <a (click)="changerSection('profil')">
+        <i class="bi bi-person"></i>
+        Mon profil
+    </a>
+
+    <a (click)="changerSection('commandes')">
+        <i class="bi bi-bag"></i>
+        Mes commandes
+    </a>
+
+    <a (click)="changerSection('favoris')">
+        <i class="bi bi-heart"></i>
+        Mes favoris
+    </a>
+
+    <a (click)="changerSection('adresses')">
+        <i class="bi bi-geo-alt"></i>
+        Mes adresses
+    </a>
+
+    <a (click)="changerSection('avis')">
+        <i class="bi bi-star"></i>
+        Mes avis
+    </a>
+
+    <a (click)="changerSection('notifications')">
+        <i class="bi bi-bell"></i>
+        Notifications
+    </a>
+
+    <a (click)="changerSection('securite')">
+        <i class="bi bi-lock"></i>
+        Sécurité
+    </a>
+
+</nav>
+
+    <button class="logout">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        Déconnexion
+
+    </button>
+
+</aside>

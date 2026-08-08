@@ -1,0 +1,202 @@
+<div class="overlay" *ngIf="produit" (click)="previewService.close()">
+
+    <div class="preview-card" (click)="$event.stopPropagation()">
+
+        
+
+        <div class="preview-container">
+
+    <div class="preview-left">
+
+        <!-- Galerie d'images -->
+         <div class="preview-image">
+
+        <img
+            [src]="imageActive || 'assets/images/default-product.png'"
+            alt="Produit">
+
+    </div>
+
+    <div
+        class="thumbnails"
+        *ngIf="images.length > 0">
+
+        <img
+            *ngFor="let image of images"
+            [src]="image.image_url"
+            (click)="changerImage(image)"
+            [class.active]="image.image_url === imageActive">
+
+    </div>
+
+
+    </div>
+
+    <div class="preview-right">
+
+        <h2>{{ produit.nom }}</h2>
+        <div class="badges">
+
+    <span
+        class="badge promo"
+        *ngIf="produit.promotion_active">
+
+       {{ produit.promotion_active.valeur }}
+
+    </span>
+
+    <span
+        class="badge new"
+        *ngIf="produit.nouveau">
+
+        Nouveau
+
+    </span>
+
+    <span
+        class="badge bestseller"
+        *ngIf="produit.best_seller">
+
+        Best Seller
+
+    </span>
+
+</div>
+
+<div class="rating">
+
+    ⭐ {{ produit.note_moyenne }}
+
+    ({{ produit.nombre_avis }} avis)
+
+</div>
+
+<div class="stats">
+
+    ❤️ {{ produit.nombre_favoris }}
+
+    favoris
+
+</div>
+
+<div class="stats">
+
+    👁 {{ produit.nombre_vues }}
+
+    vues
+
+</div>
+<div class="price">
+
+    <span
+        class="old-price"
+        *ngIf="produit.promotion_active">
+
+        {{ produit.prix }} FCFA
+
+    </span>
+
+    <span class="new-price">
+
+        {{ produit.prix_promo }} FCFA
+
+    </span>
+
+</div>
+<div class="info">
+
+    <strong>Catégorie :</strong>
+
+    {{ produit.categorie }}
+
+</div>
+
+<div class="info">
+
+    <strong>Boutique :</strong>
+
+    {{ produit.boutique }}
+
+</div>
+
+<div class="info">
+
+    
+    <div class="stock-info">
+
+    <strong>Stock :</strong>
+
+    <span
+        class="stock-ok"
+        *ngIf="produit.quantite_stock > 10">
+
+        {{ produit.quantite_stock }} disponibles
+
+    </span>
+
+    <span
+        class="stock-low"
+        *ngIf="produit.quantite_stock <= 10 && produit.quantite_stock > 0">
+
+        Plus que {{ produit.quantite_stock }}
+
+    </span>
+
+    <span
+        class="stock-empty"
+        *ngIf="produit.quantite_stock == 0">
+
+        Rupture de stock
+
+    </span>
+
+</div>
+
+</div>
+<div
+    class="status"
+
+    [class.active]="produit.est_actif"
+
+    [class.inactive]="!produit.est_actif">
+
+    {{ produit.est_actif ? 'Produit actif' : 'Produit inactif' }}
+
+</div>
+<!-- Toutes les informations -->
+
+<div class="description">
+
+    <h3>Description</h3>
+
+    <p>
+
+        {{ produit.description }}
+
+    </p>
+
+</div>
+
+<div class="preview-footer">
+
+    <button
+        class="btn-edit"
+        (click)="previewService.requestModify(produit)">
+
+        <i class="bi bi-pencil-square"></i>
+
+        Modifier
+
+    </button>
+
+    <button
+        class="btn-close"
+        (click)="previewService.close()">
+
+        <i class="bi bi-x-circle"></i>
+
+        Fermer
+
+    </button>
+
+</div>

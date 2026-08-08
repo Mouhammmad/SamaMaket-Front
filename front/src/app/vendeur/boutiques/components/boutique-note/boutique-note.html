@@ -1,0 +1,67 @@
+<div class="card">
+
+    <h3>
+
+        Évaluations
+
+    </h3>
+
+    <div class="resume">
+
+        <div class="moyenne">
+
+            {{ boutique?.note || 0 }}
+
+        </div>
+
+        <div>
+
+            <div class="etoiles">
+
+                ★★★★★
+
+            </div>
+
+            <small>
+
+                {{ boutique?.nombre_avis || 0 }}
+
+                avis
+
+            </small>
+
+        </div>
+
+    </div>
+
+    <div
+        class="ligne"
+        *ngFor="let note of notes">
+
+        <span>
+
+            {{ note }} ★
+
+        </span>
+
+        <div class="barre">
+
+            <div
+
+                class="progression"
+
+                [style.width.%]="largeur(note)">
+
+            </div>
+
+        </div>
+
+        <span>
+
+            {{ boutique?.repartition_notes?.[note] || 0 }}
+
+        </span>
+
+    </div>
+
+</div>

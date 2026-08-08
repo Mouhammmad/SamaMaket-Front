@@ -1,0 +1,120 @@
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <h2>SAMA <span>MARKET</span></h2>
+
+        <small>{{ displayName }}</small>
+
+    </div>
+
+    <div class="shop-card">
+
+        <div class="avatar">
+            🏪
+        </div>
+
+        <div>
+
+            <h4>{{ boutiqueNom }}</h4>
+
+            <p>{{ boutiqueStatut }}</p>
+
+        </div>
+
+    </div>
+
+    <span class="title">PRINCIPAL</span>
+<nav>
+
+    <a routerLink="/vendeur/dashboard"
+   routerLinkActive="active">
+
+    <i class="bi bi-speedometer2"></i>
+
+    Tableau de bord
+
+</a>
+
+<a routerLink="/vendeur/commandes"
+   routerLinkActive="active">
+
+    <i class="bi bi-bag-check"></i>
+
+    Commandes
+
+</a>
+
+<a routerLink="/vendeur/produits"
+   routerLinkActive="active">
+
+    <i class="bi bi-box-seam"></i>
+
+    Produits
+
+</a>
+
+<a routerLink="/vendeur/statistiques"
+   routerLinkActive="active">
+
+    <i class="bi bi-graph-up-arrow"></i>
+
+    Statistiques
+
+</a>
+<a routerLink="/vendeur/promotions">
+    <i class="bi bi-percent"></i>
+    Promotions
+</a>
+
+</nav>
+
+<span class="title">GESTION</span>
+
+<nav>
+
+    <a routerLink="/vendeur/boutiques"
+       routerLinkActive="active">
+        <i class="bi bi-shop"></i>
+        Ma boutique
+    </a>
+
+    <a routerLink="/vendeur/livraisons"
+       routerLinkActive="active">
+        <i class="bi bi-truck"></i>
+        Livraisons
+    </a>
+
+    <a routerLink="/vendeur/avis"
+       routerLinkActive="active">
+        <i class="bi bi-star"></i>
+        Avis clients
+    </a>
+
+    <a routerLink="/vendeur/paiements"
+       routerLinkActive="active">
+        <i class="bi bi-credit-card"></i>
+        Paiements
+    </a>
+
+</nav>
+
+<span class="title">COMPTE</span>
+
+<nav>
+
+    <a routerLink="/vendeur/parametre"
+       routerLinkActive="active">
+        <i class="bi bi-gear"></i>
+        Paramètres
+    </a>
+
+</nav>
+
+    <button class="logout">
+
+        Déconnexion
+
+    </button>
+
+</aside>

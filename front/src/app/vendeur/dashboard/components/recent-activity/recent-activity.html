@@ -1,0 +1,13 @@
+<div class="panel">
+
+    <h3>Activité récente</h3>
+
+    <div class="activity" *ngIf="activities?.length; else noActivities">
+        <p *ngFor="let message of activities">{{ message }}</p>
+    </div>
+
+    <ng-template #noActivities>
+        <div class="empty">Aucune activité récente.</div>
+    </ng-template>
+
+</div>

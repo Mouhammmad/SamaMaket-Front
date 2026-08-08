@@ -1,0 +1,31 @@
+<div class="favoris-page">
+
+  <div class="page-header">
+    <div>
+      <h2>Mes favoris</h2>
+      <p>Retrouvez vos produits préférés ajoutés à vos favoris.</p>
+    </div>
+  </div>
+
+  <div *ngIf="chargement" class="empty-state">
+    Chargement de vos favoris...
+  </div>
+
+  <div *ngIf="!chargement && message" class="empty-state">
+    {{ message }}
+  </div>
+
+  <div class="favorite-list" *ngIf="!chargement && favoris.length">
+    <div *ngFor="let favori of favoris" class="favorite-card">
+      <div class="favorite-info">
+        <h3>{{ favori.produit?.nom }}</h3>
+        <p>{{ favori.produit?.prix }} FCFA</p>
+        <p class="small">Ajouté le {{ favori.date_ajout | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div class="favorite-actions">
+        <button disabled>Voir</button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,82 @@
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Commande</th>
+
+                <th>Client</th>
+
+                <th>Adresse</th>
+
+                <th>Statut</th>
+
+                <th>Date prévue</th>
+
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let livraison of livraisons">
+
+                <td>
+
+                    {{ livraison.commande.numero }}
+
+                </td>
+
+                <td>
+
+                    {{ livraison.commande.utilisateur }}
+
+                </td>
+
+                <td>
+
+                    {{ livraison.adresse }}
+
+                </td>
+
+                <td>
+
+                    <span
+                        class="badge"
+                        [ngClass]="badgeClass(livraison.statut)">
+
+                        {{ livraison.statut }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    {{ livraison.date_prevue || '-' }}
+
+                </td>
+
+                <td>
+
+                    <button
+                        (click)="ouvrirLivraison(livraison)">
+
+                        Détails
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

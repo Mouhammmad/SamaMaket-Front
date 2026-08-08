@@ -1,0 +1,132 @@
+<div class="header">
+
+    <div class="left">
+
+        <img
+            class="logo"
+            [src]="boutique?.logo || 'assets/images/boutique.png'"
+            alt="Boutique">
+
+        <div class="infos">
+
+            <h1>
+
+                {{ boutique?.nom }}
+
+            </h1>
+
+            <p>
+
+                {{ boutique?.categorie }}
+
+                •
+
+                {{ boutique?.ville }},
+
+                {{ boutique?.pays }}
+
+            </p>
+
+            <div class="stats">
+
+                <div>
+
+                    <strong>
+
+                        {{ boutique?.nombre_produits }}
+
+                    </strong>
+
+                    <span>
+
+                        produits
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <strong>
+
+                        {{ boutique?.note }}
+
+                        /5
+
+                    </strong>
+
+                    <span>
+
+                        ({{ boutique?.nombre_avis }} avis)
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <strong>
+
+                        {{ boutique?.abonnes }}
+
+                    </strong>
+
+                    <span>
+
+                        abonnés
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <strong>
+
+                        {{ boutique?.ventes }}
+
+                    </strong>
+
+                    <span>
+
+                        ventes
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <span
+                class="badge"
+                *ngIf="boutique?.verifie">
+
+                ✔ Vendeur vérifié
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="suivre"
+            (click)="suivre.emit()">
+
+            + Suivre
+
+        </button>
+
+        <button
+            class="contacter"
+            (click)="contacter.emit()">
+
+            Contacter
+
+        </button>
+
+    </div>
+
+</div>

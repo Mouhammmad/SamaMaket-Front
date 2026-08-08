@@ -1,0 +1,35 @@
+<div class="profil-content">
+
+  <ng-container *ngIf="sectionActive === 'profil'">
+    <app-informations></app-informations>
+    <app-adresses></app-adresses>
+    <app-securite></app-securite>
+    <app-notifications></app-notifications>
+    <app-zone-danger></app-zone-danger>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'commandes'">
+    <app-commandes></app-commandes>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'favoris'">
+    <app-favoris></app-favoris>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'adresses'">
+    <app-adresses></app-adresses>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'avis'">
+    <app-avis></app-avis>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'notifications'">
+    <app-notifications></app-notifications>
+  </ng-container>
+
+  <ng-container *ngIf="sectionActive === 'securite'">
+    <app-securite></app-securite>
+  </ng-container>
+
+</div>

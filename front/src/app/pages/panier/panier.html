@@ -1,0 +1,61 @@
+<div class="panier-page">
+
+    <app-panier-header
+        [nombreArticles]="panier?.articles?.length || 0"
+        (vider)="viderPanier()">
+    </app-panier-header>
+
+    <app-panier-stepper></app-panier-stepper>
+
+    <app-panier-empty
+        *ngIf="!panier?.articles?.length"
+        (continuer)="continuerAchats()">
+    </app-panier-empty>
+
+    <ng-container *ngIf="panier?.articles?.length">
+
+        <div class="content">
+
+            <div class="left">
+
+                <app-panier-list
+                    [articles]="panier.articles"
+                    (augmenter)="augmenterQuantite($event)"
+                    (diminuer)="diminuerQuantite($event)"
+                    (supprimer)="supprimerArticle($event)">
+                </app-panier-list>
+
+                <app-promo-code
+                    [codeApplique]="codePromo"
+                    (appliquer)="appliquerCode($event)">
+                </app-promo-code>
+
+            </div>
+
+            <div class="right">
+
+                <app-panier-summary
+                    [sousTotal]="sousTotal"
+                    [reduction]="reduction"
+                    [livraison]="livraison"
+                    [codePromo]="codePromo"
+                    [total]="total"
+                    (commander)="passerCommande()"
+                    (continuer)="continuerAchats()">
+                </app-panier-summary>
+
+            </div>
+
+        </div>
+
+        <app-suggestions
+            [produits]="suggestions"
+            (ajouter)="ajouterSuggestion($event)">
+        </app-suggestions>
+
+    </ng-container>
+    <app-checkout-stepper
+    [etapeActive]="1">
+</app-checkout-stepper>
+
+</div>

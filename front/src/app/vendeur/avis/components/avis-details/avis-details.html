@@ -1,0 +1,144 @@
+<div
+    class="details"
+    *ngIf="avis; else aucunAvis">
+
+    <h2>
+
+        Détails de l'avis
+
+    </h2>
+
+    <div class="bloc">
+
+        <label>
+
+            Produit
+
+        </label>
+
+        <strong>
+
+            {{ avis.produit.nom }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Client
+
+        </label>
+
+        <strong>
+
+            {{ avis.utilisateur }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Note
+
+        </label>
+
+        <div class="note">
+
+            <span
+                class="etoile"
+                *ngFor="let e of etoiles(avis.note)">
+
+                ★
+
+            </span>
+
+            <span
+                class="etoile-vide"
+                *ngFor="let e of etoilesVides(avis.note)">
+
+                ☆
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Commentaire
+
+        </label>
+
+        <p>
+
+            {{ avis.commentaire }}
+
+        </p>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Date
+
+        </label>
+
+        <strong>
+
+            {{ avis.date_creation | date:'dd/MM/yyyy HH:mm' }}
+
+        </strong>
+
+    </div>
+
+    <div class="bloc">
+
+        <label>
+
+            Statut
+
+        </label>
+
+        <span
+            class="badge"
+            [class.approuve]="avis.est_approuve"
+            [class.attente]="!avis.est_approuve">
+
+            {{ avis.est_approuve ? 'Approuvé' : 'En attente' }}
+
+        </span>
+
+    </div>
+
+</div>
+
+<ng-template #aucunAvis>
+
+<div class="empty">
+
+    <h3>
+
+        Aucun avis sélectionné
+
+    </h3>
+
+    <p>
+
+        Sélectionnez un avis dans la liste pour afficher ses détails.
+
+    </p>
+
+</div>
+
+</ng-template>

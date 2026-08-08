@@ -1,0 +1,47 @@
+<div class="calendar-card">
+
+    <h3>
+
+        📅 Calendrier des promotions
+
+    </h3>
+
+    <div
+        class="calendar-item"
+        *ngFor="let promo of promotions">
+
+        <div>
+
+            <strong>
+
+                {{ promo.code }}
+
+            </strong>
+
+            <p>
+
+                {{ promo.date_debut | date:'dd/MM/yyyy' }}
+
+                →
+
+                {{ promo.date_fin | date:'dd/MM/yyyy' }}
+
+            </p>
+
+        </div>
+
+        <span
+        
+  class="state"
+  [ngClass]="getEtat(promo)">
+
+  {{
+    getEtat(promo) === 'en-cours' ? 'En cours' :
+    getEtat(promo) === 'a-venir' ? 'À venir' :
+    'Terminée'
+  }}
+
+</span>
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+<div class="card">
+
+    <div class="card-header">
+
+        <h2>Informations personnelles</h2>
+
+        <button class="btn-save">
+            <i class="bi bi-save"></i>
+            Enregistrer
+        </button>
+
+    </div>
+
+    <form>
+
+        <div class="grid">
+
+                    <div class="form-group">
+                <label for="profil-prenom">Prénom</label>
+                <input id="profil-prenom" type="text" [(ngModel)]="utilisateur.prenom" name="prenom" placeholder="Votre prénom">
+            </div>
+
+            <div class="form-group">
+                <label for="profil-nom">Nom</label>
+                <input id="profil-nom" type="text" [(ngModel)]="utilisateur.nom" name="nom" placeholder="Votre nom">
+            </div>
+
+            <div class="form-group">
+                <label for="profil-email">Adresse email</label>
+                <input id="profil-email" type="email" [(ngModel)]="utilisateur.email" name="email" placeholder="Votre adresse email">
+            </div>
+
+            <div class="form-group">
+                <label for="profil-telephone">Téléphone</label>
+                <input id="profil-telephone" type="text" [(ngModel)]="utilisateur.telephone" name="telephone" placeholder="Votre téléphone">
+            </div>
+
+        </div>
+
+        <div class="form-group full">
+
+            <label for="profil-ville">Ville / Localisation</label>
+
+            <input
+                id="profil-ville"
+                type="text"
+                [(ngModel)]="utilisateur.ville"
+                name="ville"
+                placeholder="Ville ou localisation">
+
+        </div>
+
+        <div *ngIf="message" class="form-message">{{ message }}</div>
+
+    </form>
+
+</div>

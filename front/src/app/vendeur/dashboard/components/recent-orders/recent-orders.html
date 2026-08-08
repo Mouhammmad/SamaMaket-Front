@@ -1,0 +1,29 @@
+<div class="panel">
+
+    <h3>Dernières commandes</h3>
+
+    <table *ngIf="orders?.length; else noOrders">
+        <tr>
+            <th>Client</th>
+            <th>Total</th>
+            <th>Statut</th>
+            <th>Date</th>
+        </tr>
+        <tr *ngFor="let order of orders">
+            <td>{{ order.customer_username || order.client || 'Client' }}</td>
+            <td>{{ order.total_price || order.montant_total || 0 }} FCFA</td>
+            <td>
+                <span [ngClass]="{
+                    'success': order.status === 'livree' || order.status === 'Livrée' || order.status === 'livrée',
+                    'waiting': order.status !== 'livree' && order.status !== 'Livrée' && order.status !== 'livrée'
+                }">{{ order.status || order.statut || '—' }}</span>
+            </td>
+            <td>{{ order.created_at ? (order.created_at | date:'short') : order.date_creation ? (order.date_creation | date:'short') : '—' }}</td>
+        </tr>
+    </table>
+
+    <ng-template #noOrders>
+        <div class="empty">Aucune commande récente.</div>
+    </ng-template>
+
+</div>

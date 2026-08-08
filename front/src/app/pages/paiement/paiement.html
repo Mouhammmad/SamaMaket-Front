@@ -1,0 +1,44 @@
+
+<app-paiement-header>
+
+</app-paiement-header>
+
+<app-checkout-stepper
+    [etapeActive]="3">
+</app-checkout-stepper>
+
+<div class="content">
+
+    <div class="left">
+
+        <app-paiement-methods
+            (selection)="choisirMethode($event)">
+        </app-paiement-methods>
+
+    </div>
+
+    <div class="right">
+
+        <app-panier-summary
+
+            [sousTotal]="sousTotal"
+
+            [reduction]="reduction"
+
+            [livraison]="livraison"
+
+            [total]="total"
+
+            [titreBouton]="'Payer maintenant'"
+
+            [afficherContinuer]="false"
+
+            [afficherCodePromo]="false"
+
+            (commander)="payer()">
+
+        </app-panier-summary>
+
+    </div>
+
+</div>

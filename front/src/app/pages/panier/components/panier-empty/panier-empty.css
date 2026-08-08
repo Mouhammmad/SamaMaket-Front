@@ -1,0 +1,61 @@
+.empty{
+
+background:white;
+
+padding:70px 40px;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:0 8px 25px rgba(0,0,0,.06);
+
+}
+
+.empty img{
+
+width:220px;
+
+margin-bottom:20px;
+
+}
+
+.empty h2{
+
+color:#102a43;
+
+margin-bottom:10px;
+
+}
+
+.empty p{
+
+color:#7b8794;
+
+margin-bottom:30px;
+
+}
+
+.empty button{
+
+padding:15px 28px;
+
+background:#1f4f95;
+
+color:white;
+
+border:none;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
+
+.empty button:hover{
+
+background:#163d74;
+
+}

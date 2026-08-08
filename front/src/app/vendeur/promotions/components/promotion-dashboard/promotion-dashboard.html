@@ -1,0 +1,86 @@
+<div class="dashboard">
+
+    <div class="card">
+
+        <div class="icon">🎁</div>
+
+        <h2>{{ promotionsActives }}</h2>
+
+        <p>Promotions actives</p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon">⛔</div>
+
+        <h2>{{ promotionsInactives }}</h2>
+
+        <p>Promotions inactives</p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon">📦</div>
+
+        <h2>{{ totalProduits }}</h2>
+
+        <p>Produits concernés</p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon">⏳</div>
+
+        <h2>{{ promotionsExpireBientot }}</h2>
+
+        <p>Expirent bientôt</p>
+
+    </div>
+    <div
+    class="urgent-card"
+    *ngIf="promotionsUrgentes.length">
+
+    <h3>
+
+        ⚠ Promotions qui expirent bientôt
+
+    </h3>
+
+    <div
+        class="urgent-item"
+        *ngFor="let promo of promotionsUrgentes">
+
+        <div>
+
+            <strong>
+
+                {{ promo.code }}
+
+            </strong>
+
+            <p>
+
+                Expire le
+
+                {{ promo.date_fin | date:'dd/MM/yyyy' }}
+
+            </p>
+
+        </div>
+
+        <span class="badge">
+
+            {{ promo.taux_remise }}
+
+            {{ promo.type_remise === 'pourcentage' ? '%' : ' FCFA' }}
+
+        </span>
+
+    </div>
+
+</div>
+
+</div>

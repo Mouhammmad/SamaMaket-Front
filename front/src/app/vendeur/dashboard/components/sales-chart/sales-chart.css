@@ -1,0 +1,30 @@
+.panel{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.panel h3{
+    margin:0;
+    color:#102a43;
+}
+
+.chart-placeholder{
+    margin-top:20px;
+    height:320px;
+    border-radius:15px;
+    border:2px dashed #d8dee6;
+    background:#f8fafc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+    color:#6c757d;
+}

@@ -1,0 +1,76 @@
+<div class="commande-card">
+
+    <img
+        class="product-image"
+        [src]="getImage()"
+        alt="Produit">
+
+    <div class="content">
+
+        <div class="top">
+
+            <div>
+
+                <h3>
+
+                    Commande #SM-{{ commande.id }}
+
+                </h3>
+
+                <p>
+
+                    {{ commande.date_creation | date:'dd/MM/yyyy' }}
+
+                </p>
+
+            </div>
+
+            <span
+                class="badge"
+                [ngClass]="commande.statut">
+
+                {{ commande.statut }}
+
+            </span>
+
+        </div>
+
+        <div class="infos">
+
+            <p>
+
+                <strong>
+
+                    {{ commande.lignes?.length || 0 }}
+
+                </strong>
+
+                produit(s)
+
+            </p>
+
+            <p>
+
+                <strong>
+
+                    {{ commande.montant_total }}
+
+                    FCFA
+
+                </strong>
+
+            </p>
+
+        </div>
+
+        <button
+            class="details-btn"
+            (click)="voir.emit(commande)">
+
+            Voir les détails →
+
+        </button>
+
+    </div>
+
+</div>

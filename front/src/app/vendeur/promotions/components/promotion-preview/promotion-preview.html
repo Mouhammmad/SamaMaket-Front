@@ -1,0 +1,114 @@
+<div
+    class="overlay"
+    *ngIf="promotion">
+
+    <div class="preview-card">
+
+        <button
+            class="close"
+            (click)="fermer.emit()">
+
+            ✕
+
+        </button>
+
+        <h2>
+
+            🎁 {{ promotion.code }}
+
+        </h2>
+
+        <div class="divider"></div>
+
+        <div class="resume">
+
+            <div>
+
+                📦 {{ promotion.produits?.length || 0 }} produit(s)
+
+            </div>
+
+            <div>
+
+                🎯 {{ promotion.type_remise === 'pourcentage' ? '-' + promotion.taux_remise + '%' : '-' + promotion.taux_remise + ' FCFA' }}
+
+            </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div
+            class="products"
+            *ngIf="promotion.produits?.length; else emptyProducts">
+
+            <div
+                class="product-card"
+                *ngFor="let produit of promotion.produits">
+
+                <img
+                    [src]="getProduitImage(produit)"
+                    alt="{{ produit.nom || 'Produit' }}"
+                    title="{{ produit.nom || 'Produit' }}">
+
+                <div class="product-info">
+
+                    <strong class="product-name">
+
+                        {{ produit.nom }}
+
+                    </strong>
+
+                    <div class="promo-badge">
+
+                        -{{ promotion.taux_remise }}{{ promotion.type_remise === 'pourcentage' ? '%' : ' FCFA' }}
+
+                    </div>
+
+                    <div class="price-box">
+
+                        <span class="old-price">
+
+                            {{ produit.prix | number:'1.0-0' }} FCFA
+
+                        </span>
+
+                        <span class="new-price">
+
+                            {{ calculerPrixPromo(produit) | number:'1.0-0' }} FCFA
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <ng-template #emptyProducts>
+
+            <div class="empty">
+
+                Aucun produit associé.
+
+            </div>
+
+        </ng-template>
+
+        <div class="footer">
+
+            <button
+                class="close-btn"
+                (click)="fermer.emit()">
+
+                Fermer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

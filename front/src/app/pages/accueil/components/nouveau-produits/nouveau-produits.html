@@ -1,0 +1,30 @@
+<section class="products-section">
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Nouveautés</h2>
+      <p>Les derniers produits ajoutés par nos vendeurs.</p>
+    </div>
+
+    <div *ngIf="chargement" class="loading-state">
+      Chargement des produits...
+    </div>
+
+    <div class="products-grid" *ngIf="!chargement && produits.length">
+      <app-produit-card
+        *ngFor="let produit of produits"
+        [produit]="produit">
+      </app-produit-card>
+    </div>
+
+    <div *ngIf="!chargement && !produits.length" class="empty-state">
+      <p>Aucun produit disponible pour le moment.</p>
+      <a routerLink="/produits" class="btn-primary">Voir le catalogue</a>
+    </div>
+
+    <div class="section-action">
+      <a routerLink="/produits" class="btn-primary">Découvrir tous les produits</a>
+    </div>
+
+  </div>
+</section>

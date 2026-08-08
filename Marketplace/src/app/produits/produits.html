@@ -1,0 +1,209 @@
+<header class="top-navbar">
+    <div class="logo">
+      <span class="logo-white">SAMA</span><span class="logo-orange">MARKET</span>
+    </div>
+
+    <div class="navbar-right">
+      <div class="nav-icons">
+        <span></span>
+        <span></span>
+      </div>
+      <button class="account-btn">Mon compte</button>
+    </div>
+  </header>
+
+
+  <div class="catalogue">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="filter-header">
+            <h2>Filtres</h2>
+            <button class="reset">Réinitialiser</button>
+        </div>
+
+        <div class="filter-section">
+            <h4>CATÉGORIE</h4>
+
+            <button
+                *ngFor="let cat of categories"
+                class="category"
+                [class.active]="cat.active"
+                (click)="toggleCategory(cat)">
+
+                <span>{{cat.name}}</span>
+                <span>{{cat.count}}</span>
+
+            </button>
+        </div>
+
+        <div class="filter-section">
+
+            <h4>PRIX (FCFA)</h4>
+
+            <input type="range" aria-label="Filtrer par prix">
+
+            <div class="price-range">
+                <span>Min : 0 F</span>
+                <span>Max : 150 000 F</span>
+            </div>
+
+        </div>
+
+        <div class="filter-section">
+
+            <h4>NOTE MINIMALE</h4>
+
+            <button class="rating-btn">★★★★★ & plus</button>
+
+            <button class="rating-btn">★★★★☆ & plus</button>
+
+            <button class="rating-btn">★★★☆☆ & plus</button>
+
+        </div>
+
+        <div class="filter-section">
+
+            <h4>VENDEURS</h4>
+
+            <label class="switch">
+
+                <input type="checkbox">
+
+                <span>Vendeurs vérifiés</span>
+
+            </label>
+
+        </div>
+
+        <button class="apply">
+
+            Appliquer les filtres
+
+        </button>
+
+    </aside>
+
+    <!-- Contenu -->
+    <main class="content">
+
+       
+
+        <!-- Barre -->
+
+        <div class="toolbar">
+
+            <h2>
+
+                Tous les produits
+
+                ({{filteredProducts.length}})
+
+            </h2>
+
+            <select aria-label="Trier les produits"
+                (change)="setSort($any($event.target).value)">
+
+                <option>Popularité</option>
+
+                <option>Plus récent</option>
+
+            </select>
+
+        </div>
+
+        <!-- Produits -->
+
+        <div class="products">
+
+            <div
+                class="card"
+                *ngFor="let produit of filteredProducts">
+
+                <div class="image">
+
+                    <span
+                        class="badge promo"
+                        *ngIf="produit.quantite_stock<5">
+
+                        Promo
+
+                    </span>
+
+                    <img
+                        [src]="produit.image_url"
+                        alt="{{ produit.nom }}"
+                        title="{{ produit.nom }}">
+
+                    <button class="heart" type="button" (click)="ajouterAuxFavoris(produit)">
+
+                        ♡
+
+                    </button>
+
+                </div>
+
+                <div class="body">
+
+                    <small>
+
+                        {{produit.categorie}}
+
+                    </small>
+
+                    <h3>
+
+                        {{produit.nom}}
+
+                    </h3>
+
+                    <p class="price">
+
+                        {{produit.prix | number}} F
+
+                    </p>
+
+                    <div class="actions">
+
+                        <button class="voir" [routerLink]="['/produit', produit.id]">
+
+                            Voir
+
+                        </button>
+
+                        <button class="cart" type="button" (click)="ajouterAuPanier(produit)">
+
+                            🛒
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Pagination -->
+
+        <div class="pagination">
+
+            <button class="active">
+
+                1
+
+            </button>
+
+            <button>2</button>
+
+            <button>3</button>
+
+            <button>></button>
+
+        </div>
+
+    </main>
+
+</div>

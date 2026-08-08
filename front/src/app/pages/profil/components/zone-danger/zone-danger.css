@@ -1,0 +1,43 @@
+.danger-card{
+
+    background:#fff5f5;
+
+    border:2px solid #dc3545;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-top:30px;
+
+}
+
+.danger-card h2{
+
+    color:#dc3545;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.danger-card p{
+
+    color:#555;
+
+    line-height:1.8;
+
+    margin-bottom:25px;
+
+}
+
+.btn-danger{
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+}

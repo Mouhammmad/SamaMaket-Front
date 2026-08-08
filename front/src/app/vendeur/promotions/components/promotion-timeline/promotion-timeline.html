@@ -1,0 +1,52 @@
+<div class="timeline-card">
+
+    <h3>
+
+        🕒 Historique des promotions
+
+    </h3>
+
+    <div
+        class="timeline-item"
+        *ngFor="let promo of promotions">
+
+        <div
+            class="dot"
+            [ngClass]="getEtat(promo)">
+        </div>
+
+        <div class="content">
+
+            <h4>
+
+                {{ promo.code }}
+
+            </h4>
+
+            <p>
+
+                {{ promo.date_debut | date:'dd/MM/yyyy' }}
+
+                →
+
+                {{ promo.date_fin | date:'dd/MM/yyyy' }}
+
+            </p>
+
+            <small>
+
+                {{ promo.type_remise }}
+
+                •
+
+                {{ promo.taux_remise }}
+
+                {{ promo.type_remise === 'pourcentage' ? '%' : 'FCFA' }}
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>

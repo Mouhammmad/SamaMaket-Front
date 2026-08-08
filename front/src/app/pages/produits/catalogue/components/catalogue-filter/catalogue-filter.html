@@ -1,0 +1,122 @@
+<div class="sidebar">
+
+    <div class="header">
+
+        <h3>Filtres</h3>
+
+        <button
+            class="reset"
+            (click)="reinitialiser()">
+
+            Réinitialiser
+
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h4>Catégorie</h4>
+
+        <button
+            class="categorie"
+            [class.active]="!filtres.categorie"
+            (click)="filtres.categorie=null">
+
+            Tous les produits
+
+        </button>
+
+        <button
+            class="categorie"
+            *ngFor="let categorie of categories"
+            [class.active]="filtres.categorie===categorie.id"
+            (click)="filtres.categorie=categorie.id">
+
+            {{ categorie.nom }}
+
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h4>Prix</h4>
+
+        <input
+            type="range"
+            min="0"
+            max="150000"
+            [(ngModel)]="filtres.prixMax">
+
+        <div class="prix">
+
+            <input
+                type="number"
+                [(ngModel)]="filtres.prixMin">
+
+            <input
+                type="number"
+                [(ngModel)]="filtres.prixMax">
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h4>Note minimale</h4>
+
+        <button
+            class="note"
+            (click)="filtres.note=5">
+
+            ★★★★★
+
+        </button>
+
+        <button
+            class="note"
+            (click)="filtres.note=4">
+
+            ★★★★☆ & plus
+
+        </button>
+
+        <button
+            class="note"
+            (click)="filtres.note=3">
+
+            ★★★☆☆ & plus
+
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                [(ngModel)]="filtres.vendeurVerifie">
+
+            <span>
+
+                Vendeurs vérifiés
+
+            </span>
+
+        </label>
+
+    </div>
+
+    <button
+        class="apply"
+        (click)="appliquer()">
+
+        Appliquer les filtres
+
+    </button>
+
+</div>

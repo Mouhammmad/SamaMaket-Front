@@ -1,0 +1,105 @@
+.confirmation-card{
+
+    max-width:700px;
+
+    margin:auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:60px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.success-icon{
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    background:#198754;
+
+    color:white;
+
+    font-size:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    margin-bottom:30px;
+
+}
+
+.confirmation-card h1{
+
+    color:#163b85;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.numero{
+
+    font-size:22px;
+
+    margin:35px 0;
+
+}
+
+.info{
+
+    color:#666;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+
+}
+
+.actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+.actions .btn{
+
+    padding:14px 30px;
+
+    border-radius:12px;
+
+}
+
+@media(max-width:768px){
+
+.actions{
+
+flex-direction:column;
+
+}
+
+.confirmation-card{
+
+padding:30px;
+
+}
+
+}

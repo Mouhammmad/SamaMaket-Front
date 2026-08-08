@@ -1,0 +1,88 @@
+<div class="product-page" *ngIf="produit">
+
+    <div class="left">
+
+        <img class="main-image" [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+
+        <div class="gallery">
+
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+
+        </div>
+
+    </div>
+
+    <div class="right">
+
+        <span class="categorie">{{produit.categorie}}</span>
+
+        <h1>{{produit.nom}}</h1>
+
+        <h2>{{produit.prix}} FCFA</h2>
+
+        <p>{{produit.description}}</p>
+
+        <h4>Couleur</h4>
+
+        <div class="colors">
+
+    <button
+        *ngFor="let c of produit.couleurs"
+        (click)="selectionnerCouleur(c)"
+        [class.active]="couleurSelectionnee===c">
+
+        {{c}}
+
+    </button>
+
+</div>
+
+        <h4>Taille</h4>
+
+        <div class="sizes">
+
+    <button
+        *ngFor="let t of produit.tailles"
+        (click)="selectionnerTaille(t)"
+        [class.active]="tailleSelectionnee===t">
+
+        {{t}}
+
+    </button>
+
+</div>
+
+        <h4>Quantité</h4>
+
+<div class="quantity">
+
+    <button (click)="diminuer()">-</button>
+
+    <span>{{ quantite }}</span>
+
+    <button (click)="augmenter()">+</button>
+
+</div>
+
+        <div class="actions">
+
+            <button class="cart" type="button" (click)="ajouterAuPanier()">
+                Ajouter au panier
+            </button>
+
+            <button class="buy" type="button" (click)="acheter()">
+                Acheter maintenant
+            </button>
+
+            <button class="favorite" type="button" (click)="ajouterAuxFavoris()">
+                Ajouter aux favoris
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

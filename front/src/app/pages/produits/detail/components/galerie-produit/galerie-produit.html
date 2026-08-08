@@ -1,0 +1,43 @@
+<div class="gallery">
+
+    <div class="thumbnails">
+
+        <img
+
+            *ngFor="let image of images"
+
+            [src]="image"
+
+            [class.active]="image===imageActive"
+
+            (click)="changerImage(image)">
+
+    </div>
+
+    <div class="preview">
+
+        <span
+
+            class="badge"
+
+            *ngIf="produit.ancien_prix">
+
+            PROMO
+
+        </span>
+
+        <button class="favorite">
+
+            ♥
+
+        </button>
+
+        <img
+
+            [src]="imageActive"
+
+            [alt]="produit.nom">
+
+    </div>
+
+</div>

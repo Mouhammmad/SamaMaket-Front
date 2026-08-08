@@ -1,0 +1,113 @@
+.sidebar{
+    width:280px;
+    min-height:100vh;
+    background:#102a43;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    padding:25px 20px;
+}
+
+.logo{
+    margin-bottom:30px;
+}
+
+.logo h2{
+    margin:0;
+    font-size:28px;
+    font-weight:800;
+}
+
+.logo span{
+    color:#ff9d1f;
+}
+
+.logo small{
+    color:#c8d6e5;
+    display:block;
+    margin-top:5px;
+}
+
+.shop-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:rgba(255,255,255,.08);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:30px;
+}
+
+.avatar{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#ff9d1f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+}
+
+.shop-card h4{
+    margin:0;
+    font-size:16px;
+}
+
+.shop-card p{
+    margin:5px 0 0;
+    color:#7CFC98;
+    font-size:13px;
+}
+
+.title{
+    color:#8fb8d8;
+    font-size:12px;
+    font-weight:700;
+    margin:20px 0 10px;
+    letter-spacing:1px;
+}
+
+nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 15px;
+    border-radius:10px;
+    color:#fff;
+    text-decoration:none;
+    cursor:pointer;
+    transition:.25s;
+}
+
+nav a:hover{
+    background:#1b3b5a;
+}
+
+nav a.active{
+    background:#ff9d1f;
+    color:#102a43;
+    font-weight:700;
+}
+
+.logout{
+    margin-top:auto;
+    border:none;
+    border-radius:10px;
+    background:#d9534f;
+    color:#fff;
+    padding:14px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+}
+
+.logout:hover{
+    background:#c9302c;
+}

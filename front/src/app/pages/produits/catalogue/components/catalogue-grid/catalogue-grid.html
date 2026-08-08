@@ -1,0 +1,17 @@
+<div class="grid">
+
+    <app-produit-card
+
+        *ngFor="let produit of produits"
+
+        [produit]="produit"
+
+        (voir)="voir.emit($event)"
+
+        (panier)="panier.emit($event)"
+
+        (favori)="favori.emit($event)">
+
+    </app-produit-card>
+
+</div>
