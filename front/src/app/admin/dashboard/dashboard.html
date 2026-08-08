@@ -1,1 +1,69 @@
-<p>dashboard works!</p>
+<div class="stats">
+
+    <app-stat-card
+
+        *ngFor="let stat of statistiques"
+
+        [titre]="stat.titre"
+
+        [valeur]="stat.valeur"
+
+        [evolution]="stat.evolution"
+
+        [couleur]="stat.couleur">
+
+    </app-stat-card>
+
+</div>
+<section class="vendeurs">
+
+    <h2>Vendeurs en attente</h2>
+
+    <app-vendeur-attente-card
+
+        *ngFor="let vendeur of vendeursEnAttente"
+
+        [vendeur]="vendeur"
+
+        (approuver)="approuver($event)"
+
+        (refuser)="refuser($event)">
+
+    </app-vendeur-attente-card>
+
+</section>
+<div class="dashboard-grid">
+
+    <section class="vendeurs">
+
+        <h2>Vendeurs en attente</h2>
+
+        <app-vendeur-attente-card
+
+            *ngFor="let vendeur of vendeursEnAttente"
+
+            [vendeur]="vendeur"
+
+            (approuver)="approuver($event)"
+
+            (refuser)="refuser($event)">
+
+        </app-vendeur-attente-card>
+
+    </section>
+
+    <section class="utilisateurs">
+
+        <h2>Utilisateurs récents</h2>
+
+        <app-utilisateur-row
+
+            *ngFor="let utilisateur of utilisateursRecents"
+
+            [utilisateur]="utilisateur">
+
+        </app-utilisateur-row>
+
+    </section>
+
+</div>

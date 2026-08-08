@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recent-activity',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './recent-activity.html',
   styleUrl: './recent-activity.css',
 })
-export class RecentActivity {}
+export class RecentActivity {
+  @Input() activities: string[] = [];
+}

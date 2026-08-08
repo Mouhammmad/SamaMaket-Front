@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './commande-status.html',
   styleUrl: './commande-status.css'
 })
-export class CommandeStatus {
+export class CommandeStatus implements OnChanges {
 
   @Input() commande: any = null;
 
@@ -22,13 +22,16 @@ export class CommandeStatus {
 
   statut = '';
 
-  ngOnChanges() {
-    if (this.commande) {
-      this.statut = this.commande.statut;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['commande'] && this.commande) {
+      this.statut = this.commande.statut || 'en_attente';
     }
   }
 
   sauvegarder() {
+    if (!this.statut) {
+      return;
+    }
     this.enregistrer.emit(this.statut);
   }
 

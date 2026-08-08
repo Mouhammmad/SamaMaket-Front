@@ -1,15 +1,15 @@
 <div class="panel">
 
-    <div class="panel-header">
+  <div class="panel-header">
+    <h3>Évolution des ventes</h3>
+  </div>
 
-        <h3>Évolution des ventes</h3>
+  <div *ngIf="ventes?.length; else noSales" class="chart-wrapper">
+    <canvas #chartCanvas></canvas>
+  </div>
 
-    </div>
-
-    <div class="chart-placeholder">
-
-        📈 Graphique des ventes
-
-    </div>
+  <ng-template #noSales>
+    <div class="empty">Aucune donnée de ventes disponible.</div>
+  </ng-template>
 
 </div>

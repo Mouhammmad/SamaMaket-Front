@@ -39,7 +39,7 @@ export class PaimentComponent implements OnInit {
           ...article,
           nom: article.produit?.nom || article.nom || 'Produit',
           prix: article.produit?.prix ?? article.prix ?? 0,
-          image: article.produit?.image || article.image || article.image_url || 'assets/images/no-image.png'
+          image: article.produit?.image_url || article.produit?.image || article.image || article.image_url || 'assets/images/no-image.png'
         }));
         this.total = data.total ?? 0;
       }
@@ -56,18 +56,18 @@ export class PaimentComponent implements OnInit {
       return;
     }
 
-    const methode = this.selectedMethod === 'wave' ? 'wave' : this.selectedMethod === 'orange' ? 'orange_money' : 'wave';
+    if (this.selectedMethod === 'livraison') {
+      this.message = 'Le paiement à la livraison n’est pas disponible pour le moment. Choisissez Wave ou Orange Money.';
+      return;
+    }
+
+    const methode = this.selectedMethod === 'wave' ? 'wave' : 'orange_money';
 
     this.panierService.validerCommande(this.address.address, methode).subscribe({
       next: (response: any) => {
         const commandeId = response?.commande?.id;
-        if (commandeId) {
-          this.router.navigate(['/confirmation'], {
-            queryParams: { commande_id: commandeId }
-          });
-        } else {
-          this.router.navigate(['/confirmation']);
-        }
+        this.message = response?.message || 'Commande créée avec succès. Redirection vers Mes commandes…';
+        this.router.navigate(['/mes-commandes']);
       },
       error: (err: any) => {
         this.message = err.error?.erreur || 'Impossible de finaliser la commande.';

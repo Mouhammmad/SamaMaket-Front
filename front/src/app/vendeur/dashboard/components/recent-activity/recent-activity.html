@@ -2,16 +2,12 @@
 
     <h3>Activité récente</h3>
 
-    <div class="activity">
-
-        <p>✅ Nouvelle commande reçue</p>
-
-        <p>⭐ Nouvel avis 5 étoiles</p>
-
-        <p>📦 Produit ajouté</p>
-
-        <p>💰 Paiement confirmé</p>
-
+    <div class="activity" *ngIf="activities?.length; else noActivities">
+        <p *ngFor="let message of activities">{{ message }}</p>
     </div>
+
+    <ng-template #noActivities>
+        <div class="empty">Aucune activité récente.</div>
+    </ng-template>
 
 </div>

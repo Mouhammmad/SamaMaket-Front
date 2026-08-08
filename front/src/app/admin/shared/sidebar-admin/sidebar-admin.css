@@ -1,0 +1,67 @@
+.sidebar{
+
+    width:280px;
+
+    background:#243a69;
+
+    color:white;
+
+    min-height:100vh;
+
+    padding:25px;
+
+}
+
+.logo{
+
+    margin-bottom:40px;
+
+}
+
+.logo h2{
+
+    margin:0;
+
+}
+
+.logo span{
+
+    color:#ff7f2a;
+
+}
+
+nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px;
+
+    border-radius:8px;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    background:#35548d;
+
+}
+
+nav a.active{
+
+    background:#35548d;
+
+}

@@ -11,17 +11,17 @@
 
     <div class="dashboard-middle">
 
-        <app-sales-chart></app-sales-chart>
+        <app-sales-chart [ventes]="salesData"></app-sales-chart>
 
-        <app-recent-activity></app-recent-activity>
+        <app-recent-activity [activities]="activityMessages"></app-recent-activity>
 
     </div>
 
     <div class="dashboard-bottom">
 
-        <app-recent-orders></app-recent-orders>
+        <app-recent-orders [orders]="recentOrders"></app-recent-orders>
 
-        <app-top-products></app-top-products>
+        <app-top-products [products]="topProducts"></app-top-products>
 
     </div>
 

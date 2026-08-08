@@ -94,15 +94,36 @@ export class Catalogue implements OnInit {
 
   chargerProduits(): void {
 
-    this.produitService.getProduits({
+    const params: any = {
+      page: this.page
+    };
 
-    page: this.page,
+    // n'envoyer que les filtres actifs pour éviter les conversions/validations côté serveur
+    if (this.filtres.prixMin && this.filtres.prixMin > 0) {
+      params.prix_min = this.filtres.prixMin;
+    }
 
-    ordering: this.tri,
+    if (this.filtres.prixMax && this.filtres.prixMax < 150000) {
+      params.prix_max = this.filtres.prixMax;
+    }
 
-    ...this.filtres
+    if (this.filtres.note) {
+      params.note = this.filtres.note;
+    }
 
-}).subscribe({
+    if (this.filtres.categorie) {
+      params.categorie = this.filtres.categorie;
+    }
+
+    if (this.filtres.vendeurVerifie) {
+      params.vendeurVerifie = true;
+    }
+
+    if (this.tri && this.tri !== 'pertinence') {
+      params.ordering = this.tri;
+    }
+
+    this.produitService.getProduits(params).subscribe({
 
     next:(response)=>{
         console.log('[Catalogue] produits response', response);

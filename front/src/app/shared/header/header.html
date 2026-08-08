@@ -32,25 +32,21 @@
 
   🛒 Panier
 
-  @if (nombreArticles > 0) {
-
-    <span
+  <span *ngIf="nombreArticles > 0"
       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 
       {{ nombreArticles }}
 
     </span>
 
-  }
-
 </a>
         
 
         <button
           class="login-btn"
-          routerLink="/login">
+          [routerLink]="estConnecte ? '/client' : '/login'">
 
-          Connexion
+          {{ estConnecte ? 'Mon compte' : 'Connexion' }}
 
         </button>
 

@@ -18,6 +18,8 @@ export class Statistiques implements OnInit {
 
   statistiques: any = null;
 
+  ventes: any[] = [];
+
   periode = 'mois';
 
   chargement = true;
@@ -27,37 +29,52 @@ export class Statistiques implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.charger();
-
   }
 
   charger(): void {
+    this.chargement = true;
 
-    this.statistiquesService
+    this.statistiquesService.dashboard(this.periode).subscribe({
+      next: (data: any) => {
+        this.statistiques = {
+          chiffre_affaires: data?.revenue ?? 0,
+          commandes: data?.orders ?? 0,
+          produits: data?.products ?? 0,
+          clients: data?.clients ?? 0,
+          note_moyenne: data?.rating ?? 0,
+          panier_moyen: data?.average_cart ?? 0,
+          favoris: data?.favorites ?? 0,
+          conversion: data?.conversion_rate ?? 0,
+          periode: this.periode
+        };
+        this.chargement = false;
+      },
+      error: () => {
+        this.statistiques = null;
+        this.chargement = false;
+      }
+    });
 
-      .dashboard(this.periode)
-
-      .subscribe({
-
-        next: (data: any) => {
-
-          this.statistiques = data;
-
-          this.chargement = false;
-
-        }
-
-      });
-
+    this.statistiquesService.graphiqueRevenus(this.periode).subscribe({
+      next: (data: any) => {
+        this.ventes = Array.isArray(data)
+          ? data.map((item: any) => ({
+              label: item.label,
+              montant: item.revenue ?? item.montant ?? 0,
+              commandes: item.commandes ?? 0
+            }))
+          : [];
+      },
+      error: () => {
+        this.ventes = [];
+      }
+    });
   }
 
   changerPeriode(periode: string): void {
-
     this.periode = periode;
-
     this.charger();
-
   }
 
 }

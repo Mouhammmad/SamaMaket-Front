@@ -1,0 +1,98 @@
+<div *ngIf="utilisateur" class="card">
+
+<h2>
+
+Profil utilisateur
+
+</h2>
+
+<hr>
+
+<p>
+
+<strong>Nom :</strong>
+
+{{utilisateur.username}}
+
+</p>
+
+<p>
+
+<strong>Email :</strong>
+
+{{utilisateur.email}}
+
+</p>
+
+<p>
+
+<strong>Rôle :</strong>
+
+{{utilisateur.role}}
+
+</p>
+<p>
+
+<strong>Statut :</strong>
+
+<span *ngIf="utilisateur.is_active; else suspended" class="text-success">
+
+Actif
+
+</span>
+
+<ng-template #suspended>
+
+<span class="text-danger">
+
+Suspendu
+
+</span>
+
+</ng-template>
+
+</p>
+
+<p>
+
+<strong>Date :</strong>
+
+{{utilisateur.date_joined | date}}
+
+</p>
+
+<div class="actions">
+
+<button
+class="btn btn-warning"
+(click)="suspendre()">
+
+Suspendre
+
+</button>
+
+<button
+class="btn btn-success"
+(click)="reactiver()">
+
+Réactiver
+
+</button>
+
+<button
+class="btn btn-danger"
+(click)="supprimer()">
+
+Supprimer
+
+</button>
+
+<button class="btn btn-danger">
+
+Supprimer
+
+</button>
+
+</div>
+
+</div>

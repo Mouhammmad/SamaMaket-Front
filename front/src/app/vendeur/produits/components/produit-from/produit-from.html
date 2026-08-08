@@ -1,4 +1,9 @@
-<form  [formGroup]="produitForm" (ngSubmit)="enregistrer()">
+<div class="overlay">
+  <div class="preview-card">
+    <button type="button" class="close" (click)="fermer.emit()">✕</button>
+    <h2 class="modal-title">{{ produit ? 'Modifier le produit' : 'Nouveau produit' }}</h2>
+
+    <form [formGroup]="produitForm" (ngSubmit)="enregistrer()" class="modal-form">
 
   <div class="grid">
 
@@ -7,7 +12,9 @@
       
       <input
     type="text"
-    formControlName="nom">
+    formControlName="nom"
+    aria-label="Nom du produit"
+    placeholder="Nom du produit">
     <small class="error" *ngIf="produitForm.get('nom')?.invalid && produitForm.get('nom')?.touched">
         Le nom du produit est obligatoire.
     </small>
@@ -15,7 +22,7 @@
 
     <div class="field">
       <label>Catégorie</label>
-      <select formControlName="categorie">
+      <select formControlName="categorie" aria-label="Catégorie du produit">
         <option value="">Choisir...</option>
         <ng-container *ngFor="let categorie of categories">
           <option [value]="categorie.id">{{ categorie.nom }}</option>
@@ -30,14 +37,18 @@
       <label>Prix (FCFA)</label>
       <input
     type="number"
-    formControlName="prix">
+    formControlName="prix"
+    aria-label="Prix du produit"
+    placeholder="Prix">
     </div>
 
     <div class="field">
       <label>Stock</label>
       <input
     type="number"
-    formControlName="stock">
+    formControlName="stock"
+    aria-label="Stock du produit"
+    placeholder="Stock">
     </div>
 
   </div>
@@ -46,12 +57,14 @@
     <label>Description</label>
     <textarea
 rows="6"
-formControlName="description">
+formControlName="description"
+aria-label="Description du produit"
+placeholder="Description du produit">
 </textarea>
   </div>
   <div class="field">
     <label>Statut</label>
-    <select formControlName="est_actif">
+    <select formControlName="est_actif" aria-label="Statut du produit">
       <option value="true">Actif</option>
       <option value="false">Inactif</option>
     </select>
@@ -73,7 +86,8 @@ formControlName="description">
         *ngFor="let image of imagePreviews; let i = index">
 
         <img
-            [src]="image">
+            [src]="image"
+            [alt]="'Aperçu image ' + (i + 1)">
 
         <span
             class="main-badge"
@@ -110,6 +124,7 @@ formControlName="description">
 </div>
 
   <div class="actions">
+    <button type="button" class="cancel" (click)="fermer.emit()">Annuler</button>
     <button
 type="submit"
 class="save">
@@ -120,3 +135,5 @@ Enregistrer
   </div>
 
 </form>
+  </div>
+</div>

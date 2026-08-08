@@ -19,7 +19,9 @@
 
     (statut)="changerStatut($event)"
 
-    (facture)="ouvrirFacture($event)">
+    (facture)="ouvrirFacture($event)"
+
+    (supprimer)="supprimerCommande($event)">
 
 </app-commande-table>
 <app-commande-status
@@ -33,6 +35,7 @@
 (enregistrer)="enregistrerStatut($event)">
 
 </app-commande-status>
+<div *ngIf="statusMessage" class="status-message">{{ statusMessage }}</div>
 <app-commande-preview
     *ngIf="afficherPreview"
     [commande]="commandePreview"

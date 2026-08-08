@@ -143,6 +143,14 @@
 
 </div>
 
+<div class="card address-card">
+  <h3>Informations de livraison</h3>
+  <label>Adresse de livraison</label>
+  <input type="text" [(ngModel)]="address.address" placeholder="Entrez votre adresse de livraison" />
+  <label>Téléphone</label>
+  <input type="tel" [(ngModel)]="address.phone" placeholder="7X XXX XX XX" />
+</div>
+
 <!-- Code promo -->
 
 <div class="card promo-card">
@@ -207,7 +215,7 @@
     </div>
 
     <button class="pay-button" type="button" (click)="payer()">
-        Payer {{ total + livraison | number:'1.0-0' }} F avec {{ selectedMethod === 'wave' ? 'Wave' : selectedMethod === 'orange' ? 'Orange Money' : 'paiement à la livraison' }}
+        Payer {{ total + livraison | number:'1.0-0' }} F avec {{ selectedMethod === 'wave' ? 'Wave' : selectedMethod === 'orange' ? 'Orange Money' : 'Paiement à la livraison' }}
     </button>
 
     <p class="secure" *ngIf="message">{{ message }}</p>

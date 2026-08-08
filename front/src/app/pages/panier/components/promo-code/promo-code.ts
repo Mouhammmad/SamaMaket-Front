@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './promo-code.html',
   styleUrl: './promo-code.css'
 })
-export class PromoCode {
+export class PromoCode implements OnChanges {
 
   @Input() codeApplique = '';
 
@@ -17,14 +17,14 @@ export class PromoCode {
 
   code = '';
 
-  appliquerCode() {
-
-    if (!this.code.trim()) {
-      return;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['codeApplique']) {
+      this.code = this.codeApplique || '';
     }
+  }
 
-    this.appliquer.emit(this.code);
-
+  appliquerCode() {
+    this.appliquer.emit(this.code.trim());
   }
 
 }

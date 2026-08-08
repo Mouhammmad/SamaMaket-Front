@@ -18,4 +18,6 @@ export class CommandeTable {
 
   @Output() facture = new EventEmitter<any>();
 
+  @Output() supprimer = new EventEmitter<any>();
+
 }

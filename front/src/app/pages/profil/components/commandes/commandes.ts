@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { CommandeService } from '../../../../core/services/commandes';
+import { ClientSectionService } from '../../../../core/services/client-section';
 
 @Component({
   selector: 'app-commandes',
@@ -9,7 +11,7 @@ import { CommandeService } from '../../../../core/services/commandes';
   templateUrl: './commandes.html',
   styleUrl: './commandes.css',
 })
-export class Commandes implements OnInit {
+export class Commandes implements OnInit, OnDestroy {
 
   commandes: any[] = [];
   chargement = true;
@@ -21,16 +23,30 @@ export class Commandes implements OnInit {
     annulees: 0
   };
 
+  private sectionSub = new Subscription();
+
   constructor(
-    private commandeService: CommandeService
+    private commandeService: CommandeService,
+    private sectionService: ClientSectionService
   ) {}
 
   ngOnInit(): void {
-    this.chargerCommandes();
+    this.sectionSub.add(
+      this.sectionService.section$.subscribe(section => {
+        if (section === 'commandes') {
+          this.chargerCommandes();
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sectionSub.unsubscribe();
   }
 
   chargerCommandes(): void {
     this.chargement = true;
+    this.message = '';
     this.commandeService.getMesCommandes().subscribe({
       next: (data: any) => {
         this.commandes = Array.isArray(data) ? data : data.results || [];

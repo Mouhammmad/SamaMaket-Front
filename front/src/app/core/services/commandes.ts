@@ -34,6 +34,14 @@ export class CommandeService {
       return this.http.get(this.api + 'vendeur/commandes/mes_commandes/');
     }
 
+    getNotifications(): Observable<any> {
+      return this.http.get(this.api + 'commandes/notifications/');
+    }
+
+    marquerToutesNotificationsLues(): Observable<any> {
+      return this.http.post(this.api + 'commandes/marquer_toutes_lues/', {});
+    }
+
     getCommandeVendeur(id: number): Observable<any> {
       return this.http.get(this.api + 'vendeur/commandes/' + id + '/detail_commande/');
     }
@@ -55,8 +63,12 @@ export class CommandeService {
 
   dashboard(): Observable<any> {
 
-    return this.http.get(this.api + 'dashboard/');
+    return this.http.get(this.api + 'vendeur/commandes/dashboard/');
 
+  }
+
+  supprimerCommande(id: number): Observable<any> {
+    return this.http.delete(this.api + 'vendeur/commandes/' + id + '/');
   }
 
   validerPanier(data: any): Observable<any> {

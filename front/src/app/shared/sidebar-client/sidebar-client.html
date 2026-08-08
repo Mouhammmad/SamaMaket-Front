@@ -3,16 +3,16 @@
     <div class="user">
 
         <div class="avatar">
-            MS
+            {{ utilisateur.prenom?.charAt(0) || 'U' }}{{ utilisateur.nom?.charAt(0) || 'S' }}
         </div>
 
         <div class="badge">
             ✓ Compte vérifié
         </div>
 
-        <h3>Moussa Sow</h3>
+        <h3>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h3>
 
-        <p>moussa@email.com</p>
+        <p>{{ utilisateur.email }}</p>
 
     </div>
 

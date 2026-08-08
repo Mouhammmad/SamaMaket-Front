@@ -25,14 +25,14 @@ export class FavorisService {
   constructor(private http: HttpClient) {}
 
   getFavoris(): Observable<FavoriApiItem[]> {
-    return this.http.get<FavoriApiItem[]>(`${this.api}/mes_favoris/`);
+    return this.http.get<FavoriApiItem[]>(`${this.api}/`);
   }
 
   ajouterFavori(produitId: number): Observable<any> {
-    return this.http.post<any>(`${this.api}/ajouter/`, { produit_id: produitId });
+    return this.http.post<any>(`${this.api}/`, { produit_id: produitId });
   }
 
   supprimerFavori(favoriId: number): Observable<any> {
-    return this.http.delete<any>(`${this.api}/supprimer/${favoriId}/`);
+    return this.http.delete<any>(`${this.api}/${favoriId}/`);
   }
 }

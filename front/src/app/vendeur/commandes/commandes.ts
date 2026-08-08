@@ -24,13 +24,43 @@ import { CommandeService } from '../../core/services/commandes';
   styleUrl: './commandes.css'
 })
 export class Commandes implements OnInit {
-  
-  appliquerFiltres(filtres:any){
 
-  console.log(filtres);
+  commandes: any[] = [];
+
+  commandesSource: any[] = [];
+
+  filtresActifs: any = {};
+  
+  appliquerFiltres(filtres: any = {}) {
+
+    this.filtresActifs = filtres || {};
+
+    const recherche = (this.filtresActifs.recherche || '').toString().trim().toLowerCase();
+    const statut = (this.filtresActifs.statut || '').toString().trim().toLowerCase();
+    const paiement = (this.filtresActifs.paiement || '').toString().trim().toLowerCase();
+    const dateDebut = this.filtresActifs.dateDebut || '';
+    const dateFin = this.filtresActifs.dateFin || '';
+
+    this.commandes = this.commandesSource.filter((commande: any) => {
+      const numero = (commande.numero || '').toString().toLowerCase();
+      const client = (commande.client || '').toString().toLowerCase();
+      const rechercheOk = !recherche || numero.includes(recherche) || client.includes(recherche);
+
+      const statutCommande = (commande.statut || '').toString().toLowerCase();
+      const statutOk = !statut || statutCommande === statut;
+
+      const modePaiement = (commande.mode_paiement || commande.paiement?.methode || '').toString().toLowerCase();
+      const paiementOk = !paiement || modePaiement.includes(paiement);
+
+      const dateCommande = commande.date_creation || commande.date || '';
+      const dateValue = dateCommande ? new Date(dateCommande) : null;
+      const debutOk = !dateDebut || !dateValue || dateValue >= new Date(dateDebut);
+      const finOk = !dateFin || !dateValue || dateValue <= new Date(dateFin);
+
+      return rechercheOk && statutOk && paiementOk && debutOk && finOk;
+    });
 
 }
-commandes: any[] = [];
 
 commandePreview: any = null;
 
@@ -59,18 +89,32 @@ ouvrirFacture(commande: any) {
   console.log(commande);
 
 }
+
+supprimerCommande(commande: any) {
+  if (!commande?.id) {
+    return;
+  }
+
+  this.commandeService.supprimerCommande(commande.id).subscribe({
+    next: () => {
+      this.commandesSource = this.commandesSource.filter((item: any) => item.id !== commande.id);
+      this.commandes = this.commandesSource;
+      this.appliquerFiltres(this.filtresActifs);
+      this.calculerStatistiques();
+      this.chargerDashboard();
+    }
+  });
+}
 commandeSelectionnee: any = null;
+  statusMessage = '';
 
 afficherStatut = false;
 changerStatut(commande: any) {
-
-  this.commandeSelectionnee = commande;
-  console.log(commande);
-
-  this.afficherStatut = true;
-
-}
-
+    console.log('ouvrir modal statut pour commande', commande?.id);
+    this.commandeSelectionnee = { ...(commande || {}) };
+    this.statusMessage = '';
+    this.afficherStatut = true;
+  }
 fermerStatut() {
 
   this.afficherStatut = false;
@@ -79,24 +123,53 @@ fermerStatut() {
 
 enregistrerStatut(statut: string) {
 
+  if (!this.commandeSelectionnee?.id) {
+    this.statusMessage = 'Impossible de mettre à jour : commande introuvable.';
+    return;
+  }
+
+  const commandeId = Number(this.commandeSelectionnee.id);
+
   this.commandeService
   .changerStatut(
-    this.commandeSelectionnee.id,
+    commandeId,
     statut
   )
   .subscribe({
 
-    next: () => {
+    next: (commandeMiseAJour: any) => {
+      console.log('Statut mis à jour', commandeMiseAJour);
+      const commandeServeur = commandeMiseAJour || { ...this.commandeSelectionnee, statut };
+      const statutFinal = commandeServeur.statut || statut;
 
-      this.fermerStatut();
+      this.commandeSelectionnee = { ...this.commandeSelectionnee, statut: statutFinal };
+      this.commandePreview = this.commandePreview && Number(this.commandePreview.id) === commandeId
+        ? { ...this.commandePreview, ...commandeServeur, statut: statutFinal }
+        : this.commandePreview;
+      this.commandesSource = this.commandesSource.map((commande: any) =>
+        Number(commande.id) === commandeId ? { ...commande, ...commandeServeur, statut: statutFinal } : commande
+      );
+      // Mettre à jour localement puis recharger depuis le serveur pour garantir
+      // que l'interface reflète exactement l'état du backend.
+      this.commandes = this.commandesSource;
+      this.appliquerFiltres(this.filtresActifs);
+      this.calculerStatistiques();
+      this.statusMessage = 'Statut mis à jour avec succès.';
 
+      // Recharger la liste depuis l'API pour s'assurer que l'affichage est à jour
+      // (utile si d'autres champs ont été modifiés côté serveur).
       this.chargerCommandes();
 
+      // Fermer le modal de statut après un court délai pour laisser Angular
+      // appliquer les mises à jour et éviter que l'overlay n'intercepte
+      // immédiatement d'autres interactions automatisées.
+      setTimeout(() => this.fermerStatut(), 150);
+    },
+    error: (err: any) => {
+      console.error('Impossible de mettre à jour le statut', err);
+      this.statusMessage = err.error?.detail || err.error?.erreur || 'Impossible de mettre à jour le statut.';
     }
-
   });
-
-  this.afficherStatut = false;
 
 }
 
@@ -129,7 +202,9 @@ chargerCommandes() {
   this.commandeService.getMesCommandesVendeur().subscribe({
     next: (data: any) => {
       const payload = Array.isArray(data) ? data : data.results || [];
+      this.commandesSource = payload;
       this.commandes = payload;
+      this.appliquerFiltres(this.filtresActifs);
       this.calculerStatistiques();
     }
   });
@@ -146,7 +221,7 @@ calculerStatistiques() {
 
   this.stats.expediees =
     this.commandes.filter(
-      c => c.statut === 'expediee'
+      c => c.statut === 'expedie'
     ).length;
 
   this.stats.revenus =

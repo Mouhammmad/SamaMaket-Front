@@ -84,16 +84,23 @@ export class PanierService {
     );
   }
 
-  validerCommande(adresse: string, methode: string): Observable<any> {
+  validerCommande(adresse: string, methode: string, codePromo = ''): Observable<any> {
     return this.http.post<any>(`${this.api}/commandes/valider_panier/`, {
       adresse_livraison: adresse,
-      methode_paiement: methode
+      methode_paiement: methode,
+      code_promo: codePromo
     }).pipe(
       tap((data: any) => {
         this.setCartCount([]);
         this.showToast(data.message || 'Commande créée avec succès');
       })
     );
+  }
+
+  appliquerCodePromo(codePromo: string): Observable<any> {
+    return this.http.post<any>(`${this.api}/panier/appliquer_code_promo/`, {
+      code_promo: codePromo
+    });
   }
 
   confirmerPaiement(commandeId: number, idTransaction: string): Observable<any> {

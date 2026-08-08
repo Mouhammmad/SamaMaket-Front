@@ -11,11 +11,15 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ConfirmationComponent implements OnInit {
   commandeId: string | null = null;
+  message = 'Vous serez redirigé vers Mes commandes dans quelques secondes.';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     const queryParams = new URLSearchParams(window.location.search);
     this.commandeId = queryParams.get('commande_id');
+    setTimeout(() => {
+      this.router.navigate(['/mes-commandes']);
+    }, 5000);
   }
 }

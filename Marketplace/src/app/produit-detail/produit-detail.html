@@ -2,14 +2,14 @@
 
     <div class="left">
 
-        <img class="main-image" [src]="produit.image" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+        <img class="main-image" [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
 
         <div class="gallery">
 
-            <img [src]="produit.image" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
-            <img [src]="produit.image2" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
-            <img [src]="produit.image3" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
-            <img [src]="produit.image4" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
+            <img [src]="produit.image || produit.image_url || 'assets/images/no-image.png'" alt="{{ produit?.nom || 'Image du produit' }}" title="{{ produit?.nom || 'Image du produit' }}">
 
         </div>
 

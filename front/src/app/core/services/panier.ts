@@ -43,6 +43,12 @@ export class PanierService {
     return this.http.delete(this.api + 'vider/');
   }
 
+  appliquerCodePromo(code: string): Observable<any> {
+    return this.http.post(this.api + 'appliquer_code_promo/', {
+      code_promo: code
+    });
+  }
+
   mettreAJourNombreArticles(nombre: number): void {
     this.nombreArticlesSubject.next(nombre);
   }

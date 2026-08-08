@@ -1,8 +1,9 @@
 <div
 class="overlay"
-*ngIf="commande">
+*ngIf="commande"
+(click)="fermer.emit()">
 
-<div class="modal">
+<div class="modal" (click)="$event.stopPropagation()">
 
 <h2>
 
@@ -10,25 +11,24 @@ Modifier le statut
 
 </h2>
 
-<select [(ngModel)]="statut">
+<select [(ngModel)]="statut" aria-label="Statut de la commande">
 
 <option value="en_attente">🟡 En attente</option>
 
-<option value="confirmee">🔵 Confirmée</option>
+<option value="confirme">🔵 Confirmée</option>
 
-<option value="preparation">🟣 Préparation</option>
+<option value="expedie">🚚 Expédiée</option>
 
-<option value="expediee">🚚 Expédiée</option>
+<option value="livre">✅ Livrée</option>
 
-<option value="livree">✅ Livrée</option>
-
-<option value="annulee">❌ Annulée</option>
+<option value="annule">❌ Annulée</option>
 
 </select>
 
 <div class="buttons">
 
 <button
+type="button"
 class="cancel"
 (click)="fermer.emit()">
 
@@ -37,7 +37,7 @@ Annuler
 </button>
 
 <button
-class="save"
+type="button"
 (click)="sauvegarder()">
 
 Enregistrer

@@ -24,7 +24,7 @@
   <div *ngIf="statistiques" class="stats-content">
     <div class="stats-card">
       <h3>Ventes</h3>
-      <p>{{ statistiques?.ventes ?? 0 }}</p>
+      <p>{{ statistiques?.chiffre_affaires ?? 0 }} FCFA</p>
     </div>
     <div class="stats-card">
       <h3>Commandes</h3>
@@ -40,6 +40,6 @@
     </div>
   </div>
   <app-statistiques-chart
-    [ventes]="statistiques?.ventes">
-</app-statistiques-chart>
+    [ventes]="ventes">
+  </app-statistiques-chart>
 </section>

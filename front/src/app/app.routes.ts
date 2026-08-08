@@ -11,9 +11,9 @@ import { Detail as ProduitDetail } from './pages/produits/detail/detail';
 import { Livraison } from './pages/livraison/livraison';
 import { Paiement } from './pages/paiement/paiement';
 import { Confirmation } from './pages/confirmation/confirmation';
-
+import { UtilisateurDetail } from './admin/utilisateur-detail/utilisateur-detail';
 import { VendeurLayout } from './layout/vendeur-layout/vendeur-layout';
-
+import { VendeurDetail } from './admin/vendeurs/components/vendeur-detail/vendeur-detail';
 import { Dashboard } from './vendeur/dashboard/dashboard';
 import { Produits as ProduitsVendeur } from './vendeur/produits/produits';
 import { Commandes } from './vendeur/commandes/commandes';
@@ -26,6 +26,12 @@ import { Parametre } from './vendeur/parametre/parametre';
 import { vendeurGuard } from './core/guards/vendeur-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { Promotions } from './vendeur/promotions/promotions';
+import { AdminLayout } from './layout/admin-layout/admin-layout';
+import { Dashboard as DashboardAdmin } from './admin/dashboard/dashboard';
+import { Utilisateurs } from './admin/utilisateurs/utilisateurs';
+import { Vendeurs } from './admin/vendeurs/vendeurs';
+import { adminGuard } from './core/guards/admin-guard';
+import { AdminLogin } from './pages/admin-login/admin-login';
 export const routes: Routes = [
 
   {
@@ -67,7 +73,7 @@ export const routes: Routes = [
         path: 'confirmation/:id',
         component: Confirmation
       }
-
+    
     ]
   },
 
@@ -153,13 +159,53 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/login',
+    component: AdminLogin
+  },
+
+  {
     path: 'register',
     component: Register
   },
 
   {
-    path: '**',
-    redirectTo: ''
-  }
+    path: 'admin',
+    component: AdminLayout,
+    canActivate: [adminGuard],
+    children: [
+
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full'
+    },
+
+    {
+      path: 'dashboard',
+      component: Dashboard
+    },
+
+    {
+      path: 'utilisateurs',
+      component: Utilisateurs
+    },
+
+    {
+      path: 'utilisateurs/:id',
+      component: UtilisateurDetail
+    },
+
+    {
+      path: 'vendeurs',
+      component: Vendeurs
+    },
+
+    {
+      path: 'vendeurs/:id',
+      component: VendeurDetail
+    }
+
+  ]
+}
 
 ];

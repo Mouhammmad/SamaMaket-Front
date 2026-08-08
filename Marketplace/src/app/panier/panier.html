@@ -91,13 +91,9 @@
         <span>Sous-total ({{ panier.length }} articles)</span>
         <span>{{ total | number:'1.0-0' }} FCFA</span>
       </div>
-      <div class="summary-line discount">
-        <span>Reduction promo (-20%)</span>
-        <span>-2 750 F</span>
-      </div>
-      <div class="summary-line discount">
-        <span>Code SAMA10</span>
-        <span>-4 620 F</span>
+      <div class="summary-line discount" *ngIf="reductionPromo > 0">
+        <span>Réduction promo</span>
+        <span>-{{ reductionPromo | number:'1.0-0' }} F</span>
       </div>
       <div class="summary-line">
         <span>Frais de livraison</span>
@@ -109,7 +105,7 @@
       </div>
       <div class="summary-total">
         <span>Total TTC</span>
-        <strong>{{ total + 2000 | number:'1.0-0' }} F</strong>
+        <strong>{{ totalFinal | number:'1.0-0' }} F</strong>
       </div>
       <input type="text" [(ngModel)]="adresseLivraison" placeholder="Adresse de livraison" />
       <select [(ngModel)]="methodePaiement" aria-label="Méthode de paiement">
@@ -132,10 +128,10 @@
     <h3>Code promotionnel</h3>
   </div>
   <div class="promo-input">
-    <input type="text" placeholder="Entrez votre code promo">
-    <button type="button">Appliquer</button>
+    <input type="text" [(ngModel)]="codePromo" placeholder="Entrez votre code promo">
+    <button type="button" (click)="appliquerCodePromo()">Appliquer</button>
   </div>
-  <div class="promo-note">Code SAMA10 applique - 10% de reduction !</div>
+  <div class="promo-note">Essayez un code comme SAMA10 pour obtenir une réduction.</div>
 </div>
 
 <h2>Vous aimerez aussi</h2>
