@@ -9,11 +9,11 @@
 
     <app-stats-cards></app-stats-cards>
 
-    <div class="dashboard-middle">
+    <div class="dashboard-grid">
 
-        <app-sales-chart [ventes]="salesData"></app-sales-chart>
+        <app-monthly-comparison [ventes]="salesData"></app-monthly-comparison>
 
-        <app-recent-activity [activities]="activityMessages"></app-recent-activity>
+        <app-categories-chart [categories]="categoriesData"></app-categories-chart>
 
     </div>
 

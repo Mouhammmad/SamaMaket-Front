@@ -1,6 +1,6 @@
 <div class="profil-content">
 
-  <ng-container *ngIf="sectionActive === 'profil'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'profil'">
     <app-informations></app-informations>
     <app-adresses></app-adresses>
     <app-securite></app-securite>
@@ -8,27 +8,27 @@
     <app-zone-danger></app-zone-danger>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'commandes'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'commandes'">
     <app-commandes></app-commandes>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'favoris'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'favoris'">
     <app-favoris></app-favoris>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'adresses'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'adresses'">
     <app-adresses></app-adresses>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'avis'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'avis'">
     <app-avis></app-avis>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'notifications'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'notifications'">
     <app-notifications></app-notifications>
   </ng-container>
 
-  <ng-container *ngIf="sectionActive === 'securite'">
+  <ng-container *ngIf="(sectionActive$ | async) === 'securite'">
     <app-securite></app-securite>
   </ng-container>
 

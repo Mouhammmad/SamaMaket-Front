@@ -1,9 +1,9 @@
 <app-avis-header
-    [total]="avis.length">
+    [total]="(avis$ | async)?.length || 0">
 </app-avis-header>
 
 <app-avis-stats
-    [avis]="avis">
+    [avis]="(avis$ | async) || []">
 </app-avis-stats>
 
 <app-avis-filter
@@ -13,17 +13,18 @@
     (noteChange)="filtrerParNote($event)">
 
 </app-avis-filter>
+
 <app-avis-empty
-    *ngIf="!chargement && avis.length===0">
+    *ngIf="!(chargement$ | async) && ((avis$ | async)?.length || 0) === 0">
 </app-avis-empty>
 
 <div
     class="contenu"
-    *ngIf="avis.length">
+    *ngIf="(avis$ | async)?.length">
 
     <app-avis-list
 
-        [avis]="avis"
+        [avis]="(avis$ | async) || []"
 
         (selection)="selectionnerAvis($event)">
 

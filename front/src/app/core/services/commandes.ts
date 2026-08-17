@@ -11,7 +11,7 @@ import { Observable, map } from 'rxjs';
 })
 export class CommandeService {
 
-  api = 'http://127.0.0.1:8000/api/commandes/';
+  api = '/api/commandes/';
 
   constructor(
 
@@ -42,14 +42,8 @@ export class CommandeService {
       return this.http.post(this.api + 'commandes/marquer_toutes_lues/', {});
     }
 
-    getCommandeVendeur(id: number): Observable<any> {
-      return this.http.get(this.api + 'vendeur/commandes/' + id + '/detail_commande/');
-    }
-
-  detailCommande(id: number): Observable<any> {
-
-    return this.getCommande(id);
-
+  getResume(): Observable<any> {
+    return this.http.get(this.api + 'commandes/resume/');
   }
 
   changerStatut(id: number, statut: string): Observable<any> {

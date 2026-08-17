@@ -11,6 +11,10 @@ export class Boutique {
 
   constructor(private http: HttpClient) {}
 
+  getBoutiques(): Observable<any[]> {
+    return this.http.get<any[]>(this.api);
+  }
+
   getMaBoutique(): Observable<any> {
     return this.http.get(this.api + 'ma/');
   }

@@ -19,24 +19,18 @@ import { Utilisateur } from '../../../../core/models/utilisateur';
 export class Informations implements OnInit {
   
   utilisateur: Utilisateur = {
-
-  id: 0,
-
-  prenom: '',
-
-  nom: '',
-
-  email: '',
-
-  telephone: '',
-
-  ville: '',
-
-  adresse: '',
-
-  photo: ''
-
-};
+    id: 0,
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    role: '',
+    date_joined: '',
+    ville: '',
+    adresse: '',
+    photo: ''
+  };
 
   message = '';
   chargement = true;

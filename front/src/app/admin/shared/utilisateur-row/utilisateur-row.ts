@@ -12,4 +12,8 @@ export class UtilisateurRow {
 
   @Input() utilisateur: any;
 
+  get affichageNom(): string {
+    return this.utilisateur?.username || this.utilisateur?.nom || 'Utilisateur';
+  }
+
 }

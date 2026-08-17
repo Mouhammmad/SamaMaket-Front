@@ -9,16 +9,16 @@
     </button>
   </div>
 
-  <div *ngIf="chargement" class="notification-loading">
+  <div *ngIf="chargement$ | async" class="notification-loading">
     Chargement des notifications...
   </div>
 
-  <div *ngIf="!chargement && message" class="notification-empty">
-    {{ message }}
+  <div *ngIf="!(chargement$ | async) && (message$ | async)" class="notification-empty">
+    {{ message$ | async }}
   </div>
 
-  <div *ngIf="!chargement && notifications.length" class="notification-list">
-    <div *ngFor="let notification of notifications" class="notification-item" [class.unread]="!notification.est_lu">
+  <div *ngIf="!(chargement$ | async) && (notifications$ | async)?.length" class="notification-list">
+    <div *ngFor="let notification of (notifications$ | async)" class="notification-item" [class.unread]="!notification.est_lu">
       <div class="notification-meta">
         <span class="notification-title">{{ notification.titre }}</span>
         <span class="notification-date">{{ notification.date_creation }}</span>

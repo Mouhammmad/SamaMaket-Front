@@ -81,8 +81,14 @@ typeSelectionne = '';
     this.promotionService.getPromotions().subscribe({
       next: (data: any) => {
         const payload = Array.isArray(data) ? data : (data?.results || []);
-        this.promotions = payload;
-        this.promotionsFiltrees = [...payload];
+        // Trier par date de création décroissante (nouvelles en haut)
+        const sorted = payload.sort((a: any, b: any) => {
+          const dateA = new Date(a.date_creation || a.date_ajout || 0).getTime();
+          const dateB = new Date(b.date_creation || b.date_ajout || 0).getTime();
+          return dateB - dateA; // Décroissant
+        });
+        this.promotions = sorted;
+        this.promotionsFiltrees = [...sorted];
         this.appliquerFiltres();
         this.loading = false;
       },

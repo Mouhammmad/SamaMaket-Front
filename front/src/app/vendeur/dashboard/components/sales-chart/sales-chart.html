@@ -5,7 +5,7 @@
   </div>
 
   <div *ngIf="ventes?.length; else noSales" class="chart-wrapper">
-    <canvas #chartCanvas></canvas>
+    <canvas #chartCanvas width="800" height="320"></canvas>
   </div>
 
   <ng-template #noSales>

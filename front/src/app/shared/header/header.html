@@ -17,12 +17,9 @@
 
         <a routerLink="/produits">Produits</a>
 
-        <a href="#">Vendeurs</a>
+        <a routerLink="/vendeurs">Vendeurs</a>
 
-        <a href="#">Offres</a>
-
-        <a href="#">Contact</a>
-
+        <a routerLink="/offres">Offres</a>
       </div>
 
       <!-- Actions -->
@@ -45,9 +42,7 @@
         <button
           class="login-btn"
           [routerLink]="estConnecte ? '/client' : '/login'">
-
           {{ estConnecte ? 'Mon compte' : 'Connexion' }}
-
         </button>
 
       </div>

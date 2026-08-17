@@ -7,9 +7,21 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
 
-  private api = 'http://127.0.0.1:8000/api/admin/';
+  private api = '/api/dashboard/admin/';
 
   constructor(private http: HttpClient) {}
+
+  getStats(): Observable<any> {
+    return this.http.get<any>(`${this.api}stats/`);
+  }
+
+  getVendeursEnAttente(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}vendeur_en_attente/`);
+  }
+
+  getUtilisateursRecents(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}utilisateurs_recents/`);
+  }
 
   getUtilisateurs(search = ''): Observable<any[]> {
     return this.http.get<any[]>(`${this.api}utilisateurs/?search=${search}`);

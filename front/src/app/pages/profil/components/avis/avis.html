@@ -1,1 +1,45 @@
-<p>avis works!</p>
+<div class="card">
+  <div class="card-header">
+    <h2>Mes avis</h2>
+    <p>Retrouvez vos avis publiés sur les produits.</p>
+  </div>
+
+  <div *ngIf="chargement$ | async" class="empty-state">
+    Chargement de vos avis...
+  </div>
+
+  <div *ngIf="!(chargement$ | async) && (message$ | async)" class="empty-state">
+    {{ message$ | async }}
+  </div>
+
+  <div *ngIf="!(chargement$ | async) && (avis$ | async)?.length">
+    <div *ngFor="let item of (avis$ | async)" class="review-card">
+      <div class="review-image" *ngIf="item.produit?.image_url">
+        <img [src]="item.produit?.image_url" [alt]="item.produit?.nom" />
+      </div>
+      <div class="review-header">
+        <strong>{{ item.produit?.nom || 'Produit inconnu' }}</strong>
+        <span>{{ item.date_creation | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="review-stars">{{ '⭐'.repeat(item.note) }}</div>
+      <p>{{ item.commentaire || 'Aucun commentaire.' }}</p>
+      <button type="button" class="btn btn-danger" (click)="supprimerAvis(item.id, item.produit?.nom)">Supprimer</button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="showConfirmModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirmation</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{ confirmModalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="confirmerAction()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>

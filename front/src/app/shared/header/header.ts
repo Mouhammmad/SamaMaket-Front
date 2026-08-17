@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PanierService } from '../../core/services/panier';
@@ -11,7 +11,7 @@ import { AuthService } from '../../core/services/auth';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit {
 
   nombreArticles = 0;
   estConnecte = false;
@@ -23,7 +23,12 @@ export class Header {
     this.panierService.nombreArticles$.subscribe((nombre: number) => {
       this.nombreArticles = nombre;
     });
-    this.estConnecte = this.authService.estConnecte();
+  }
+
+  ngOnInit(): void {
+    this.authService.connected$.subscribe((connected: boolean) => {
+      this.estConnecte = connected;
+    });
   }
 
 }

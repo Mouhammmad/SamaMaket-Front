@@ -1,12 +1,19 @@
 import { Routes } from '@angular/router';
 import { ClientLayout } from './layout/client-layout/client-layout';
 
+
+import { Produits as AdminProduits } from './admin/produits/produits';
+
+
+
 import { PublicLayout } from './layout/public-layout/public-layout';
 import { Panier } from './pages/panier/panier';
 import { Accueil } from './pages/accueil/accueil';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Produits } from './pages/produits/produits';
+import { VendeursPage } from './pages/vendeurs/vendeurs';
+import { OffresPage } from './pages/offres/offres';
 import { Detail as ProduitDetail } from './pages/produits/detail/detail';
 import { Livraison } from './pages/livraison/livraison';
 import { Paiement } from './pages/paiement/paiement';
@@ -47,6 +54,16 @@ export const routes: Routes = [
       {
         path: 'produits',
         component: Produits
+      },
+
+      {
+        path: 'vendeurs',
+        component: VendeursPage
+      },
+
+      {
+        path: 'offres',
+        component: OffresPage
       },
 
       {
@@ -173,6 +190,17 @@ export const routes: Routes = [
     component: AdminLayout,
     canActivate: [adminGuard],
     children: [
+      {
+      path: '',
+      redirectTo: 'produits',
+      pathMatch: 'full'
+    },
+
+    {
+      path: 'produits',
+      component: AdminProduits
+    },
+
 
     {
       path: '',
@@ -182,7 +210,7 @@ export const routes: Routes = [
 
     {
       path: 'dashboard',
-      component: Dashboard
+      component: DashboardAdmin
     },
 
     {

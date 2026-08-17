@@ -4,10 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { StatsCards } from './components/stats-cards/stats-cards';
-import { SalesChart } from './components/sales-chart/sales-chart';
 import { RecentOrders } from './components/recent-orders/recent-orders';
 import { TopProducts } from './components/top-products/top-products';
-import { RecentActivity } from './components/recent-activity/recent-activity';
+import { MonthlyComparison } from './components/monthly-comparison/monthly-comparison';
+import { CategoriesChart } from './components/categories-chart/categories-chart';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,10 +15,10 @@ import { RecentActivity } from './components/recent-activity/recent-activity';
   imports: [
     CommonModule,
     StatsCards,
-    SalesChart,
     RecentOrders,
     TopProducts,
-    RecentActivity
+    MonthlyComparison,
+    CategoriesChart
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
@@ -27,9 +27,9 @@ export class Dashboard implements OnInit {
   displayName = 'Vendeur';
 
   salesData: any[] = [];
+  categoriesData: any[] = [];
   recentOrders: any[] = [];
   topProducts: any[] = [];
-  activityMessages: string[] = [];
   period = 'mois';
 
   constructor(
@@ -61,18 +61,22 @@ export class Dashboard implements OnInit {
       }
     });
 
+    this.dashboardService.salesByCategory().subscribe({
+      next: (data: any) => {
+        this.categoriesData = Array.isArray(data) ? data : [];
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.categoriesData = [];
+      }
+    });
+
     this.dashboardService.recentOrders().subscribe({
       next: (data: any) => {
         this.recentOrders = Array.isArray(data) ? data : data.results || [];
-        this.activityMessages = this.recentOrders.slice(0, 4).map((commande: any) => {
-          const customer = commande.customer_username || commande.client || 'Client';
-          const total = commande.total_price || commande.montant_total || '—';
-          return `Nouvelle commande de ${customer} : ${total} FCFA`;
-        });
       },
       error: () => {
         this.recentOrders = [];
-        this.activityMessages = [];
       }
     });
 

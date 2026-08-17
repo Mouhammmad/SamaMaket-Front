@@ -34,24 +34,7 @@
 </section>
 <div class="dashboard-grid">
 
-    <section class="vendeurs">
-
-        <h2>Vendeurs en attente</h2>
-
-        <app-vendeur-attente-card
-
-            *ngFor="let vendeur of vendeursEnAttente"
-
-            [vendeur]="vendeur"
-
-            (approuver)="approuver($event)"
-
-            (refuser)="refuser($event)">
-
-        </app-vendeur-attente-card>
-
-    </section>
-
+    
     <section class="utilisateurs">
 
         <h2>Utilisateurs récents</h2>

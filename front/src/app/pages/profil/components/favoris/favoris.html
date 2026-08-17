@@ -7,23 +7,42 @@
     </div>
   </div>
 
-  <div *ngIf="chargement" class="empty-state">
+  <div *ngIf="chargement$ | async" class="empty-state">
     Chargement de vos favoris...
   </div>
 
-  <div *ngIf="!chargement && message" class="empty-state">
-    {{ message }}
+  <div *ngIf="!(chargement$ | async) && (message$ | async)" class="empty-state">
+    {{ message$ | async }}
   </div>
 
-  <div class="favorite-list" *ngIf="!chargement && favoris.length">
-    <div *ngFor="let favori of favoris" class="favorite-card">
+  <div class="favorite-list" *ngIf="!(chargement$ | async) && (favoris$ | async)?.length">
+    <div *ngFor="let favori of (favoris$ | async)" class="favorite-card">
+      <div class="favorite-image" *ngIf="favori.produit?.image_url">
+        <img [src]="favori.produit?.image_url" [alt]="favori.produit?.nom" />
+      </div>
       <div class="favorite-info">
         <h3>{{ favori.produit?.nom }}</h3>
         <p>{{ favori.produit?.prix }} FCFA</p>
         <p class="small">Ajouté le {{ favori.date_ajout | date:'dd/MM/yyyy' }}</p>
       </div>
       <div class="favorite-actions">
-        <button disabled>Voir</button>
+        <button type="button" class="btn btn-danger" (click)="supprimerFavori(favori.id, favori.produit?.nom)">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="showConfirmModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirmation</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{ confirmModalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="confirmerAction()">Confirmer</button>
       </div>
     </div>
   </div>

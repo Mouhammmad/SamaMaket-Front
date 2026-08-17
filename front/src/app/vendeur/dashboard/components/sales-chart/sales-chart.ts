@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnDestroy, AfterViewInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 
@@ -9,14 +9,22 @@ import Chart from 'chart.js/auto';
   templateUrl: './sales-chart.html',
   styleUrl: './sales-chart.css',
 })
-export class SalesChart implements AfterViewInit, OnDestroy {
+export class SalesChart implements AfterViewInit, OnChanges, OnDestroy {
   @Input() ventes: any[] = [];
 
-  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartCanvas') canvas?: ElementRef<HTMLCanvasElement>;
   private chart: any | null = null;
 
   ngAfterViewInit(): void {
-    this.renderChart();
+    setTimeout(() => {
+      this.renderChart();
+    }, 0);
+  }
+
+  ngOnChanges(): void {
+    setTimeout(() => {
+      this.renderChart();
+    }, 0);
   }
 
   ngOnDestroy(): void {
@@ -27,12 +35,21 @@ export class SalesChart implements AfterViewInit, OnDestroy {
   }
 
   private renderChart(): void {
-    if (!this.chartCanvas) return;
-    const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    if (!ctx) return;
+    if (!this.canvas?.nativeElement) {
+      return;
+    }
 
+    const canvasEl = this.canvas.nativeElement;
     const labels = (this.ventes || []).map(v => v.label || '');
-    const data = (this.ventes || []).map(v => Number(v.montant || v.revenue || 0));
+    const data = (this.ventes || []).map(v => Number(v.montant ?? v.revenue ?? 0));
+
+    if (!this.ventes?.length) {
+      if (this.chart) {
+        this.chart.destroy();
+        this.chart = null;
+      }
+      return;
+    }
 
     if (this.chart) {
       this.chart.data.labels = labels;
@@ -41,7 +58,7 @@ export class SalesChart implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.chart = new Chart(ctx, {
+    this.chart = new Chart(canvasEl, {
       type: 'line',
       data: {
         labels,
@@ -59,6 +76,9 @@ export class SalesChart implements AfterViewInit, OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 0
+        },
         scales: {
           y: {
             beginAtZero: true
@@ -66,10 +86,5 @@ export class SalesChart implements AfterViewInit, OnDestroy {
         }
       }
     });
-  }
-
-  // Re-render chart when input changes
-  ngOnChanges(): void {
-    if (this.chart) this.renderChart();
   }
 }

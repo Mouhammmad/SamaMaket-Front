@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -32,7 +32,8 @@ recherche='';
 
 constructor(
 
-private admin:AdminService
+private admin:AdminService,
+private cdr: ChangeDetectorRef
 
 ){}
 
@@ -51,6 +52,7 @@ this.admin
 .subscribe(data=>{
 
 this.utilisateurs=data;
+this.cdr.detectChanges();
 
 });
 

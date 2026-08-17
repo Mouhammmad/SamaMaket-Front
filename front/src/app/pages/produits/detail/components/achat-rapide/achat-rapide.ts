@@ -81,7 +81,11 @@ export class AchatRapide {
 
   favori(): void {
 
-    this.ajouterFavori.emit(this.produit);
+    this.ajouterFavori.emit({
+
+      produit: this.produit
+
+    });
 
   }
 

@@ -43,6 +43,7 @@ export class Login {
     localStorage.setItem('access', response.access);
     localStorage.setItem('refresh', response.refresh);
     localStorage.setItem('user', JSON.stringify(response.user));
+    this.authService.refreshAuthState();
 
     if (response.user.role === 'VENDOR') {
 
@@ -50,7 +51,7 @@ export class Login {
 
     } else if (response.user.role === 'CUSTOMER') {
 
-      this.router.navigate(['/']);
+      this.router.navigate(['/client']);
 
     } else if (response.user.role === 'ADMIN') {
 

@@ -1,0 +1,17 @@
+<div class="chart-container">
+  <div class="chart-header">
+    <h3>Distribution par Catégories</h3>
+  </div>
+  <div class="chart-wrapper">
+    <canvas #chartCanvas width="400" height="320"></canvas>
+  </div>
+  <div *ngIf="!categories || categories.length === 0" class="no-data">
+    Aucune donnée disponible
+  </div>
+  <div class="legend" *ngIf="categories && categories.length > 0">
+    <div class="legend-item" *ngFor="let cat of categories">
+      <span class="category-name">{{ cat.category }}</span>
+      <span class="category-percentage">{{ getPercentage(cat.sales) }}</span>
+    </div>
+  </div>
+</div>

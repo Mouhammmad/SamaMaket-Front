@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProduitService } from '../../../core/services/produit';
 import { PanierService } from '../../../core/services/panier';
+import { FavoriService } from '../../../core/services/favori.service';
 import { Produit } from '../../../core/models/produit';
 
 import { GalerieProduit } from './components/galerie-produit/galerie-produit';
@@ -38,11 +39,16 @@ export class Detail implements OnInit {
 
   messagePanier = '';
 
+  showConfirmModal = false;
+  confirmModalMessage = '';
+  confirmModalAction: (() => void) | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private produitService: ProduitService,
     private panierService: PanierService,
+    private favoriService: FavoriService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -131,6 +137,43 @@ export class Detail implements OnInit {
   acheterMaintenant(event: any): void {
     this.ajouterAuPanier(event);
     this.router.navigate(['/panier']);
+  }
+
+  ajouterAuxFavoris(event: any): void {
+    const produitId = this.produit?.id ?? event?.produit?.id;
+    const produitNom = this.produit?.nom ?? event?.produit?.nom ?? 'ce produit';
+
+    if (!produitId) {
+      return;
+    }
+
+    this.confirmModalMessage = `Ajouter "${produitNom}" à vos favoris ?`;
+    this.confirmModalAction = () => {
+      this.favoriService.toggle(produitId).subscribe({
+        next: () => {
+          this.messagePanier = `"${produitNom}" a été ajouté à vos favoris.`;
+          this.closeConfirmModal();
+        },
+        error: (err: any) => {
+          console.error('Erreur ajout favoris', err);
+          this.messagePanier = 'Impossible d\'ajouter le produit aux favoris.';
+          this.closeConfirmModal();
+        }
+      });
+    };
+    this.showConfirmModal = true;
+  }
+
+  confirmerAction(): void {
+    if (this.confirmModalAction) {
+      this.confirmModalAction();
+    }
+  }
+
+  closeConfirmModal(): void {
+    this.showConfirmModal = false;
+    this.confirmModalMessage = '';
+    this.confirmModalAction = null;
   }
 
 }

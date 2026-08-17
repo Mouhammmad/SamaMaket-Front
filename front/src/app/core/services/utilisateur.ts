@@ -9,17 +9,35 @@ import { Utilisateur } from '../models/utilisateur';
 })
 export class UtilisateurService {
 
-  private api = 'http://127.0.0.1:8000/api/utilisateur/';
+  private api = '/api/comptes/';
 
   constructor(private http: HttpClient) {}
 
   getProfil(): Observable<Utilisateur> {
-    return this.http.get<Utilisateur>(this.api + 'profil/');
+    return this.http.get<Utilisateur>(this.api + 'profil/mon_profil/');
   }
 
   modifierProfil(data: Utilisateur): Observable<Utilisateur> {
-    return this.http.put<Utilisateur>(
-      this.api + 'profil/',
+    const payload = {
+      username: data.username,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      phone: data.phone,
+      notif_commandes: (data as any).notif_commandes,
+      notif_promos: (data as any).notif_promos,
+      notif_favoris: (data as any).notif_favoris,
+      notif_newsletter: (data as any).notif_newsletter
+    };
+    return this.http.patch<Utilisateur>(
+      this.api + 'profil/modifier/',
+      payload
+    );
+  }
+
+  changerMotDePasse(data: { ancien_mot_de_passe: string; nouveau_mot_de_passe: string }): Observable<any> {
+    return this.http.post<any>(
+      this.api + 'profil/changer_mot_de_passe/',
       data
     );
   }

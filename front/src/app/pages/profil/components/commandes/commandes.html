@@ -24,7 +24,7 @@
 
         <div class="card-stat">
 
-            <h3>{{ stats.total }}</h3>
+            <h3>{{ (stats$ | async)?.total }}</h3>
 
             <span>Total</span>
 
@@ -32,7 +32,7 @@
 
         <div class="card-stat">
 
-            <h3>{{ stats.enCours }}</h3>
+            <h3>{{ (stats$ | async)?.enCours }}</h3>
 
             <span>En cours</span>
 
@@ -40,7 +40,7 @@
 
         <div class="card-stat">
 
-            <h3>{{ stats.livrees }}</h3>
+            <h3>{{ (stats$ | async)?.livrees }}</h3>
 
             <span>Livrées</span>
 
@@ -48,7 +48,7 @@
 
         <div class="card-stat">
 
-            <h3>{{ stats.annulees }}</h3>
+            <h3>{{ (stats$ | async)?.annulees }}</h3>
 
             <span>Annulées</span>
 
@@ -62,17 +62,23 @@
             type="text"
             placeholder="Rechercher une commande..."
             aria-label="Recherche commande"
-            disabled>
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange(searchTerm)">
 
-        <select id="statut-commande" aria-label="Filtrer les statuts" title="Filtrer les statuts" disabled>
+        <select id="statut-commande" aria-label="Filtrer les statuts" title="Filtrer les statuts" 
+            [(ngModel)]="filterStatut" (change)="onFilterStatutChange(filterStatut)">
 
-            <option>Tous les statuts</option>
+            <option value="tous">Tous les statuts</option>
 
-            <option>En cours</option>
+            <option value="en_attente">En attente</option>
 
-            <option>Livrée</option>
+            <option value="confirme">Confirmée</option>
 
-            <option>Annulée</option>
+            <option value="expedie">Expédiée</option>
+
+            <option value="livre">Livrée</option>
+
+            <option value="annule">Annulée</option>
 
         </select>
 
@@ -80,19 +86,19 @@
 
     <div class="orders">
 
-        <div *ngIf="chargement" class="empty-state">
+        <div *ngIf="chargement$ | async" class="empty-state">
             Chargement de vos commandes...
         </div>
 
-        <div *ngIf="!chargement && message" class="empty-state">
-            {{ message }}
+        <div *ngIf="!(chargement$ | async) && (message$ | async)" class="empty-state">
+            {{ message$ | async }}
         </div>
 
-        <div *ngIf="!chargement && !commandes.length && !message" class="empty-state">
+        <div *ngIf="!(chargement$ | async) && !(commandes$ | async)?.length && !(message$ | async)" class="empty-state">
             Vous n'avez pas encore de commande.
         </div>
 
-        <div *ngFor="let commande of commandes" class="order-card">
+        <div *ngFor="let commande of (filteredCommandes$ | async)" class="order-card">
             <div class="order-summary">
                 <div>
                     <strong>Commande #{{ commande.numero || commande.id }}</strong>
@@ -107,8 +113,13 @@
             </div>
             <div class="order-lines" *ngIf="commande.lignes?.length">
                 <div *ngFor="let ligne of commande.lignes" class="order-line">
-                    <span>{{ ligne.produit?.nom }}</span>
-                    <span>{{ ligne.quantite }} × {{ ligne.prix_unitaire }} FCFA</span>
+                    <div class="order-line-image" *ngIf="ligne.produit?.image_url">
+                        <img [src]="ligne.produit?.image_url" [alt]="ligne.produit?.nom" />
+                    </div>
+                    <div class="order-line-info">
+                        <span>{{ ligne.produit?.nom }}</span>
+                        <span>{{ ligne.quantite }} × {{ ligne.prix_unitaire }} FCFA</span>
+                    </div>
                 </div>
             </div>
         </div>

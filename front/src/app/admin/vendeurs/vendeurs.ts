@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -27,7 +27,8 @@ boutiques:any[]=[];
 
 constructor(
 
-private admin:AdminService
+private admin:AdminService,
+private cdr: ChangeDetectorRef
 
 ){}
 
@@ -40,6 +41,7 @@ this.admin
 .subscribe(data=>{
 
 this.boutiques=data;
+this.cdr.detectChanges();
 
 });
 

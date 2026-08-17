@@ -1,0 +1,27 @@
+<section class="offres-page">
+  <div class="container">
+    <div class="section-header">
+      <h1>Offres</h1>
+      <p>Retrouvez les produits en promotion et les meilleures affaires du moment.</p>
+    </div>
+
+    <div *ngIf="chargement" class="loading-state">
+      Chargement des offres...
+    </div>
+
+    <div *ngIf="!chargement && erreur" class="empty-state">
+      <p>Impossible de charger les offres pour le moment.</p>
+    </div>
+
+    <div *ngIf="!chargement && !erreur && produits.length === 0" class="empty-state">
+      <p>Aucune offre active n'est disponible pour le moment.</p>
+    </div>
+
+    <div class="cards-grid" *ngIf="!chargement && produits.length > 0">
+      <app-produit-card
+        *ngFor="let produit of produits"
+        [produit]="produit">
+      </app-produit-card>
+    </div>
+  </div>
+</section>

@@ -23,4 +23,10 @@ export class DashboardService {
   topProducts(): Observable<any> {
     return this.http.get<any>(`${this.api}produits/`);
   }
+
+  salesByCategory(period: string = 'tout'): Observable<any> {
+    return this.http.get<any>(`${this.api}categorie-vendeur/`, {
+      params: { period }
+    });
+  }
 }

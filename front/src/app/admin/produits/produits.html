@@ -1,1 +1,271 @@
-<p>produits works!</p>
+<div class="admin-products">
+
+  <!-- En-tête -->
+  <div class="page-header">
+
+    <div>
+      <h1>Gestion des produits</h1>
+      <p>Gérez les produits présents sur Sama Market.</p>
+    </div>
+
+    <button class="btn-primary">
+      + Nouveau produit
+    </button>
+
+  </div>
+
+
+  <!-- Filtres -->
+  <div class="filters-card">
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        placeholder="Rechercher un produit..."
+      >
+
+    </div>
+
+    <select title="Filtrer par catégorie">
+      <option value="">Toutes les catégories</option>
+      <option>Électronique</option>
+      <option>Mode</option>
+      <option>Alimentation</option>
+      <option>Maison</option>
+    </select>
+
+    <select title="Filtrer par statut">
+      <option value="">Tous les statuts</option>
+      <option value="actif">Actifs</option>
+      <option value="inactif">Inactifs</option>
+    </select>
+
+    <select title="Filtrer par stock">
+      <option value="">Tous les stocks</option>
+      <option value="disponible">Disponible</option>
+      <option value="faible">Stock faible</option>
+      <option value="rupture">Rupture</option>
+    </select>
+
+  </div>
+
+
+  <!-- Chargement -->
+  @if (chargement) {
+
+    <div class="loading">
+      Chargement des produits...
+    </div>
+
+  }
+
+
+  <!-- Tableau -->
+  @if (!chargement) {
+
+    <div class="products-card">
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Produit</th>
+
+              <th>Boutique</th>
+
+              <th>Catégorie</th>
+
+              <th>Prix</th>
+
+              <th>Stock</th>
+
+              <th>Statut</th>
+
+              <th>Date</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (produit of produits; track produit.id) {
+
+              <tr>
+
+                <!-- Produit -->
+                <td>
+
+                  <div class="product-info">
+
+                    @if (produit.image_url) {
+
+                      <img
+                        [src]="produit.image_url"
+                        [alt]="produit.nom"
+                      >
+
+                    } @else {
+
+                      <div class="no-image">
+                        📦
+                      </div>
+
+                    }
+
+                    <div>
+
+                      <strong>
+                        {{ produit.nom }}
+                      </strong>
+
+                      <small>
+                        ID : {{ produit.id }}
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- Boutique -->
+                <td>
+                  {{ produit.boutique }}
+                </td>
+
+
+                <!-- Catégorie -->
+                <td>
+                  {{ produit.categorie }}
+                </td>
+
+
+                <!-- Prix -->
+                <td>
+
+                  <strong>
+                    {{ produit.prix | number:'1.0-0' }}
+                  </strong>
+
+                  FCFA
+
+                </td>
+
+
+                <!-- Stock -->
+                <td>
+
+                  <span
+                    class="stock"
+                    [class.stock-low]="produit.quantite_stock > 0 && produit.quantite_stock < 5"
+                    [class.stock-empty]="produit.quantite_stock === 0"
+                  >
+
+                    {{ produit.quantite_stock }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- Statut -->
+                <td>
+
+                  @if (produit.est_actif) {
+
+                    <span class="status active">
+                      Actif
+                    </span>
+
+                  } @else {
+
+                    <span class="status inactive">
+                      Inactif
+                    </span>
+
+                  }
+
+                </td>
+
+
+                <!-- Date -->
+                <td>
+
+                  {{ produit.date_creation | date:'dd/MM/yyyy' }}
+
+                </td>
+
+
+                <!-- Actions -->
+                <td>
+
+                  <div class="actions">
+
+                    <button
+                      class="action view"
+                      title="Voir le produit"
+                    >
+                      👁
+                    </button>
+
+                    <button
+                      class="action edit"
+                      title="Modifier le produit"
+                    >
+                      ✏️
+                    </button>
+
+                    <button
+                      class="action delete"
+                      title="Supprimer le produit"
+                    >
+                      🗑
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            @if (produits.length === 0) {
+
+              <tr>
+
+                <td
+                  colspan="8"
+                  class="empty"
+                >
+
+                  Aucun produit trouvé.
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

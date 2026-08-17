@@ -40,7 +40,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('access');
   const refreshToken = localStorage.getItem('refresh');
   const normalizedUrl = req.url.toLowerCase();
-  const isAuthRequest = normalizedUrl.includes('/api/comptes/login/') || normalizedUrl.includes('/api/comptes/register/') || normalizedUrl.includes('/api/token/refresh/');
+  const isAuthRequest = normalizedUrl.includes('/api/comptes/login/') || normalizedUrl.includes('/api/comptes/register/') || normalizedUrl.includes('/api/token/') || normalizedUrl.includes('/api/token/refresh/');
   const skipAuth = shouldSkipAuth(normalizedUrl);
   const isApiRequest = normalizedUrl.includes('/api/') || normalizedUrl.includes('127.0.0.1:8000') || normalizedUrl.includes('localhost:8000');
   const tokenExpired = token ? isTokenExpired(token) : false;

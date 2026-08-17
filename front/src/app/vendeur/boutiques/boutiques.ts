@@ -71,6 +71,7 @@ export class Boutiques implements OnInit {
   selectedLogo?: File;
   constructor(
     private fb: FormBuilder,
+    private http: HttpClient,
     private boutiqueService: Boutique,
     private produitService: VendeurProduits,
     private promotionService: PromotionService
@@ -163,6 +164,7 @@ chargerBoutique(): void {
       console.log(response);
 
       this.boutique = response;
+      this.chargerAvis();
 
       this.boutiqueForm.patchValue({
         nom: response.nom || '',
@@ -177,11 +179,28 @@ chargerBoutique(): void {
     error: () => {
 
       this.boutique = null;
+      this.avis = [];
 
     }
 
   });
 
+}
+
+chargerAvis(): void {
+  if (!this.boutique?.id) {
+    this.avis = [];
+    return;
+  }
+
+  this.http.get<any[]>(`/api/boutiques/${this.boutique.id}/avis/`).subscribe({
+    next: (response) => {
+      this.avis = Array.isArray(response) ? response : [];
+    },
+    error: () => {
+      this.avis = [];
+    }
+  });
 }
 
 chargerProduits(): void {

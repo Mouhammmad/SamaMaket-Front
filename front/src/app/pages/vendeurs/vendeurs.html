@@ -1,0 +1,37 @@
+<section class="vendeurs-page">
+  <div class="container">
+    <div class="section-header">
+      <h1>Vendeurs</h1>
+      <p>Découvrez toutes nos boutiques locales et leurs offres.</p>
+    </div>
+
+    <div *ngIf="chargement" class="loading-state">
+      Chargement des vendeurs...
+    </div>
+
+    <div *ngIf="!chargement && erreur" class="empty-state">
+      <p>Impossible de charger les vendeurs pour le moment.</p>
+    </div>
+
+    <div *ngIf="!chargement && !erreur && boutiques.length === 0" class="empty-state">
+      <p>Aucun vendeur n'est disponible actuellement.</p>
+    </div>
+
+    <div class="cards-grid" *ngIf="!chargement && boutiques.length > 0">
+      <article *ngFor="let boutique of boutiques" class="vendor-card">
+        <img [src]="getLogo(boutique)" alt="Logo {{ boutique.nom }}" />
+        <div class="vendor-content">
+          <h2>{{ boutique.nom || boutique.nom_boutique || 'Boutique' }}</h2>
+          <p class="vendor-owner">{{ boutique.proprietaire || boutique.responsable || 'Responsable inconnu' }}</p>
+          <p class="vendor-location">{{ boutique.ville || boutique.localisation || 'Ville non renseignée' }}</p>
+          <p class="vendor-email">{{ boutique.email || boutique.contact_email || 'Email indisponible' }}</p>
+          <p class="vendor-description">{{ boutique.description || boutique.apropos || 'Aucune description disponible.' }}</p>
+          <div class="vendor-footer">
+            <span class="badge" [class.active]="getStatut(boutique) === 'Approuvée'">{{ getStatut(boutique) }}</span>
+            <span *ngIf="boutique.produits_count !== undefined">{{ boutique.produits_count }} produits</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

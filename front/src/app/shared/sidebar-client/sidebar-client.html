@@ -3,14 +3,14 @@
     <div class="user">
 
         <div class="avatar">
-            {{ utilisateur.prenom?.charAt(0) || 'U' }}{{ utilisateur.nom?.charAt(0) || 'S' }}
+            {{ utilisateur.first_name?.charAt(0) || 'U' }}{{ utilisateur.last_name?.charAt(0) || 'S' }}
         </div>
 
         <div class="badge">
             ✓ Compte vérifié
         </div>
 
-        <h3>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h3>
+        <h3>{{ utilisateur.first_name }} {{ utilisateur.last_name }}</h3>
 
         <p>{{ utilisateur.email }}</p>
 
@@ -20,37 +20,37 @@
 
     <nav>
 
-    <a (click)="changerSection('profil')">
+    <a (click)="changerSection('profil')" [class.active]="(section$ | async) === 'profil'">
         <i class="bi bi-person"></i>
         Mon profil
     </a>
 
-    <a (click)="changerSection('commandes')">
+    <a (click)="changerSection('commandes')" [class.active]="(section$ | async) === 'commandes'">
         <i class="bi bi-bag"></i>
         Mes commandes
     </a>
 
-    <a (click)="changerSection('favoris')">
+    <a (click)="changerSection('favoris')" [class.active]="(section$ | async) === 'favoris'">
         <i class="bi bi-heart"></i>
         Mes favoris
     </a>
 
-    <a (click)="changerSection('adresses')">
+    <a (click)="changerSection('adresses')" [class.active]="(section$ | async) === 'adresses'">
         <i class="bi bi-geo-alt"></i>
         Mes adresses
     </a>
 
-    <a (click)="changerSection('avis')">
+    <a (click)="changerSection('avis')" [class.active]="(section$ | async) === 'avis'">
         <i class="bi bi-star"></i>
         Mes avis
     </a>
 
-    <a (click)="changerSection('notifications')">
+    <a (click)="changerSection('notifications')" [class.active]="(section$ | async) === 'notifications'">
         <i class="bi bi-bell"></i>
         Notifications
     </a>
 
-    <a (click)="changerSection('securite')">
+    <a (click)="changerSection('securite')" [class.active]="(section$ | async) === 'securite'">
         <i class="bi bi-lock"></i>
         Sécurité
     </a>

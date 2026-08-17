@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavoriService } from '../../../../core/services/favori.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-favoris',
@@ -11,12 +12,22 @@ import { FavoriService } from '../../../../core/services/favori.service';
 })
 export class Favoris implements OnInit {
 
-  favoris: any[] = [];
-  chargement = true;
-  message = '';
+  private favorisSubject = new BehaviorSubject<any[]>([]);
+  favoris$ = this.favorisSubject.asObservable();
+
+  private chargementSubject = new BehaviorSubject(true);
+  chargement$ = this.chargementSubject.asObservable();
+
+  private messageSubject = new BehaviorSubject('');
+  message$ = this.messageSubject.asObservable();
+
+  showConfirmModal = false;
+  confirmModalMessage = '';
+  confirmModalAction: (() => void) | null = null;
 
   constructor(
-    private favoriService: FavoriService
+    private favoriService: FavoriService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -24,23 +35,62 @@ export class Favoris implements OnInit {
   }
 
   chargerFavoris(): void {
-    this.chargement = true;
+    this.chargementSubject.next(true);
+    console.log('[Favoris] Starting to load favoris...');
     this.favoriService.getFavoris().subscribe({
       next: (data: any) => {
-        this.favoris = Array.isArray(data) ? data : data.results || [];
-        if (!this.favoris.length) {
-          this.message = 'Vous n’avez pas de favoris pour le moment.';
+        console.log('[Favoris] Data received:', data);
+        const newFavoris = Array.isArray(data) ? data : data.results || [];
+        this.favorisSubject.next(newFavoris);
+        console.log('[Favoris] Favoris set to:', newFavoris.length, 'items');
+        if (!newFavoris.length) {
+          this.messageSubject.next("Vous n'avez pas de favoris pour le moment.");
         } else {
-          this.message = '';
+          this.messageSubject.next('');
         }
-        this.chargement = false;
+        this.chargementSubject.next(false);
       },
-      error: () => {
-        this.message = 'Impossible de charger vos favoris.';
-        this.favoris = [];
-        this.chargement = false;
+      error: (err: any) => {
+        console.error('[Favoris] Error loading:', err);
+        this.messageSubject.next('Impossible de charger vos favoris.');
+        this.favorisSubject.next([]);
+        this.chargementSubject.next(false);
       }
     });
+  }
+
+  supprimerFavori(id: number, nomProduit: string): void {
+    this.confirmModalMessage = `Êtes-vous sûr de vouloir retirer "${nomProduit}" de vos favoris ?`;
+    this.confirmModalAction = () => {
+      this.favoriService.supprimerFavori(id).subscribe({
+        next: () => {
+          const currentFavoris = this.favorisSubject.value;
+          const newFavoris = currentFavoris.filter(f => f.id !== id);
+          this.favorisSubject.next(newFavoris);
+          if (!newFavoris.length) {
+            this.messageSubject.next("Vous n'avez pas de favoris pour le moment.");
+          }
+          this.closeConfirmModal();
+        },
+        error: () => {
+          console.error('[Favoris] Error deleting favori');
+          this.closeConfirmModal();
+        }
+      });
+    };
+    this.showConfirmModal = true;
+  }
+
+  confirmerAction(): void {
+    if (this.confirmModalAction) {
+      this.confirmModalAction();
+    }
+  }
+
+  closeConfirmModal(): void {
+    this.showConfirmModal = false;
+    this.confirmModalMessage = '';
+    this.confirmModalAction = null;
   }
 
 }
