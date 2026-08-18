@@ -1,0 +1,109 @@
+<div class="favorites-page">
+  <div class="favorites-header">
+    <div>
+      <h1>Mes favoris</h1>
+      <span class="count" *ngIf="!loading">{{ allItems.length }} produits</span>
+    </div>
+    <div class="favorites-actions" *ngIf="allItems.length > 0">
+      <button type="button" class="btn-outline">Tout ajouter au panier</button>
+      <button type="button" class="btn-outline" (click)="onClearAll()">
+        Vider les favoris
+      </button>
+      <select
+        class="sort-select"
+        (change)="onSortChange($any($event.target).value)"
+      >
+        <option value="recent">Trier : Récemment ajoutés</option>
+        <option value="price-asc">Prix croissant</option>
+        <option value="price-desc">Prix décroissant</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="favorites-filters" *ngIf="!loading && allItems.length > 0">
+    <button
+      type="button"
+      class="filter-chip"
+      *ngFor="let cat of categories"
+      [class.active]="activeCategory === cat.name"
+      (click)="onSelectCategory(cat.name)"
+    >
+      {{ cat.name }} ({{ cat.count }})
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="favorites-loading">Chargement...</div>
+
+  <div *ngIf="!loading && error" class="favorites-error">
+    Une erreur est survenue lors du chargement de vos favoris.
+  </div>
+
+  <!-- État vide -->
+  <div *ngIf="!loading && !error && allItems.length === 0" class="favorites-empty">
+    <img src="/assets/illustrations/empty-favorites.svg" alt="" />
+    <p>Aucun favori pour le moment</p>
+    <a routerLink="/catalogue" class="btn-primary">Découvrir le catalogue</a>
+  </div>
+
+  <!-- Grille des favoris -->
+  <div *ngIf="!loading && !error && allItems.length > 0" class="favorites-grid">
+    <div class="favorite-card" *ngFor="let item of items">
+      <div class="favorite-card__image">
+        <span class="badge" *ngIf="item.badge === 'promo'">Promo</span>
+        <span class="badge badge--new" *ngIf="item.badge === 'nouveau'">Nouveau</span>
+        <span class="badge badge--out" *ngIf="item.badge === 'rupture'">Rupture</span>
+        <span class="badge badge--discount" *ngIf="item.discountPercent as pct">
+          -{{ pct }}%
+        </span>
+        <img [src]="item.image || '/assets/illustrations/placeholder-product.svg'" [alt]="item.name" />
+        <app-favorite-button
+          [itemId]="item.id"
+          [initialIsFavorite]="true"
+          (toggled)="onToggle($event)"
+        ></app-favorite-button>
+      </div>
+
+      <div class="favorite-card__body">
+        <p class="seller" *ngIf="item.sellerName">{{ item.sellerName }}</p>
+        <h3>{{ item.name }}</h3>
+        <p class="rating" *ngIf="item.rating">
+          {{ stars(item.rating) }}
+          <span class="review-count" *ngIf="item.reviewCount">
+            ({{ item.reviewCount }})
+          </span>
+        </p>
+        <p class="price">
+          {{ item.price | number }} F
+          <span class="old-price" *ngIf="item.oldPrice">
+            {{ item.oldPrice | number }} F
+          </span>
+        </p>
+      </div>
+
+      <div class="favorite-card__footer">
+        <a class="btn-primary" [routerLink]="['/produits', item.slug]" *ngIf="item.inStock">
+          Voir
+        </a>
+        <button class="btn-alert" type="button" *ngIf="!item.inStock">
+          M'alerter dès dispo
+        </button>
+        <button class="btn-cart" type="button" *ngIf="item.inStock" aria-label="Ajouter au panier">
+          🛒
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommandations -->
+  <div class="favorites-recommended" *ngIf="!loading && recommended.length > 0">
+    <h2>Vous pourriez aussi aimer</h2>
+    <div class="recommended-grid">
+      <div class="recommended-card" *ngFor="let item of recommended">
+        <img [src]="item.image || '/assets/illustrations/placeholder-product.svg'" [alt]="item.name" />
+        <p class="name">{{ item.name }}</p>
+        <p class="price">{{ item.price | number }} F</p>
+        <button type="button" class="btn-outline btn-small">+ Ajouter</button>
+      </div>
+    </div>
+  </div>
+</div>
