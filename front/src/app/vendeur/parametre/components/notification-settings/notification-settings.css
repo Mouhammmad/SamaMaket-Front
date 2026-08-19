@@ -1,0 +1,394 @@
+.settings-card {
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 24px 28px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #eff6ff;
+
+  border-radius: 10px;
+
+  font-size: 21px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  color: #102a43;
+
+  font-size: 19px;
+
+  font-weight: 700;
+}
+
+.card-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   CONTENU
+   ========================================================== */
+
+.settings-content {
+  padding: 28px;
+}
+
+
+/* ==========================================================
+   NOTIFICATION OPTION
+   ========================================================== */
+
+.notification-option {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 11px;
+
+  transition: 0.2s;
+}
+
+.notification-option:hover {
+  border-color: #cbd5e1;
+
+  background: #fafcff;
+}
+
+
+/* ==========================================================
+   PARTIE GAUCHE
+   ========================================================== */
+
+.notification-left {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+/* ==========================================================
+   ICÔNES
+   ========================================================== */
+
+.notification-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  font-size: 19px;
+}
+
+.notification-icon.commandes {
+  background: #eff6ff;
+}
+
+.notification-icon.avis {
+  background: #fff7ed;
+}
+
+.notification-icon.messages {
+  background: #f0fdf4;
+}
+
+
+/* ==========================================================
+   TEXTE
+   ========================================================== */
+
+.notification-info strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 15px;
+}
+
+.notification-info p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   SWITCH
+   ========================================================== */
+
+.switch {
+  position: relative;
+
+  width: 48px;
+  height: 26px;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  padding: 0;
+
+  background: #cbd5e1;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition: background 0.25s;
+}
+
+.switch span {
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  left: 3px;
+  top: 3px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.25s;
+}
+
+.switch.active {
+  background: #102a43;
+}
+
+.switch.active span {
+  transform: translateX(22px);
+}
+
+
+/* ==========================================================
+   RÉSUMÉ
+   ========================================================== */
+
+.notification-summary {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+
+  margin-top: 25px;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.summary-icon {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: white;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+.notification-summary strong {
+  color: #334155;
+
+  font-size: 13px;
+}
+
+.notification-summary p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   BOUTON
+   ========================================================== */
+
+.form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 25px;
+}
+
+.save-button {
+  min-width: 140px;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 20px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #102a43;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #1d4f73;
+}
+
+.save-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* ==========================================================
+   SPINNER
+   ========================================================== */
+
+.button-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+  .card-header,
+  .settings-content {
+    padding: 20px;
+  }
+
+  .notification-option {
+    align-items: flex-start;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+
+}

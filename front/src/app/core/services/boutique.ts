@@ -2,29 +2,179 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Boutique {
+  id: number;
+
+  nom: string;
+  description: string;
+  ville: string;
+  pays?: string;
+
+  telephone?: string;
+  email?: string;
+  whatsapp?: string;
+
+  logo?: string;
+  logo_url?: string;
+
+  banniere?: string;
+  banniere_url?: string;
+
+  note: number;
+  followers: number;
+  abonnes?: number;
+  ventes: number;
+
+  apprové: boolean;
+  verifie: boolean;
+
+  categorie?: string;
+  categories?: any[];
+
+  nombre_produits?: number;
+  nombre_avis?: number;
+  repartition_notes?: any;
+  total_produits?: number;
+}
+
+export interface StatutSuivi {
+  suivi: boolean;
+  followers: number;
+}
+
+export interface ReponseSuivi {
+  suivi: boolean;
+  followers: number;
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class Boutique {
+export class BoutiqueService {
 
-  private api = '/api/boutiques/';
+  private apiUrl = '/api/boutiques/';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
-  getBoutiques(): Observable<any[]> {
-    return this.http.get<any[]>(this.api);
+  // ==========================================================
+  // BOUTIQUES
+  // ==========================================================
+
+  getBoutiques(): Observable<Boutique[]> {
+
+    return this.http.get<Boutique[]>(
+      this.apiUrl
+    );
+
   }
 
-  getMaBoutique(): Observable<any> {
-    return this.http.get(this.api + 'ma/');
+  getBoutique(id: number): Observable<Boutique> {
+
+    return this.http.get<Boutique>(
+      `${this.apiUrl}${id}/`
+    );
+
   }
 
-  creerBoutique(data: FormData): Observable<any> {
-    return this.http.post(this.api + 'create/', data);
+  getProduitsBoutique(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}${id}/produits/`);
   }
 
-  modifierBoutique(id: number, data: FormData): Observable<any> {
-    return this.http.put(this.api + id + '/', data);
+  getAvisBoutique(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}${id}/avis/`);
+  }
+
+  getPromotionsBoutique(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}${id}/promotions/`);
+  }
+
+  // ==========================================================
+  // MA BOUTIQUE
+  // ==========================================================
+
+  getMaBoutique(): Observable<Boutique> {
+
+    return this.http.get<Boutique>(
+      `${this.apiUrl}ma/`
+    );
+
+  }
+
+  // ==========================================================
+  // CREER UNE BOUTIQUE
+  // ==========================================================
+
+  creerBoutique(
+    data: FormData
+  ): Observable<Boutique> {
+
+    return this.http.post<Boutique>(
+      `${this.apiUrl}create/`,
+      data
+    );
+
+  }
+
+  // ==========================================================
+  // MODIFIER UNE BOUTIQUE
+  // ==========================================================
+
+  modifierBoutique(
+    id: number,
+    data: FormData
+  ): Observable<Boutique> {
+
+    return this.http.put<Boutique>(
+      `${this.apiUrl}${id}/`,
+      data
+    );
+
+  }
+
+  // ==========================================================
+  // SUIVRE UNE BOUTIQUE
+  // ==========================================================
+
+  suivreBoutique(
+    boutiqueId: number
+  ): Observable<ReponseSuivi> {
+
+    return this.http.post<ReponseSuivi>(
+      `${this.apiUrl}${boutiqueId}/suivre/`,
+      {}
+    );
+
+  }
+
+  // ==========================================================
+  // NE PLUS SUIVRE UNE BOUTIQUE
+  // ==========================================================
+
+  nePlusSuivreBoutique(
+    boutiqueId: number
+  ): Observable<ReponseSuivi> {
+
+    return this.http.delete<ReponseSuivi>(
+      `${this.apiUrl}${boutiqueId}/suivre/`
+    );
+
+  }
+
+  // ==========================================================
+  // STATUT DU SUIVI
+  // ==========================================================
+
+  getStatutSuivi(
+    boutiqueId: number
+  ): Observable<StatutSuivi> {
+
+    return this.http.get<StatutSuivi>(
+      `${this.apiUrl}${boutiqueId}/suivi/`
+    );
+
   }
 
 }

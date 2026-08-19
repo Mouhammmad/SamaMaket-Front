@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Boutique } from '../../core/services/boutique';
+import { BoutiqueService } from '../../core/services/boutique';
 
 @Component({
   selector: 'app-vendeurs-public',
@@ -15,7 +15,7 @@ export class VendeursPage implements OnInit {
   erreur = false;
 
   constructor(
-    private boutiqueService: Boutique,
+    private boutiqueService: BoutiqueService,
     private cdr: ChangeDetectorRef
   ) {}
 

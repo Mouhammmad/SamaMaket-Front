@@ -1,6 +1,10 @@
 <app-boutique-header
-    [boutique]="boutique">
-</app-boutique-header>
+    [boutique]="boutique"
+    [estSuivi]="estSuivi"
+    [chargementSuivi]="chargementSuivi"
+    (suivre)="toggleSuivi()"
+    (contacter)="contacter()"
+></app-boutique-header>
 
 <app-boutique-navigation
     [onglet]="onglet"

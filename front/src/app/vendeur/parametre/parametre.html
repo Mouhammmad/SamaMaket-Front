@@ -1,1 +1,206 @@
-<p>parametre works!</p>
+<div class="parametre-page">
+
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
+  <app-parametre-header></app-parametre-header>
+
+
+  <!-- ======================================================
+       CHARGEMENT
+       ====================================================== -->
+
+  <div
+    class="loading-container"
+    *ngIf="chargement">
+
+    <div class="spinner"></div>
+
+    <p>
+      Chargement des paramètres...
+    </p>
+
+  </div>
+
+
+  <!-- ======================================================
+       ERREUR
+       ====================================================== -->
+
+  <div
+    class="message message-error"
+    *ngIf="!chargement && messageErreur">
+
+    <span class="message-icon">
+      ⚠️
+    </span>
+
+    <span>
+      {{ messageErreur }}
+    </span>
+
+    <button
+      type="button"
+      (click)="actualiser()">
+
+      Réessayer
+
+    </button>
+
+  </div>
+
+
+  <!-- ======================================================
+       SUCCÈS
+       ====================================================== -->
+
+  <div
+    class="message message-success"
+    *ngIf="messageSucces">
+
+    <span class="message-icon">
+      ✓
+    </span>
+
+    <span>
+      {{ messageSucces }}
+    </span>
+
+  </div>
+
+
+  <!-- ======================================================
+       PARAMÈTRES
+       ====================================================== -->
+
+  <main
+    class="settings-container"
+    *ngIf="!chargement && parametres">
+
+
+    <!-- ====================================================
+         INFORMATIONS DE LA BOUTIQUE
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-boutique-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'boutique'"
+        (modifier)="enregistrer($event, 'boutique')">
+      </app-boutique-settings>
+
+    </section>
+
+
+    <!-- ====================================================
+         CONTACT
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-contact-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'contact'"
+        (modifier)="enregistrer($event, 'contact')">
+      </app-contact-settings>
+
+    </section>
+
+
+    <!-- ====================================================
+         LIVRAISON
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-livraison-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'livraison'"
+        (modifier)="enregistrer($event, 'livraison')">
+      </app-livraison-settings>
+
+    </section>
+
+
+    <!-- ====================================================
+         RETOURS
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-retour-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'retours'"
+        (modifier)="enregistrer($event, 'retours')">
+      </app-retour-settings>
+
+    </section>
+
+
+    <!-- ====================================================
+         PAIEMENTS
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-paiement-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'paiement'"
+        (modifier)="enregistrer($event, 'paiement')">
+      </app-paiement-settings>
+
+    </section>
+
+
+    <!-- ====================================================
+         NOTIFICATIONS
+         ==================================================== -->
+
+    <section class="settings-section">
+
+      <app-notification-settings
+        [parametres]="parametres"
+        [enregistrement]="sectionEnregistrement === 'notifications'"
+        (modifier)="enregistrer($event, 'notifications')">
+      </app-notification-settings>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ======================================================
+       AUCUNE DONNÉE
+       ====================================================== -->
+
+  <div
+    class="empty-state"
+    *ngIf="!chargement && !parametres && !messageErreur">
+
+    <div class="empty-icon">
+      ⚙️
+    </div>
+
+    <h2>
+      Paramètres indisponibles
+    </h2>
+
+    <p>
+      Les paramètres de votre boutique ne sont pas disponibles pour le moment.
+    </p>
+
+    <button
+      type="button"
+      (click)="actualiser()">
+
+      Actualiser
+
+    </button>
+
+  </div>
+
+</div>

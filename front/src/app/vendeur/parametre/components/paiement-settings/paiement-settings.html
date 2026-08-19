@@ -1,0 +1,170 @@
+<div class="settings-card">
+
+  <div class="card-header">
+
+    <div class="header-icon">
+      💳
+    </div>
+
+    <div>
+      <h2>
+        Moyens de paiement
+      </h2>
+
+      <p>
+        Choisissez les moyens de paiement disponibles pour vos clients.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="settings-content">
+
+    <!-- WAVE -->
+
+    <div class="payment-option">
+
+      <div class="payment-left">
+
+        <div class="payment-logo wave">
+          W
+        </div>
+
+        <div class="payment-info">
+
+          <strong>
+            Wave
+          </strong>
+
+          <p>
+            Permettre aux clients de payer leurs commandes avec Wave.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="switch"
+        [class.active]="waveActif"
+        (click)="changerWave()"
+        [attr.aria-pressed]="waveActif">
+
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- ORANGE MONEY -->
+
+    <div class="payment-option">
+
+      <div class="payment-left">
+
+        <div class="payment-logo orange">
+          OM
+        </div>
+
+        <div class="payment-info">
+
+          <strong>
+            Orange Money
+          </strong>
+
+          <p>
+            Permettre aux clients de payer leurs commandes avec Orange Money.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="switch"
+        [class.active]="orangeMoneyActif"
+        (click)="changerOrangeMoney()"
+        [attr.aria-pressed]="orangeMoneyActif">
+
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+
+    <div class="payment-info-box">
+
+      <div class="info-icon">
+        ℹ️
+      </div>
+
+      <div>
+
+        <strong>
+          Paiements disponibles
+        </strong>
+
+        <p>
+
+          <span *ngIf="waveActif && orangeMoneyActif">
+            Wave et Orange Money sont actuellement disponibles.
+          </span>
+
+          <span *ngIf="waveActif && !orangeMoneyActif">
+            Seul Wave est actuellement disponible.
+          </span>
+
+          <span *ngIf="!waveActif && orangeMoneyActif">
+            Seul Orange Money est actuellement disponible.
+          </span>
+
+          <span *ngIf="!waveActif && !orangeMoneyActif">
+            Aucun moyen de paiement mobile n'est actuellement activé.
+          </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- BOUTON -->
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="save-button"
+        [disabled]="enregistrement"
+        (click)="enregistrer()">
+
+        <span
+          class="button-spinner"
+          *ngIf="enregistrement">
+        </span>
+
+        <span *ngIf="!enregistrement">
+          Enregistrer
+        </span>
+
+        <span *ngIf="enregistrement">
+          Enregistrement...
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

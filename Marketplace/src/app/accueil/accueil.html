@@ -27,13 +27,10 @@
         <input type="search" placeholder="Rechercher un produit, un vendeur..." aria-label="Recherche de produit ou vendeur" />
         <div class="select-wrapper">
           <select title="Choisir une catégorie" aria-label="Choisir une catégorie">
-            <option>Toutes catégories</option>
-            <option>Mode & Tissu</option>
-            <option>Électronique</option>
-            <option>Alimentation</option>
-            <option>Beauté</option>
-            <option>Artisanat</option>
-            <option>Maison</option>
+            <option value="">Toutes catégories</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.title }}
+            </option>
           </select>
         </div>
         <button type="button">Rechercher</button>
@@ -45,7 +42,7 @@
     <p class="section-label">Parcourir par catégorie</p>
     <div class="category-grid">
       <div *ngIf="loadingCategories" class="loading-placeholder">Chargement des catégories...</div>
-      <a *ngFor="let category of categories" class="category-card" href="#">
+      <a *ngFor="let category of categories" class="category-card" [routerLink]="['/produits']" [queryParams]="{ categorie: category.id }">
         <span class="category-icon" [style.background]="category.color">{{ category.icon }}</span>
         <span>{{ category.title }}</span>
       </a>

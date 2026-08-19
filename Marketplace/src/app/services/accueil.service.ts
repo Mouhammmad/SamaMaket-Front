@@ -119,13 +119,35 @@ export class AccueilService {
   getCategories(): Observable<Categorie[]> {
     return this.http.get<any[]>(`${this.api}/produits/categories/`).pipe(
       map(categories =>
-        categories.map((c: any) => ({
+        (categories || []).map((c: any) => ({
           id: c.id,
           nom: c.nom,
-          icon: c.icon || '📦',
-          color: c.color || '#f0f0f0'
+          icon: this.getCategoryIcon(c.nom),
+          color: this.getCategoryColor(c.nom)
         }))
       )
     );
+  }
+
+  private getCategoryIcon(nom: string): string {
+    const text = (nom || '').toLowerCase();
+    if (text.includes('mode') || text.includes('tissu') || text.includes('fashion')) return '🧵';
+    if (text.includes('electron') || text.includes('tech')) return '💡';
+    if (text.includes('aliment') || text.includes('food') || text.includes('nour')) return '🍯';
+    if (text.includes('bea') || text.includes('cosm')) return '💄';
+    if (text.includes('artisan') || text.includes('hand')) return '🪡';
+    if (text.includes('maison') || text.includes('home')) return '🏠';
+    return '📦';
+  }
+
+  private getCategoryColor(nom: string): string {
+    const text = (nom || '').toLowerCase();
+    if (text.includes('mode') || text.includes('tissu')) return '#fdf3e8';
+    if (text.includes('electron') || text.includes('tech')) return '#e8effd';
+    if (text.includes('aliment') || text.includes('food') || text.includes('nour')) return '#edf8ec';
+    if (text.includes('bea') || text.includes('cosm')) return '#f9ecfb';
+    if (text.includes('artisan') || text.includes('hand')) return '#f3f0ff';
+    if (text.includes('maison') || text.includes('home')) return '#ecf9ff';
+    return '#f0f0f0';
   }
 }

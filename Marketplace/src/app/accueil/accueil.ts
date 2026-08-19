@@ -52,6 +52,7 @@ export class Accueil implements OnInit {
     this.accueilService.getCategories().subscribe({
       next: (data) => {
         this.categories = data.map(c => ({
+          id: c.id,
           title: c.nom,
           icon: c.icon || '📦',
           color: c.color || '#f0f0f0'
@@ -61,12 +62,12 @@ export class Accueil implements OnInit {
       error: (err) => {
         console.warn('Categories loading failed, using fallback', err);
         this.categories = [
-          { title: 'Mode & Tissu', icon: '🧵', color: '#fdf3e8' },
-          { title: 'Électronique', icon: '💡', color: '#e8effd' },
-          { title: 'Alimentation', icon: '🍯', color: '#edf8ec' },
-          { title: 'Beauté', icon: '💄', color: '#f9ecfb' },
-          { title: 'Artisanat', icon: '🪡', color: '#f3f0ff' },
-          { title: 'Maison', icon: '🏠', color: '#ecf9ff' },
+          { id: 1, title: 'Mode & Tissu', icon: '🧵', color: '#fdf3e8' },
+          { id: 2, title: 'Électronique', icon: '💡', color: '#e8effd' },
+          { id: 3, title: 'Alimentation', icon: '🍯', color: '#edf8ec' },
+          { id: 4, title: 'Beauté', icon: '💄', color: '#f9ecfb' },
+          { id: 5, title: 'Artisanat', icon: '🪡', color: '#f3f0ff' },
+          { id: 6, title: 'Maison', icon: '🏠', color: '#ecf9ff' },
         ];
         this.loadingCategories = false;
       }

@@ -1,0 +1,177 @@
+<div class="settings-card">
+
+  <!-- EN-TÊTE -->
+
+  <div class="card-header">
+
+    <div class="header-icon">
+      ↩️
+    </div>
+
+    <div>
+
+      <h2>
+        Paramètres des retours
+      </h2>
+
+      <p>
+        Définissez les conditions dans lesquelles vos clients peuvent retourner leurs commandes.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- FORMULAIRE -->
+
+  <form
+    [formGroup]="formulaire"
+    (ngSubmit)="enregistrer()"
+    class="settings-form">
+
+
+    <!-- RETOURS ACTIVÉS -->
+
+    <div class="setting-row">
+
+      <div class="setting-info">
+
+        <strong>
+          Autoriser les retours
+        </strong>
+
+        <p>
+          Permettre aux clients de demander le retour d'un produit.
+        </p>
+
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          formControlName="retours_acceptes">
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <!-- DÉLAI -->
+
+    <div class="form-group">
+
+      <label for="delai_retour">
+        Délai de retour
+      </label>
+
+      <div class="days-input">
+
+        <input
+          id="delai_retour"
+          type="number"
+          min="0"
+          formControlName="delai_retour"
+          [class.invalid]="
+            delaiRetour?.invalid &&
+            delaiRetour?.touched
+          ">
+
+        <span>
+          jours
+        </span>
+
+      </div>
+
+      <div
+        class="error"
+        *ngIf="
+          delaiRetour?.invalid &&
+          delaiRetour?.touched
+        ">
+
+        Le délai doit être supérieur ou égal à 0 jour.
+
+      </div>
+
+      <div class="help-text">
+
+        Exemple : 7 jours signifie que le client dispose de 7 jours après réception pour demander un retour.
+
+      </div>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+
+    <div class="return-info">
+
+      <div class="info-icon">
+        ℹ️
+      </div>
+
+      <div>
+
+        <strong>
+          Politique de retour
+        </strong>
+
+        <p *ngIf="formulaire.get('retours_acceptes')?.value">
+
+          Les retours sont actuellement
+          <strong>autorisés</strong>
+          pendant
+          <strong>
+            {{ formulaire.get('delai_retour')?.value || 0 }}
+            jours
+          </strong>
+          après réception de la commande.
+
+        </p>
+
+        <p *ngIf="!formulaire.get('retours_acceptes')?.value">
+
+          Les retours sont actuellement
+          <strong>désactivés</strong>
+          pour cette boutique.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTION -->
+
+    <div class="form-actions">
+
+      <button
+        type="submit"
+        class="save-button"
+        [disabled]="enregistrement">
+
+        <span
+          class="button-spinner"
+          *ngIf="enregistrement">
+        </span>
+
+        <span *ngIf="!enregistrement">
+          Enregistrer
+        </span>
+
+        <span *ngIf="enregistrement">
+          Enregistrement...
+        </span>
+
+      </button>
+
+    </div>
+
+  </form>
+
+</div>
