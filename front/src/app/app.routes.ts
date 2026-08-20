@@ -12,8 +12,9 @@ import { Accueil } from './pages/accueil/accueil';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Produits } from './pages/produits/produits';
-import { VendeursPage } from './pages/vendeurs/vendeurs';
-import { OffresPage } from './pages/offres/offres';
+import { Vendeurs } from './pages/vendeurs/vendeurs';
+import { BoutiqueDetail } from './pages/boutique-detail/boutique-detail';
+import { Offres } from './pages/offres/offres';
 import { Detail as ProduitDetail } from './pages/produits/detail/detail';
 import { Livraison } from './pages/livraison/livraison';
 import { Paiement } from './pages/paiement/paiement';
@@ -30,13 +31,14 @@ import { Livraisons } from './vendeur/livraisons/livraisons';
 import { Avis } from './vendeur/avis/avis';
 import { Paiement as PaiementVendeur } from './vendeur/paiement/paiement';
 import { Parametre } from './vendeur/parametre/parametre';
+import { VendeurMessages } from './vendeur/messages/messages';
 import { vendeurGuard } from './core/guards/vendeur-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { Promotions } from './vendeur/promotions/promotions';
 import { AdminLayout } from './layout/admin-layout/admin-layout';
 import { Dashboard as DashboardAdmin } from './admin/dashboard/dashboard';
 import { Utilisateurs } from './admin/utilisateurs/utilisateurs';
-import { Vendeurs } from './admin/vendeurs/vendeurs';
+import { Vendeurs as AdminVendeurs } from './admin/vendeurs/vendeurs';
 import { adminGuard } from './core/guards/admin-guard';
 import { AdminLogin } from './pages/admin-login/admin-login';
 export const routes: Routes = [
@@ -58,12 +60,17 @@ export const routes: Routes = [
 
       {
         path: 'vendeurs',
-        component: VendeursPage
+        component: Vendeurs
+      },
+
+      {
+        path: 'boutique/:id',
+        component: BoutiqueDetail
       },
 
       {
         path: 'offres',
-        component: OffresPage
+        component: Offres
       },
 
       {
@@ -120,6 +127,11 @@ export const routes: Routes = [
     {
       path: 'commandes',
       component: Commandes
+    },
+
+    {
+      path: 'messages',
+      component: VendeurMessages
     },
 
     {

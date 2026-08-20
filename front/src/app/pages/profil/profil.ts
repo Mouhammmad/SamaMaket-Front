@@ -11,6 +11,7 @@ import { ZoneDanger } from './components/zone-danger/zone-danger';
 import { Commandes } from './components/commandes/commandes';
 import { Favoris } from './components/favoris/favoris';
 import { Avis } from './components/avis/avis';
+import { Messages } from './components/messages/messages';
 
 @Component({
   selector: 'app-profil',
@@ -24,7 +25,8 @@ import { Avis } from './components/avis/avis';
     ZoneDanger,
     Commandes,
     Favoris,
-    Avis
+    Avis,
+    Messages
   ],
   templateUrl: './profil.html',
   styleUrl: './profil.css'

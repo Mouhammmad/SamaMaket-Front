@@ -1,0 +1,54 @@
+<main class="boutique-page">
+  <button type="button" class="back-button" (click)="retourner()">Retour aux vendeurs</button>
+
+  <div *ngIf="chargement" class="loading">Chargement de la boutique...</div>
+
+  <section *ngIf="!chargement && boutique" class="boutique-header">
+    <img
+      class="boutique-banner"
+      [src]="boutique.banniere_url || boutique.logo_url || boutique.logo || 'assets/images/boutique.png'"
+      [alt]="boutique.nom">
+
+    <div class="boutique-info">
+      <img
+        class="boutique-logo"
+        [src]="boutique.logo_url || boutique.logo || 'assets/images/boutique.png'"
+        [alt]="boutique.nom">
+      <div>
+        <h1>{{ boutique.nom }}</h1>
+        <p *ngIf="boutique.ville">{{ boutique.ville }}</p>
+        <p *ngIf="boutique.description">{{ boutique.description }}</p>
+      </div>
+    </div>
+
+    <div class="boutique-actions">
+      <button type="button" class="follow-button" (click)="toggleSuivi()" [disabled]="chargementSuivi">
+        {{ chargementSuivi ? 'Chargement...' : (estSuivi ? 'Ne plus suivre' : 'Suivre le vendeur') }}
+      </button>
+      <button type="button" class="contact-button" (click)="contacter()" [disabled]="chargementContact">
+        {{ chargementContact ? 'Ouverture...' : 'Contacter le vendeur' }}
+      </button>
+    </div>
+
+    <div class="boutique-stats">
+      <span><strong>{{ boutique.note || 0 }}</strong> note</span>
+      <span><strong>{{ boutique.followers || 0 }}</strong> abonnés</span>
+      <span><strong>{{ boutique.nombre_produits || produits.length }}</strong> produits</span>
+    </div>
+    <p *ngIf="messageAction" class="action-message">{{ messageAction }}</p>
+  </section>
+
+  <section *ngIf="!chargement && boutique" class="products-section">
+    <h2>Produits de la boutique</h2>
+    <p *ngIf="produits.length === 0" class="empty">Aucun produit disponible pour le moment.</p>
+    <div *ngIf="produits.length > 0" class="products-grid">
+      <app-produit-card
+        *ngFor="let produit of produits"
+        [produit]="produit"
+        (voir)="voirProduit($event)">
+      </app-produit-card>
+    </div>
+  </section>
+
+  <p *ngIf="!chargement && erreur" class="error">{{ erreur }}</p>
+</main>

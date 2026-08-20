@@ -41,7 +41,25 @@ export interface StatutSuivi {
   suivi: boolean;
   followers: number;
 }
-
+export interface Conversation {
+  id: number;
+  client: number;
+  client_nom?: string;
+  boutique: number;
+  boutique_nom: string;
+  boutique_logo?: string;
+  date_creation: string;
+  derniere_activite: string;
+  dernier_message?: {
+    id: number;
+    conversation: number;
+    expediteur: number;
+    expediteur_nom: string;
+    contenu: string;
+    lu: boolean;
+    date_envoi: string;
+  } | null;
+}
 export interface ReponseSuivi {
   suivi: boolean;
   followers: number;
@@ -176,5 +194,45 @@ export class BoutiqueService {
     );
 
   }
+// ==========================================================
+// CONTACTER UNE BOUTIQUE
+// ==========================================================
 
+// ==========================================================
+// CONTACTER UNE BOUTIQUE
+// ==========================================================
+
+contacterBoutique(
+  boutiqueId: number
+): Observable<{
+  conversation: Conversation;
+  nouvelle: boolean;
+}> {
+
+  return this.http.post<{
+    conversation: Conversation;
+    nouvelle: boolean;
+  }>(
+    `/api/messages/boutiques/${boutiqueId}/contacter/`,
+    {}
+  );
+
+}
+
+  getConversations(): Observable<Conversation[]> {
+    return this.http.get<Conversation[]>('/api/messages/conversations/');
+  }
+
+  getConversationMessages(conversationId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `/api/messages/conversations/${conversationId}/messages/`
+    );
+  }
+
+  envoyerMessage(conversationId: number, contenu: string): Observable<any> {
+    return this.http.post<any>(
+      `/api/messages/conversations/${conversationId}/messages/envoyer/`,
+      { contenu }
+    );
+  }
 }

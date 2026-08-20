@@ -1,0 +1,141 @@
+.messages-page {
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.messages-header,
+.message-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.messages-header h2,
+.conversation-panel h3 {
+  margin: 0 0 6px;
+  color: #102a43;
+}
+
+.messages-header p,
+.state,
+.error {
+  margin: 0;
+  color: #627d98;
+}
+
+.messages-header button,
+.message-form button {
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #102a43;
+  color: #fff;
+  cursor: pointer;
+}
+
+.messages-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 420px;
+  margin-top: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.conversation-list {
+  border-right: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.conversation-list button {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  padding: 16px;
+  border: 0;
+  border-bottom: 1px solid #e5e7eb;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conversation-list button.active {
+  background: #e6f4f1;
+}
+
+.conversation-list strong {
+  color: #102a43;
+}
+
+.conversation-list span {
+  overflow: hidden;
+  color: #627d98;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.message-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 0;
+}
+
+.message {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f1f5f9;
+}
+
+.message span,
+.message small {
+  color: #627d98;
+  font-size: 12px;
+}
+
+.message p {
+  margin: 4px 0;
+  color: #102a43;
+}
+
+.message-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.message-form button:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+.error {
+  margin-top: 20px;
+  color: #b42318;
+}
+
+@media (max-width: 700px) {
+  .messages-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .conversation-list {
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}

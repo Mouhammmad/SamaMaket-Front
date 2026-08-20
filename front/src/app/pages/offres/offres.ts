@@ -1,59 +1,229 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProduitService } from '../../core/services/produit';
-import { ProduitCard } from '../produits/catalogue/components/produit-card/produit-card';
-import { Produit } from '../../core/models/produit';
+import { Router } from '@angular/router';
+
+import {
+  ProduitService,
+  Promotion
+} from '../../core/services/produit';
+
+import { OffresCard } from './components/offres-card/offres-card';
+import { OffresFiltres } from './components/offres-filtres/offres-filtres';
+import { OffresFlash } from './components/offres-flash/offres-flash';
+import { OffresHeader } from './components/offres-header/offres-header';
+import { OffresVides } from './components/offres-vides/offres-vides';
 
 @Component({
   selector: 'app-offres',
   standalone: true,
-  imports: [CommonModule, ProduitCard],
+
+  imports: [
+    CommonModule,
+    OffresCard,
+    OffresFiltres,
+    OffresFlash,
+    OffresHeader,
+    OffresVides
+  ],
+
   templateUrl: './offres.html',
   styleUrl: './offres.css'
 })
-export class OffresPage implements OnInit {
-  produits: Produit[] = [];
+export class Offres implements OnInit {
+
+  private produitService = inject(ProduitService);
+  private router = inject(Router);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
+  offres: Promotion[] = [];
+
+  offresFiltrees: Promotion[] = [];
+
   chargement = true;
+
   erreur = false;
 
-  constructor(
-    private produitService: ProduitService,
-    private cdr: ChangeDetectorRef
-  ) {}
+
+  // ==========================================
+  // INITIALISATION
+  // ==========================================
 
   ngOnInit(): void {
-    this.chargerPromotions();
+
+    this.chargerOffres();
+
   }
 
-  chargerPromotions(): void {
+
+  // ==========================================
+  // CHARGER LES OFFRES
+  // ==========================================
+
+  chargerOffres(): void {
+
     this.chargement = true;
     this.erreur = false;
 
-    this.produitService.getProduits({
-      page: 1,
-      page_size: 24,
-      ordering: '-date_creation'
-    }).subscribe({
-      next: (response: any) => {
-        const raw = Array.isArray(response?.results)
-          ? response.results
-          : Array.isArray(response)
-            ? response
-            : response?.results || [];
+    this.produitService
+      .getOffres()
+      .subscribe({
 
-        this.produits = raw.filter((produit: any) => {
-          return !!produit.prix_promo || !!produit.promotion_active || !!produit.ancien_prix;
-        });
+        next: (response) => {
 
-        this.chargement = false;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.produits = [];
-        this.erreur = true;
-        this.chargement = false;
-        this.cdr.detectChanges();
-      }
-    });
+          console.log(
+            'Offres reçues :',
+            response
+          );
+
+          this.offres = response;
+
+          this.offresFiltrees = response;
+
+          this.chargement = false;
+          this.changeDetectorRef.markForCheck();
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Erreur chargement offres :',
+            error
+          );
+
+          this.offres = [];
+
+          this.offresFiltrees = [];
+
+          this.chargement = false;
+
+          this.erreur = true;
+          this.changeDetectorRef.markForCheck();
+
+        }
+
+      });
+
   }
+
+
+  // ==========================================
+  // FILTRER LES OFFRES
+  // ==========================================
+
+  filtrerOffres(offres: Promotion[]): void {
+
+    this.offresFiltrees = offres;
+
+  }
+
+
+  // ==========================================
+  // VOIR UN PRODUIT
+  // ==========================================
+
+  voirProduit(produitId: number): void {
+
+    this.router.navigate([
+      '/produit',
+      produitId
+    ]);
+
+  }
+
+
+  // ==========================================
+  // CALCULER LE PRIX APRÈS REMISE
+  // ==========================================
+
+  calculerPrix(
+    prix: string,
+    offre: Promotion
+  ): number {
+
+    const prixNumber = Number(prix);
+
+    if (
+      offre.type_remise === 'pourcentage'
+    ) {
+
+      return (
+        prixNumber -
+        (
+          prixNumber *
+          Number(offre.taux_remise) /
+          100
+        )
+      );
+
+    }
+
+    return Math.max(
+      0,
+      prixNumber -
+      Number(offre.taux_remise)
+    );
+
+  }
+
+
+  // ==========================================
+  // AFFICHER LA REMISE
+  // ==========================================
+
+  afficherRemise(offre: Promotion): string {
+
+    if (
+      offre.type_remise === 'pourcentage'
+    ) {
+
+      return `-${offre.taux_remise}%`;
+
+    }
+
+    return `-${offre.taux_remise} FCFA`;
+
+  }
+
+
+  // ==========================================
+  // AUCUNE OFFRE
+  // ==========================================
+
+  get aucuneOffre(): boolean {
+
+    return (
+      !this.chargement &&
+      this.offresFiltrees.length === 0
+    );
+
+  }
+
+  rechercherOffres(texte: string): void {
+    const recherche = texte.trim().toLowerCase();
+    this.offresFiltrees = this.offres.filter((offre) =>
+      offre.boutique.toLowerCase().includes(recherche) ||
+      offre.produits.some((produit) =>
+        produit.nom.toLowerCase().includes(recherche)
+      )
+    );
+  }
+
+  filtrerTypeRemise(type: string): void {
+    this.offresFiltrees = type
+      ? this.offres.filter((offre) => offre.type_remise === type)
+      : [...this.offres];
+  }
+
+  rechercherBoutique(nom: string): void {
+    const recherche = nom.trim().toLowerCase();
+    this.offresFiltrees = this.offres.filter((offre) =>
+      offre.boutique.toLowerCase().includes(recherche)
+    );
+  }
+
+  reinitialiserFiltres(): void {
+    this.offresFiltrees = [...this.offres];
+  }
+
 }

@@ -28,6 +28,10 @@
     <app-notifications></app-notifications>
   </ng-container>
 
+  <ng-container *ngIf="(sectionActive$ | async) === 'messages'">
+    <app-messages></app-messages>
+  </ng-container>
+
   <ng-container *ngIf="(sectionActive$ | async) === 'securite'">
     <app-securite></app-securite>
   </ng-container>

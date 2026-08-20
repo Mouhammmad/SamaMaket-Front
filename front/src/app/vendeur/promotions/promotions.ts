@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PromotionCalendar } from './components/promotion-calendar/promotion-calendar';
 import { PromotionService } from '../../core/services/promotion';
@@ -38,19 +38,25 @@ export class Promotions implements OnInit {
   private estPromotionActive(promotion: any): boolean {
     const valeur = promotion?.est_active ?? promotion?.est_actif;
 
+    const dateFin = promotion?.date_fin
+      ? new Date(`${promotion.date_fin}T23:59:59`).getTime()
+      : Number.POSITIVE_INFINITY;
+
+    const periodeValide = dateFin >= Date.now();
+
     if (typeof valeur === 'boolean') {
-      return valeur;
+      return valeur && periodeValide;
     }
 
     if (typeof valeur === 'string') {
-      return ['true', '1', 'yes', 'oui', 'active'].includes(valeur.toLowerCase());
+      return ['true', '1', 'yes', 'oui', 'active'].includes(valeur.toLowerCase()) && periodeValide;
     }
 
     if (typeof valeur === 'number') {
-      return valeur === 1;
+      return valeur === 1 && periodeValide;
     }
 
-    return Boolean(valeur);
+    return Boolean(valeur) && periodeValide;
   }
 
   promotionsFiltrees: any[] = [];
@@ -69,7 +75,8 @@ statutSelectionne = '';
 typeSelectionne = '';
 
   constructor(
-    private promotionService: PromotionService
+    private promotionService: PromotionService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -85,18 +92,24 @@ typeSelectionne = '';
         const sorted = payload.sort((a: any, b: any) => {
           const dateA = new Date(a.date_creation || a.date_ajout || 0).getTime();
           const dateB = new Date(b.date_creation || b.date_ajout || 0).getTime();
-          return dateB - dateA; // Décroissant
+          if (dateB !== dateA) {
+            return dateB - dateA;
+          }
+
+          return Number(b.id || 0) - Number(a.id || 0);
         });
         this.promotions = sorted;
         this.promotionsFiltrees = [...sorted];
         this.appliquerFiltres();
         this.loading = false;
+        this.changeDetectorRef.markForCheck();
       },
       error: (error) => {
         console.error('[Promotions] load error', error);
         this.promotions = [];
         this.promotionsFiltrees = [];
         this.loading = false;
+        this.changeDetectorRef.markForCheck();
       }
     });
     

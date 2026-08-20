@@ -1,0 +1,29 @@
+<div class="search-container">
+
+  <div class="search-box">
+
+    <span class="search-icon">
+      🔍
+    </span>
+
+    <input
+      type="text"
+      [(ngModel)]="recherche"
+      (input)="rechercher()"
+      placeholder="Rechercher une boutique ou une ville..."
+      aria-label="Rechercher un vendeur"
+    >
+
+    <button
+      *ngIf="recherche"
+      type="button"
+      class="clear-button"
+      (click)="effacer()"
+      aria-label="Effacer la recherche"
+    >
+      ×
+    </button>
+
+  </div>
+
+</div>

@@ -394,11 +394,75 @@ chargementSuivi = false;
   }
 
   contacter(): void {
-    const email = this.boutique?.email;
-    if (email) {
-      window.location.href = `mailto:${email}`;
-    }
+
+  if (!this.boutique?.id) {
+    return;
   }
+
+  this.boutiqueService
+    .contacterBoutique(this.boutique.id)
+    .subscribe({
+
+      next: (response) => {
+
+        console.log(
+          'Conversation :',
+          response
+        );
+
+        const conversationId =
+          response.conversation.id;
+
+        console.log(
+          'Conversation ID :',
+          conversationId
+        );
+
+        // Pour le moment :
+        // on affiche simplement l'identifiant
+        // avant de créer l'interface de messagerie.
+
+        alert(
+          `Conversation ouverte avec ${this.boutique.nom}`
+        );
+
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Erreur contact boutique :',
+          error
+        );
+
+        if (error.status === 401) {
+
+          alert(
+            'Vous devez être connecté pour contacter cette boutique.'
+          );
+
+          return;
+        }
+
+        if (error.status === 400) {
+
+          alert(
+            error.error?.detail ||
+            'Impossible de contacter cette boutique.'
+          );
+
+          return;
+        }
+
+        alert(
+          'Une erreur est survenue lors de l’ouverture de la conversation.'
+        );
+
+      }
+
+    });
+
+}
 
 
   // ==========================================

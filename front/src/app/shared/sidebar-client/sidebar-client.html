@@ -50,6 +50,11 @@
         Notifications
     </a>
 
+    <a (click)="changerSection('messages')" [class.active]="(section$ | async) === 'messages'">
+        <i class="bi bi-chat-dots"></i>
+        Messages
+    </a>
+
     <a (click)="changerSection('securite')" [class.active]="(section$ | async) === 'securite'">
         <i class="bi bi-lock"></i>
         Sécurité

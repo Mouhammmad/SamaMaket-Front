@@ -1,37 +1,180 @@
-<section class="vendeurs-page">
-  <div class="container">
-    <div class="section-header">
-      <h1>Vendeurs</h1>
-      <p>Découvrez toutes nos boutiques locales et leurs offres.</p>
+<div class="vendeurs-page">
+
+  <!-- =====================================================
+       EN-TÊTE
+       ===================================================== -->
+
+  <app-vendeur-header></app-vendeur-header>
+
+
+  <!-- =====================================================
+       RECHERCHE
+       ===================================================== -->
+
+  <section class="recherche-section">
+
+    <app-vendeur-search
+      (rechercheChange)="rechercher($event)">
+    </app-vendeur-search>
+
+  </section>
+
+
+  <!-- =====================================================
+       FILTRES
+       ===================================================== -->
+
+  <section class="filtres-section">
+
+    <app-vendeurs-filtres
+      (filtresChange)="filtrerVille($event.ville)">
+    </app-vendeurs-filtres>
+
+  </section>
+
+
+  <!-- =====================================================
+       CONTENU
+       ===================================================== -->
+
+  <main class="vendeurs-content">
+
+
+    <!-- ===================================================
+         TITRE / NOMBRE
+         =================================================== -->
+
+    <div
+      class="resultats-header"
+      *ngIf="!chargement">
+
+      <div>
+
+        <h2>
+          Nos vendeurs
+        </h2>
+
+        <p>
+          Découvrez les boutiques présentes sur Sama Market.
+        </p>
+
+      </div>
+
+      <span class="nombre-vendeurs">
+
+        {{ nombreVendeurs }}
+
+        {{ nombreVendeurs > 1 ? 'vendeurs' : 'vendeur' }}
+
+      </span>
+
     </div>
 
-    <div *ngIf="chargement" class="loading-state">
-      Chargement des vendeurs...
+
+    <!-- ===================================================
+         CHARGEMENT
+         =================================================== -->
+
+    <div
+      class="loading"
+      *ngIf="chargement">
+
+      <div class="spinner"></div>
+
+      <p>
+        Chargement des vendeurs...
+      </p>
+
     </div>
 
-    <div *ngIf="!chargement && erreur" class="empty-state">
-      <p>Impossible de charger les vendeurs pour le moment.</p>
+
+    <!-- ===================================================
+         ERREUR
+         =================================================== -->
+
+    <div
+      class="erreur"
+      *ngIf="!chargement && erreur">
+
+      <div class="erreur-icon">
+        ⚠
+      </div>
+
+      <h3>
+        Impossible de charger les vendeurs
+      </h3>
+
+      <p>
+        {{ messageErreur }}
+      </p>
+
+      <button
+        type="button"
+        (click)="chargerVendeurs()">
+
+        Réessayer
+
+      </button>
+
     </div>
 
-    <div *ngIf="!chargement && !erreur && boutiques.length === 0" class="empty-state">
-      <p>Aucun vendeur n'est disponible actuellement.</p>
+
+    <!-- ===================================================
+         AUCUN VENDEUR
+         =================================================== -->
+
+    <div
+      class="aucun-resultat"
+      *ngIf="
+        !chargement &&
+        !erreur &&
+        boutiquesFiltrees.length === 0
+      ">
+
+      <div class="aucun-icon">
+        🏪
+      </div>
+
+      <h3>
+        Aucun vendeur trouvé
+      </h3>
+
+      <p>
+        Aucun vendeur ne correspond à votre recherche ou à vos filtres.
+      </p>
+
+      <button
+        type="button"
+        (click)="reinitialiserFiltres()">
+
+        Réinitialiser les filtres
+
+      </button>
+
     </div>
 
-    <div class="cards-grid" *ngIf="!chargement && boutiques.length > 0">
-      <article *ngFor="let boutique of boutiques" class="vendor-card">
-        <img [src]="getLogo(boutique)" alt="Logo {{ boutique.nom }}" />
-        <div class="vendor-content">
-          <h2>{{ boutique.nom || boutique.nom_boutique || 'Boutique' }}</h2>
-          <p class="vendor-owner">{{ boutique.proprietaire || boutique.responsable || 'Responsable inconnu' }}</p>
-          <p class="vendor-location">{{ boutique.ville || boutique.localisation || 'Ville non renseignée' }}</p>
-          <p class="vendor-email">{{ boutique.email || boutique.contact_email || 'Email indisponible' }}</p>
-          <p class="vendor-description">{{ boutique.description || boutique.apropos || 'Aucune description disponible.' }}</p>
-          <div class="vendor-footer">
-            <span class="badge" [class.active]="getStatut(boutique) === 'Approuvée'">{{ getStatut(boutique) }}</span>
-            <span *ngIf="boutique.produits_count !== undefined">{{ boutique.produits_count }} produits</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+
+    <!-- ===================================================
+         GRILLE DES VENDEURS
+         =================================================== -->
+
+    <section
+      class="vendeurs-grid"
+      *ngIf="
+        !chargement &&
+        !erreur &&
+        boutiquesFiltrees.length > 0
+      ">
+
+      <app-vendeur-card
+        *ngFor="let boutique of boutiquesFiltrees"
+        [vendeur]="boutique"
+        (voirBoutique)="ouvrirBoutique($event)">
+      </app-vendeur-card>
+
+    </section>
+
+
+  </main>
+
+</div>

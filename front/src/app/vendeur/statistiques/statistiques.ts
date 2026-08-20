@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import{ StatistiquesCards } from './components/statistiques-cards/statistiques-cards';
 import{ StatistiquesHeader } from './components/statistiques-header/statistiques-header';
@@ -25,7 +25,8 @@ export class Statistiques implements OnInit {
   chargement = true;
 
   constructor(
-    private statistiquesService: StatistiquesService
+    private statistiquesService: StatistiquesService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +50,12 @@ export class Statistiques implements OnInit {
           periode: this.periode
         };
         this.chargement = false;
+        this.changeDetectorRef.markForCheck();
       },
       error: () => {
         this.statistiques = null;
         this.chargement = false;
+        this.changeDetectorRef.markForCheck();
       }
     });
 
@@ -65,9 +68,11 @@ export class Statistiques implements OnInit {
               commandes: item.commandes ?? 0
             }))
           : [];
+        this.changeDetectorRef.markForCheck();
       },
       error: () => {
         this.ventes = [];
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
