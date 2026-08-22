@@ -1,1 +1,649 @@
-<p>rapports works!</p>
+<div class="rapport-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Rapports</h1>
+
+      <p>
+        Analyse et synthèse des données de la plateforme
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        class="btn-secondary"
+        (click)="imprimerRapport()"
+      >
+        🖨️ Imprimer
+      </button>
+
+      <button
+        class="btn-primary"
+        (click)="chargerRapport()"
+        [disabled]="chargement"
+      >
+        ↻ Actualiser
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FILTRES -->
+
+  <div class="filtres-card">
+
+    <div class="filtre">
+
+      <label for="periode">
+        Période
+      </label>
+
+      <select
+        id="periode"
+        [value]="periode"
+        (change)="changerPeriode($event)"
+      >
+
+        <option value="aujourd_hui">
+          Aujourd'hui
+        </option>
+
+        <option value="ce_mois">
+          Ce mois
+        </option>
+
+        <option value="mois_precedent">
+          Mois précédent
+        </option>
+
+        <option value="global">
+          Depuis le début
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="filtre">
+
+      <label for="typeRapport">
+        Type de rapport
+      </label>
+
+      <select
+        id="typeRapport"
+        [value]="typeRapport"
+        (change)="changerTypeRapport($event)"
+      >
+
+        <option value="global">
+          Rapport global
+        </option>
+
+        <option value="commandes">
+          Commandes
+        </option>
+
+        <option value="utilisateurs">
+          Utilisateurs
+        </option>
+
+        <option value="vendeurs">
+          Vendeurs
+        </option>
+
+        <option value="produits">
+          Produits
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHARGEMENT -->
+
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+
+    <div class="spinner"></div>
+
+    <span>
+      Génération du rapport...
+    </span>
+
+  </div>
+
+
+  <!-- ERREUR -->
+
+  <div
+    class="error-message"
+    *ngIf="!chargement && erreur"
+  >
+
+    {{ erreur }}
+
+  </div>
+
+
+  <!-- RAPPORT -->
+
+  <ng-container
+    *ngIf="!chargement && statistiques"
+  >
+
+    <!-- TITRE DU RAPPORT -->
+
+    <div class="rapport-title">
+
+      <div>
+
+        <span>
+          RAPPORT ADMINISTRATEUR
+        </span>
+
+        <h2>
+          {{ titreRapport }}
+        </h2>
+
+      </div>
+
+      <div class="date-rapport">
+
+        Généré le
+        {{ today | date:'dd/MM/yyyy' }}
+
+      </div>
+
+    </div>
+
+
+    <!-- INDICATEURS -->
+
+    <div class="indicateurs-grid">
+
+
+      <!-- UTILISATEURS -->
+
+      <div class="indicateur-card" *ngIf="afficherType('utilisateurs')">
+
+        <div class="indicateur-icon utilisateurs">
+          👥
+        </div>
+
+        <div>
+
+          <span>
+            Utilisateurs
+          </span>
+
+          <strong>
+            {{ statistiques.utilisateurs_total | number }}
+          </strong>
+
+          <small>
+            +{{ statistiques.nouveaux_utilisateurs_ce_mois }}
+            ce mois
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- VENDEURS -->
+
+      <div class="indicateur-card" *ngIf="afficherType('vendeurs')">
+
+        <div class="indicateur-icon vendeurs">
+          🏪
+        </div>
+
+        <div>
+
+          <span>
+            Vendeurs actifs
+          </span>
+
+          <strong>
+            {{ statistiques.vendeurs_actifs | number }}
+          </strong>
+
+          <small>
+            {{ statistiques.vendeurs_en_attente }}
+            en attente
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUITS -->
+
+      <div class="indicateur-card" *ngIf="afficherType('produits')">
+
+        <div class="indicateur-icon produits">
+          📦
+        </div>
+
+        <div>
+
+          <span>
+            Produits
+          </span>
+
+          <strong>
+            {{ statistiques.produits_total | number }}
+          </strong>
+
+          <small>
+            produits enregistrés
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- COMMANDES -->
+
+      <div class="indicateur-card" *ngIf="afficherType('commandes')">
+
+        <div class="indicateur-icon commandes">
+          🛒
+        </div>
+
+        <div>
+
+          <span>
+            Commandes
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_total | number }}
+          </strong>
+
+          <small
+            [class.positive]="evolutionPositive"
+            [class.negative]="!evolutionPositive"
+          >
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct !== null"
+            >
+
+              {{ evolutionCommandes > 0 ? '+' : '' }}
+              {{ evolutionCommandes }}%
+
+              ce mois
+
+            </ng-container>
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct === null"
+            >
+
+              Pas de comparaison
+
+            </ng-container>
+
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIVITÉ DES COMMANDES -->
+
+    <section class="rapport-section" *ngIf="afficherType('commandes')">
+
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-kicker">
+            COMMANDES
+          </span>
+
+          <h2>
+            Activité commerciale
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="commandes-resume">
+
+
+        <div class="resume-item">
+
+          <span>
+            Aujourd'hui
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_du_jour | number }}
+          </strong>
+
+          <small>
+            commandes
+          </small>
+
+        </div>
+
+
+        <div class="resume-item">
+
+          <span>
+            Ce mois
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_ce_mois | number }}
+          </strong>
+
+          <small>
+            commandes
+          </small>
+
+        </div>
+
+
+        <div class="resume-item">
+
+          <span>
+            Mois précédent
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_mois_precedent | number }}
+          </strong>
+
+          <small>
+            commandes
+          </small>
+
+        </div>
+
+
+        <div class="resume-item">
+
+          <span>
+            Évolution
+          </span>
+
+          <strong
+            [class.positive]="evolutionPositive"
+            [class.negative]="!evolutionPositive"
+          >
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct !== null"
+            >
+
+              {{ evolutionCommandes > 0 ? '+' : '' }}
+              {{ evolutionCommandes }}%
+
+            </ng-container>
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct === null"
+            >
+
+              N/A
+
+            </ng-container>
+
+          </strong>
+
+          <small>
+            par rapport au mois précédent
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SYNTHÈSE -->
+
+    <section class="rapport-section" *ngIf="typeRapport === 'global'">
+
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-kicker">
+            SYNTHÈSE
+          </span>
+
+          <h2>
+            Vue générale de la plateforme
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="synthese-list">
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              👥
+            </span>
+
+            <span>
+              Utilisateurs inscrits
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.utilisateurs_total | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              🏪
+            </span>
+
+            <span>
+              Vendeurs actifs
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.vendeurs_actifs | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              ⏳
+            </span>
+
+            <span>
+              Vendeurs en attente
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.vendeurs_en_attente | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              📦
+            </span>
+
+            <span>
+              Produits
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.produits_total | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              🛒
+            </span>
+
+            <span>
+              Commandes
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.commandes_total | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="synthese-row">
+
+          <div class="synthese-label">
+
+            <span class="synthese-icon">
+              ✨
+            </span>
+
+            <span>
+              Nouveaux utilisateurs ce mois
+            </span>
+
+          </div>
+
+          <strong>
+            {{ statistiques.nouveaux_utilisateurs_ce_mois | number }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- EXPORT -->
+
+    <section class="export-section">
+
+      <div>
+
+        <h2>
+          Exporter le rapport
+        </h2>
+
+        <p>
+          Téléchargez ou imprimez les informations affichées
+          dans ce rapport.
+        </p>
+
+      </div>
+
+
+      <div class="export-actions">
+
+        <button
+          class="export-btn print"
+          (click)="imprimerRapport()"
+        >
+
+          🖨️
+
+          Imprimer
+
+        </button>
+
+
+        <button
+          class="export-btn"
+          (click)="exporterPdf()"
+          [disabled]="chargement || !statistiques"
+          title="Exporter en PDF"
+        >
+
+          📄
+
+          PDF
+
+        </button>
+
+
+        <button
+          class="export-btn"
+          (click)="exporterExcel()"
+          [disabled]="chargement || !statistiques"
+          title="Exporter en Excel"
+        >
+
+          📊
+
+          Excel
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </ng-container>
+
+</div>

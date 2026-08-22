@@ -5,6 +5,7 @@ export interface LigneCommande {
     id: number;
     nom: string;
     image?: string | null;
+    image_url?: string | null;
   };
   nom?: string;
   image?: string;

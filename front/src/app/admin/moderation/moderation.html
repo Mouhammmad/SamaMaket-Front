@@ -1,0 +1,720 @@
+<div class="moderation-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Modération</h1>
+      <p>
+        Contrôlez les contenus et les activités de la plateforme
+      </p>
+    </div>
+
+    <div class="filters">
+      <input
+        type="search"
+        [(ngModel)]="recherche"
+        placeholder="Rechercher..."
+        aria-label="Rechercher dans la modération"
+      >
+
+      <select
+        [(ngModel)]="filtreStatut"
+        aria-label="Filtrer par statut"
+      >
+        <option value="tous">Tous les statuts</option>
+        @if (ongletActif === 'avis' || ongletActif === 'boutiques') {
+          <option value="approuve">Approuvé</option>
+          <option value="attente">En attente</option>
+        }
+        @if (ongletActif === 'produits') {
+          <option value="actif">Actif</option>
+          <option value="inactif">Inactif</option>
+        }
+        @if (ongletActif === 'utilisateurs') {
+          <option value="actif">Actif</option>
+          <option value="suspendu">Suspendu</option>
+        }
+      </select>
+
+      <button type="button" class="clear-filters" (click)="reinitialiserFiltres()">
+        Réinitialiser
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- CARTES RESUME -->
+  <div class="stats-grid">
+
+    <!-- AVIS -->
+    <div class="stat-card">
+
+      <div class="stat-icon avis-icon">
+        ★
+      </div>
+
+      <div>
+        <span class="stat-label">Avis</span>
+
+        <strong>
+          {{ getNombreAvis() }}
+        </strong>
+
+        <small>
+          Avis disponibles
+        </small>
+      </div>
+
+    </div>
+
+
+    <!-- PRODUITS -->
+    <div class="stat-card">
+
+      <div class="stat-icon produits-icon">
+        ◈
+      </div>
+
+      <div>
+        <span class="stat-label">Produits</span>
+
+        <strong>
+          {{ getNombreProduits() }}
+        </strong>
+
+        <small>
+          Produits disponibles
+        </small>
+      </div>
+
+    </div>
+
+
+    <!-- BOUTIQUES -->
+    <div class="stat-card">
+
+      <div class="stat-icon boutiques-icon">
+        ◉
+      </div>
+
+      <div>
+        <span class="stat-label">Boutiques</span>
+
+        <strong>
+          {{ getNombreBoutiquesEnAttente() }}
+        </strong>
+
+        <small>
+          En attente
+        </small>
+      </div>
+
+    </div>
+
+
+    <!-- UTILISATEURS -->
+    <div class="stat-card">
+
+      <div class="stat-icon utilisateurs-icon">
+        👤
+      </div>
+
+      <div>
+        <span class="stat-label">Utilisateurs</span>
+
+        <strong>
+          {{ getNombreUtilisateursSuspendus() }}
+        </strong>
+
+        <small>
+          Suspendus
+        </small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTENU -->
+  <div class="moderation-card">
+
+    <!-- ONGLETS -->
+    <div class="tabs">
+
+      <button
+        type="button"
+        [class.active]="estActif('avis')"
+        (click)="changerOnglet('avis')"
+      >
+        Avis
+      </button>
+
+      <button
+        type="button"
+        [class.active]="estActif('produits')"
+        (click)="changerOnglet('produits')"
+      >
+        Produits
+      </button>
+
+      <button
+        type="button"
+        [class.active]="estActif('boutiques')"
+        (click)="changerOnglet('boutiques')"
+      >
+        Boutiques
+      </button>
+
+      <button
+        type="button"
+        [class.active]="estActif('utilisateurs')"
+        (click)="changerOnglet('utilisateurs')"
+      >
+        Utilisateurs
+      </button>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- AVIS -->
+    <!-- ========================= -->
+
+    @if (ongletActif === 'avis') {
+
+      <div class="section-header">
+
+        <div>
+          <h2>Avis</h2>
+
+          <p>
+            Consultez les avis publiés sur les produits.
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (chargementAvis) {
+
+        <div class="loading-state">
+          Chargement des avis...
+        </div>
+
+      }
+
+
+      @if (erreurAvis) {
+
+        <div class="error-state">
+          {{ erreurAvis }}
+        </div>
+
+      }
+
+
+      @if (!chargementAvis && !erreurAvis && avisFiltres.length > 0) {
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>UTILISATEUR</th>
+                <th>PRODUIT</th>
+                <th>NOTE</th>
+                <th>COMMENTAIRE</th>
+                <th>DATE</th>
+                <th>ACTIONS</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (item of avisFiltres; track item.id) {
+
+                <tr>
+
+                  <td>
+                    {{ getNomUtilisateur(item.utilisateur) }}
+                  </td>
+
+                  <td>
+                    {{ getNomProduit(item.produit) }}
+                  </td>
+
+                  <td>
+                    <span class="rating">
+                      {{ getNoteAvis(item) }}/5
+                    </span>
+                  </td>
+
+                  <td class="commentaire">
+                    {{ getCommentaireAvis(item) }}
+                  </td>
+
+                  <td>
+                    {{ item.date_creation || '—' }}
+                  </td>
+
+                  <td class="actions">
+                    <button
+                      type="button"
+                      *ngIf="item.est_approuve !== true"
+                      (click)="modererAvis(item, true)"
+                    >
+                      Approuver
+                    </button>
+                    <button
+                      type="button"
+                      class="warning"
+                      *ngIf="item.est_approuve === true"
+                      (click)="modererAvis(item, false)"
+                    >
+                      Rejeter
+                    </button>
+                    <button type="button" class="danger" (click)="supprimerAvis(item)">
+                      Supprimer
+                    </button>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      @if (!chargementAvis && !erreurAvis && avisFiltres.length === 0) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            ★
+          </div>
+
+          <h3>Aucun avis</h3>
+
+          <p>
+            Aucun avis n'est actuellement disponible.
+          </p>
+
+        </div>
+
+      }
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- PRODUITS -->
+    <!-- ========================= -->
+
+    @if (ongletActif === 'produits') {
+
+      <div class="section-header">
+
+        <div>
+          <h2>Produits</h2>
+
+          <p>
+            Consultez les produits présents sur la plateforme.
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (chargementProduits) {
+
+        <div class="loading-state">
+          Chargement des produits...
+        </div>
+
+      }
+
+
+      @if (erreurProduits) {
+
+        <div class="error-state">
+          {{ erreurProduits }}
+        </div>
+
+      }
+
+
+      @if (!chargementProduits && !erreurProduits && produitsFiltres.length > 0) {
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>PRODUIT</th>
+                <th>PRIX</th>
+                <th>BOUTIQUE</th>
+                <th>STATUT</th>
+                <th>ACTIONS</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (produit of produitsFiltres; track produit.id) {
+
+                <tr>
+
+                  <td class="produit-name">
+                    {{ produit.nom }}
+                  </td>
+
+                  <td>
+                    {{ produit.prix ?? '—' }}
+                  </td>
+
+                  <td>
+                    {{ getNomBoutique(produit.boutique) }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status"
+                      [class.active]="produit.est_actif !== false"
+                      [class.inactive]="produit.est_actif === false"
+                    >
+                      {{
+                        produit.est_actif === false
+                          ? 'Inactif'
+                          : 'Actif'
+                      }}
+                    </span>
+
+                  </td>
+
+                  <td class="actions">
+                    <button type="button" (click)="changerStatutProduit(produit)">
+                      {{ produit.est_actif === false ? 'Activer' : 'Désactiver' }}
+                    </button>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      @if (!chargementProduits && !erreurProduits && produitsFiltres.length === 0) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            ◈
+          </div>
+
+          <h3>Aucun produit</h3>
+
+          <p>
+            Aucun produit n'est actuellement disponible.
+          </p>
+
+        </div>
+
+      }
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- BOUTIQUES -->
+    <!-- ========================= -->
+
+    @if (ongletActif === 'boutiques') {
+
+      <div class="section-header">
+
+        <div>
+          <h2>Boutiques</h2>
+
+          <p>
+            Consultez les boutiques et leur état de validation.
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (chargementBoutiques) {
+
+        <div class="loading-state">
+          Chargement des boutiques...
+        </div>
+
+      }
+
+
+      @if (erreurBoutiques) {
+
+        <div class="error-state">
+          {{ erreurBoutiques }}
+        </div>
+
+      }
+
+
+      @if (!chargementBoutiques && !erreurBoutiques && boutiquesFiltrees.length > 0) {
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>BOUTIQUE</th>
+                <th>PROPRIÉTAIRE</th>
+                <th>VILLE</th>
+                <th>CATÉGORIE</th>
+                <th>STATUT</th>
+                <th>ACTIONS</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (boutique of boutiquesFiltrees; track boutique.id) {
+
+                <tr>
+
+                  <td class="produit-name">
+                    {{ boutique.nom }}
+                  </td>
+
+                  <td>
+                    {{ boutique.proprietaire || '—' }}
+                  </td>
+
+                  <td>
+                    {{ boutique.ville || '—' }}
+                  </td>
+
+                  <td>
+                    {{ boutique.categorie || 'Général' }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status"
+                      [class.active]="estBoutiqueApprouvee(boutique)"
+                      [class.pending]="!estBoutiqueApprouvee(boutique)"
+                    >
+                      {{
+                        estBoutiqueApprouvee(boutique)
+                          ? 'Approuvée'
+                          : 'En attente'
+                      }}
+                    </span>
+
+                  </td>
+
+                  <td class="actions">
+                    <button type="button" (click)="changerStatutBoutique(boutique)">
+                      {{ estBoutiqueApprouvee(boutique) ? 'Rejeter' : 'Approuver' }}
+                    </button>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      @if (!chargementBoutiques && !erreurBoutiques && boutiquesFiltrees.length === 0) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            ◉
+          </div>
+
+          <h3>Aucune boutique</h3>
+
+          <p>
+            Aucune boutique n'est actuellement disponible.
+          </p>
+
+        </div>
+
+      }
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- UTILISATEURS -->
+    <!-- ========================= -->
+
+    @if (ongletActif === 'utilisateurs') {
+
+      <div class="section-header">
+
+        <div>
+          <h2>Utilisateurs</h2>
+
+          <p>
+            Consultez les utilisateurs et leur statut.
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (chargementUtilisateurs) {
+
+        <div class="loading-state">
+          Chargement des utilisateurs...
+        </div>
+
+      }
+
+
+      @if (erreurUtilisateurs) {
+
+        <div class="error-state">
+          {{ erreurUtilisateurs }}
+        </div>
+
+      }
+
+
+      @if (
+        !chargementUtilisateurs &&
+        !erreurUtilisateurs &&
+        utilisateursFiltres.length > 0
+      ) {
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>UTILISATEUR</th>
+                <th>EMAIL</th>
+                <th>RÔLE</th>
+                <th>STATUT</th>
+                <th>ACTIONS</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (utilisateur of utilisateursFiltres; track utilisateur.id) {
+
+                <tr>
+
+                  <td class="produit-name">
+                    {{ utilisateur.nom || utilisateur.username || '—' }}
+                  </td>
+
+                  <td>
+                    {{ utilisateur.email || '—' }}
+                  </td>
+
+                  <td>
+                    <span class="role">
+                      {{ getRoleLabel(utilisateur.role) }}
+                    </span>
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status"
+                      [class.active]="estUtilisateurActif(utilisateur)"
+                      [class.inactive]="!estUtilisateurActif(utilisateur)"
+                    >
+                      {{ getStatutUtilisateur(utilisateur) }}
+                    </span>
+
+                  </td>
+
+                  <td class="actions">
+                    <button type="button" (click)="changerStatutUtilisateur(utilisateur)">
+                      {{ estUtilisateurActif(utilisateur) ? 'Suspendre' : 'Réactiver' }}
+                    </button>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      @if (
+        !chargementUtilisateurs &&
+        !erreurUtilisateurs &&
+        utilisateursFiltres.length === 0
+      ) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            👤
+          </div>
+
+          <h3>Aucun utilisateur</h3>
+
+          <p>
+            Aucun utilisateur n'est actuellement disponible.
+          </p>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+</div>

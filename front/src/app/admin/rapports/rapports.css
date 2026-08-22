@@ -1,0 +1,516 @@
+.rapport-page {
+  min-height: 100%;
+  padding: 30px;
+  background: #f5f7fb;
+}
+
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #7b8497;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary,
+.btn-secondary {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #102a43;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1c3d63;
+}
+
+.btn-secondary {
+  background: white;
+  color: #102a43;
+  border: 1px solid #d9e0e8;
+}
+
+.btn-secondary:hover {
+  background: #f0f3f7;
+}
+
+.btn-primary:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+
+/* ============================= */
+/* FILTRES */
+/* ============================= */
+
+.filtres-card {
+  display: flex;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 12px rgba(16, 42, 67, .05);
+}
+
+.filtre {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 220px;
+}
+
+.filtre label {
+  color: #526174;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.filtre select {
+  padding: 11px 13px;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  background: white;
+  color: #172033;
+  outline: none;
+}
+
+.filtre select:focus {
+  border-color: #102a43;
+}
+
+
+/* ============================= */
+/* LOADING */
+/* ============================= */
+
+.loading {
+  background: white;
+  min-height: 200px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #6b7280;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #dce2ea;
+  border-top-color: #102a43;
+  border-radius: 50%;
+  animation: rotation .8s linear infinite;
+}
+
+@keyframes rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ============================= */
+/* ERREUR */
+/* ============================= */
+
+.error-message {
+  padding: 16px 20px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #dc2626;
+  border-radius: 10px;
+}
+
+
+/* ============================= */
+/* TITRE RAPPORT */
+/* ============================= */
+
+.rapport-title {
+  background: white;
+  padding: 25px;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid #edf0f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rapport-title > div:first-child > span {
+  color: #7b8497;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+
+.rapport-title h2 {
+  margin: 5px 0 0;
+  color: #172033;
+  font-size: 22px;
+}
+
+.date-rapport {
+  color: #7b8497;
+  font-size: 14px;
+}
+
+
+/* ============================= */
+/* INDICATEURS */
+/* ============================= */
+
+.indicateurs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.indicateur-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 3px 12px rgba(16, 42, 67, .05);
+}
+
+.indicateur-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  background: #f0f3f7;
+}
+
+.indicateur-icon.utilisateurs {
+  background: #eff6ff;
+}
+
+.indicateur-icon.vendeurs {
+  background: #faf5ff;
+}
+
+.indicateur-icon.produits {
+  background: #fff7ed;
+}
+
+.indicateur-icon.commandes {
+  background: #f0fdf4;
+}
+
+.indicateur-card span {
+  display: block;
+  color: #7b8497;
+  font-size: 13px;
+}
+
+.indicateur-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 25px;
+  color: #172033;
+}
+
+.indicateur-card small {
+  display: block;
+  margin-top: 4px;
+  color: #7b8497;
+}
+
+
+/* ============================= */
+/* SECTIONS */
+/* ============================= */
+
+.rapport-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 12px rgba(16, 42, 67, .05);
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-kicker {
+  font-size: 11px;
+  color: #7b8497;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+
+.section-header h2 {
+  margin: 5px 0 0;
+  font-size: 20px;
+  color: #172033;
+}
+
+
+/* ============================= */
+/* COMMANDES */
+/* ============================= */
+
+.commandes-resume {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.resume-item {
+  padding: 18px;
+  border-radius: 10px;
+  background: #f7f9fc;
+}
+
+.resume-item span {
+  display: block;
+  color: #7b8497;
+  font-size: 13px;
+}
+
+.resume-item strong {
+  display: block;
+  margin-top: 8px;
+  color: #172033;
+  font-size: 25px;
+}
+
+.resume-item small {
+  display: block;
+  margin-top: 4px;
+  color: #8b95a5;
+}
+
+
+/* ============================= */
+/* SYNTHÈSE */
+/* ============================= */
+
+.synthese-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.synthese-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.synthese-row:last-child {
+  border-bottom: none;
+}
+
+.synthese-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #526174;
+}
+
+.synthese-icon {
+  width: 34px;
+  height: 34px;
+  background: #f1f4f8;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.synthese-row strong {
+  color: #172033;
+  font-size: 18px;
+}
+
+
+/* ============================= */
+/* EXPORT */
+/* ============================= */
+
+.export-section {
+  background: #102a43;
+  color: white;
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.export-section h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.export-section p {
+  margin: 6px 0 0;
+  color: #c7d3df;
+}
+
+.export-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.export-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  background: white;
+  color: #102a43;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.export-btn:hover:not(:disabled) {
+  background: #eef2f6;
+}
+
+.export-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+
+/* ============================= */
+/* COULEURS */
+/* ============================= */
+
+.positive {
+  color: #16a34a !important;
+}
+
+.negative {
+  color: #dc2626 !important;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1100px) {
+
+  .indicateurs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .commandes-resume {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .rapport-page {
+    padding: 20px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .filtres-card {
+    flex-direction: column;
+  }
+
+  .filtre {
+    width: 100%;
+  }
+
+  .indicateurs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .commandes-resume {
+    grid-template-columns: 1fr;
+  }
+
+  .rapport-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .export-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .export-actions {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+/* ============================= */
+/* IMPRESSION */
+/* ============================= */
+
+@media print {
+
+  .rapport-page {
+    padding: 0;
+    background: white;
+  }
+
+  .page-header,
+  .filtres-card,
+  .export-section {
+    display: none;
+  }
+
+  .rapport-section,
+  .indicateur-card,
+  .rapport-title {
+    box-shadow: none;
+  }
+
+}

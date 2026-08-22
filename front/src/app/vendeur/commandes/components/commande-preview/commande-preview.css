@@ -146,6 +146,23 @@ cursor:pointer;
 
 }
 
+.delete{
+
+background:#b42318;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+.delete:hover{
+
+background:#8f1d14;
+
+}
+
 .close-btn{
 
 background:#ef4444;

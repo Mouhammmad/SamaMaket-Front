@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { Commande } from '../models/commande';
 
@@ -22,9 +22,13 @@ export class AdminCommandesService {
 
   getCommandes(): Observable<Commande[]> {
 
-    return this.http.get<Commande[]>(
-      this.apiUrl
-    );
+    return this.http
+      .get<Commande[] | { results?: Commande[] }>(this.apiUrl)
+      .pipe(
+        map((response) => Array.isArray(response)
+          ? response
+          : response.results ?? [])
+      );
   }
 
   // ==========================================================

@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminCommandesService } from '../../core/services/admin-commande';
 import { Commande } from '../../core/models/commande';
+import { CommandePreview } from '../../vendeur/commandes/components/commande-preview/commande-preview';
+import { CommandeStatus } from '../../vendeur/commandes/components/commande-status/commande-status';
 
 @Component({
   selector: 'app-admin-commandes',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    CommandePreview,
+    CommandeStatus
   ],
   templateUrl: './commandes.html',
   styleUrl: './commandes.css'
@@ -30,8 +34,11 @@ export class AdminCommandes implements OnInit {
 
   commandeSelectionnee: Commande | null = null;
 
+  afficherStatut = false;
+
   constructor(
-    private commandesService: AdminCommandesService
+    private commandesService: AdminCommandesService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -58,9 +65,12 @@ export class AdminCommandes implements OnInit {
 
           this.commandes = commandes;
 
-          this.commandesFiltrees = commandes;
+          this.recherche = '';
+          this.filtreStatut = 'tous';
+          this.filtrerCommandes();
 
           this.chargement = false;
+          this.changeDetectorRef.detectChanges();
 
         },
 
@@ -71,10 +81,12 @@ export class AdminCommandes implements OnInit {
             error
           );
 
-          this.erreur =
-            'Impossible de charger les commandes.';
+          this.erreur = error.status === 401 || error.status === 403
+            ? 'Session administrateur invalide ou expirée. Veuillez vous reconnecter.'
+            : 'Impossible de charger les commandes.';
 
           this.chargement = false;
+          this.changeDetectorRef.detectChanges();
 
         }
 
@@ -150,8 +162,68 @@ export class AdminCommandes implements OnInit {
 
   fermerDetail(): void {
 
+    this.afficherStatut = false;
     this.commandeSelectionnee =
       null;
+
+  }
+
+  ouvrirStatut(commande: Commande): void {
+
+    this.commandeSelectionnee = commande;
+    this.afficherStatut = true;
+
+  }
+
+  fermerStatut(): void {
+
+    this.afficherStatut = false;
+
+  }
+
+  supprimerCommande(commande: Commande): void {
+
+    if (!confirm(`Supprimer définitivement la commande #${commande.numero} ?`)) {
+      return;
+    }
+
+    this.commandesService
+      .supprimerCommande(commande.id)
+      .subscribe({
+
+        next: () => {
+
+          this.commandes = this.commandes.filter(
+            (item) => item.id !== commande.id
+          );
+          this.filtrerCommandes();
+          this.fermerDetail();
+
+        },
+
+        error: (error) => {
+
+          console.error('Erreur suppression commande :', error);
+          this.erreur = 'Impossible de supprimer la commande.';
+
+        }
+
+      });
+
+  }
+
+  enregistrerStatut(statut: string): void {
+
+    if (this.commandeSelectionnee) {
+
+      this.modifierStatut(
+        this.commandeSelectionnee,
+        statut
+      );
+
+    }
+
+    this.afficherStatut = false;
 
   }
 

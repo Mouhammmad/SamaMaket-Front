@@ -1,17 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import { Rapports } from './rapports';
+import { Rapport } from './rapports';
+import { AdminStatistiquesService } from '../../core/services/admin-statistiques';
 
-describe('Rapports', () => {
-  let component: Rapports;
-  let fixture: ComponentFixture<Rapports>;
+describe('Rapport', () => {
+  let component: Rapport;
+  let fixture: ComponentFixture<Rapport>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Rapports],
+      imports: [Rapport],
+      providers: [
+        {
+          provide: AdminStatistiquesService,
+          useValue: {
+            getStatistiques: () => of({}),
+          },
+        },
+      ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Rapports);
+    fixture = TestBed.createComponent(Rapport);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

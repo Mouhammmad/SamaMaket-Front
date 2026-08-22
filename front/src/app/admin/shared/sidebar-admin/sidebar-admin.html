@@ -15,8 +15,8 @@
         </div>
 
         <div>
-            <h4>Administration</h4>
-            <p>Compte administrateur</p>
+            <h4>{{ nomAdmin }}</h4>
+            <p>Administrateur</p>
         </div>
 
     </div>
@@ -84,7 +84,7 @@
 
     </nav>
 
-    <button class="logout" type="button">
+    <button class="logout" type="button" (click)="deconnecter()">
         Déconnexion
     </button>
 

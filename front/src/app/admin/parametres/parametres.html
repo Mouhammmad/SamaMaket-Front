@@ -1,1 +1,277 @@
-<p>parametres works!</p>
+<div class="parametres-page">
+
+  <div *ngIf="chargement" class="loading-state">
+    Chargement des paramètres...
+  </div>
+
+  <div *ngIf="erreur" class="error-state">
+    {{ erreur }}
+  </div>
+
+  <div *ngIf="message" class="success-state">
+    {{ message }}
+  </div>
+
+  <ng-container *ngIf="!chargement">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1>Paramètres</h1>
+      <p>
+        Configurez les paramètres de la plateforme
+      </p>
+    </div>
+  </div>
+
+
+  <!-- PARAMÈTRES GÉNÉRAUX -->
+  <section class="settings-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Paramètres généraux</h2>
+        <p>Informations générales de la plateforme.</p>
+      </div>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label for="nomPlateforme">
+          Nom de la plateforme
+        </label>
+
+        <input
+          id="nomPlateforme"
+          type="text"
+          [(ngModel)]="nomPlateforme"
+          name="nomPlateforme"
+        >
+      </div>
+
+
+      <div class="form-group">
+        <label for="emailContact">
+          Email de contact
+        </label>
+
+        <input
+          id="emailContact"
+          type="email"
+          placeholder="contact@samamarket.com"
+          [(ngModel)]="emailContact"
+          name="emailContact"
+        >
+      </div>
+
+
+      <div class="form-group full">
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          rows="4"
+          placeholder="Description de la plateforme..."
+          [(ngModel)]="description"
+          name="description"
+        ></textarea>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- VENDEURS -->
+  <section class="settings-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Vendeurs</h2>
+        <p>Configurez la gestion des vendeurs.</p>
+      </div>
+    </div>
+
+    <div class="setting-row">
+
+      <div>
+        <strong>Validation des vendeurs</strong>
+
+        <p>
+          Les nouveaux vendeurs doivent être validés
+          avant de pouvoir utiliser leur boutique.
+        </p>
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          [(ngModel)]="validationVendeurs"
+          aria-label="Validation des vendeurs"
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+  </section>
+
+
+  <!-- NOTIFICATIONS -->
+  <section class="settings-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Notifications</h2>
+        <p>Gérez les notifications envoyées par la plateforme.</p>
+      </div>
+    </div>
+
+
+    <div class="setting-row">
+
+      <div>
+        <strong>Notifications de commandes</strong>
+
+        <p>
+          Recevoir les notifications concernant les commandes.
+        </p>
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          [(ngModel)]="notificationsCommandes"
+          aria-label="Notifications de commandes"
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="setting-row">
+
+      <div>
+        <strong>Notifications des vendeurs</strong>
+
+        <p>
+          Recevoir les notifications concernant les vendeurs.
+        </p>
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          [(ngModel)]="notificationsVendeurs"
+          aria-label="Notifications des vendeurs"
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="setting-row">
+
+      <div>
+        <strong>Notifications système</strong>
+
+        <p>
+          Recevoir les notifications importantes du système.
+        </p>
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          [(ngModel)]="notificationsSysteme"
+          aria-label="Notifications système"
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+  </section>
+
+
+  <!-- SÉCURITÉ -->
+  <section class="settings-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Sécurité</h2>
+        <p>Paramètres de sécurité du compte administrateur.</p>
+      </div>
+    </div>
+
+    <div class="security-item">
+
+      <div>
+        <strong>Mot de passe</strong>
+
+        <p>
+          Modifiez régulièrement votre mot de passe
+          pour protéger votre compte.
+        </p>
+      </div>
+
+      <button type="button" class="secondary-button">
+        Modifier
+      </button>
+
+    </div>
+
+
+    <div class="security-item">
+
+      <div>
+        <strong>Sessions actives</strong>
+
+        <p>
+          Gérez les sessions actuellement ouvertes.
+        </p>
+      </div>
+
+      <button type="button" class="secondary-button">
+        Gérer
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ACTIONS -->
+  <div class="actions">
+
+    <button
+      type="button"
+      class="save-button"
+      (click)="sauvegarder()"
+      [disabled]="sauvegardeEnCours"
+    >
+      {{ sauvegardeEnCours ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+    </button>
+
+  </div>
+
+  </ng-container>
+
+</div>

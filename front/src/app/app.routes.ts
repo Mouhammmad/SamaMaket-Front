@@ -25,7 +25,7 @@ import { VendeurDetail } from './admin/vendeurs/components/vendeur-detail/vendeu
 import { Dashboard } from './vendeur/dashboard/dashboard';
 import { Produits as ProduitsVendeur } from './vendeur/produits/produits';
 import { Commandes } from './vendeur/commandes/commandes';
-import { Statistiques } from './vendeur/statistiques/statistiques';
+import { Statistiques as StatistiquesVendeur } from './vendeur/statistiques/statistiques';
 import { Boutiques } from './vendeur/boutiques/boutiques';
 import { Livraisons } from './vendeur/livraisons/livraisons';
 import { Avis } from './vendeur/avis/avis';
@@ -37,10 +37,17 @@ import { authGuard } from './core/guards/auth-guard';
 import { Promotions } from './vendeur/promotions/promotions';
 import { AdminLayout } from './layout/admin-layout/admin-layout';
 import { Dashboard as DashboardAdmin } from './admin/dashboard/dashboard';
+import { AdminCommandes } from './admin/commandes/commandes';
 import { Utilisateurs } from './admin/utilisateurs/utilisateurs';
 import { Vendeurs as AdminVendeurs } from './admin/vendeurs/vendeurs';
 import { adminGuard } from './core/guards/admin-guard';
 import { AdminLogin } from './pages/admin-login/admin-login';
+
+import { Statistiques as StatistiquesAdmin } from './admin/statistiques/statistiques';
+import { Rapport } from './admin/rapports/rapports';
+
+import { Moderation } from './admin/moderation/moderation';
+import { Parametres } from './admin/parametres/parametres';
 export const routes: Routes = [
 
   {
@@ -141,7 +148,7 @@ export const routes: Routes = [
 
     {
       path: 'statistiques',
-      component: Statistiques
+      component: StatistiquesVendeur
     },
     {
       path: 'promotions',
@@ -239,7 +246,28 @@ export const routes: Routes = [
     {
       path: 'produits',
       component: AdminProduits
-    }
+    },
+
+    {
+      path: 'commandes',
+      component: AdminCommandes
+    },
+    {
+  path: 'statistiques',
+  component: StatistiquesAdmin
+},
+{
+  path: 'rapports',
+  component: Rapport
+},
+{
+  path: 'moderation',
+  component: Moderation
+},
+{
+  path: 'parametres',
+  component: Parametres
+}
 
   ]
 }

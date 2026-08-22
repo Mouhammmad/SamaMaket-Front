@@ -428,13 +428,30 @@
   </div>
 
 
+  <app-commande-preview
+    *ngIf="commandeSelectionnee"
+    [commande]="commandeSelectionnee"
+    [permettreSuppression]="true"
+    (fermer)="fermerDetail()"
+    (modifierStatut)="ouvrirStatut($event)"
+    (supprimer)="supprimerCommande($event)"
+  ></app-commande-preview>
+
+  <app-commande-status
+    *ngIf="afficherStatut"
+    [commande]="commandeSelectionnee"
+    (fermer)="fermerStatut()"
+    (enregistrer)="enregistrerStatut($event)"
+  ></app-commande-status>
+
+
   <!-- ======================================================
        DETAIL COMMANDE
   ======================================================= -->
 
   <div
     class="detail-overlay"
-    *ngIf="commandeSelectionnee"
+    *ngIf="false"
     (click)="fermerDetail()"
   >
 
@@ -448,11 +465,11 @@
         <div>
 
           <h2>
-            Commande #{{ commandeSelectionnee.numero }}
+            Commande #{{ commandeSelectionnee!.numero }}
           </h2>
 
           <span>
-            {{ commandeSelectionnee.date }}
+            {{ commandeSelectionnee!.date }}
           </span>
 
         </div>
@@ -478,22 +495,22 @@
 
         <p>
           <strong>Nom :</strong>
-          {{ commandeSelectionnee.client }}
+          {{ commandeSelectionnee!.client }}
         </p>
 
         <p>
           <strong>Email :</strong>
-          {{ commandeSelectionnee.email }}
+          {{ commandeSelectionnee!.email }}
         </p>
 
         <p>
           <strong>Téléphone :</strong>
-          {{ commandeSelectionnee.telephone || 'Non renseigné' }}
+          {{ commandeSelectionnee!.telephone || 'Non renseigné' }}
         </p>
 
         <p>
           <strong>Adresse :</strong>
-          {{ commandeSelectionnee.adresse_livraison }}
+          {{ commandeSelectionnee!.adresse_livraison }}
         </p>
 
       </div>
@@ -508,11 +525,31 @@
         <div
           class="ligne-produit"
           *ngFor="
-            let ligne of commandeSelectionnee.lignes
+            let ligne of commandeSelectionnee!.lignes
           "
         >
 
-          <div>
+            <div class="produit-detail">
+
+              <div class="produit-image">
+
+                <img
+                  *ngIf="ligne.produit.image_url || ligne.produit.image"
+                  [src]="ligne.produit.image_url || ligne.produit.image"
+                  [alt]="ligne.produit.nom"
+                  [title]="ligne.produit.nom"
+                >
+
+                <span
+                  *ngIf="!ligne.produit.image_url && !ligne.produit.image"
+                  aria-hidden="true"
+                >
+                  📦
+                </span>
+
+              </div>
+
+              <div>
 
             <strong>
               {{ ligne.produit.nom }}
@@ -522,6 +559,8 @@
               {{ ligne.quantite }} ×
               {{ formatMontant(ligne.prix_unitaire) }}
             </small>
+
+            </div>
 
           </div>
 
@@ -545,7 +584,7 @@
         <strong>
           {{
             formatMontant(
-              commandeSelectionnee.total
+              commandeSelectionnee!.total
             )
           }}
         </strong>
@@ -560,11 +599,11 @@
         <h3>Statut de la commande</h3>
 
         <select
-          [value]="commandeSelectionnee.statut"
+          [value]="commandeSelectionnee!.statut"
           aria-label="Modifier le statut de la commande"
           (change)="
             modifierStatut(
-              commandeSelectionnee,
+              commandeSelectionnee!,
               $any($event.target).value
             )
           "
