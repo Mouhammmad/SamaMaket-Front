@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CategorieService } from '../../../core/services/categorie';
@@ -66,7 +66,8 @@ export class Catalogue implements OnInit {
     private router: Router,
     private categorieService: CategorieService,
     private panierService: PanierService,
-    private favoriService: FavoriService
+    private favoriService: FavoriService,
+    private changeDetectorRef: ChangeDetectorRef
 
   ){}
 
@@ -85,6 +86,7 @@ export class Catalogue implements OnInit {
         next: (categories) => {
 
             this.categories = categories;
+          this.changeDetectorRef.markForCheck();
 
         }
 
@@ -94,27 +96,50 @@ export class Catalogue implements OnInit {
 
   chargerProduits(): void {
 
-    this.produitService.getProduits({
+    const params: any = {
+      page: this.page
+    };
 
-    page: this.page,
+    // n'envoyer que les filtres actifs pour éviter les conversions/validations côté serveur
+    if (this.filtres.prixMin && this.filtres.prixMin > 0) {
+      params.prix_min = this.filtres.prixMin;
+    }
 
-    ordering: this.tri,
+    if (this.filtres.prixMax && this.filtres.prixMax < 150000) {
+      params.prix_max = this.filtres.prixMax;
+    }
 
-    ...this.filtres
+    if (this.filtres.note) {
+      params.note = this.filtres.note;
+    }
 
-}).subscribe({
+    if (this.filtres.categorie) {
+      params.categorie = this.filtres.categorie;
+    }
+
+    if (this.filtres.vendeurVerifie) {
+      params.vendeurVerifie = true;
+    }
+
+    if (this.tri && this.tri !== 'pertinence') {
+      params.ordering = this.tri;
+    }
+
+    this.produitService.getProduits(params).subscribe({
 
     next:(response)=>{
         console.log('[Catalogue] produits response', response);
         this.produits = response.results || [];
         this.totalProduits = response.count || 0;
         this.pages = response.total_pages || 1;
+        this.changeDetectorRef.markForCheck();
     },
     error:(err)=>{
         console.error('[Catalogue] produits error', err);
         this.produits = [];
         this.totalProduits = 0;
         this.pages = 1;
+        this.changeDetectorRef.markForCheck();
     }
 
 });
@@ -141,6 +166,7 @@ export class Catalogue implements OnInit {
             this.totalProduits=response.count;
 
             this.pages=response.total_pages;
+            this.changeDetectorRef.markForCheck();
 
         }
 

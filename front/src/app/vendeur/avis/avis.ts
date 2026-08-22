@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 import { AvisService } from '../../core/services/avis.service';
 
@@ -27,11 +28,13 @@ import { AvisEmpty } from './components/avis-empty/avis-empty';
 })
 export class Avis implements OnInit {
 
-  avis: any[] = [];
+  private avisSubject = new BehaviorSubject<any[]>([]);
+  avis$ = this.avisSubject.asObservable();
+
+  private chargementSubject = new BehaviorSubject(true);
+  chargement$ = this.chargementSubject.asObservable();
 
   avisSelectionne: any = null;
-
-  chargement = true;
 
   constructor(
     private avisService: AvisService
@@ -45,16 +48,31 @@ export class Avis implements OnInit {
 
   chargerAvis(): void {
 
+    this.chargementSubject.next(true);
+    console.log('[Avis Vendeur] Starting to load avis...');
+
     this.avisService
       .getAvisVendeur()
       .subscribe({
 
         next: (data: any) => {
+          console.log('[Avis Vendeur] Data received:', data);
+          const avis = Array.isArray(data) ? data : (data.results || []);
+          // Trier par date décroissante (plus récents en haut)
+          const sorted = avis.sort((a: any, b: any) => {
+            const dateA = new Date(a.date_creation || a.date || 0).getTime();
+            const dateB = new Date(b.date_creation || b.date || 0).getTime();
+            return dateB - dateA;
+          });
+          this.avisSubject.next(sorted);
+          console.log('[Avis Vendeur] Avis set to:', sorted.length, 'items');
+          this.chargementSubject.next(false);
 
-          this.avis = data.results || data;
-
-          this.chargement = false;
-
+        },
+        error: (err: any) => {
+          console.error('[Avis Vendeur] Error loading avis:', err);
+          this.avisSubject.next([]);
+          this.chargementSubject.next(false);
         }
 
       });
@@ -66,35 +84,49 @@ export class Avis implements OnInit {
     this.avisSelectionne = avis;
 
   }
-rechercher(texte: string): void {
 
-  this.avisService.rechercherAvis(texte)
+  rechercher(texte: string): void {
 
-    .subscribe({
+    this.avisService.rechercherAvis(texte)
 
-      next: (data: any) => {
+      .subscribe({
 
-        this.avis = data.results || data;
+        next: (data: any) => {
 
-      }
+          const avis = Array.isArray(data) ? data : (data.results || []);
+          const sorted = avis.sort((a: any, b: any) => {
+            const dateA = new Date(a.date_creation || a.date || 0).getTime();
+            const dateB = new Date(b.date_creation || b.date || 0).getTime();
+            return dateB - dateA;
+          });
+          this.avisSubject.next(sorted);
 
-    });
+        }
 
-}
+      });
 
-filtrerParNote(note: string): void {
+  }
 
-  this.avisService.filtrerParNote(note)
+  filtrerParNote(note: string): void {
 
-    .subscribe({
+    this.avisService.filtrerParNote(note)
 
-      next: (data: any) => {
+      .subscribe({
 
-        this.avis = data.results || data;
+        next: (data: any) => {
 
-      }
+          const avis = Array.isArray(data) ? data : (data.results || []);
+          const sorted = avis.sort((a: any, b: any) => {
+            const dateA = new Date(a.date_creation || a.date || 0).getTime();
+            const dateB = new Date(b.date_creation || b.date || 0).getTime();
+            return dateB - dateA;
+          });
+          this.avisSubject.next(sorted);
 
-    });
+        }
 
-}
+      });
+
+  }
+
 }

@@ -1,0 +1,35 @@
+<section class="offres-page">
+  <div class="container">
+    <app-offres-header></app-offres-header>
+
+    <app-offres-filtres
+      (recherche)="rechercherOffres($event)"
+      (typeRemise)="filtrerTypeRemise($event)"
+      (boutique)="rechercherBoutique($event)"
+      (reset)="reinitialiserFiltres()">
+    </app-offres-filtres>
+
+    <div *ngIf="chargement" class="loading-state">
+      Chargement des offres...
+    </div>
+
+    <div *ngIf="!chargement && erreur" class="empty-state">
+      <p>Impossible de charger les offres pour le moment.</p>
+    </div>
+
+    <app-offres-flash
+      *ngIf="!chargement && !erreur && offresFiltrees.length > 0"
+      [offres]="offresFiltrees"
+      (produitClick)="voirProduit($event)">
+    </app-offres-flash>
+
+    <app-offres-vides
+      *ngIf="aucuneOffre && !erreur"
+      [titre]="offres.length === 0 ? 'Aucune offre disponible' : 'Aucun résultat'"
+      [message]="offres.length === 0
+        ? 'Revenez bientôt pour découvrir les prochaines promotions.'
+        : 'Aucune offre ne correspond à vos critères.'"
+      icone="🏷️">
+    </app-offres-vides>
+  </div>
+</section>

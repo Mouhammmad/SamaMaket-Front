@@ -17,12 +17,9 @@
 
         <a routerLink="/produits">Produits</a>
 
-        <a href="#">Vendeurs</a>
+        <a routerLink="/vendeurs">Vendeurs</a>
 
-        <a href="#">Offres</a>
-
-        <a href="#">Contact</a>
-
+        <a routerLink="/offres">Offres</a>
       </div>
 
       <!-- Actions -->
@@ -32,26 +29,20 @@
 
   🛒 Panier
 
-  @if (nombreArticles > 0) {
-
-    <span
+  <span *ngIf="nombreArticles > 0"
       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 
       {{ nombreArticles }}
 
     </span>
 
-  }
-
 </a>
         
 
         <button
           class="login-btn"
-          routerLink="/login">
-
-          Connexion
-
+          [routerLink]="estConnecte ? '/client' : '/login'">
+          {{ estConnecte ? 'Mon compte' : 'Connexion' }}
         </button>
 
       </div>

@@ -28,7 +28,8 @@
 
                 [produit]="produit"
                 (ajouterPanier)="ajouterAuPanier($event)"
-                (acheterMaintenant)="acheterMaintenant($event)">
+                (acheterMaintenant)="acheterMaintenant($event)"
+                (ajouterFavori)="ajouterAuxFavoris($event)">
 
             </app-achat-rapide>
 
@@ -63,4 +64,19 @@
 <div *ngIf="!chargement && !produit" class="detail-empty">
     <p>Le produit demandé est indisponible ou n’a pas pu être chargé.</p>
     <p *ngIf="erreur" class="detail-error">{{ erreur }}</p>
+</div>
+<!-- Confirmation Modal -->
+<div *ngIf="showConfirmModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirmation</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{ confirmModalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="confirmerAction()">Confirmer</button>
+      </div>
+    </div>
 </div>

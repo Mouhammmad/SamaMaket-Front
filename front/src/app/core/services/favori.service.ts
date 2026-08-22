@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FavoriService {
 
-  private api = 'http://127.0.0.1:8000/api/favoris/';
+  private api = '/api/produits/favoris/';
 
   constructor(
     private http: HttpClient
@@ -31,6 +31,12 @@ export class FavoriService {
       }
 
     );
+
+  }
+
+  supprimerFavori(id: number) {
+
+    return this.http.delete(this.api + id + '/');
 
   }
 

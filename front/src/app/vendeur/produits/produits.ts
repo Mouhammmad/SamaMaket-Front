@@ -46,7 +46,7 @@ previewProduit: any = null;
   
 
   constructor(
-    private produitService: VendeurProduits,
+    private vendeurProduitsService: VendeurProduits,
     private categorieService: CategorieService,
     private cdr: ChangeDetectorRef
     , private previewService: PreviewService
@@ -82,7 +82,7 @@ previewProduit: any = null;
 
     this.loading = true;
 
-    this.produitService.getProduits()
+    this.vendeurProduitsService.getProduits()
 
       .pipe(
 
@@ -154,9 +154,31 @@ modifierProduit(produit: any): void {
 
   }
 
-  changerStatut(produit: any): void {
-    produit.est_actif = !produit.est_actif;
-    this.produitsFiltres = [...this.produitsFiltres];
+  changerStatutProduit(produit: any): void {
+    const nouvelEtat = !produit.est_actif;
+    const action = nouvelEtat ? 'réactiver' : 'désactiver';
+
+    if (!confirm(`Voulez-vous vraiment ${action} le produit "${produit.nom}" ?`)) {
+      return;
+    }
+
+    this.vendeurProduitsService
+      .changerStatutProduit(produit.id, nouvelEtat)
+      .subscribe({
+        next: (response) => {
+          console.log('Statut produit modifié :', response);
+          produit.est_actif = nouvelEtat;
+          this.produitsFiltres = [...this.produitsFiltres];
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Erreur modification statut produit :', error);
+          alert(
+            error?.error?.detail ||
+            `Impossible de ${action} le produit.`
+          );
+        }
+      });
   }
 
   supprimerProduit(produit: any): void {
@@ -165,7 +187,7 @@ modifierProduit(produit: any): void {
       return;
     }
 
-    this.produitService.supprimerProduit(produit.id).subscribe({
+    this.vendeurProduitsService.supprimerProduit(produit.id).subscribe({
       next: () => {
         this.chargerProduits();
       },
@@ -268,7 +290,7 @@ modifierProduit(produit: any): void {
     formData.append('quantite_stock', String(produit.quantite_stock || 0));
     formData.append('est_actif', produit.est_actif ? 'true' : 'false');
 
-    this.produitService.ajouterProduit(formData).subscribe({
+    this.vendeurProduitsService.ajouterProduit(formData).subscribe({
       next: () => this.chargerProduits(),
       error: (err) => { console.error('Duplication failed', err); alert('Impossible de dupliquer ce produit.'); }
     });

@@ -4,58 +4,97 @@
 
         <div class="note">
 
-            {{ moyenne }}
+            {{ reviewAverage() }}
 
             <span>/5</span>
 
         </div>
 
         <div>
-
-            ⭐⭐⭐⭐⭐
-
             <p>
-
                 {{ avis.length }} avis clients
-
             </p>
-
         </div>
 
     </div>
 
-    <div
-        class="commentaire"
-        *ngFor="let item of avis">
+    <div *ngIf="chargement" class="empty-state">
+      Chargement des avis...
+    </div>
 
-        <div class="header">
+    <div *ngIf="!chargement && message" class="empty-state">
+      {{ message }}
+    </div>
 
-            <strong>
+    <div *ngIf="!chargement && avis.length">
+      <div class="commentaire" *ngFor="let item of avis">
 
-                {{ item.utilisateur }}
+          <div class="header">
 
-            </strong>
+              <strong>
+                  {{ item.utilisateur || item.user || item.username || 'Client' }}
+              </strong>
+           <span *ngIf="!item.est_approuve" class="pending"> (En attente) </span>
 
-            <span>
+              <span>
+                  {{ item.date_creation | date:'dd/MM/yyyy' }}
+              </span>
 
-                {{ item.date }}
+          </div>
 
-            </span>
+          <div class="etoiles">
+              {{ '⭐'.repeat(item.note) }}
+          </div>
 
+          <p>
+              {{ item.commentaire || 'Aucun commentaire.' }}
+          </p>
+
+      </div>
+    </div>
+
+    <div class="add-review">
+      <h3>Laisser un avis</h3>
+
+      <div *ngIf="!isLoggedIn()" class="alert alert-info">
+        Vous devez être connecté pour laisser un avis.
+      </div>
+
+      <div *ngIf="isLoggedIn()">
+        <div class="form-group">
+          <label for="note">Note</label>
+          <select id="note" [(ngModel)]="note" name="note">
+            <option *ngFor="let valeur of [5,4,3,2,1]" [ngValue]="valeur">{{ valeur }} étoiles</option>
+          </select>
         </div>
 
-        <div class="etoiles">
-
-            {{ '⭐'.repeat(item.note) }}
-
+        <div class="form-group">
+          <label for="commentaire">Commentaire</label>
+          <textarea id="commentaire" [(ngModel)]="commentaire" name="commentaire" rows="3" placeholder="Partagez votre expérience"></textarea>
         </div>
 
-        <p>
+        <div *ngIf="error" class="form-message error">{{ error }}</div>
 
-            {{ item.commentaire }}
+        <button type="button" class="btn btn-primary" (click)="ajouterAvis()" [disabled]="envoiEnCours">
+          {{ envoiEnCours ? 'Envoi...' : 'Envoyer mon avis' }}
+        </button>
+      </div>
+    </div>
 
-        </p>
-
+    <!-- Confirmation Modal -->
+    <div *ngIf="showConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Confirmation</h3>
+          </div>
+          <div class="modal-body">
+            <p>{{ confirmModalMessage }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="confirmerAction()">Confirmer</button>
+          </div>
+        </div>
     </div>
 
 </div>

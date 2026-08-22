@@ -45,6 +45,8 @@
 
 </a>
 
+
+
 <a routerLink="/vendeur/produits"
    routerLinkActive="active">
 
@@ -79,22 +81,10 @@
         Ma boutique
     </a>
 
-    <a routerLink="/vendeur/livraisons"
-       routerLinkActive="active">
-        <i class="bi bi-truck"></i>
-        Livraisons
-    </a>
-
     <a routerLink="/vendeur/avis"
        routerLinkActive="active">
         <i class="bi bi-star"></i>
         Avis clients
-    </a>
-
-    <a routerLink="/vendeur/paiements"
-       routerLinkActive="active">
-        <i class="bi bi-credit-card"></i>
-        Paiements
     </a>
 
 </nav>
@@ -102,7 +92,14 @@
 <span class="title">COMPTE</span>
 
 <nav>
+<a routerLink="/vendeur/messages"
+   routerLinkActive="active">
 
+    <i class="bi bi-chat-dots"></i>
+
+    Messages clients
+
+</a>
     <a routerLink="/vendeur/parametre"
        routerLinkActive="active">
         <i class="bi bi-gear"></i>

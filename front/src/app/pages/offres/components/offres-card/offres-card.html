@@ -1,0 +1,142 @@
+<div class="offre-card">
+
+  <!-- En-tête de l'offre -->
+  <div class="offre-top">
+
+    <div class="remise">
+
+      {{ afficherRemise() }}
+
+    </div>
+
+    <div
+      class="code"
+      *ngIf="offre.code"
+    >
+
+      Code :
+      <strong>
+        {{ offre.code }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- Boutique -->
+  <div class="boutique">
+
+    <span class="boutique-icon">
+      🏪
+    </span>
+
+    <span>
+      {{ offre.boutique }}
+    </span>
+
+  </div>
+
+
+  <!-- Produits concernés -->
+  <div class="produits">
+
+    <div
+      class="produit"
+      *ngFor="
+        let produit of offre.produits
+      "
+      (click)="voirProduit(produit.id)"
+    >
+
+      <div class="image-container">
+
+        <img
+          [src]="getImage(produit)"
+          [alt]="produit.nom"
+        >
+
+      </div>
+
+
+      <div class="produit-info">
+
+        <h3>
+          {{ produit.nom }}
+        </h3>
+
+        <div class="prix">
+
+          <span class="ancien-prix">
+
+            {{ produit.prix | number:'1.0-2' }}
+            FCFA
+
+          </span>
+
+          <strong class="nouveau-prix">
+
+            {{
+              prixPromotionnel(produit.prix)
+              | number:'1.0-2'
+            }}
+
+            FCFA
+
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Période -->
+  <div class="periode">
+
+    <span>
+      📅
+    </span>
+
+    <span>
+
+      Du
+      <strong>
+        {{ offre.date_debut | date:'dd/MM/yyyy' }}
+      </strong>
+
+      au
+
+      <strong>
+        {{ offre.date_fin | date:'dd/MM/yyyy' }}
+      </strong>
+
+    </span>
+
+  </div>
+
+
+  <!-- Statut -->
+  <div
+    class="statut"
+    [class.expiree]="!offre.est_valide"
+  >
+
+    <span
+      *ngIf="offre.est_valide"
+    >
+      ✓ Offre active
+    </span>
+
+    <span
+      *ngIf="!offre.est_valide"
+    >
+      Offre expirée
+    </span>
+
+  </div>
+
+</div>

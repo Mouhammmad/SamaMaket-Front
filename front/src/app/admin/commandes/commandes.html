@@ -1,1 +1,640 @@
-<p>commandes works!</p>
+<div class="admin-commandes">
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Commandes</h1>
+
+      <p>
+        Gestion de toutes les commandes de la plateforme
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        class="btn-refresh"
+        type="button"
+        (click)="chargerCommandes()"
+      >
+        ↻ Actualiser
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       STATISTIQUES
+  ======================================================= -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon total">
+        🛒
+      </div>
+
+      <div>
+
+        <span>Total commandes</span>
+
+        <strong>
+          {{ commandes.length }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon attente">
+        ⏳
+      </div>
+
+      <div>
+
+        <span>En attente</span>
+
+        <strong>
+          {{
+            commandes.filter(
+              c => c.statut === 'en_attente'
+            ).length
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon confirme">
+        ✓
+      </div>
+
+      <div>
+
+        <span>Confirmées</span>
+
+        <strong>
+          {{
+            commandes.filter(
+              c => c.statut === 'confirme'
+            ).length
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon livre">
+        ✓
+      </div>
+
+      <div>
+
+        <span>Livrées</span>
+
+        <strong>
+          {{
+            commandes.filter(
+              c => c.statut === 'livre'
+            ).length
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       FILTRES
+  ======================================================= -->
+
+  <div class="filters">
+
+    <div class="search-box">
+
+      <span>⌕</span>
+
+      <input
+        type="text"
+        placeholder="Rechercher une commande, un client..."
+        [(ngModel)]="recherche"
+        (input)="filtrerCommandes()"
+      >
+
+    </div>
+
+
+    <select
+      [(ngModel)]="filtreStatut"
+      (change)="changerStatutFiltre()"
+      aria-label="Filtrer les commandes par statut"
+    >
+
+      <option value="tous">
+        Tous les statuts
+      </option>
+
+      <option value="en_attente">
+        En attente
+      </option>
+
+      <option value="confirme">
+        Confirmées
+      </option>
+
+      <option value="expedie">
+        Expédiées
+      </option>
+
+      <option value="livre">
+        Livrées
+      </option>
+
+      <option value="annule">
+        Annulées
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- ======================================================
+       CHARGEMENT
+  ======================================================= -->
+
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+
+    Chargement des commandes...
+
+  </div>
+
+
+  <!-- ======================================================
+       ERREUR
+  ======================================================= -->
+
+  <div
+    class="error"
+    *ngIf="erreur"
+  >
+
+    {{ erreur }}
+
+  </div>
+
+
+  <!-- ======================================================
+       TABLE
+  ======================================================= -->
+
+  <div
+    class="table-container"
+    *ngIf="!chargement && !erreur"
+  >
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Commande</th>
+
+          <th>Client</th>
+
+          <th>Produits</th>
+
+          <th>Montant</th>
+
+          <th>Paiement</th>
+
+          <th>Statut</th>
+
+          <th>Date</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let commande of commandesFiltrees
+          "
+        >
+
+          <!-- COMMANDE -->
+
+          <td>
+
+            <strong class="numero">
+
+              #{{ commande.numero }}
+
+            </strong>
+
+          </td>
+
+
+          <!-- CLIENT -->
+
+          <td>
+
+            <div class="client">
+
+              <div class="avatar">
+
+                {{
+                  commande.client
+                    ?.charAt(0)
+                    ?.toUpperCase()
+                    || '?'
+                }}
+
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ commande.client || 'Client inconnu' }}
+                </strong>
+
+                <small>
+                  {{ commande.email }}
+                </small>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- PRODUITS -->
+
+          <td>
+
+            <span class="produits-count">
+
+              {{ commande.nombre_produits }}
+
+              produit(s)
+
+            </span>
+
+          </td>
+
+
+          <!-- MONTANT -->
+
+          <td>
+
+            <strong>
+
+              {{ formatMontant(commande.total) }}
+
+            </strong>
+
+          </td>
+
+
+          <!-- PAIEMENT -->
+
+          <td>
+
+            <span
+              class="paiement"
+              [class.wave]="commande.mode_paiement === 'wave'"
+              [class.orange]="commande.mode_paiement === 'orange_money'"
+            >
+
+              {{
+  getPaiementLabel(
+    commande.mode_paiement ?? null
+  )
+}}
+            </span>
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+            <span
+              class="statut"
+              [ngClass]="
+                getStatutClass(
+                  commande.statut
+                )
+              "
+            >
+
+              {{
+                getStatutLabel(
+                  commande.statut
+                )
+              }}
+
+            </span>
+
+          </td>
+
+
+          <!-- DATE -->
+
+          <td>
+
+            {{ commande.date }}
+
+          </td>
+
+
+          <!-- ACTIONS -->
+
+          <td>
+
+            <button
+              type="button"
+              class="btn-view"
+              title="Voir la commande"
+              (click)="voirCommande(commande)"
+            >
+
+              👁
+
+            </button>
+
+          </td>
+
+        </tr>
+
+
+        <!-- AUCUNE COMMANDE -->
+
+        <tr
+          *ngIf="
+            commandesFiltrees.length === 0
+          "
+        >
+
+          <td
+            colspan="8"
+            class="empty"
+          >
+
+            Aucune commande trouvée.
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <app-commande-preview
+    *ngIf="commandeSelectionnee"
+    [commande]="commandeSelectionnee"
+    [permettreSuppression]="true"
+    (fermer)="fermerDetail()"
+    (modifierStatut)="ouvrirStatut($event)"
+    (supprimer)="supprimerCommande($event)"
+  ></app-commande-preview>
+
+  <app-commande-status
+    *ngIf="afficherStatut"
+    [commande]="commandeSelectionnee"
+    (fermer)="fermerStatut()"
+    (enregistrer)="enregistrerStatut($event)"
+  ></app-commande-status>
+
+
+  <!-- ======================================================
+       DETAIL COMMANDE
+  ======================================================= -->
+
+  <div
+    class="detail-overlay"
+    *ngIf="false"
+    (click)="fermerDetail()"
+  >
+
+    <div
+      class="detail-panel"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="detail-header">
+
+        <div>
+
+          <h2>
+            Commande #{{ commandeSelectionnee!.numero }}
+          </h2>
+
+          <span>
+            {{ commandeSelectionnee!.date }}
+          </span>
+
+        </div>
+
+        <button
+          type="button"
+          class="close"
+          (click)="fermerDetail()"
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <!-- CLIENT -->
+
+      <div class="detail-section">
+
+        <h3>Informations client</h3>
+
+        <p>
+          <strong>Nom :</strong>
+          {{ commandeSelectionnee!.client }}
+        </p>
+
+        <p>
+          <strong>Email :</strong>
+          {{ commandeSelectionnee!.email }}
+        </p>
+
+        <p>
+          <strong>Téléphone :</strong>
+          {{ commandeSelectionnee!.telephone || 'Non renseigné' }}
+        </p>
+
+        <p>
+          <strong>Adresse :</strong>
+          {{ commandeSelectionnee!.adresse_livraison }}
+        </p>
+
+      </div>
+
+
+      <!-- PRODUITS -->
+
+      <div class="detail-section">
+
+        <h3>Produits commandés</h3>
+
+        <div
+          class="ligne-produit"
+          *ngFor="
+            let ligne of commandeSelectionnee!.lignes
+          "
+        >
+
+            <div class="produit-detail">
+
+              <div class="produit-image">
+
+                <img
+                  *ngIf="ligne.produit.image_url || ligne.produit.image"
+                  [src]="ligne.produit.image_url || ligne.produit.image"
+                  [alt]="ligne.produit.nom"
+                  [title]="ligne.produit.nom"
+                >
+
+                <span
+                  *ngIf="!ligne.produit.image_url && !ligne.produit.image"
+                  aria-hidden="true"
+                >
+                  📦
+                </span>
+
+              </div>
+
+              <div>
+
+            <strong>
+              {{ ligne.produit.nom }}
+            </strong>
+
+            <small>
+              {{ ligne.quantite }} ×
+              {{ formatMontant(ligne.prix_unitaire) }}
+            </small>
+
+            </div>
+
+          </div>
+
+          <strong>
+
+            {{ formatMontant(ligne.total) }}
+
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- TOTAL -->
+
+      <div class="detail-total">
+
+        <span>Total</span>
+
+        <strong>
+          {{
+            formatMontant(
+              commandeSelectionnee!.total
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <!-- STATUT -->
+
+      <div class="detail-section">
+
+        <h3>Statut de la commande</h3>
+
+        <select
+          [value]="commandeSelectionnee!.statut"
+          aria-label="Modifier le statut de la commande"
+          (change)="
+            modifierStatut(
+              commandeSelectionnee!,
+              $any($event.target).value
+            )
+          "
+        >
+
+          <option value="en_attente">
+            En attente
+          </option>
+
+          <option value="confirme">
+            Confirmée
+          </option>
+
+          <option value="expedie">
+            Expédiée
+          </option>
+
+          <option value="livre">
+            Livrée
+          </option>
+
+          <option value="annule">
+            Annulée
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

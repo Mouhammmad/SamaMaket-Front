@@ -1,0 +1,385 @@
+.settings-card {
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================================================
+   EN-TÊTE
+   ========================================================== */
+
+.card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 24px 28px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #eff6ff;
+
+  border-radius: 10px;
+
+  font-size: 21px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  color: #102a43;
+
+  font-size: 19px;
+
+  font-weight: 700;
+}
+
+.card-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   FORMULAIRE
+   ========================================================== */
+
+.settings-form {
+  padding: 28px;
+}
+
+.form-group {
+  margin-bottom: 23px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 8px;
+
+  padding: 11px 13px;
+
+  background: white;
+
+  color: #1e293b;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-group input {
+  height: 44px;
+}
+
+.form-group textarea {
+  min-height: 105px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #102a43;
+
+  box-shadow:
+    0 0 0 3px rgba(16, 42, 67, 0.08);
+}
+
+.form-group input.invalid {
+  border-color: #dc2626;
+}
+
+
+/* ==========================================================
+   PRIX
+   ========================================================== */
+
+.price-input {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.price-input input {
+  padding-right: 65px;
+}
+
+.price-input span {
+  position: absolute;
+
+  right: 13px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   AIDE
+   ========================================================== */
+
+.help-text {
+  margin-top: 6px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   ERREUR
+   ========================================================== */
+
+.error {
+  margin-top: 6px;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================
+   APERÇU
+   ========================================================== */
+
+.delivery-preview {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 5px;
+
+  margin-bottom: 25px;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.preview-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+
+  border-radius: 8px;
+
+  font-size: 18px;
+}
+
+.preview-content strong {
+  display: block;
+
+  color: #334155;
+
+  font-size: 13px;
+}
+
+.preview-content p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.preview-content p span {
+  color: #102a43;
+
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   ACTIONS
+   ========================================================== */
+
+.form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  padding-top: 8px;
+}
+
+.save-button {
+  min-width: 140px;
+
+  height: 42px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 0 20px;
+
+  background: #102a43;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #1d4f73;
+}
+
+.save-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* ==========================================================
+   SPINNER
+   ========================================================== */
+
+.button-spinner {
+  width: 15px;
+
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+  .card-header,
+  .settings-form {
+    padding: 20px;
+  }
+
+  .card-header {
+    align-items: flex-start;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+
+}

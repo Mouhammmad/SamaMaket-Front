@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,13 +18,14 @@ import { CommonModule } from '@angular/common';
 })
 export class BoutiqueHeader {
 
-  @Input()
-  boutique: any;
+  @Input() boutique: any = null;
 
-  @Output()
-  suivre = new EventEmitter<void>();
+  @Input() estSuivi = false;
 
-  @Output()
-  contacter = new EventEmitter<void>();
+  @Input() chargementSuivi = false;
+
+  @Output() suivre = new EventEmitter<void>();
+
+  @Output() contacter = new EventEmitter<void>();
 
 }

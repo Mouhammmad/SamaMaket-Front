@@ -1,0 +1,16 @@
+.offres-page .section-header {
+  margin-bottom: 1.5rem;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.loading-state,
+.empty-state {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #555;
+}

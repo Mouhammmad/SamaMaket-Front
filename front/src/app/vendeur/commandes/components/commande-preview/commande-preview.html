@@ -56,8 +56,9 @@ class="product"
 *ngFor="let ligne of commande.lignes">
 
 <img
-[src]="ligne.produit.image"
-[alt]="ligne.produit.nom">
+[src]="ligne.produit.image_url || ligne.produit.image || 'assets/images/default-product.png'"
+    [alt]="ligne.produit.nom"
+    [title]="ligne.produit.nom">
 
 <div>
 
@@ -93,9 +94,9 @@ Qté : {{ ligne.quantite }}
 
 <div class="section">
 
-<p>{{ commande.adresse }}</p>
+<p>{{ commande.adresse_livraison }}</p>
 
-<p>{{ commande.ville }}</p>
+<p *ngIf="commande.mode_livraison"><strong>Mode :</strong> {{ commande.mode_livraison }}</p>
 
 </div>
 
@@ -155,7 +156,7 @@ Livraison
 
 <span>
 
-{{ commande.adresse_livraison }}
+{{ commande.frais_livraison }} FCFA
 
 </span>
 
@@ -190,15 +191,26 @@ TOTAL
 <div class="footer">
 
 <button
-class="status"
-(click)="modifierStatut.emit(commande)">
+    *ngIf="permettreSuppression"
+    type="button"
+    class="delete"
+    (click)="supprimer.emit(commande)">
 
-Changer le statut
+Supprimer
 
 </button>
 
 <button
-class="close-btn"
+            type="button"
+            class="status"
+            (click)="modifierStatut.emit(commande)">
+
+            Changer le statut
+
+        </button>
+
+        <button
+            type="button"
 (click)="fermer.emit()">
 
 Fermer

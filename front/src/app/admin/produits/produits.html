@@ -1,1 +1,724 @@
-<p>produits works!</p>
+<div class="admin-produits">
+
+  <!-- ====================================================== -->
+  <!-- EN-TÊTE -->
+  <!-- ====================================================== -->
+
+  <div class="page-header">
+
+    <div>
+      <h1>Produits</h1>
+
+      <p>
+        Gestion de tous les produits de la plateforme
+      </p>
+    </div>
+
+    <button
+      class="btn-refresh"
+      type="button"
+      (click)="chargerProduits()"
+      [disabled]="loading"
+    >
+      ↻
+      Actualiser
+    </button>
+
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- STATISTIQUES -->
+  <!-- ====================================================== -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon total">
+        📦
+      </div>
+
+      <div>
+        <span>Total produits</span>
+        <strong>{{ totalProduits }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon actif">
+        ✓
+      </div>
+
+      <div>
+        <span>Produits actifs</span>
+        <strong>{{ totalProduitsActifs }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon inactif">
+        !
+      </div>
+
+      <div>
+        <span>Produits inactifs</span>
+        <strong>{{ totalProduitsInactifs }}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- FILTRES -->
+  <!-- ====================================================== -->
+
+  <div class="filters-card">
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        🔎
+      </span>
+
+      <input
+        type="text"
+        placeholder="Rechercher un produit ou une boutique..."
+        [(ngModel)]="recherche"
+        (input)="filtrerRecherche()"
+      />
+
+    </div>
+
+
+    <div class="filter-item">
+
+      <label>
+        Catégorie
+      </label>
+
+      <select
+        [(ngModel)]="categorieSelectionnee"
+        (change)="filtrerCategorie()"
+      >
+
+        <option value="">
+          Toutes les catégories
+        </option>
+
+        <option
+          *ngFor="let categorie of categories"
+          [value]="categorie.id"
+        >
+          {{ categorie.nom }}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="filter-item">
+
+      <label>
+        Statut
+      </label>
+
+      <select
+        [(ngModel)]="statutSelectionne"
+        (change)="filtrerStatut()"
+      >
+
+        <option value="">
+          Tous les statuts
+        </option>
+
+        <option value="actif">
+          Actifs
+        </option>
+
+        <option value="inactif">
+          Inactifs
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button
+      class="btn-reset"
+      type="button"
+      (click)="reinitialiserFiltres()"
+    >
+      Réinitialiser
+    </button>
+
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- TABLE -->
+  <!-- ====================================================== -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Liste des produits
+        </h2>
+
+        <span>
+          {{ produitsFiltres.length }} produit(s)
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- CHARGEMENT -->
+    <!-- ==================================================== -->
+
+    <div
+      class="loading-state"
+      *ngIf="loading"
+    >
+
+      <div class="spinner"></div>
+
+      <p>
+        Chargement des produits...
+      </p>
+
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- TABLE -->
+    <!-- ==================================================== -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="!loading && produitsFiltres.length > 0"
+    >
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Produit
+            </th>
+
+            <th>
+              Boutique
+            </th>
+
+            <th>
+              Prix
+            </th>
+
+            <th>
+              Stock
+            </th>
+
+            <th>
+              Statut
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let produit of produitsFiltres"
+          >
+
+            <!-- ========================================== -->
+            <!-- PRODUIT -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="product-cell">
+
+                <div class="product-image">
+
+                  <img
+                    *ngIf="produit.image_url || produit.image"
+                    [src]="produit.image_url || produit.image"
+                    [alt]="produit.nom"
+                  />
+
+                  <span
+                    *ngIf="!produit.image_url && !produit.image"
+                  >
+                    📦
+                  </span>
+
+                </div>
+
+
+                <div class="product-info">
+
+                  <strong>
+                    {{ produit.nom }}
+                  </strong>
+
+                  <small>
+                    #{{ produit.id }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- BOUTIQUE -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="boutique-cell">
+
+                <span class="boutique-icon">
+                  🏪
+                </span>
+
+                <span>
+                  {{ produit.boutique || '—' }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- PRIX -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="price-cell">
+
+                <strong>
+                  {{ produit.prix | number:'1.0-2' }}
+                </strong>
+
+                <span>
+                  FCFA
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- STOCK -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div
+                class="stock-cell"
+                [ngClass]="getStockClass(produit)"
+              >
+
+                <strong>
+                  {{ produit.quantite_stock }}
+                </strong>
+
+                <span>
+                  {{ getStockLabel(produit) }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- STATUT -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="produit.est_actif"
+                [class.inactive]="!produit.est_actif"
+              >
+
+                <span class="status-dot"></span>
+
+                {{
+                  produit.est_actif
+                    ? 'Actif'
+                    : 'Inactif'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- ACTIONS -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="actions">
+
+                <!-- Voir -->
+
+                <button
+                  type="button"
+                  class="action-btn view"
+                  title="Voir le produit"
+                  (click)="voirProduit(produit)"
+                >
+                  👁
+                </button>
+
+
+                <!-- Activer / désactiver -->
+
+                <button
+                  type="button"
+                  class="action-btn status"
+                  [class.activate]="!produit.est_actif"
+                  [class.deactivate]="produit.est_actif"
+                  [title]="
+                    produit.est_actif
+                      ? 'Désactiver'
+                      : 'Activer'
+                  "
+                  (click)="changerStatutProduit(produit)"
+                >
+
+                  {{
+                    produit.est_actif
+                      ? '⏸'
+                      : '▶'
+                  }}
+
+                </button>
+
+
+                <!-- Supprimer -->
+
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Supprimer"
+                  (click)="supprimerProduit(produit)"
+                >
+                  🗑
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- AUCUN PRODUIT -->
+    <!-- ==================================================== -->
+
+    <div
+      class="empty-state"
+      *ngIf="!loading && produitsFiltres.length === 0"
+    >
+
+      <div class="empty-icon">
+        📦
+      </div>
+
+      <h3>
+        Aucun produit trouvé
+      </h3>
+
+      <p>
+        Aucun produit ne correspond aux critères sélectionnés.
+      </p>
+
+      <button
+        type="button"
+        class="btn-reset-empty"
+        (click)="reinitialiserFiltres()"
+      >
+        Réinitialiser les filtres
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================== -->
+<!-- MODAL DÉTAIL PRODUIT -->
+<!-- ======================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="afficherDetail && produitSelectionne"
+  (click)="fermerDetail()"
+>
+
+  <div
+    class="product-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- HEADER MODAL -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <span class="modal-label">
+          DÉTAIL DU PRODUIT
+        </span>
+
+        <h2>
+          {{ produitSelectionne.nom }}
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="fermerDetail()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- CONTENU -->
+
+    <div class="modal-body">
+
+      <div class="modal-product">
+
+        <div class="modal-image">
+
+          <img
+            *ngIf="
+              produitSelectionne.image_url ||
+              produitSelectionne.image
+            "
+            [src]="
+              produitSelectionne.image_url ||
+              produitSelectionne.image
+            "
+            [alt]="produitSelectionne.nom"
+          />
+
+          <span
+            *ngIf="
+              !produitSelectionne.image_url &&
+              !produitSelectionne.image
+            "
+          >
+            📦
+          </span>
+
+        </div>
+
+
+        <div class="modal-main-info">
+
+          <h3>
+            {{ produitSelectionne.nom }}
+          </h3>
+
+          <p>
+            {{ produitSelectionne.description || 'Aucune description.' }}
+          </p>
+
+
+          <span
+            class="status-badge"
+            [class.active]="produitSelectionne.est_actif"
+            [class.inactive]="!produitSelectionne.est_actif"
+          >
+
+            <span class="status-dot"></span>
+
+            {{
+              produitSelectionne.est_actif
+                ? 'Produit actif'
+                : 'Produit inactif'
+            }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATIONS -->
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+
+          <span>
+            Boutique
+          </span>
+
+          <strong>
+            {{ produitSelectionne.boutique || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Catégorie
+          </span>
+
+          <strong>
+            {{ produitSelectionne.categorie || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Prix
+          </span>
+
+          <strong>
+            {{ produitSelectionne.prix | number:'1.0-2' }}
+            FCFA
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Stock
+          </span>
+
+          <strong>
+            {{ produitSelectionne.quantite_stock }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            État
+          </span>
+
+          <strong>
+            {{ produitSelectionne.etat || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Date de création
+          </span>
+
+          <strong>
+            {{
+              produitSelectionne.date_creation
+                | date:'dd/MM/yyyy HH:mm'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER MODAL -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn-modal-secondary"
+        (click)="fermerDetail()"
+      >
+        Fermer
+      </button>
+
+
+      <button
+        type="button"
+        class="btn-modal-status"
+        (click)="changerStatutProduit(produitSelectionne)"
+      >
+
+        {{
+          produitSelectionne.est_actif
+            ? 'Désactiver le produit'
+            : 'Activer le produit'
+        }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

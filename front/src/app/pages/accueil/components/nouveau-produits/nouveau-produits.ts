@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProduitService } from '../../../../core/services/produit';
@@ -15,7 +15,10 @@ export class NouveauProduits implements OnInit {
   produits: any[] = [];
   chargement = true;
 
-  constructor(private produitService: ProduitService) {}
+  constructor(
+    private produitService: ProduitService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.chargerProduits();
@@ -32,6 +35,7 @@ export class NouveauProduits implements OnInit {
       next: (response: any) => {
         this.produits = response?.results || [];
         this.chargement = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.produits = [];

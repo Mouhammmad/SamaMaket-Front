@@ -12,7 +12,8 @@
 
     flex:1;
 
-    margin-left:270px;
+    min-width:0;
+    margin-left:300px;
 
 }
 
@@ -58,7 +59,8 @@
 
     background:#102a43;
 
-    color:white;
+    min-width:0;
+    margin-left:300px;
 
     text-decoration:none;
 
@@ -111,5 +113,13 @@
 .page-content{
 
     padding:20px 30px 40px;
+
+}
+
+@media (max-width: 800px){
+
+    .main-content{
+        margin-left:250px;
+    }
 
 }

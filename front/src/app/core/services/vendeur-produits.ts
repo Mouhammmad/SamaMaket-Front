@@ -23,6 +23,13 @@ export class VendeurProduits {
     return this.http.put(`${this.apiUrl}${id}/`, formData);
   }
 
+  changerStatutProduit(id: number, estActif: boolean): Observable<any> {
+    const formData = new FormData();
+    formData.append('est_actif', estActif ? 'true' : 'false');
+
+    return this.http.patch(`${this.apiUrl}${id}/`, formData);
+  }
+
   supprimerProduit(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}${id}/`);
   }

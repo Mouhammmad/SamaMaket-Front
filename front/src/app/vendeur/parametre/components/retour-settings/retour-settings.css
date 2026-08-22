@@ -1,0 +1,466 @@
+.settings-card {
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================================================
+   EN-TÊTE
+   ========================================================== */
+
+.card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 24px 28px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #eff6ff;
+
+  border-radius: 10px;
+
+  font-size: 21px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  color: #102a43;
+
+  font-size: 19px;
+
+  font-weight: 700;
+}
+
+.card-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   FORMULAIRE
+   ========================================================== */
+
+.settings-form {
+  padding: 28px;
+}
+
+
+/* ==========================================================
+   LIGNE PARAMÈTRE
+   ========================================================== */
+
+.setting-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px;
+
+  margin-bottom: 25px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.setting-info strong {
+  display: block;
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+.setting-info p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   SWITCH
+   ========================================================== */
+
+.switch {
+  position: relative;
+
+  width: 48px;
+
+  height: 26px;
+
+  flex-shrink: 0;
+
+  cursor: pointer;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+
+  inset: 0;
+
+  background: #cbd5e1;
+
+  border-radius: 999px;
+
+  transition: 0.25s;
+}
+
+.slider::before {
+  content: '';
+
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  left: 3px;
+  top: 3px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  transition: 0.25s;
+}
+
+.switch input:checked + .slider {
+  background: #102a43;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+
+/* ==========================================================
+   GROUPE
+   ========================================================== */
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   INPUT
+   ========================================================== */
+
+.days-input {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.days-input input {
+  width: 100%;
+
+  height: 44px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 8px;
+
+  padding: 0 60px 0 13px;
+
+  background: white;
+
+  color: #1e293b;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+.days-input input:focus {
+  border-color: #102a43;
+
+  box-shadow:
+    0 0 0 3px rgba(16, 42, 67, 0.08);
+}
+
+.days-input input.invalid {
+  border-color: #dc2626;
+}
+
+.days-input span {
+  position: absolute;
+
+  right: 13px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   AIDE
+   ========================================================== */
+
+.help-text {
+  margin-top: 6px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   ERREUR
+   ========================================================== */
+
+.error {
+  margin-top: 6px;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================
+   INFORMATION
+   ========================================================== */
+
+.return-info {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+
+  margin-bottom: 25px;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+}
+
+.info-icon {
+  width: 35px;
+  height: 35px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+.return-info strong {
+  color: #334155;
+
+  font-size: 13px;
+}
+
+.return-info p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   ACTION
+   ========================================================== */
+
+.form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  padding-top: 8px;
+}
+
+.save-button {
+  min-width: 140px;
+
+  height: 42px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 0 20px;
+
+  background: #102a43;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #1d4f73;
+}
+
+.save-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* ==========================================================
+   SPINNER
+   ========================================================== */
+
+.button-spinner {
+  width: 15px;
+
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+  .card-header,
+  .settings-form {
+    padding: 20px;
+  }
+
+  .setting-row {
+    align-items: flex-start;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+
+}

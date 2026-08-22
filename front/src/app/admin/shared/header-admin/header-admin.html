@@ -1,0 +1,40 @@
+<header class="header">
+
+    <div>
+
+        <h2>Tableau de bord Admin</h2>
+
+        <small>Vue globale de la plateforme</small>
+
+    </div>
+
+    <div class="actions">
+
+       
+        <button class="btn-add" type="button" (click)="ouvrirFormulaire()">
+
+            + Ajouter admin
+
+        </button>
+
+    </div>
+
+</header>
+
+<div class="admin-modal-overlay" *ngIf="afficherFormulaire" (click)="fermerFormulaire()">
+    <form class="admin-modal" (ngSubmit)="ajouterAdmin()" (click)="$event.stopPropagation()">
+        <button class="modal-close" type="button" (click)="fermerFormulaire()">×</button>
+        <h2>Ajouter un administrateur</h2>
+        <p *ngIf="message" class="success">{{ message }}</p>
+        <p *ngIf="erreur" class="error">{{ erreur }}</p>
+        <label for="adminUsername">Nom d’utilisateur</label>
+        <input id="adminUsername" name="username" [(ngModel)]="username" required>
+        <label for="adminEmail">Email</label>
+        <input id="adminEmail" name="email" type="email" [(ngModel)]="email">
+        <label for="adminPassword">Mot de passe</label>
+        <input id="adminPassword" name="password" type="password" minlength="8" [(ngModel)]="password" required>
+        <button class="btn-submit" type="submit" [disabled]="envoiEnCours">
+            {{ envoiEnCours ? 'Création...' : 'Créer l’administrateur' }}
+        </button>
+    </form>
+</div>

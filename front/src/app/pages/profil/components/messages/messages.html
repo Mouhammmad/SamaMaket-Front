@@ -1,0 +1,66 @@
+<section class="messages-page">
+  <header class="messages-header">
+    <div>
+      <h2>Messages</h2>
+      <p>Contactez les vendeurs de vos boutiques préférées.</p>
+    </div>
+    <button type="button" (click)="chargerConversations()">Actualiser</button>
+  </header>
+
+  <div class="filters-bar" *ngIf="!chargement">
+    <input
+      type="search"
+      [(ngModel)]="recherche"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher une conversation..."
+      aria-label="Rechercher une conversation">
+    <select
+      [(ngModel)]="filtre"
+      (change)="appliquerFiltres()"
+      aria-label="Filtrer les conversations">
+      <option value="toutes">Toutes les conversations</option>
+      <option value="avec_messages">Avec messages</option>
+    </select>
+  </div>
+
+  <p *ngIf="chargement" class="state">Chargement des conversations...</p>
+  <p *ngIf="!chargement && erreur" class="error">{{ erreur }}</p>
+  <p *ngIf="!chargement && !erreur && conversations.length === 0" class="state">
+    Vous n’avez pas encore de conversation.
+  </p>
+
+  <div *ngIf="!chargement && conversationsFiltrees.length > 0" class="messages-layout">
+    <nav class="conversation-list" aria-label="Liste des conversations">
+      <button
+        type="button"
+        *ngFor="let conversation of conversationsFiltrees"
+        [class.active]="conversationActive?.id === conversation.id"
+        (click)="selectionner(conversation)">
+        <strong>{{ conversation.boutique_nom }}</strong>
+        <span>{{ conversation.dernier_message?.contenu || 'Nouvelle conversation' }}</span>
+      </button>
+    </nav>
+
+    <section class="conversation-panel" *ngIf="conversationActive">
+      <h3>{{ conversationActive.boutique_nom }}</h3>
+      <div class="message-list">
+        <p *ngIf="messages.length === 0" class="state">Aucun message. Écrivez au vendeur.</p>
+        <article *ngFor="let message of messages" class="message">
+          <span>{{ message.expediteur_nom }}</span>
+          <p>{{ message.contenu }}</p>
+          <small>{{ message.date_envoi | date:'short' }}</small>
+        </article>
+      </div>
+      <form class="message-form" (ngSubmit)="envoyer()">
+        <input
+          name="nouveauMessage"
+          [(ngModel)]="nouveauMessage"
+          placeholder="Écrire un message..."
+          autocomplete="off">
+        <button type="submit" [disabled]="envoiEnCours || !nouveauMessage.trim()">
+          Envoyer
+        </button>
+      </form>
+    </section>
+  </div>
+</section>

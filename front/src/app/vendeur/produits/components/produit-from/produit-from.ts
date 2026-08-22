@@ -212,13 +212,13 @@ export class ProduitFrom implements OnChanges {
     formData.append('description', this.produitForm.value.description);
     formData.append('est_actif', this.produitForm.value.est_actif);
 
-    if (this.selectedFiles.length > 0) {
-      formData.append('image', this.selectedFiles[this.mainImageIndex]);
-    }
-
     this.selectedFiles.forEach((file) => {
       formData.append('images', file);
     });
+
+    if (this.selectedFiles.length > 0) {
+      formData.append('image', this.selectedFiles[this.mainImageIndex]);
+    }
 
     const requete = this.produit
       ? this.produitService.modifierProduit(this.produit.id, formData)

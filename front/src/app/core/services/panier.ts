@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class PanierService {
 
-  private api = 'http://127.0.0.1:8000/api/commandes/panier/';
+  private api = '/api/commandes/panier/';
   private nombreArticlesSubject = new BehaviorSubject<number>(0);
   readonly nombreArticles$ = this.nombreArticlesSubject.asObservable();
 
@@ -41,6 +41,12 @@ export class PanierService {
 
   viderPanier(): Observable<any> {
     return this.http.delete(this.api + 'vider/');
+  }
+
+  appliquerCodePromo(code: string): Observable<any> {
+    return this.http.post(this.api + 'appliquer_code_promo/', {
+      code_promo: code
+    });
   }
 
   mettreAJourNombreArticles(nombre: number): void {

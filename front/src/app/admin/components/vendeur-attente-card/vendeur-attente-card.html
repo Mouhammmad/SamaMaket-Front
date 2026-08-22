@@ -1,0 +1,31 @@
+<div class="vendeur-card">
+
+    <div class="infos">
+
+        <h4>{{ vendeur.nom }}</h4>
+
+        <small>{{ vendeur.email }}</small>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn-success"
+            (click)="approuver.emit(vendeur.id)">
+
+            Approuver
+
+        </button>
+
+        <button
+            class="btn-danger"
+            (click)="refuser.emit(vendeur.id)">
+
+            Refuser
+
+        </button>
+
+    </div>
+
+</div>

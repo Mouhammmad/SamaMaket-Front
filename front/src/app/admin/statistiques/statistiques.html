@@ -1,0 +1,366 @@
+<div class="statistiques-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Statistiques</h1>
+
+      <p>
+        Analyse globale de l'activité de la plateforme
+      </p>
+
+    </div>
+
+    <button
+      class="btn-actualiser"
+      (click)="chargerStatistiques()"
+      [disabled]="chargement"
+    >
+
+      ↻
+
+      Actualiser
+
+    </button>
+
+  </div>
+
+
+  <!-- CHARGEMENT -->
+
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+
+    Chargement des statistiques...
+
+  </div>
+
+
+  <!-- ERREUR -->
+
+  <div
+    class="error-message"
+    *ngIf="!chargement && erreur"
+  >
+
+    {{ erreur }}
+
+  </div>
+
+
+  <!-- CONTENU -->
+
+  <ng-container
+    *ngIf="!chargement && statistiques"
+  >
+
+    <!-- CARTES PRINCIPALES -->
+
+    <div class="stats-grid">
+
+
+      <!-- UTILISATEURS -->
+
+      <div class="stat-card utilisateurs">
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            Utilisateurs
+          </span>
+
+          <strong>
+            {{ statistiques.utilisateurs_total | number }}
+          </strong>
+
+          <small>
+            +{{ statistiques.nouveaux_utilisateurs_ce_mois }}
+            ce mois
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- VENDEURS -->
+
+      <div class="stat-card vendeurs">
+
+        <div class="stat-icon">
+          🏪
+        </div>
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            Vendeurs actifs
+          </span>
+
+          <strong>
+            {{ statistiques.vendeurs_actifs | number }}
+          </strong>
+
+          <small>
+            {{ statistiques.vendeurs_en_attente }}
+            en attente
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUITS -->
+
+      <div class="stat-card produits">
+
+        <div class="stat-icon">
+          📦
+        </div>
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            Produits
+          </span>
+
+          <strong>
+            {{ statistiques.produits_total | number }}
+          </strong>
+
+          <small>
+            produits publiés
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- COMMANDES -->
+
+      <div class="stat-card commandes">
+
+        <div class="stat-icon">
+          🛒
+        </div>
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            Commandes
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_total | number }}
+          </strong>
+
+          <small
+            [class.positive]="evolutionPositive"
+            [class.negative]="!evolutionPositive"
+          >
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct !== null"
+            >
+
+              {{ statistiques.commandes_change_pct > 0 ? '+' : '' }}
+              {{ statistiques.commandes_change_pct }}%
+
+              ce mois
+
+            </ng-container>
+
+            <ng-container
+              *ngIf="statistiques.commandes_change_pct === null"
+            >
+
+              Pas de comparaison disponible
+
+            </ng-container>
+
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMMANDES -->
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2>
+            Activité des commandes
+          </h2>
+
+          <p>
+            Vue synthétique des commandes
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="commandes-grid">
+
+
+        <div class="commande-stat">
+
+          <span>
+            Aujourd'hui
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_du_jour | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="commande-stat">
+
+          <span>
+            Ce mois
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_ce_mois | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="commande-stat">
+
+          <span>
+            Mois précédent
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_mois_precedent | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="commande-stat">
+
+          <span>
+            Total
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_total | number }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMPARAISON -->
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2>
+            Comparaison mensuelle
+          </h2>
+
+          <p>
+            Évolution du nombre de commandes
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="comparaison">
+
+        <div class="periode">
+
+          <span>
+            Mois précédent
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_mois_precedent | number }}
+          </strong>
+
+        </div>
+
+
+        <div class="fleche">
+          →
+        </div>
+
+
+        <div class="periode actuel">
+
+          <span>
+            Mois actuel
+          </span>
+
+          <strong>
+            {{ statistiques.commandes_ce_mois | number }}
+          </strong>
+
+        </div>
+
+
+        <div
+          class="evolution"
+          [class.positive]="evolutionPositive"
+          [class.negative]="!evolutionPositive"
+        >
+
+          <ng-container
+            *ngIf="statistiques.commandes_change_pct !== null"
+          >
+
+            {{ statistiques.commandes_change_pct > 0 ? '+' : '' }}
+            {{ statistiques.commandes_change_pct }}%
+
+          </ng-container>
+
+          <ng-container
+            *ngIf="statistiques.commandes_change_pct === null"
+          >
+
+            N/A
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

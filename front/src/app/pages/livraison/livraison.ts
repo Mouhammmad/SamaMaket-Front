@@ -45,6 +45,8 @@ export class Livraison implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.codePromo = localStorage.getItem('checkoutCodePromo') || '';
+    this.reduction = Number(localStorage.getItem('checkoutReduction') || 0);
     this.chargerPanier();
   }
 
@@ -52,13 +54,38 @@ export class Livraison implements OnInit {
     this.panierService.getPanier().subscribe({
       next: (panier: any) => {
         this.sousTotal = Number(panier?.total || 0);
-        this.total = this.sousTotal + this.livraison - this.reduction;
+        if (this.codePromo) {
+          this.revaliderCodePromo();
+        } else {
+          this.calculerTotal();
+        }
       },
       error: () => {
         this.sousTotal = 0;
         this.total = 0;
       }
     });
+  }
+
+  revaliderCodePromo(): void {
+    this.panierService.appliquerCodePromo(this.codePromo).subscribe({
+      next: (response: any) => {
+        this.reduction = Number(response?.reduction || 0);
+        localStorage.setItem('checkoutReduction', String(this.reduction));
+        this.calculerTotal();
+      },
+      error: () => {
+        this.clearPromoCode();
+      }
+    });
+  }
+
+  clearPromoCode(): void {
+    this.codePromo = '';
+    this.reduction = 0;
+    localStorage.removeItem('checkoutCodePromo');
+    localStorage.removeItem('checkoutReduction');
+    this.calculerTotal();
   }
 
   enregistrerAdresse(adresse: any): void {

@@ -1,0 +1,45 @@
+<section class="vendor-messages">
+  <header class="messages-header">
+    <div>
+      <h1>Messages clients</h1>
+      <p>Répondez aux clients qui contactent votre boutique.</p>
+    </div>
+    <button type="button" (click)="chargerConversations()">Actualiser</button>
+  </header>
+
+  <p *ngIf="chargement" class="state">Chargement des conversations...</p>
+  <p *ngIf="!chargement && erreur" class="error">{{ erreur }}</p>
+  <p *ngIf="!chargement && !erreur && conversations.length === 0" class="state">
+    Aucun client ne vous a encore contacté.
+  </p>
+
+  <div *ngIf="!chargement && conversations.length > 0" class="messages-layout">
+    <nav class="conversation-list" aria-label="Conversations clients">
+      <button
+        type="button"
+        *ngFor="let conversation of conversations"
+        [class.active]="conversationActive?.id === conversation.id"
+        (click)="selectionner(conversation)">
+        <strong>{{ conversation.client_nom || 'Client' }}</strong>
+        <span>{{ conversation.boutique_nom }}</span>
+        <small>{{ conversation.dernier_message?.contenu || 'Conversation sans message' }}</small>
+      </button>
+    </nav>
+
+    <section class="conversation-panel" *ngIf="conversationActive">
+      <h2>{{ conversationActive.client_nom || 'Client' }}</h2>
+      <div class="message-list">
+        <p *ngIf="messages.length === 0" class="state">Aucun message.</p>
+        <article *ngFor="let message of messages" class="message">
+          <span>{{ message.expediteur_nom }}</span>
+          <p>{{ message.contenu }}</p>
+          <small>{{ message.date_envoi | date:'short' }}</small>
+        </article>
+      </div>
+      <form class="message-form" (ngSubmit)="envoyer()">
+        <input name="nouveauMessage" [(ngModel)]="nouveauMessage" placeholder="Répondre au client..." autocomplete="off">
+        <button type="submit" [disabled]="envoiEnCours || !nouveauMessage.trim()">Envoyer</button>
+      </form>
+    </section>
+  </div>
+</section>

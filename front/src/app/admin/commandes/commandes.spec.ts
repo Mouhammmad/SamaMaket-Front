@@ -1,17 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import { Commandes } from './commandes';
+import { AdminCommandes } from './commandes';
+import { AdminCommandesService } from '../../core/services/admin-commande';
 
-describe('Commandes', () => {
-  let component: Commandes;
-  let fixture: ComponentFixture<Commandes>;
+describe('AdminCommandes', () => {
+  let component: AdminCommandes;
+  let fixture: ComponentFixture<AdminCommandes>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Commandes],
+      imports: [AdminCommandes],
+      providers: [
+        {
+          provide: AdminCommandesService,
+          useValue: {
+            getCommandes: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Commandes);
+    fixture = TestBed.createComponent(AdminCommandes);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

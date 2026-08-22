@@ -44,7 +44,7 @@
 
         <td>
 
-          {{ commande.nombre_produits }}
+          {{ commande.nombre_produits ?? commande.lignes?.length ?? 0 }}
 
         </td>
 
@@ -56,7 +56,7 @@
 
         <td>
 
-          {{ commande.mode_paiement }}
+          {{ commande.mode_paiement || commande.paiement?.methode || '—' }}
 
         </td>
 
@@ -74,7 +74,7 @@
 
         <td>
 
-          {{ commande.date }}
+          {{ commande.date || commande.date_creation || '—' }}
 
         </td>
 
@@ -83,6 +83,7 @@
           <div class="actions">
 
             <button
+              type="button"
               class="view"
               (click)="apercu.emit(commande)">
 
@@ -91,6 +92,7 @@
             </button>
 
             <button
+              type="button"
               class="status"
               (click)="statut.emit(commande)">
 
@@ -99,10 +101,19 @@
             </button>
 
             <button
+              type="button"
               class="facture"
               (click)="facture.emit(commande)">
 
               🧾
+
+            </button>
+
+            <button
+              class="delete"
+              (click)="supprimer.emit(commande)">
+
+              🗑️
 
             </button>
 

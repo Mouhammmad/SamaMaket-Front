@@ -113,12 +113,19 @@
 
         <button
             class="suivre"
+            [class.deja-suivi]="estSuivi"
+            [disabled]="chargementSuivi"
             (click)="suivre.emit()">
 
-            + Suivre
+            <span *ngIf="!chargementSuivi">
+                {{ estSuivi ? '✓ Suivi' : '+ Suivre' }}
+            </span>
+
+            <span *ngIf="chargementSuivi">
+                Chargement...
+            </span>
 
         </button>
-
         <button
             class="contacter"
             (click)="contacter.emit()">

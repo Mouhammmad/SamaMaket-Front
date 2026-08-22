@@ -19,4 +19,20 @@ describe('CommandeTable', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit delete event when delete button is clicked', () => {
+    component.commandes = [{ id: 1, numero: 'CMD-001' }];
+    let emittedCommande: any;
+
+    component.supprimer.subscribe((commande: any) => {
+      emittedCommande = commande;
+    });
+
+    fixture.detectChanges();
+
+    const deleteButton = fixture.nativeElement.querySelector('button.delete');
+    deleteButton.click();
+
+    expect(emittedCommande).toEqual(component.commandes[0]);
+  });
 });

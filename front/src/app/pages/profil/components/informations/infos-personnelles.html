@@ -4,7 +4,7 @@
 
         <h2>Informations personnelles</h2>
 
-        <button class="btn-save">
+        <button class="btn-save" type="button" (click)="enregistrer()">
             <i class="bi bi-save"></i>
             Enregistrer
         </button>
@@ -15,24 +15,24 @@
 
         <div class="grid">
 
-            <div class="form-group">
+                    <div class="form-group">
                 <label for="profil-prenom">Prénom</label>
-                <input id="profil-prenom" type="text" value="Moussa" placeholder="Votre prénom">
+                <input id="profil-prenom" type="text" [(ngModel)]="utilisateur.first_name" name="first_name" placeholder="Votre prénom">
             </div>
 
             <div class="form-group">
                 <label for="profil-nom">Nom</label>
-                <input id="profil-nom" type="text" value="Sow" placeholder="Votre nom">
+                <input id="profil-nom" type="text" [(ngModel)]="utilisateur.last_name" name="last_name" placeholder="Votre nom">
             </div>
 
             <div class="form-group">
                 <label for="profil-email">Adresse email</label>
-                <input id="profil-email" type="email" value="moussa@email.com" placeholder="Votre adresse email">
+                <input id="profil-email" type="email" [(ngModel)]="utilisateur.email" name="email" placeholder="Votre adresse email">
             </div>
 
             <div class="form-group">
                 <label for="profil-telephone">Téléphone</label>
-                <input id="profil-telephone" type="text" value="+221 77 123 45 67" placeholder="Votre téléphone">
+                <input id="profil-telephone" type="text" [(ngModel)]="utilisateur.phone" name="phone" placeholder="Votre téléphone">
             </div>
 
         </div>
@@ -44,10 +44,13 @@
             <input
                 id="profil-ville"
                 type="text"
-                value="Dakar, Sénégal"
+                [(ngModel)]="utilisateur.ville"
+                name="ville"
                 placeholder="Ville ou localisation">
 
         </div>
+
+        <div *ngIf="message" class="form-message">{{ message }}</div>
 
     </form>
 

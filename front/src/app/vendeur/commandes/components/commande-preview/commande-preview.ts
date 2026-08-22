@@ -12,8 +12,12 @@ export class CommandePreview {
 
   @Input() commande: any = null;
 
+  @Input() permettreSuppression = false;
+
   @Output() fermer = new EventEmitter<void>();
 
   @Output() modifierStatut = new EventEmitter<any>();
+
+  @Output() supprimer = new EventEmitter<any>();
 
 }

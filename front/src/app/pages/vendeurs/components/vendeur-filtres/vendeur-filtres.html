@@ -1,0 +1,87 @@
+<div class="filtres-container">
+
+  <div class="filtres-title">
+    <span>⚙</span>
+    <strong>Filtrer les vendeurs</strong>
+  </div>
+
+
+  <div class="filtres-form">
+
+    <!-- VILLE -->
+
+    <div class="filtre-group">
+
+      <label for="ville">
+        Ville
+      </label>
+
+      <input
+        id="ville"
+        type="text"
+        [(ngModel)]="ville"
+        placeholder="Ex : Dakar"
+      >
+
+    </div>
+
+
+    <!-- NOTE -->
+
+    <div class="filtre-group">
+
+      <label for="note">
+        Note minimale
+      </label>
+
+      <select
+        id="note"
+        [(ngModel)]="noteMinimum"
+      >
+
+        <option [ngValue]="0">
+          Toutes les notes
+        </option>
+
+        <option [ngValue]="4">
+          ⭐ 4 et plus
+        </option>
+
+        <option [ngValue]="4.5">
+          ⭐ 4.5 et plus
+        </option>
+
+        <option [ngValue]="4.8">
+          ⭐ 4.8 et plus
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="filtre-actions">
+
+      <button
+        type="button"
+        class="btn-appliquer"
+        (click)="appliquerFiltres()"
+      >
+        Appliquer
+      </button>
+
+      <button
+        type="button"
+        class="btn-reset"
+        (click)="reinitialiser()"
+      >
+        Réinitialiser
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

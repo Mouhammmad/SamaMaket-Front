@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, Subscription } from 'rxjs';
 import { ClientSectionService } from '../../core/services/client-section';
 import { Informations } from './components/informations/infos-personnelles';
 import { Adresses } from './components/adresses/adresses-profil';
@@ -10,6 +11,7 @@ import { ZoneDanger } from './components/zone-danger/zone-danger';
 import { Commandes } from './components/commandes/commandes';
 import { Favoris } from './components/favoris/favoris';
 import { Avis } from './components/avis/avis';
+import { Messages } from './components/messages/messages';
 
 @Component({
   selector: 'app-profil',
@@ -21,27 +23,34 @@ import { Avis } from './components/avis/avis';
     Securite,
     Notifications,
     ZoneDanger,
-    Commandes, 
-    Favoris, 
-    Avis
+    Commandes,
+    Favoris,
+    Avis,
+    Messages
   ],
   templateUrl: './profil.html',
   styleUrl: './profil.css'
 })
-export class Profil {
+export class Profil implements OnInit, OnDestroy {
 
-  sectionActive = 'profil';
+  sectionActive$!: Observable<string>;
+  
+  private sectionSub?: Subscription;
 
-constructor(
-  private sectionService: ClientSectionService
-) {
+  constructor(
+    private sectionService: ClientSectionService
+  ) {}
 
-  this.sectionService.section$.subscribe(section => {
+  ngOnInit(): void {
+    this.sectionActive$ = this.sectionService.section$;
+    // Subscribe for any side effects if needed
+    this.sectionSub = this.sectionService.section$.subscribe(section => {
+      console.log('Profil section changed to:', section);
+    });
+  }
 
-    this.sectionActive = section;
-
-  });
-
-}
+  ngOnDestroy(): void {
+    this.sectionSub?.unsubscribe();
+  }
 
 }

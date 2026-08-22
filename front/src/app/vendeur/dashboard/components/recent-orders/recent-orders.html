@@ -2,48 +2,28 @@
 
     <h3>Dernières commandes</h3>
 
-    <table>
-
+    <table *ngIf="orders?.length; else noOrders">
         <tr>
-
             <th>Client</th>
-
-            <th>Produit</th>
-
             <th>Total</th>
-
             <th>Statut</th>
-
+            <th>Date</th>
         </tr>
-
-        <tr>
-
-            <td>Moussa</td>
-
-            <td>Samsung S25</td>
-
-            <td>550 000 FCFA</td>
-
+        <tr *ngFor="let order of orders">
+            <td>{{ order.customer_username || order.client || 'Client' }}</td>
+            <td>{{ order.total_price || order.montant_total || 0 }} FCFA</td>
             <td>
-                <span class="success">Livrée</span>
+                <span [ngClass]="{
+                    'success': order.status === 'livree' || order.status === 'Livrée' || order.status === 'livrée',
+                    'waiting': order.status !== 'livree' && order.status !== 'Livrée' && order.status !== 'livrée'
+                }">{{ order.status || order.statut || '—' }}</span>
             </td>
-
+            <td>{{ order.created_at ? (order.created_at | date:'short') : order.date_creation ? (order.date_creation | date:'short') : '—' }}</td>
         </tr>
-
-        <tr>
-
-            <td>Awa</td>
-
-            <td>Casque</td>
-
-            <td>30 000 FCFA</td>
-
-            <td>
-                <span class="waiting">Préparation</span>
-            </td>
-
-        </tr>
-
     </table>
+
+    <ng-template #noOrders>
+        <div class="empty">Aucune commande récente.</div>
+    </ng-template>
 
 </div>
