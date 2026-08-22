@@ -17,14 +17,19 @@
       <p>Impossible de charger les offres pour le moment.</p>
     </div>
 
-    <app-offres-vides *ngIf="aucuneOffre && !erreur"></app-offres-vides>
+    <app-offres-flash
+      *ngIf="!chargement && !erreur && offresFiltrees.length > 0"
+      [offres]="offresFiltrees"
+      (produitClick)="voirProduit($event)">
+    </app-offres-flash>
 
-    <div class="cards-grid" *ngIf="!chargement && !erreur && offresFiltrees.length > 0">
-      <app-offres-card
-        *ngFor="let offre of offresFiltrees"
-        [offre]="offre"
-        (produitClick)="voirProduit($event)">
-      </app-offres-card>
-    </div>
+    <app-offres-vides
+      *ngIf="aucuneOffre && !erreur"
+      [titre]="offres.length === 0 ? 'Aucune offre disponible' : 'Aucun résultat'"
+      [message]="offres.length === 0
+        ? 'Revenez bientôt pour découvrir les prochaines promotions.'
+        : 'Aucune offre ne correspond à vos critères.'"
+      icone="🏷️">
+    </app-offres-vides>
   </div>
 </section>

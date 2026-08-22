@@ -7,6 +7,20 @@
     </div>
   </div>
 
+  <div class="filters-bar" *ngIf="!(chargement$ | async)">
+    <input
+      type="search"
+      [(ngModel)]="recherche"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher un produit..."
+      aria-label="Rechercher dans mes favoris">
+    <select [(ngModel)]="tri" (change)="appliquerFiltres()" aria-label="Trier mes favoris">
+      <option value="recent">Ajoutés récemment</option>
+      <option value="nom">Nom du produit</option>
+      <option value="prix">Prix croissant</option>
+    </select>
+  </div>
+
   <div *ngIf="chargement$ | async" class="empty-state">
     Chargement de vos favoris...
   </div>
@@ -15,8 +29,8 @@
     {{ message$ | async }}
   </div>
 
-  <div class="favorite-list" *ngIf="!(chargement$ | async) && (favoris$ | async)?.length">
-    <div *ngFor="let favori of (favoris$ | async)" class="favorite-card">
+  <div class="favorite-list" *ngIf="!(chargement$ | async) && (favorisFiltres$ | async)?.length">
+    <div *ngFor="let favori of (favorisFiltres$ | async)" class="favorite-card">
       <div class="favorite-image" *ngIf="favori.produit?.image_url">
         <img [src]="favori.produit?.image_url" [alt]="favori.produit?.nom" />
       </div>

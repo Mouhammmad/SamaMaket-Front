@@ -393,6 +393,43 @@ chargementSuivi = false;
 
   }
 
+  enregistrerImages(): void {
+
+    if (!this.boutique?.id) {
+      alert('La boutique doit être chargée avant de modifier ses images.');
+      return;
+    }
+
+    if (!this.selectedLogo && !this.selectedBanniere) {
+      alert('Sélectionnez au moins une image.');
+      return;
+    }
+
+    const data = new FormData();
+
+    if (this.selectedLogo) {
+      data.append('logo', this.selectedLogo);
+    }
+
+    if (this.selectedBanniere) {
+      data.append('banniere', this.selectedBanniere);
+    }
+
+    this.boutiqueService.modifierBoutique(this.boutique.id, data).subscribe({
+      next: (response) => {
+        this.boutique = response;
+        this.selectedLogo = undefined;
+        this.selectedBanniere = undefined;
+        alert('Images de la boutique enregistrées avec succès.');
+      },
+      error: (error) => {
+        console.error('Erreur modification images boutique :', error);
+        alert(error.error?.detail || 'Impossible d’enregistrer les images.');
+      }
+    });
+
+  }
+
   contacter(): void {
 
   if (!this.boutique?.id) {

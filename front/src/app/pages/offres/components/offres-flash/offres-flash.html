@@ -1,1 +1,169 @@
-<p>offres-flash works!</p>
+<section class="offres-flash">
+
+  <div class="section-header">
+
+    <div>
+      <span class="sur-titre">
+        BONNES AFFAIRES
+      </span>
+
+      <h2>
+        Offres flash
+      </h2>
+
+      <p>
+        Profitez des promotions disponibles
+        avant leur expiration.
+      </p>
+    </div>
+
+    <span
+      class="badge-offres"
+      *ngIf="offres.length">
+
+      {{ offres.length }}
+      offre{{ offres.length > 1 ? 's' : '' }}
+
+    </span>
+
+  </div>
+
+
+  <div
+    class="offres-grid"
+    *ngIf="offres.length > 0">
+
+    <article
+      class="offre-card"
+      *ngFor="let offre of offres">
+
+      <div class="offre-badge">
+
+        <span
+          *ngIf="offre.type_remise === 'pourcentage'">
+
+          -{{ obtenirPourcentage(offre) }}%
+
+        </span>
+
+        <span
+          *ngIf="offre.type_remise === 'montant_fixe'">
+
+          -{{ offre.taux_remise }} FCFA
+
+        </span>
+
+      </div>
+
+
+      <div class="offre-info">
+
+        <span class="boutique">
+          {{ offre.boutique }}
+        </span>
+
+        <h3>
+          Code :
+          {{ offre.code }}
+        </h3>
+
+        <p class="expiration">
+
+          ⏳
+
+          <span
+            *ngIf="joursRestants(offre.date_fin) > 0">
+
+            Encore
+            {{ joursRestants(offre.date_fin) }}
+            jour{{ joursRestants(offre.date_fin) > 1 ? 's' : '' }}
+
+          </span>
+
+          <span
+            *ngIf="joursRestants(offre.date_fin) === 0">
+
+            Dernier jour
+
+          </span>
+
+        </p>
+
+      </div>
+
+
+      <div
+        class="produits"
+        *ngIf="offre.produits?.length">
+
+        <div
+          class="produit"
+          *ngFor="let produit of offre.produits">
+
+          <img
+            [src]="produit.image_url || produit.image || 'assets/images/produit.png'"
+            [alt]="produit.nom">
+
+          <div class="produit-details">
+
+            <h4>
+              {{ produit.nom }}
+            </h4>
+
+            <div class="prix">
+
+              <strong>
+                {{
+                  calculerPrixPromo(
+                    produit.prix,
+                    offre
+                  ) | number:'1.0-0'
+                }}
+                FCFA
+              </strong>
+
+              <del>
+                {{ produit.prix }} FCFA
+              </del>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="sans-produit"
+        *ngIf="!offre.produits?.length">
+
+        Offre disponible dans la boutique
+
+      </div>
+
+
+      <button
+        class="btn-offre"
+        type="button"
+        [disabled]="!offre.produits?.length"
+        (click)="voirOffre(offre)">
+
+        Voir l'offre
+
+      </button>
+
+    </article>
+
+  </div>
+
+
+  <app-offres-vides
+  *ngIf="offres.length === 0"
+  titre="Aucune offre flash disponible"
+  message="Revenez bientôt pour découvrir les prochaines promotions."
+  icone="🏷️">
+</app-offres-vides>
+
+</section>

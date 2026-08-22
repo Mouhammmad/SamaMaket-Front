@@ -1,12 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { FavoriService } from '../../../../core/services/favori.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-favoris',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './favoris.html',
   styleUrl: './favoris.css',
 })
@@ -14,6 +15,11 @@ export class Favoris implements OnInit {
 
   private favorisSubject = new BehaviorSubject<any[]>([]);
   favoris$ = this.favorisSubject.asObservable();
+  private favorisFiltresSubject = new BehaviorSubject<any[]>([]);
+  favorisFiltres$ = this.favorisFiltresSubject.asObservable();
+
+  recherche = '';
+  tri = 'recent';
 
   private chargementSubject = new BehaviorSubject(true);
   chargement$ = this.chargementSubject.asObservable();
@@ -42,6 +48,7 @@ export class Favoris implements OnInit {
         console.log('[Favoris] Data received:', data);
         const newFavoris = Array.isArray(data) ? data : data.results || [];
         this.favorisSubject.next(newFavoris);
+        this.appliquerFiltres();
         console.log('[Favoris] Favoris set to:', newFavoris.length, 'items');
         if (!newFavoris.length) {
           this.messageSubject.next("Vous n'avez pas de favoris pour le moment.");
@@ -67,6 +74,7 @@ export class Favoris implements OnInit {
           const currentFavoris = this.favorisSubject.value;
           const newFavoris = currentFavoris.filter(f => f.id !== id);
           this.favorisSubject.next(newFavoris);
+          this.appliquerFiltres();
           if (!newFavoris.length) {
             this.messageSubject.next("Vous n'avez pas de favoris pour le moment.");
           }
@@ -91,6 +99,26 @@ export class Favoris implements OnInit {
     this.showConfirmModal = false;
     this.confirmModalMessage = '';
     this.confirmModalAction = null;
+  }
+
+  appliquerFiltres(): void {
+    const recherche = this.recherche.trim().toLowerCase();
+    const favoris = this.favorisSubject.value.filter((favori) => {
+      const nom = String(favori.produit?.nom || '').toLowerCase();
+      return !recherche || nom.includes(recherche);
+    });
+
+    favoris.sort((a, b) => {
+      if (this.tri === 'nom') {
+        return String(a.produit?.nom || '').localeCompare(String(b.produit?.nom || ''));
+      }
+      if (this.tri === 'prix') {
+        return Number(a.produit?.prix || 0) - Number(b.produit?.prix || 0);
+      }
+      return new Date(b.date_ajout || 0).getTime() - new Date(a.date_ajout || 0).getTime();
+    });
+
+    this.favorisFiltresSubject.next(favoris);
   }
 
 }

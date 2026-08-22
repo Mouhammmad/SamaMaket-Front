@@ -1,0 +1,552 @@
+/* =========================================================
+   PAGE VENDEURS
+   ========================================================= */
+
+.vendeurs-page {
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   EN-TÊTE
+   ========================================================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #102a43;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #627d98;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RECHERCHE
+   ========================================================= */
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #e6eaf0;
+}
+
+.search-input {
+  flex: 1;
+  height: 44px;
+  padding: 0 15px;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  color: #243b53;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.1);
+}
+
+.search-button {
+  height: 44px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 8px;
+  background: #102a43;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.search-button:hover {
+  background: #243b53;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-container {
+  background: #ffffff;
+  border: 1px solid #e6eaf0;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(16, 42, 67, 0.04);
+}
+
+table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8fafc;
+}
+
+thead th {
+  padding: 16px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #627d98;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid #e6eaf0;
+}
+
+tbody td {
+  padding: 17px 18px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 14px;
+  color: #334e68;
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   INFORMATIONS VENDEUR
+   ========================================================= */
+
+.vendeur-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: #102a43;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.vendeur-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.vendeur-info strong {
+  color: #102a43;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vendeur-info span {
+  color: #829ab1;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   BOUTIQUE
+   ========================================================= */
+
+.boutique-name {
+  font-weight: 600;
+  color: #243b53;
+}
+
+.description {
+  max-width: 220px;
+  color: #829ab1;
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   BADGE STATUT
+   ========================================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 11px;
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #e6f7ee;
+  color: #16845b;
+}
+
+.status-pending {
+  background: #fff4db;
+  color: #a66a00;
+}
+
+.status-suspended {
+  background: #fde8e8;
+  color: #c53030;
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #243b53;
+  font-weight: 600;
+}
+
+.note-star {
+  color: #f5a623;
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   CATÉGORIE
+   ========================================================= */
+
+.category-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  background: #edf2f7;
+  color: #486581;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.action-button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #f1f5f9;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  transition: all 0.2s;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+}
+
+
+/* Voir */
+
+.action-button.view {
+  color: #2f80ed;
+  background: #eaf3ff;
+}
+
+.action-button.view:hover {
+  background: #dbeafe;
+}
+
+
+/* Valider */
+
+.action-button.approve {
+  color: #16845b;
+  background: #e6f7ee;
+}
+
+.action-button.approve:hover {
+  background: #d1fae5;
+}
+
+
+/* Refuser */
+
+.action-button.reject {
+  color: #c53030;
+  background: #fde8e8;
+}
+
+.action-button.reject:hover {
+  background: #fee2e2;
+}
+
+
+/* Suspendre */
+
+.action-button.suspend {
+  color: #a66a00;
+  background: #fff4db;
+}
+
+.action-button.suspend:hover {
+  background: #ffedc2;
+}
+
+
+/* =========================================================
+   BOUTONS PRINCIPAUX
+   ========================================================= */
+
+.btn-primary {
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  background: #102a43;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  background: #243b53;
+}
+
+
+/* =========================================================
+   CHARGEMENT
+   ========================================================= */
+
+.loading {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #627d98;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MESSAGE ERREUR
+   ========================================================= */
+
+.error-message {
+  margin-bottom: 20px;
+
+  padding: 14px 16px;
+
+  border-radius: 8px;
+
+  background: #fde8e8;
+  border: 1px solid #f5c2c2;
+
+  color: #c53030;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MESSAGE VIDE
+   ========================================================= */
+
+.empty {
+  padding: 50px 20px !important;
+
+  text-align: center;
+
+  color: #829ab1 !important;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER TABLEAU
+   ========================================================= */
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 15px;
+
+  color: #627d98;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   CARTES DE STATISTIQUES
+   ========================================================= */
+
+.stats-container {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: white;
+
+  border: 1px solid #e6eaf0;
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  box-shadow: 0 2px 8px rgba(16, 42, 67, 0.04);
+}
+
+.stat-card .label {
+  display: block;
+
+  color: #829ab1;
+
+  font-size: 12px;
+
+  margin-bottom: 8px;
+}
+
+.stat-card .value {
+  color: #102a43;
+
+  font-size: 25px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .vendeurs-page {
+    padding: 20px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .vendeurs-page {
+    padding: 15px;
+  }
+
+  .page-header h1 {
+    font-size: 21px;
+  }
+
+  .table-container {
+    border-radius: 8px;
+  }
+
+}

@@ -44,8 +44,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const skipAuth = shouldSkipAuth(normalizedUrl);
   const isApiRequest = normalizedUrl.includes('/api/') || normalizedUrl.includes('127.0.0.1:8000') || normalizedUrl.includes('localhost:8000');
   const tokenExpired = token ? isTokenExpired(token) : false;
-  const hasValidJwt = !!token && !tokenExpired && parseJwt(token) !== null;
-  const attachAuth = hasValidJwt && !isAuthRequest && !skipAuth && isApiRequest;
+  const attachAuth = !!token && !isAuthRequest && !skipAuth && isApiRequest;
   const authReq = attachAuth
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     : req;

@@ -13,12 +13,15 @@ import { BoutiqueService, Conversation } from '../../../../core/services/boutiqu
 })
 export class Messages implements OnInit {
   conversations: Conversation[] = [];
+  conversationsFiltrees: Conversation[] = [];
   conversationActive: Conversation | null = null;
   messages: any[] = [];
   nouveauMessage = '';
   chargement = true;
   envoiEnCours = false;
   erreur = '';
+  recherche = '';
+  filtre = 'toutes';
 
   constructor(
     private boutiqueService: BoutiqueService,
@@ -34,9 +37,10 @@ export class Messages implements OnInit {
     this.boutiqueService.getConversations().subscribe({
       next: (conversations) => {
         this.conversations = conversations;
+        this.appliquerFiltres();
         this.chargement = false;
-        if (conversations.length > 0) {
-          this.selectionner(conversations[0]);
+        if (this.conversationsFiltrees.length > 0) {
+          this.selectionner(this.conversationsFiltrees[0]);
         }
         this.changeDetectorRef.markForCheck();
       },
@@ -46,6 +50,21 @@ export class Messages implements OnInit {
         this.changeDetectorRef.markForCheck();
       }
     });
+  }
+
+  appliquerFiltres(): void {
+    const recherche = this.recherche.trim().toLowerCase();
+    this.conversationsFiltrees = this.conversations.filter((conversation) => {
+      const texte = `${conversation.boutique_nom || ''} ${conversation.dernier_message?.contenu || ''}`.toLowerCase();
+      const rechercheOK = !recherche || texte.includes(recherche);
+      const filtreOK = this.filtre === 'toutes' || !!conversation.dernier_message;
+      return rechercheOK && filtreOK;
+    });
+
+    if (this.conversationActive && !this.conversationsFiltrees.some(c => c.id === this.conversationActive?.id)) {
+      this.conversationActive = null;
+      this.messages = [];
+    }
   }
 
   selectionner(conversation: Conversation): void {

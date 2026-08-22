@@ -1,22 +1,27 @@
 <aside class="sidebar">
 
+    <div class="logo">
+        <h2>SAMA <span>MARKET</span></h2>
+        <small>Espace Client</small>
+    </div>
+
     <div class="user">
 
         <div class="avatar">
             {{ utilisateur.first_name?.charAt(0) || 'U' }}{{ utilisateur.last_name?.charAt(0) || 'S' }}
         </div>
 
-        <div class="badge">
-            ✓ Compte vérifié
-        </div>
-
         <h3>{{ utilisateur.first_name }} {{ utilisateur.last_name }}</h3>
 
         <p>{{ utilisateur.email }}</p>
 
+        <div class="badge">
+            ✓ Compte vérifié
+        </div>
+
     </div>
 
-    <hr>
+    <span class="title">PRINCIPAL</span>
 
     <nav>
 
@@ -45,6 +50,12 @@
         Mes avis
     </a>
 
+</nav>
+
+    <span class="title">ACTIVITÉ</span>
+
+    <nav>
+
     <a (click)="changerSection('notifications')" [class.active]="(section$ | async) === 'notifications'">
         <i class="bi bi-bell"></i>
         Notifications
@@ -55,14 +66,20 @@
         Messages
     </a>
 
+    </nav>
+
+    <span class="title">COMPTE</span>
+
+    <nav>
+
     <a (click)="changerSection('securite')" [class.active]="(section$ | async) === 'securite'">
         <i class="bi bi-lock"></i>
         Sécurité
     </a>
 
-</nav>
+    </nav>
 
-    <button class="logout">
+    <button class="logout" type="button">
 
         <i class="bi bi-box-arrow-right"></i>
 

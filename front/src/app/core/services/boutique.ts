@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 
 export interface Boutique {
   id: number;
@@ -72,6 +72,7 @@ export interface ReponseSuivi {
 export class BoutiqueService {
 
   private apiUrl = '/api/boutiques/';
+  private maBoutiqueRequest$?: Observable<Boutique>;
 
   constructor(
     private http: HttpClient
@@ -115,9 +116,21 @@ export class BoutiqueService {
 
   getMaBoutique(): Observable<Boutique> {
 
-    return this.http.get<Boutique>(
-      `${this.apiUrl}ma/`
-    );
+    if (!this.maBoutiqueRequest$) {
+      this.maBoutiqueRequest$ = this.http.get<Boutique>(
+        `${this.apiUrl}ma/`
+      ).pipe(
+        shareReplay({ bufferSize: 1, refCount: true })
+      );
+    }
+
+    return this.maBoutiqueRequest$;
+
+  }
+
+  private invaliderMaBoutiqueCache(): void {
+
+    this.maBoutiqueRequest$ = undefined;
 
   }
 
@@ -132,6 +145,8 @@ export class BoutiqueService {
     return this.http.post<Boutique>(
       `${this.apiUrl}create/`,
       data
+    ).pipe(
+      tap(() => this.invaliderMaBoutiqueCache())
     );
 
   }
@@ -146,8 +161,10 @@ export class BoutiqueService {
   ): Observable<Boutique> {
 
     return this.http.put<Boutique>(
-      `${this.apiUrl}${id}/`,
+      `${this.apiUrl}ma/`,
       data
+    ).pipe(
+      tap(() => this.invaliderMaBoutiqueCache())
     );
 
   }

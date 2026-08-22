@@ -1,76 +1,209 @@
-import { Component, OnInit } from '@angular/core';
-
-import { ActivatedRoute } from '@angular/router';
-
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize, timeout } from 'rxjs';
 
-import { AdminService } from '../../../../core/services/admin.service';
+import {
+  AdminService,
+  AdminBoutique
+} from '../../../../core/services/admin.service';
 
 @Component({
-
-selector:'app-vendeur-detail',
-
-standalone:true,
-
-imports:[
-CommonModule
-],
-
-templateUrl:'./vendeur-detail.html',
-
-styleUrl:'./vendeur-detail.css'
-
+  selector: 'app-vendeur-detail',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './vendeur-detail.html',
+  styleUrl: './vendeur-detail.css'
 })
+export class VendeurDetail implements OnInit {
 
-export class VendeurDetail implements OnInit{
+  private adminService = inject(AdminService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private changeDetector = inject(ChangeDetectorRef);
 
-boutique:any;
+  boutique: AdminBoutique | null = null;
 
-constructor(
+  chargement = true;
+  erreur = '';
+  confirmationAction: 'approuver' | 'desactiver' | null = null;
+  traitement = false;
 
-private route:ActivatedRoute,
+  ngOnInit(): void {
 
-private admin:AdminService
+    const id = Number(
+      this.route.snapshot.paramMap.get('id')
+    );
 
-){}
+    if (!id) {
 
-ngOnInit(){
+      this.erreur = 'Boutique introuvable.';
+      this.chargement = false;
 
-  this.chargerBoutique();
+      return;
+    }
 
-}
-approuver() {
+    this.chargerBoutique(id);
+  }
 
-  this.admin
-    .validerBoutique(this.boutique.id, true)
-    .subscribe(() => {
 
-      this.chargerBoutique();
+  // =====================================================
+  // CHARGER LA BOUTIQUE
+  // =====================================================
 
-    });
+  chargerBoutique(id: number): void {
 
-}
+    this.chargement = true;
+    this.erreur = '';
 
-refuser() {
+    this.adminService
+      .getBoutique(id)
+      .pipe(
+        timeout(10000),
+        finalize(() => {
+          this.chargement = false;
+          this.changeDetector.markForCheck();
+        })
+      )
+      .subscribe({
 
-  this.admin
-    .validerBoutique(this.boutique.id, false)
-    .subscribe(() => {
+        next: (boutique) => {
 
-      this.chargerBoutique();
+          console.log(
+            'Boutique chargée :',
+            boutique
+          );
 
-    });
+          this.boutique = boutique;
+          this.changeDetector.markForCheck();
 
-}
-chargerBoutique() {
+        },
 
-  const id = this.route.snapshot.params['id'];
+        error: (error) => {
 
-  this.admin.getBoutique(id).subscribe((data: any) => {
+          console.error(
+            'Erreur chargement boutique :',
+            error
+          );
 
-    this.boutique = data;
+          this.erreur =
+            error?.error?.detail ||
+            'Impossible de charger cette boutique.';
+          this.changeDetector.markForCheck();
 
-  });
+        }
 
-}
+      });
+
+  }
+
+
+  // =====================================================
+  // RETOUR
+  // =====================================================
+
+  retour(): void {
+
+    this.router.navigate([
+      '/admin/vendeurs'
+    ]);
+
+  }
+
+
+  // =====================================================
+  // APPROUVER
+  // =====================================================
+
+  approuver(): void {
+
+    if (!this.boutique) {
+      return;
+    }
+
+    this.confirmationAction = 'approuver';
+  }
+
+  desactiver(): void {
+
+    if (!this.boutique) {
+      return;
+    }
+
+    this.confirmationAction = 'desactiver';
+  }
+
+  annulerConfirmation(): void {
+    if (!this.traitement) {
+      this.confirmationAction = null;
+    }
+  }
+
+  confirmerAction(): void {
+
+    if (!this.boutique || !this.confirmationAction) {
+      return;
+    }
+
+    const approuver = this.confirmationAction === 'approuver';
+    this.traitement = true;
+
+    this.adminService
+      .validerBoutique(
+        this.boutique.id,
+        approuver
+      )
+      .subscribe({
+
+        next: () => {
+
+          if (this.boutique) {
+
+            this.boutique.apprové = approuver;
+
+          }
+
+          this.confirmationAction = null;
+          this.traitement = false;
+          this.changeDetector.markForCheck();
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Erreur approbation boutique :',
+            error
+          );
+
+          this.erreur = error?.error?.detail ||
+            `Impossible de ${approuver ? 'approuver' : 'désactiver'} cette boutique.`;
+          this.confirmationAction = null;
+          this.traitement = false;
+          this.changeDetector.markForCheck();
+
+        }
+
+      });
+
+  }
+
+
+  // =====================================================
+  // =====================================================
+  // LIBELLÉ DU STATUT
+  // =====================================================
+
+  getStatutLabel(): string {
+
+    if (!this.boutique) {
+      return '';
+    }
+
+    return this.boutique.apprové
+      ? 'Approuvé'
+      : 'En attente';
+
+  }
+
 }

@@ -7,7 +7,6 @@ import {
   Promotion
 } from '../../core/services/produit';
 
-import { OffresCard } from './components/offres-card/offres-card';
 import { OffresFiltres } from './components/offres-filtres/offres-filtres';
 import { OffresFlash } from './components/offres-flash/offres-flash';
 import { OffresHeader } from './components/offres-header/offres-header';
@@ -19,7 +18,6 @@ import { OffresVides } from './components/offres-vides/offres-vides';
 
   imports: [
     CommonModule,
-    OffresCard,
     OffresFiltres,
     OffresFlash,
     OffresHeader,

@@ -1,94 +1,274 @@
-<h2>
+<div class="vendeurs-page">
 
-Gestion des vendeurs
+  <!-- HEADER -->
 
-</h2>
+  <div class="page-header">
 
-<table class="table table-hover">
+    <div>
 
-<thead>
+      <h1>Vendeurs</h1>
 
-<tr>
+      <p>
+        Gestion des vendeurs et de leurs boutiques
+      </p>
 
-<th>Boutique</th>
+    </div>
 
-<th>Responsable</th>
+  </div>
 
-<th>Ville</th>
 
-<th>Email</th>
+  <!-- RECHERCHE -->
 
-<th>Statut</th>
+  <div class="filters">
 
-<th></th>
+    <input
+      type="text"
+      [(ngModel)]="recherche"
+      (input)="filtrer()"
+      placeholder="Rechercher un vendeur ou une boutique..."
+      class="search-input"
+    />
 
-</tr>
 
-</thead>
+    <select
+      [(ngModel)]="filtreStatut"
+      (change)="filtrer()"
+      aria-label="Filtrer les boutiques par statut"
+      class="status-filter"
+    >
 
-<tbody>
+      <option value="tous">
+        Tous les vendeurs
+      </option>
 
-<tr *ngFor="let b of boutiques">
+      <option value="approuve">
+        Boutiques approuvées
+      </option>
 
-<td>
+      <option value="attente">
+        En attente
+      </option>
 
-{{ b.nom }}
+    </select>
 
-</td>
+  </div>
 
-<td>
 
-{{ b.proprietaire }}
+  <!-- ERREUR -->
 
-</td>
+  <div
+    class="error-message"
+    *ngIf="erreur"
+  >
 
-<td>
+    {{ erreur }}
 
-{{ b.ville }}
+  </div>
 
-</td>
 
-<td>
+  <!-- CHARGEMENT -->
 
-{{ b.email }}
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
 
-</td>
+    Chargement des vendeurs...
 
-<td>
+  </div>
 
-<span *ngIf="b['approuvé']; else attente" class="badge bg-success">
 
-Approuvée
+  <!-- TABLE -->
 
-</span>
+  <div
+    class="table-container"
+    *ngIf="!chargement"
+  >
 
-<ng-template #attente>
+    <table>
 
-<span class="badge bg-warning">
+      <thead>
 
-En attente
+        <tr>
 
-</span>
+          <th>Boutique</th>
 
-</ng-template>
+          <th>Propriétaire</th>
 
-</td>
+          <th>Email</th>
 
-<td>
+          <th>Ville</th>
 
-<button
+          <th>Catégorie</th>
 
-class="btn btn-primary"
+          <th>Note</th>
 
-[routerLink]="['/admin/vendeurs', b.id]">
+          <th>Statut</th>
 
-Voir
+          <th>Actions</th>
 
-</button>
-</td>
+        </tr>
 
-</tr>
+      </thead>
 
-</tbody>
 
-</table>
+      <tbody>
+
+        <tr
+          *ngFor="
+            let boutique of boutiquesFiltrees
+          "
+        >
+
+          <!-- BOUTIQUE -->
+
+          <td>
+
+            <strong>
+              {{ boutique.nom }}
+            </strong>
+
+          </td>
+
+
+          <!-- PROPRIÉTAIRE -->
+
+          <td>
+
+            {{ boutique.proprietaire }}
+
+          </td>
+
+
+          <!-- EMAIL -->
+
+          <td>
+
+            {{ boutique.email }}
+
+          </td>
+
+
+          <!-- VILLE -->
+
+          <td>
+
+            {{ boutique.ville }}
+
+          </td>
+
+
+          <!-- CATÉGORIE -->
+
+          <td>
+
+            {{ boutique.categorie }}
+
+          </td>
+
+
+          <!-- NOTE -->
+
+          <td>
+
+            ⭐ {{ boutique.note }}
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+            <span
+              class="status-badge"
+              [class.status-active]="boutique['apprové']"
+              [class.status-pending]="!boutique['apprové']"
+            >
+              {{ boutique['apprové'] ? 'Approuvé' : 'En attente' }}
+            </span>
+
+          </td>
+
+
+          <!-- ACTIONS -->
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                type="button"
+                class="action-button view"
+                title="Voir"
+                (click)="voirDetail(boutique)"
+              >
+                👁️
+              </button>
+
+              <button
+                *ngIf="!boutique['apprové']"
+                type="button"
+                class="action-button approve"
+                title="Approuver"
+                (click)="approuver(boutique)"
+              >
+                ✓
+              </button>
+
+              <button
+                *ngIf="boutique['apprové']"
+                type="button"
+                class="action-button reject"
+                title="Refuser"
+                (click)="refuser(boutique)"
+              >
+                ✕
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        <!-- AUCUN RÉSULTAT -->
+
+        <tr
+          *ngIf="
+            boutiquesFiltrees.length === 0
+          "
+        >
+
+          <td
+            colspan="8"
+            class="empty"
+          >
+
+            Aucun vendeur trouvé.
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div
+    class="table-footer"
+    *ngIf="!chargement"
+  >
+
+    {{ boutiquesFiltrees.length }}
+    vendeur(s)
+
+  </div>
+
+</div>

@@ -10,64 +10,82 @@
   box-sizing: border-box;
   overflow-y: auto;
   padding: 28px 18px;
-  background: #223d6b;
+  background: #102a43;
   color: #fff;
 }
 
 .logo {
   margin-bottom: 30px;
-  text-align: center;
-  font-size: 32px;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 28px;
   font-weight: 800;
 }
 
-.green {
-  color: #fff;
-}
-
-.orange {
+.logo span {
   color: #ff9d1f;
 }
 
+.logo small {
+  display: block;
+  margin-top: 5px;
+  color: #c8d6e5;
+}
+
 .user {
-  text-align: center;
+  display: grid;
+  grid-template-columns: 55px 1fr;
+  column-gap: 15px;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .08);
+  text-align: left;
 }
 
 .avatar {
   display: flex;
-  width: 85px;
-  height: 85px;
+  width: 55px;
+  height: 55px;
   align-items: center;
   justify-content: center;
-  margin: auto;
   border-radius: 50%;
-  background: #ff7b1d;
-  font-size: 34px;
+  background: #ff9d1f;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .badge {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 6px 15px;
-  border-radius: 20px;
-  background: #29c765;
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 2px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #7CFC98;
   font-size: 12px;
 }
 
 .user h3 {
-  margin: 18px 0 6px;
+  margin: 0;
+  font-size: 16px;
 }
 
 .user p {
+  margin: 5px 0 0;
   color: #cfd8e5;
   font-size: 14px;
 }
 
-hr {
-  width: 100%;
-  margin: 25px 0;
-  border-color: rgba(255, 255, 255, .1);
+.title {
+  margin: 20px 0 10px;
+  color: #8fb8d8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 nav {
@@ -86,7 +104,7 @@ nav a {
   gap: 14px;
   padding: 14px 17px;
   border-radius: 10px;
-  color: #d9d9d9;
+  color: #fff;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.25;
@@ -103,12 +121,12 @@ nav a i {
 }
 
 nav a:hover {
-  background: #31518c;
+  background: #1b3b5a;
 }
 
 nav a.active {
-  background: #31518c;
-  color: #fff;
+  background: #ff9d1f;
+  color: #102a43;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 0, 0, .14);
 }
@@ -118,11 +136,17 @@ nav a.active {
   margin-top: auto;
   padding: 14px 17px;
   border: 0;
-  background: none;
-  color: #ff6b6b;
+  border-radius: 10px;
+  background: #d9534f;
+  color: #fff;
   font-size: 16px;
   text-align: left;
+  font-weight: 600;
   cursor: pointer;
+}
+
+.logout:hover {
+  background: #c9302c;
 }
 
 @media (max-width: 800px) {

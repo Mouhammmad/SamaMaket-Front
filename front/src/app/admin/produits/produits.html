@@ -1,271 +1,724 @@
-<div class="admin-products">
+<div class="admin-produits">
 
-  <!-- En-tête -->
+  <!-- ====================================================== -->
+  <!-- EN-TÊTE -->
+  <!-- ====================================================== -->
+
   <div class="page-header">
 
     <div>
-      <h1>Gestion des produits</h1>
-      <p>Gérez les produits présents sur Sama Market.</p>
+      <h1>Produits</h1>
+
+      <p>
+        Gestion de tous les produits de la plateforme
+      </p>
     </div>
 
-    <button class="btn-primary">
-      + Nouveau produit
+    <button
+      class="btn-refresh"
+      type="button"
+      (click)="chargerProduits()"
+      [disabled]="loading"
+    >
+      ↻
+      Actualiser
     </button>
 
   </div>
 
 
-  <!-- Filtres -->
-  <div class="filters-card">
+  <!-- ====================================================== -->
+  <!-- STATISTIQUES -->
+  <!-- ====================================================== -->
 
-    <div class="search-box">
+  <div class="stats-grid">
 
-      <input
-        type="text"
-        placeholder="Rechercher un produit..."
-      >
+    <div class="stat-card">
+
+      <div class="stat-icon total">
+        📦
+      </div>
+
+      <div>
+        <span>Total produits</span>
+        <strong>{{ totalProduits }}</strong>
+      </div>
 
     </div>
 
-    <select title="Filtrer par catégorie">
-      <option value="">Toutes les catégories</option>
-      <option>Électronique</option>
-      <option>Mode</option>
-      <option>Alimentation</option>
-      <option>Maison</option>
-    </select>
 
-    <select title="Filtrer par statut">
-      <option value="">Tous les statuts</option>
-      <option value="actif">Actifs</option>
-      <option value="inactif">Inactifs</option>
-    </select>
+    <div class="stat-card">
 
-    <select title="Filtrer par stock">
-      <option value="">Tous les stocks</option>
-      <option value="disponible">Disponible</option>
-      <option value="faible">Stock faible</option>
-      <option value="rupture">Rupture</option>
-    </select>
+      <div class="stat-icon actif">
+        ✓
+      </div>
+
+      <div>
+        <span>Produits actifs</span>
+        <strong>{{ totalProduitsActifs }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon inactif">
+        !
+      </div>
+
+      <div>
+        <span>Produits inactifs</span>
+        <strong>{{ totalProduitsInactifs }}</strong>
+      </div>
+
+    </div>
 
   </div>
 
 
-  <!-- Chargement -->
-  @if (chargement) {
+  <!-- ====================================================== -->
+  <!-- FILTRES -->
+  <!-- ====================================================== -->
 
-    <div class="loading">
-      Chargement des produits...
+  <div class="filters-card">
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        🔎
+      </span>
+
+      <input
+        type="text"
+        placeholder="Rechercher un produit ou une boutique..."
+        [(ngModel)]="recherche"
+        (input)="filtrerRecherche()"
+      />
+
     </div>
 
-  }
 
+    <div class="filter-item">
 
-  <!-- Tableau -->
-  @if (!chargement) {
+      <label>
+        Catégorie
+      </label>
 
-    <div class="products-card">
+      <select
+        [(ngModel)]="categorieSelectionnee"
+        (change)="filtrerCategorie()"
+      >
 
-      <div class="table-wrapper">
+        <option value="">
+          Toutes les catégories
+        </option>
 
-        <table>
+        <option
+          *ngFor="let categorie of categories"
+          [value]="categorie.id"
+        >
+          {{ categorie.nom }}
+        </option>
 
-          <thead>
+      </select>
 
-            <tr>
+    </div>
 
-              <th>Produit</th>
 
-              <th>Boutique</th>
+    <div class="filter-item">
 
-              <th>Catégorie</th>
+      <label>
+        Statut
+      </label>
 
-              <th>Prix</th>
+      <select
+        [(ngModel)]="statutSelectionne"
+        (change)="filtrerStatut()"
+      >
 
-              <th>Stock</th>
+        <option value="">
+          Tous les statuts
+        </option>
 
-              <th>Statut</th>
+        <option value="actif">
+          Actifs
+        </option>
 
-              <th>Date</th>
+        <option value="inactif">
+          Inactifs
+        </option>
 
-              <th>Actions</th>
+      </select>
 
-            </tr>
+    </div>
 
-          </thead>
 
+    <button
+      class="btn-reset"
+      type="button"
+      (click)="reinitialiserFiltres()"
+    >
+      Réinitialiser
+    </button>
 
-          <tbody>
+  </div>
 
-            @for (produit of produits; track produit.id) {
 
-              <tr>
+  <!-- ====================================================== -->
+  <!-- TABLE -->
+  <!-- ====================================================== -->
 
-                <!-- Produit -->
-                <td>
+  <div class="table-card">
 
-                  <div class="product-info">
+    <div class="table-header">
 
-                    @if (produit.image_url) {
+      <div>
 
-                      <img
-                        [src]="produit.image_url"
-                        [alt]="produit.nom"
-                      >
+        <h2>
+          Liste des produits
+        </h2>
 
-                    } @else {
-
-                      <div class="no-image">
-                        📦
-                      </div>
-
-                    }
-
-                    <div>
-
-                      <strong>
-                        {{ produit.nom }}
-                      </strong>
-
-                      <small>
-                        ID : {{ produit.id }}
-                      </small>
-
-                    </div>
-
-                  </div>
-
-                </td>
-
-
-                <!-- Boutique -->
-                <td>
-                  {{ produit.boutique }}
-                </td>
-
-
-                <!-- Catégorie -->
-                <td>
-                  {{ produit.categorie }}
-                </td>
-
-
-                <!-- Prix -->
-                <td>
-
-                  <strong>
-                    {{ produit.prix | number:'1.0-0' }}
-                  </strong>
-
-                  FCFA
-
-                </td>
-
-
-                <!-- Stock -->
-                <td>
-
-                  <span
-                    class="stock"
-                    [class.stock-low]="produit.quantite_stock > 0 && produit.quantite_stock < 5"
-                    [class.stock-empty]="produit.quantite_stock === 0"
-                  >
-
-                    {{ produit.quantite_stock }}
-
-                  </span>
-
-                </td>
-
-
-                <!-- Statut -->
-                <td>
-
-                  @if (produit.est_actif) {
-
-                    <span class="status active">
-                      Actif
-                    </span>
-
-                  } @else {
-
-                    <span class="status inactive">
-                      Inactif
-                    </span>
-
-                  }
-
-                </td>
-
-
-                <!-- Date -->
-                <td>
-
-                  {{ produit.date_creation | date:'dd/MM/yyyy' }}
-
-                </td>
-
-
-                <!-- Actions -->
-                <td>
-
-                  <div class="actions">
-
-                    <button
-                      class="action view"
-                      title="Voir le produit"
-                    >
-                      👁
-                    </button>
-
-                    <button
-                      class="action edit"
-                      title="Modifier le produit"
-                    >
-                      ✏️
-                    </button>
-
-                    <button
-                      class="action delete"
-                      title="Supprimer le produit"
-                    >
-                      🗑
-                    </button>
-
-                  </div>
-
-                </td>
-
-              </tr>
-
-            }
-
-
-            @if (produits.length === 0) {
-
-              <tr>
-
-                <td
-                  colspan="8"
-                  class="empty"
-                >
-
-                  Aucun produit trouvé.
-
-                </td>
-
-              </tr>
-
-            }
-
-          </tbody>
-
-        </table>
+        <span>
+          {{ produitsFiltres.length }} produit(s)
+        </span>
 
       </div>
 
     </div>
 
-  }
+
+    <!-- ==================================================== -->
+    <!-- CHARGEMENT -->
+    <!-- ==================================================== -->
+
+    <div
+      class="loading-state"
+      *ngIf="loading"
+    >
+
+      <div class="spinner"></div>
+
+      <p>
+        Chargement des produits...
+      </p>
+
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- TABLE -->
+    <!-- ==================================================== -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="!loading && produitsFiltres.length > 0"
+    >
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Produit
+            </th>
+
+            <th>
+              Boutique
+            </th>
+
+            <th>
+              Prix
+            </th>
+
+            <th>
+              Stock
+            </th>
+
+            <th>
+              Statut
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let produit of produitsFiltres"
+          >
+
+            <!-- ========================================== -->
+            <!-- PRODUIT -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="product-cell">
+
+                <div class="product-image">
+
+                  <img
+                    *ngIf="produit.image_url || produit.image"
+                    [src]="produit.image_url || produit.image"
+                    [alt]="produit.nom"
+                  />
+
+                  <span
+                    *ngIf="!produit.image_url && !produit.image"
+                  >
+                    📦
+                  </span>
+
+                </div>
+
+
+                <div class="product-info">
+
+                  <strong>
+                    {{ produit.nom }}
+                  </strong>
+
+                  <small>
+                    #{{ produit.id }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- BOUTIQUE -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="boutique-cell">
+
+                <span class="boutique-icon">
+                  🏪
+                </span>
+
+                <span>
+                  {{ produit.boutique || '—' }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- PRIX -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="price-cell">
+
+                <strong>
+                  {{ produit.prix | number:'1.0-2' }}
+                </strong>
+
+                <span>
+                  FCFA
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- STOCK -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div
+                class="stock-cell"
+                [ngClass]="getStockClass(produit)"
+              >
+
+                <strong>
+                  {{ produit.quantite_stock }}
+                </strong>
+
+                <span>
+                  {{ getStockLabel(produit) }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- STATUT -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="produit.est_actif"
+                [class.inactive]="!produit.est_actif"
+              >
+
+                <span class="status-dot"></span>
+
+                {{
+                  produit.est_actif
+                    ? 'Actif'
+                    : 'Inactif'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- ACTIONS -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <div class="actions">
+
+                <!-- Voir -->
+
+                <button
+                  type="button"
+                  class="action-btn view"
+                  title="Voir le produit"
+                  (click)="voirProduit(produit)"
+                >
+                  👁
+                </button>
+
+
+                <!-- Activer / désactiver -->
+
+                <button
+                  type="button"
+                  class="action-btn status"
+                  [class.activate]="!produit.est_actif"
+                  [class.deactivate]="produit.est_actif"
+                  [title]="
+                    produit.est_actif
+                      ? 'Désactiver'
+                      : 'Activer'
+                  "
+                  (click)="changerStatutProduit(produit)"
+                >
+
+                  {{
+                    produit.est_actif
+                      ? '⏸'
+                      : '▶'
+                  }}
+
+                </button>
+
+
+                <!-- Supprimer -->
+
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Supprimer"
+                  (click)="supprimerProduit(produit)"
+                >
+                  🗑
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- AUCUN PRODUIT -->
+    <!-- ==================================================== -->
+
+    <div
+      class="empty-state"
+      *ngIf="!loading && produitsFiltres.length === 0"
+    >
+
+      <div class="empty-icon">
+        📦
+      </div>
+
+      <h3>
+        Aucun produit trouvé
+      </h3>
+
+      <p>
+        Aucun produit ne correspond aux critères sélectionnés.
+      </p>
+
+      <button
+        type="button"
+        class="btn-reset-empty"
+        (click)="reinitialiserFiltres()"
+      >
+        Réinitialiser les filtres
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================== -->
+<!-- MODAL DÉTAIL PRODUIT -->
+<!-- ======================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="afficherDetail && produitSelectionne"
+  (click)="fermerDetail()"
+>
+
+  <div
+    class="product-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- HEADER MODAL -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <span class="modal-label">
+          DÉTAIL DU PRODUIT
+        </span>
+
+        <h2>
+          {{ produitSelectionne.nom }}
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="fermerDetail()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- CONTENU -->
+
+    <div class="modal-body">
+
+      <div class="modal-product">
+
+        <div class="modal-image">
+
+          <img
+            *ngIf="
+              produitSelectionne.image_url ||
+              produitSelectionne.image
+            "
+            [src]="
+              produitSelectionne.image_url ||
+              produitSelectionne.image
+            "
+            [alt]="produitSelectionne.nom"
+          />
+
+          <span
+            *ngIf="
+              !produitSelectionne.image_url &&
+              !produitSelectionne.image
+            "
+          >
+            📦
+          </span>
+
+        </div>
+
+
+        <div class="modal-main-info">
+
+          <h3>
+            {{ produitSelectionne.nom }}
+          </h3>
+
+          <p>
+            {{ produitSelectionne.description || 'Aucune description.' }}
+          </p>
+
+
+          <span
+            class="status-badge"
+            [class.active]="produitSelectionne.est_actif"
+            [class.inactive]="!produitSelectionne.est_actif"
+          >
+
+            <span class="status-dot"></span>
+
+            {{
+              produitSelectionne.est_actif
+                ? 'Produit actif'
+                : 'Produit inactif'
+            }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATIONS -->
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+
+          <span>
+            Boutique
+          </span>
+
+          <strong>
+            {{ produitSelectionne.boutique || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Catégorie
+          </span>
+
+          <strong>
+            {{ produitSelectionne.categorie || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Prix
+          </span>
+
+          <strong>
+            {{ produitSelectionne.prix | number:'1.0-2' }}
+            FCFA
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Stock
+          </span>
+
+          <strong>
+            {{ produitSelectionne.quantite_stock }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            État
+          </span>
+
+          <strong>
+            {{ produitSelectionne.etat || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Date de création
+          </span>
+
+          <strong>
+            {{
+              produitSelectionne.date_creation
+                | date:'dd/MM/yyyy HH:mm'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER MODAL -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn-modal-secondary"
+        (click)="fermerDetail()"
+      >
+        Fermer
+      </button>
+
+
+      <button
+        type="button"
+        class="btn-modal-status"
+        (click)="changerStatutProduit(produitSelectionne)"
+      >
+
+        {{
+          produitSelectionne.est_actif
+            ? 'Désactiver le produit'
+            : 'Activer le produit'
+        }}
+
+      </button>
+
+    </div>
+
+  </div>
 
 </div>

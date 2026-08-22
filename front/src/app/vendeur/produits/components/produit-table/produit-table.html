@@ -24,10 +24,20 @@
 
                 <td>
 
-                    <img
-                        class="photo"
-                        [src]="produit.image_url || 'assets/images/default-product.png'"
-                        alt="Produit">
+                    <div class="product-gallery" *ngIf="produit.images?.length; else imagePrincipale">
+                        <img
+                            class="photo"
+                            *ngFor="let image of produit.images"
+                            [src]="image.image_url || 'assets/images/default-product.png'"
+                            [alt]="produit.nom">
+                    </div>
+
+                    <ng-template #imagePrincipale>
+                        <img
+                            class="photo"
+                            [src]="produit.image_url || 'assets/images/default-product.png'"
+                            alt="Produit">
+                    </ng-template>
 
                 </td>
 
@@ -71,16 +81,12 @@
 
                 <td>
 
-    <label class="switch">
-
-        <input
-            type="checkbox"
-            [checked]="produit.est_actif"
-            (change)="changerStatut(produit)">
-
-        <span class="slider"></span>
-
-    </label>
+                    <span
+                        class="status-badge"
+                        [class.status-active]="produit.est_actif"
+                        [class.status-inactive]="!produit.est_actif">
+                        {{ produit.est_actif ? 'Actif' : 'Désactivé' }}
+                    </span>
 
 </td>
 
@@ -121,6 +127,20 @@
                 <i class="bi bi-copy"></i>
 
                 Dupliquer
+
+            </button>
+
+            <button
+                type="button"
+                class="status-action"
+                [class.activate]="!produit.est_actif"
+                [class.deactivate]="produit.est_actif"
+                [title]="produit.est_actif ? 'Désactiver' : 'Réactiver'"
+                (click)="changerStatut(produit)">
+
+                {{ produit.est_actif ? '⛔' : '✓' }}
+
+                {{ produit.est_actif ? 'Désactiver' : 'Réactiver' }}
 
             </button>
 

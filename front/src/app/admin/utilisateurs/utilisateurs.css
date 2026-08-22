@@ -1,0 +1,378 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
+.utilisateurs-page {
+  width: 100%;
+  padding: 28px 30px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+  margin-bottom: 22px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #8b95a7;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RECHERCHE
+========================================================= */
+
+.search-container {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  height: 42px;
+  border: 1px solid #dce2ea;
+  border-radius: 7px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+}
+
+.search-button {
+  height: 42px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 7px;
+  background: #263f70;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background: #1d335c;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-container {
+  width: 100%;
+  background: white;
+  border: 1px solid #e2e7ee;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+
+/* =========================================================
+   HEADER TABLE
+========================================================= */
+
+thead {
+  background: #f5f7fa;
+}
+
+thead th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #596579;
+  border-bottom: 1px solid #e2e7ee;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   LIGNES
+========================================================= */
+
+tbody tr {
+  border-bottom: 1px solid #edf0f4;
+  transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+  background: #fafbfd;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody td {
+  padding: 15px 16px;
+  font-size: 14px;
+  color: #394457;
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   UTILISATEUR
+========================================================= */
+
+.user-name {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: #e9eef8;
+  color: #263f70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.user-name strong {
+  display: block;
+  color: #172033;
+  font-size: 14px;
+}
+
+.user-name span {
+  display: block;
+  margin-top: 3px;
+  color: #9aa3b2;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ROLE
+========================================================= */
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* CLIENT */
+
+.role-client {
+  background: #e9f1ff;
+  color: #3478d4;
+}
+
+
+/* VENDEUR */
+
+.role-vendeur {
+  background: #fff1df;
+  color: #ee8a24;
+}
+
+
+/* ADMIN */
+
+.role-admin {
+  background: #f0e2ff;
+  color: #8a38d6;
+}
+
+
+/* =========================================================
+   STATUT
+========================================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #e4f9ed;
+  color: #26a269;
+}
+
+.status-suspended {
+  background: #ffe8e8;
+  color: #df4b4b;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.action-button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: 0.15s ease;
+}
+
+
+/* VOIR */
+
+.action-button.view {
+  background: #eaf2ff;
+  color: #3978d4;
+}
+
+.action-button.view:hover {
+  background: #dceaff;
+}
+
+
+/* SUSPENDRE */
+
+.action-button.suspend {
+  background: #fff1e8;
+  color: #ed7c28;
+}
+
+.action-button.suspend:hover {
+  background: #ffe5d2;
+}
+
+
+/* REACTIVER */
+
+.action-button.activate {
+  background: #e6f8ee;
+  color: #24935e;
+}
+
+.action-button.activate:hover {
+  background: #d6f2e2;
+}
+
+
+/* SUPPRIMER */
+
+.action-button.delete {
+  background: #ffeaea;
+  color: #dd4d4d;
+}
+
+.action-button.delete:hover {
+  background: #ffdcdc;
+}
+
+
+/* =========================================================
+   CHARGEMENT
+========================================================= */
+
+.loading {
+  padding: 50px;
+  text-align: center;
+  color: #7d8798;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   ERREUR
+========================================================= */
+
+.error-message {
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border-radius: 7px;
+  background: #ffe9e9;
+  color: #c93636;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   AUCUN RESULTAT
+========================================================= */
+
+.empty {
+  text-align: center;
+  padding: 45px 20px !important;
+  color: #8b95a7;
+}
+
+
+/* =========================================================
+   FOOTER TABLE
+========================================================= */
+
+.table-footer {
+  margin-top: 12px;
+  color: #8a94a5;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .utilisateurs-page {
+    padding: 20px;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+}

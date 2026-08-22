@@ -198,21 +198,11 @@ export const routes: Routes = [
   },
 
   {
-    path: 'admin',
-    component: AdminLayout,
-    canActivate: [adminGuard],
-    children: [
-      {
-      path: '',
-      redirectTo: 'produits',
-      pathMatch: 'full'
-    },
+  path: 'admin',
+  component: AdminLayout,
+  canActivate: [adminGuard],
 
-    {
-      path: 'produits',
-      component: AdminProduits
-    },
-
+  children: [
 
     {
       path: '',
@@ -227,7 +217,8 @@ export const routes: Routes = [
 
     {
       path: 'utilisateurs',
-      component: Utilisateurs
+      component: Utilisateurs,
+      pathMatch: 'full'
     },
 
     {
@@ -237,15 +228,19 @@ export const routes: Routes = [
 
     {
       path: 'vendeurs',
-      component: Vendeurs
+      component: AdminVendeurs
     },
 
     {
       path: 'vendeurs/:id',
       component: VendeurDetail
+    },
+
+    {
+      path: 'produits',
+      component: AdminProduits
     }
 
   ]
 }
-
 ];

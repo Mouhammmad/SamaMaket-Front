@@ -1,85 +1,303 @@
-<h2>
+<div class="utilisateurs-page">
 
-Utilisateurs
+  <!-- ============================= -->
+  <!-- EN-TÊTE -->
+  <!-- ============================= -->
 
-</h2>
+  <div class="page-header">
 
-<input
+    <div>
+      <h1>Utilisateurs</h1>
 
-class="form-control"
+      <p>
+        Gestion des utilisateurs de la plateforme
+      </p>
+    </div>
 
-[(ngModel)]="recherche"
+  </div>
 
-(input)="charger()"
 
-placeholder="Rechercher...">
+  <!-- ============================= -->
+  <!-- RECHERCHE -->
+  <!-- ============================= -->
 
-<table class="table mt-4">
+  <div class="search-container">
 
-<thead>
+    <input
+      type="text"
+      [(ngModel)]="recherche"
+      (keyup.enter)="rechercher()"
+      placeholder="Rechercher..."
+      class="search-input"
+    />
 
-<tr>
+    <button
+      class="search-button"
+      type="button"
+      (click)="rechercher()"
+    >
+      Rechercher
+    </button>
 
-<th>Nom</th>
+  </div>
 
-<th>Email</th>
 
-<th>Rôle</th>
+  <!-- ============================= -->
+  <!-- ERREUR -->
+  <!-- ============================= -->
 
-<th>Date</th>
+  <div
+    class="error-message"
+    *ngIf="erreur"
+  >
+    {{ erreur }}
+  </div>
 
-<th></th>
 
-</tr>
+  <!-- ============================= -->
+  <!-- CHARGEMENT -->
+  <!-- ============================= -->
 
-</thead>
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+    Chargement des utilisateurs...
+  </div>
 
-<tbody>
 
-<tr
+  <!-- ============================= -->
+  <!-- TABLEAU -->
+  <!-- ============================= -->
 
-*ngFor="let u of utilisateurs">
+  <div
+    class="table-container"
+    *ngIf="!chargement"
+  >
 
-<td>
+    <table>
 
-{{u.username}}
+      <thead>
 
-</td>
+        <tr>
 
-<td>
+          <th>Nom</th>
 
-{{u.email}}
+          <th>Email</th>
 
-</td>
+          <th>Rôle</th>
 
-<td>
+          <th>Date</th>
 
-{{u.role}}
+          <th>Statut</th>
 
-</td>
+          <th>Actions</th>
 
-<td>
+        </tr>
 
-{{u.date_joined | date}}
+      </thead>
 
-</td>
 
-<td>
+      <tbody>
 
-<button
+        <!-- ============================= -->
+        <!-- UTILISATEURS -->
+        <!-- ============================= -->
 
-class="btn btn-primary"
+        <tr
+          *ngFor="let utilisateur of utilisateurs"
+        >
 
-[routerLink]="['/admin/utilisateurs',u.id]">
+          <!-- NOM -->
 
-Voir
+          <td>
 
+            <div class="user-name">
+
+              <div class="avatar">
+
+                {{ utilisateur.nom.charAt(0).toUpperCase() }}
+
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ utilisateur.nom }}
+                </strong>
+
+                <span>
+                  @{{ utilisateur.username }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- EMAIL -->
+
+          <td>
+
+            {{ utilisateur.email }}
+
+          </td>
+
+
+          <!-- ROLE -->
+
+          <td>
+
+            <span
+              class="role-badge"
+              [class.role-admin]="utilisateur.role === 'ADMIN'"
+              [class.role-vendeur]="utilisateur.role === 'VENDOR'"
+              [class.role-client]="utilisateur.role === 'CUSTOMER'"
+            >
+
+              {{
+                utilisateur.role === 'ADMIN'
+                  ? 'Admin'
+                  : utilisateur.role === 'VENDOR'
+                    ? 'Vendeur'
+                    : 'Client'
+              }}
+
+            </span>
+
+          </td>
+
+
+          <!-- DATE -->
+
+          <td>
+
+            {{ utilisateur.date_joined | date:'dd/MM/yyyy' }}
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+            <span
+              class="status-badge"
+              [class.status-active]="utilisateur.is_active"
+              [class.status-suspended]="!utilisateur.is_active"
+            >
+
+              {{ utilisateur.statut }}
+
+            </span>
+
+          </td>
+
+
+          <!-- ACTIONS -->
+
+          <td>
+
+            <div class="actions">
+
+              <!-- VOIR -->
+
+            <button
+  type="button"
+  class="btn-action"
+  title="Voir le profil"
+  (click)="voirDetail(utilisateur)"
+>
+  👁️
 </button>
 
-</td>
+              <!-- SUSPENDRE -->
 
-</tr>
+              <button
+                *ngIf="utilisateur.is_active"
+                type="button"
+                class="action-button suspend"
+                title="Suspendre"
+                (click)="suspendre(utilisateur)"
+              >
+                ⛔
+              </button>
 
-</tbody>
 
-</table>
+              <!-- REACTIVER -->
+
+              <button
+                *ngIf="!utilisateur.is_active"
+                type="button"
+                class="action-button activate"
+                title="Réactiver"
+                (click)="reactiver(utilisateur)"
+              >
+                ✓
+              </button>
+
+
+              <!-- SUPPRIMER -->
+
+              <button
+                type="button"
+                class="action-button delete"
+                title="Supprimer"
+                (click)="supprimer(utilisateur)"
+              >
+                ✕
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        <!-- ============================= -->
+        <!-- AUCUN UTILISATEUR -->
+        <!-- ============================= -->
+
+        <tr
+          *ngIf="utilisateurs.length === 0"
+        >
+
+          <td
+            colspan="6"
+            class="empty"
+          >
+
+            Aucun utilisateur trouvé.
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- TOTAL -->
+  <!-- ============================= -->
+
+  <div
+    class="table-footer"
+    *ngIf="!chargement && utilisateurs.length > 0"
+  >
+
+    <span>
+
+      {{ total }} utilisateur(s)
+
+    </span>
+
+  </div>
+
+</div>

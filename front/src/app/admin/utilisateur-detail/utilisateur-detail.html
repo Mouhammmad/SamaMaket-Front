@@ -1,98 +1,330 @@
-<div *ngIf="utilisateur" class="card">
+<div class="detail-page">
 
-<h2>
+  <!-- ============================= -->
+  <!-- RETOUR -->
+  <!-- ============================= -->
 
-Profil utilisateur
+  <button
+    type="button"
+    class="back-button"
+    (click)="retour()"
+  >
+    ← Retour aux utilisateurs
+  </button>
 
-</h2>
 
-<hr>
+  <!-- ============================= -->
+  <!-- CHARGEMENT -->
+  <!-- ============================= -->
 
-<p>
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+    Chargement de l'utilisateur...
+  </div>
 
-<strong>Nom :</strong>
 
-{{utilisateur.username}}
+  <!-- ============================= -->
+  <!-- ERREUR -->
+  <!-- ============================= -->
 
-</p>
+  <div
+    class="error-message"
+    *ngIf="!chargement && erreur"
+  >
+    {{ erreur }}
+  </div>
 
-<p>
 
-<strong>Email :</strong>
+  <!-- ============================= -->
+  <!-- CONTENU -->
+  <!-- ============================= -->
 
-{{utilisateur.email}}
+  <div
+    class="content"
+    *ngIf="!chargement && utilisateur"
+  >
 
-</p>
+    <!-- HEADER -->
 
-<p>
+    <div class="detail-header">
 
-<strong>Rôle :</strong>
+      <div>
 
-{{utilisateur.role}}
+        <h1>
+          Profil utilisateur
+        </h1>
 
-</p>
-<p>
+        <p>
+          Informations et gestion du compte
+        </p>
 
-<strong>Statut :</strong>
+      </div>
 
-<span *ngIf="utilisateur.is_active; else suspended" class="text-success">
+    </div>
 
-Actif
 
-</span>
+    <!-- ============================= -->
+    <!-- PROFIL -->
+    <!-- ============================= -->
 
-<ng-template #suspended>
+    <div class="profile-card">
 
-<span class="text-danger">
+      <div class="profile-main">
 
-Suspendu
+        <div class="avatar">
 
-</span>
+          {{ getInitiales() }}
 
-</ng-template>
+        </div>
 
-</p>
 
-<p>
+        <div class="profile-info">
 
-<strong>Date :</strong>
+          <h2>
+            {{ utilisateur.nom }}
+          </h2>
 
-{{utilisateur.date_joined | date}}
+          <p class="username">
+            @{{ utilisateur.username }}
+          </p>
 
-</p>
+          <div class="badges">
 
-<div class="actions">
+            <span
+              class="role-badge"
+              [class.admin]="utilisateur.role === 'ADMIN'"
+              [class.vendor]="utilisateur.role === 'VENDOR'"
+              [class.customer]="utilisateur.role === 'CUSTOMER'"
+            >
+              {{ getRoleLabel(utilisateur.role) }}
+            </span>
 
-<button
-class="btn btn-warning"
-(click)="suspendre()">
 
-Suspendre
+            <span
+              class="status-badge"
+              [class.active]="utilisateur.is_active"
+              [class.suspended]="!utilisateur.is_active"
+            >
+              {{ utilisateur.statut }}
+            </span>
 
-</button>
+          </div>
 
-<button
-class="btn btn-success"
-(click)="reactiver()">
+        </div>
 
-Réactiver
+      </div>
 
-</button>
+    </div>
 
-<button
-class="btn btn-danger"
-(click)="supprimer()">
 
-Supprimer
+    <!-- ============================= -->
+    <!-- INFORMATIONS -->
+    <!-- ============================= -->
 
-</button>
+    <div class="info-card">
 
-<button class="btn btn-danger">
+      <div class="card-title">
 
-Supprimer
+        <h2>
+          Informations personnelles
+        </h2>
 
-</button>
+      </div>
 
-</div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span class="label">
+            Nom complet
+          </span>
+
+          <strong>
+            {{ utilisateur.nom }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Nom d'utilisateur
+          </span>
+
+          <strong>
+            @{{ utilisateur.username }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Adresse email
+          </span>
+
+          <strong>
+            {{ utilisateur.email || 'Non renseigné' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Téléphone
+          </span>
+
+          <strong>
+            {{ utilisateur.phone || 'Non renseigné' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Rôle
+          </span>
+
+          <strong>
+            {{ getRoleLabel(utilisateur.role) }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Date d'inscription
+          </span>
+
+          <strong>
+            {{ utilisateur.date_joined | date:'dd/MM/yyyy à HH:mm' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- GESTION DU COMPTE -->
+    <!-- ============================= -->
+
+    <div class="actions-card">
+
+      <div class="card-title">
+
+        <h2>
+          Gestion du compte
+        </h2>
+
+        <p>
+          Actions administratives
+        </p>
+
+      </div>
+
+
+      <div class="actions-container">
+
+        <!-- SUSPENDRE -->
+
+        <button
+          *ngIf="utilisateur.is_active"
+          type="button"
+          class="action suspend"
+          (click)="suspendre()"
+        >
+
+          <span class="icon">
+            ⛔
+          </span>
+
+          <span>
+
+            <strong>
+              Suspendre le compte
+            </strong>
+
+            <small>
+              Empêcher temporairement l'utilisateur de se connecter
+            </small>
+
+          </span>
+
+        </button>
+
+
+        <!-- REACTIVER -->
+
+        <button
+          *ngIf="!utilisateur.is_active"
+          type="button"
+          class="action activate"
+          (click)="reactiver()"
+        >
+
+          <span class="icon">
+            ✓
+          </span>
+
+          <span>
+
+            <strong>
+              Réactiver le compte
+            </strong>
+
+            <small>
+              Autoriser à nouveau l'utilisateur à se connecter
+            </small>
+
+          </span>
+
+        </button>
+
+
+        <!-- SUPPRIMER -->
+
+        <button
+          type="button"
+          class="action delete"
+          (click)="supprimer()"
+        >
+
+          <span class="icon">
+            ✕
+          </span>
+
+          <span>
+
+            <strong>
+              Supprimer le compte
+            </strong>
+
+            <small>
+              Supprimer définitivement cet utilisateur
+            </small>
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

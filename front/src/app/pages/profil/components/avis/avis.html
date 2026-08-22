@@ -4,6 +4,26 @@
     <p>Retrouvez vos avis publiés sur les produits.</p>
   </div>
 
+  <div class="filters-bar" *ngIf="!(chargement$ | async)">
+    <input
+      type="search"
+      [(ngModel)]="recherche"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher un produit ou un commentaire..."
+      aria-label="Rechercher dans mes avis">
+    <select
+      [(ngModel)]="noteSelectionnee"
+      (change)="appliquerFiltres()"
+      aria-label="Filtrer mes avis par note">
+      <option value="toutes">Toutes les notes</option>
+      <option value="5">5 étoiles</option>
+      <option value="4">4 étoiles</option>
+      <option value="3">3 étoiles</option>
+      <option value="2">2 étoiles</option>
+      <option value="1">1 étoile</option>
+    </select>
+  </div>
+
   <div *ngIf="chargement$ | async" class="empty-state">
     Chargement de vos avis...
   </div>
@@ -12,8 +32,8 @@
     {{ message$ | async }}
   </div>
 
-  <div *ngIf="!(chargement$ | async) && (avis$ | async)?.length">
-    <div *ngFor="let item of (avis$ | async)" class="review-card">
+  <div *ngIf="!(chargement$ | async) && (avisFiltres$ | async)?.length">
+    <div *ngFor="let item of (avisFiltres$ | async)" class="review-card">
       <div class="review-image" *ngIf="item.produit?.image_url">
         <img [src]="item.produit?.image_url" [alt]="item.produit?.nom" />
       </div>
