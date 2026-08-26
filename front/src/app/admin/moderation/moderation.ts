@@ -64,7 +64,7 @@ export class Moderation implements OnInit {
   private http = inject(HttpClient);
   private changeDetectorRef = inject(ChangeDetectorRef);
 
-  private readonly apiUrl = 'http://127.0.0.1:8000/api';
+  private readonly apiUrl = '/api';
 
   ongletActif: OngletModeration = 'avis';
 

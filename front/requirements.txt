@@ -1,0 +1,36 @@
+# Ce projet est un frontend Angular : ses dependances sont gerees par npm.
+#
+# Installation reproductible :
+#   npm ci
+#
+# Le fichier de reference contenant toutes les dependances et leurs versions
+# exactes est package-lock.json. Ne pas lancer "pip install -r requirements.txt"
+# pour deployer ce frontend.
+#
+# Versions requises :
+#   Node.js >= 20.19.0
+#   npm 11.18.0
+#
+# Dependances applicatives (package.json) :
+#   @angular/common ^22.0.0
+#   @angular/compiler ^22.0.0
+#   @angular/core ^22.0.0
+#   @angular/forms ^22.0.0
+#   @angular/platform-browser ^22.0.0
+#   @angular/router ^22.0.0
+#   bootstrap ^5.3.8
+#   bootstrap-icons ^1.13.1
+#   chart.js ^4.5.1
+#   jspdf ^4.2.1
+#   rxjs ~7.8.0
+#   tslib ^2.3.0
+#   xlsx ^0.18.5
+#
+# Dependances de developpement et de build :
+#   @angular/build ^22.0.5
+#   @angular/cli ^22.0.5
+#   @angular/compiler-cli ^22.0.0
+#   jsdom ^28.0.0
+#   prettier ^3.8.1
+#   typescript ~6.0.2
+#   vitest ^4.0.8

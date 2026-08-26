@@ -9,8 +9,7 @@ import { Commande } from '../models/commande';
 })
 export class AdminCommandesService {
 
-  private apiUrl =
-    'http://127.0.0.1:8000/api/commandes/admin/commandes/';
+  private apiUrl = '/api/commandes/admin/commandes/';
 
   constructor(
     private http: HttpClient

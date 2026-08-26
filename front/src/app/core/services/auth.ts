@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   login(data: any): Observable<any> {
-    return this.http.post('http://127.0.0.1:8000/api/token/', data);
+    return this.http.post('/api/token/', data);
   }
 
   logout() {

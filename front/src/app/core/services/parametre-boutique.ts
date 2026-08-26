@@ -31,7 +31,7 @@ export interface ParametresBoutique {
 })
 export class ParametreBoutiqueService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/boutiques/ma/parametres/';
+  private apiUrl = '/api/boutiques/ma/parametres/';
 
   constructor(
     private http: HttpClient

@@ -23,7 +23,7 @@ export interface StatistiquesAdmin {
 })
 export class AdminStatistiquesService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/dashboard/admin/stats/';
+  private apiUrl = '/api/dashboard/admin/stats/';
 
   constructor(
     private http: HttpClient

@@ -14,7 +14,7 @@ export interface ParametresPlateforme {
 
 @Injectable({ providedIn: 'root' })
 export class AdminParametresService {
-  private readonly apiUrl = 'http://127.0.0.1:8000/api/dashboard/admin/parametres/';
+  private readonly apiUrl = '/api/dashboard/admin/parametres/';
 
   constructor(private http: HttpClient) {}
 

@@ -43,7 +43,7 @@ export class HeaderAdmin {
     this.envoiEnCours = true;
     this.message = '';
     this.erreur = '';
-    this.http.post('http://127.0.0.1:8000/api/dashboard/admin/admins/', {
+    this.http.post('/api/dashboard/admin/admins/', {
       username: this.username,
       email: this.email,
       password: this.password
