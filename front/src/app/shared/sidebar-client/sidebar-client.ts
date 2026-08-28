@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClientSectionService } from '../../core/services/client-section';
 import { UtilisateurService } from '../../core/services/utilisateur';
+import { AuthService } from '../../core/services/auth';
 import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-sidebar-client',
@@ -21,7 +23,9 @@ export class SidebarClient implements OnInit {
 
   constructor(
     private sectionService: ClientSectionService,
-    private utilisateurService: UtilisateurService
+    private utilisateurService: UtilisateurService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +37,11 @@ export class SidebarClient implements OnInit {
     console.log('Sidebar changerSection called with:', section);
     this.sectionService.changeSection(section);
     console.log('Section changed to:', section);
+  }
+
+  deconnecter(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   private chargerUtilisateur(): void {
