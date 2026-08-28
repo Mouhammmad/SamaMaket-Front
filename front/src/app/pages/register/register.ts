@@ -39,10 +39,21 @@ export class Register {
       return;
     }
 
+    if (this.password.length < 8) {
+      this.erreur = 'Le mot de passe doit contenir au moins 8 caractères.';
+      return;
+    }
+
     this.chargement = true;
 
+    const identifiantBase = (this.email.split('@')[0] || this.prenom + this.nom)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9]/g, '')
+      .toLowerCase();
+
     const utilisateur = {
-      username: (this.prenom + this.nom).replace(/\s/g, '').toLowerCase(),
+      username: `${identifiantBase || 'user'}${Date.now().toString().slice(-6)}`,
       first_name: this.prenom,
       last_name: this.nom,
       email: this.email,
@@ -65,7 +76,16 @@ export class Register {
 
         console.error(err);
 
-        this.erreur = 'Impossible de créer le compte.';
+        const details = err?.error;
+        if (details?.username?.length) {
+          this.erreur = `Nom d'utilisateur : ${details.username[0]}`;
+        } else if (details?.password?.length) {
+          this.erreur = `Mot de passe : ${details.password[0]}`;
+        } else if (details?.email?.length) {
+          this.erreur = `Email : ${details.email[0]}`;
+        } else {
+          this.erreur = details?.detail || 'Impossible de créer le compte.';
+        }
 
         this.chargement = false;
 
