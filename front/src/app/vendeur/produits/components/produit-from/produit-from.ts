@@ -49,6 +49,8 @@ export class ProduitFrom implements OnChanges {
   selectedFiles: File[] = [];
   imagePreviews: string[] = [];
   mainImageIndex = 0;
+  messageErreur = '';
+  enregistrementEnCours = false;
 
   constructor(
     private fb: FormBuilder,
@@ -86,7 +88,7 @@ export class ProduitFrom implements OnChanges {
 
         nom: this.produit.nom,
 
-        categorie: this.produit.categorie_id ? this.produit.categorie_id : this.findCategoryIdByName(this.produit.categorie),
+        categorie: this.produit.categorie || this.findCategoryNameById(this.produit.categorie_id),
 
         prix: this.produit.prix,
 
@@ -106,6 +108,10 @@ export class ProduitFrom implements OnChanges {
       if (!nom) return '';
     const found = this.categories.find(c => c.nom === nom);
       return found ? (found as any).id : '';
+  }
+
+  private findCategoryNameById(id: number): string {
+    return this.categories.find((categorie) => categorie.id === id)?.nom || '';
   }
 
   loadCategories(): void {
@@ -201,10 +207,18 @@ export class ProduitFrom implements OnChanges {
   }
 
   enregistrer(): void {
+    this.messageErreur = '';
     if (this.produitForm.invalid) {
       this.produitForm.markAllAsTouched();
+      this.messageErreur = 'Veuillez remplir tous les champs obligatoires.';
       return;
     }
+
+    if (this.enregistrementEnCours) {
+      return;
+    }
+
+    this.enregistrementEnCours = true;
 
     this.resoudreCategorie(this.produitForm.value.categorie).subscribe({
       next: (categorieId) => {
@@ -230,10 +244,18 @@ export class ProduitFrom implements OnChanges {
 
         requete.subscribe({
           next: () => this.finaliserEnregistrement(),
-          error: (error) => console.error(error)
+          error: (error) => {
+            this.enregistrementEnCours = false;
+            this.messageErreur = this.extraireMessageErreur(error, 'Impossible d’enregistrer le produit.');
+            console.error(error);
+          }
         });
       },
-      error: (error) => console.error('Erreur création catégorie :', error)
+      error: (error) => {
+        this.enregistrementEnCours = false;
+        this.messageErreur = this.extraireMessageErreur(error, 'Impossible de créer la catégorie.');
+        console.error('Erreur création catégorie :', error);
+      }
     });
   }
 
@@ -261,11 +283,28 @@ export class ProduitFrom implements OnChanges {
     });
 
     this.selectedFiles = [];
+    this.enregistrementEnCours = false;
 
     this.produitAjoute.emit();
 
     this.fermer.emit();
 
+  }
+
+  private extraireMessageErreur(error: any, messageParDefaut: string): string {
+    const details = error?.error;
+    if (typeof details === 'string') {
+      return details;
+    }
+    if (details?.detail) {
+      return details.detail;
+    }
+    if (details && typeof details === 'object') {
+      return Object.entries(details)
+        .map(([champ, erreur]) => `${champ}: ${Array.isArray(erreur) ? erreur.join(', ') : erreur}`)
+        .join(' | ');
+    }
+    return messageParDefaut;
   }
 
 }

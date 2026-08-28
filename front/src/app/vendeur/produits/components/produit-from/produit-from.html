@@ -129,12 +129,14 @@ placeholder="Description du produit">
 </div>
 
   <div class="actions">
+    <small class="error" *ngIf="messageErreur" role="alert">{{ messageErreur }}</small>
     <button type="button" class="cancel" (click)="fermer.emit()">Annuler</button>
     <button
 type="submit"
 class="save">
+    [disabled]="enregistrementEnCours">
 
-Enregistrer
+{{ enregistrementEnCours ? 'Enregistrement...' : 'Enregistrer' }}
 
 </button>
   </div>
