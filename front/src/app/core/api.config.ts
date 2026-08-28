@@ -8,7 +8,7 @@ const configuredApiUrl =
 export const API_BASE_URL =
   configuredApiUrl
     ? `${configuredApiUrl.replace(/\/$/, '')}/api`
-    : 'https://samamarket.onrender.com/api';
+    : 'https://samamarket-api.onrender.com/api';
 
 export function toApiUrl(url: string): string {
   if (url.startsWith('/api') && API_BASE_URL !== '/api') {
