@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {
   FormBuilder,
@@ -204,52 +206,66 @@ export class ProduitFrom implements OnChanges {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('nom', this.produitForm.value.nom);
-    formData.append('categorie_id', this.produitForm.value.categorie);
-    formData.append('prix', this.produitForm.value.prix);
-    formData.append('quantite_stock', this.produitForm.value.stock);
-    formData.append('description', this.produitForm.value.description);
-    formData.append('est_actif', this.produitForm.value.est_actif);
+    this.resoudreCategorie(this.produitForm.value.categorie).subscribe({
+      next: (categorieId) => {
+        const formData = new FormData();
+        formData.append('nom', this.produitForm.value.nom);
+        formData.append('categorie_id', String(categorieId));
+        formData.append('prix', this.produitForm.value.prix);
+        formData.append('quantite_stock', this.produitForm.value.stock);
+        formData.append('description', this.produitForm.value.description);
+        formData.append('est_actif', this.produitForm.value.est_actif);
 
-    this.selectedFiles.forEach((file) => {
-      formData.append('images', file);
-    });
-
-    if (this.selectedFiles.length > 0) {
-      formData.append('image', this.selectedFiles[this.mainImageIndex]);
-    }
-
-    const requete = this.produit
-      ? this.produitService.modifierProduit(this.produit.id, formData)
-      : this.produitService.ajouterProduit(formData);
-
-    requete.subscribe({
-
-      next: () => {
-
-        this.produitForm.reset({
-
-          est_actif: true
-
+        this.selectedFiles.forEach((file) => {
+          formData.append('images', file);
         });
 
-        this.selectedFiles = [];
+        if (this.selectedFiles.length > 0) {
+          formData.append('image', this.selectedFiles[this.mainImageIndex]);
+        }
 
-        this.produitAjoute.emit();
+        const requete = this.produit
+          ? this.produitService.modifierProduit(this.produit.id, formData)
+          : this.produitService.ajouterProduit(formData);
 
-        this.fermer.emit();
-
+        requete.subscribe({
+          next: () => this.finaliserEnregistrement(),
+          error: (error) => console.error(error)
+        });
       },
+      error: (error) => console.error('Erreur création catégorie :', error)
+    });
+  }
 
-      error: (error) => {
+  private resoudreCategorie(nom: string): Observable<number> {
+    const nomCategorie = String(nom || '').trim();
+    const categorieExistante = this.categories.find(
+      (categorie) => categorie.nom.toLowerCase() === nomCategorie.toLowerCase()
+    );
 
-        console.error(error);
+    if (categorieExistante) {
+      return of(categorieExistante.id);
+    }
 
-      }
+    return this.categorieService.creerCategorie(nomCategorie).pipe(
+      map((categorie) => categorie.id)
+    );
+  }
+
+  private finaliserEnregistrement(): void {
+
+    this.produitForm.reset({
+
+      est_actif: true
 
     });
 
+    this.selectedFiles = [];
+
+    this.produitAjoute.emit();
+
+    this.fermer.emit();
+
   }
-  
+
 }

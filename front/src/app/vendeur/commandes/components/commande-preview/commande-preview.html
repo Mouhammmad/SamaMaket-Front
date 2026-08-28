@@ -58,7 +58,7 @@ class="product"
 <img
 [src]="ligne.produit.image_url || ligne.produit.image || 'assets/images/default-product.png'"
     [alt]="ligne.produit.nom"
-    [title]="ligne.produit.nom">
+    title="{{ ligne.produit.nom }}">
 
 <div>
 

@@ -22,12 +22,15 @@
 
     <div class="field">
       <label>Catégorie</label>
-      <select formControlName="categorie" aria-label="Catégorie du produit">
-        <option value="">Choisir...</option>
-        <ng-container *ngFor="let categorie of categories">
-          <option [value]="categorie.id">{{ categorie.nom }}</option>
-        </ng-container>
-      </select>
+      <input
+        type="text"
+        formControlName="categorie"
+        list="categories-disponibles"
+        aria-label="Catégorie du produit"
+        placeholder="Saisir ou créer une catégorie">
+      <datalist id="categories-disponibles">
+        <option *ngFor="let categorie of categories" [value]="categorie.nom"></option>
+      </datalist>
       <small class="error" *ngIf="produitForm.get('categorie')?.invalid && produitForm.get('categorie')?.touched">
         La catégorie est obligatoire.
       </small>
@@ -75,6 +78,7 @@ placeholder="Description du produit">
     <input
     type="file"
     multiple
+    aria-label="Images du produit"
     (change)="onFilesSelected($event)">
   </div>
  <div
@@ -87,7 +91,8 @@ placeholder="Description du produit">
 
         <img
             [src]="image"
-            [alt]="'Aperçu image ' + (i + 1)">
+          [alt]="'Aperçu image ' + (i + 1)"
+          title="Aperçu de l'image du produit">
 
         <span
             class="main-badge"

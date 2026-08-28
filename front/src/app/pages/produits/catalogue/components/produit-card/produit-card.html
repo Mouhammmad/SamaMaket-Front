@@ -17,7 +17,9 @@
         </span>
 
 <button
-(click)="toggleFavori(produit)">
+(click)="toggleFavori(produit)"
+title="Ajouter aux favoris"
+aria-label="Ajouter aux favoris">
 
 <i
 class="fa-solid"
@@ -42,9 +44,11 @@ produit.est_favori
 
         <img
 
-[src]="produit.image_url"
+    [src]="produit.image_url"
 
-[alt]="produit.nom">
+    [alt]="produit.nom"
+
+    title="{{ produit.nom }}">
     </div>
 
     <div class="body">
