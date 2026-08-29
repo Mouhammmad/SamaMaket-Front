@@ -33,7 +33,11 @@ export class AdminLogin {
       password: this.password
     }).subscribe({
       next: (response: any) => {
-        if (response.user.role !== 'ADMIN') {
+        const user = response?.user ?? {};
+        const role = String(user.role ?? '').toUpperCase();
+        const isAdmin = role === 'ADMIN' || !!user.is_staff || !!user.is_superuser;
+
+        if (!isAdmin) {
           this.erreur = 'Accès réservé aux administrateurs.';
           this.chargement = false;
           return;
@@ -41,7 +45,7 @@ export class AdminLogin {
 
         localStorage.setItem('access', response.access);
         localStorage.setItem('refresh', response.refresh);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('user', JSON.stringify(user));
 
         this.router.navigate(['/admin']);
       },

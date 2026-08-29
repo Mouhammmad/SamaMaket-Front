@@ -79,7 +79,13 @@ export class AuthService {
 
   getUserRole(): string | null {
     const user = this.getUser();
-    return user ? user.role : null;
+    const role = user ? (user.role ?? user.user_role ?? user.roles?.[0]) : null;
+
+    if (typeof role !== 'string') {
+      return null;
+    }
+
+    return role.toUpperCase();
   }
 
   isVendor(): boolean {
@@ -87,7 +93,9 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.getUserRole() === 'ADMIN';
+    const user = this.getUser();
+    const role = this.getUserRole();
+    return role === 'ADMIN' || !!user?.is_staff || !!user?.is_superuser;
   }
 
   isCustomer(): boolean {
