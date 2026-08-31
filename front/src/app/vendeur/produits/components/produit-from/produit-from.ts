@@ -72,7 +72,9 @@ export class ProduitFrom implements OnChanges {
 
       description: ['', Validators.required],
 
-      est_actif: [true]
+      est_actif: [true],
+
+      imageUrl: ['']
 
     });
 
@@ -96,7 +98,9 @@ export class ProduitFrom implements OnChanges {
 
         description: this.produit.description,
 
-        est_actif: this.produit.est_actif
+        est_actif: this.produit.est_actif,
+
+        imageUrl: this.produit.image_url || ''
 
       });
 
@@ -236,6 +240,11 @@ export class ProduitFrom implements OnChanges {
 
         if (this.selectedFiles.length > 0) {
           formData.append('image', this.selectedFiles[this.mainImageIndex]);
+        }
+
+        const imageUrl = (this.produitForm.get('imageUrl')?.value || '').trim();
+        if (imageUrl) {
+          formData.append('image_url', imageUrl);
         }
 
         const requete = this.produit

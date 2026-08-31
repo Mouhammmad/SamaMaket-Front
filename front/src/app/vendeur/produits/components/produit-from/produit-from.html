@@ -81,6 +81,16 @@ placeholder="Description du produit">
     aria-label="Images du produit"
     (change)="onFilesSelected($event)">
   </div>
+
+  <div class="field">
+    <label>URL de l’image externe (optionnel)</label>
+    <input
+      type="url"
+      formControlName="imageUrl"
+      aria-label="URL de l’image externe"
+      placeholder="https://example.com/image.jpg">
+  </div>
+
  <div
     class="preview-container"
     *ngIf="imagePreviews.length">
