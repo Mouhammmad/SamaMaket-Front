@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { defer, Observable } from 'rxjs';
+import { toApiUrl } from '../../../core/api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,8 @@ export class AdminProduitsService {
   private requeteAdmin<T>(url: string): Observable<T> {
     return defer(async () => {
       const token = localStorage.getItem('access');
-      const response = await fetch(url, {
+      const apiUrl = toApiUrl(url);
+      const response = await fetch(apiUrl, {
         headers: token
           ? { Authorization: `Bearer ${token}` }
           : undefined

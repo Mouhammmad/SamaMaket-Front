@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { defer, Observable } from 'rxjs';
+import { toApiUrl } from '../api.config';
 
 
 export interface AdminProduit {
@@ -156,12 +157,13 @@ export class AdminService {
     return defer(async () => {
       const token = localStorage.getItem('access');
       const headers = new Headers(options.headers);
+      const apiUrl = toApiUrl(url);
 
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
 
-      const response = await fetch(url, {
+      const response = await fetch(apiUrl, {
         ...options,
         headers
       });
