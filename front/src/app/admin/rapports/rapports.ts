@@ -172,7 +172,22 @@ export class Rapport implements OnInit {
       positionY += 9;
     }
 
-    pdf.save(`rapport-${this.periode}.pdf`);
+    // Télécharger en utilisant Blob pour éviter les violations de Permissions Policy
+    try {
+      const blob = pdf.output('blob');
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `rapport-${this.periode}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erreur lors de l\'export PDF:', error);
+      // Fallback vers save()
+      pdf.save(`rapport-${this.periode}.pdf`);
+    }
 
   }
 
@@ -199,7 +214,24 @@ export class Rapport implements OnInit {
     feuille['!cols'] = [{ wch: 34 }, { wch: 16 }];
     const classeur = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(classeur, feuille, 'Rapport');
-    XLSX.writeFile(classeur, `rapport-${this.periode}.xlsx`);
+    
+    // Télécharger en utilisant Blob pour éviter les violations de Permissions Policy
+    try {
+      const blob = XLSX.write(classeur, { bookType: 'xlsx', type: 'array' });
+      const excelBlob = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = URL.createObjectURL(excelBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `rapport-${this.periode}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erreur lors de l\'export Excel:', error);
+      // Fallback vers writeFile()
+      XLSX.writeFile(classeur, `rapport-${this.periode}.xlsx`);
+    }
 
   }
 

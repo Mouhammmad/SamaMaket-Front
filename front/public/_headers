@@ -1,0 +1,7 @@
+/* Security Headers for Render Static Site */
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: unload=*, accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), sync-xhr=(), usb=(), vr=(), xr-spatial-tracking=(), clipboard-read=(), clipboard-write=(), gamepad=(), layout-animations=(), legacy-image-formats=(), picture-in-picture=(), speaker-selection=(), sync-script=(), unsized-media=(), unsync-script=(), vertical-scroll=()
