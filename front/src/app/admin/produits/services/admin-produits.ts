@@ -34,6 +34,10 @@ export class AdminProduitsService {
     return this.http.delete(`${this.api}${id}/`);
   }
 
+  nettoyerProduits(): Observable<any> {
+    return this.http.post(`${this.api}nettoyer/`, {});
+  }
+
   private requeteAdmin<T>(url: string): Observable<T> {
     return defer(async () => {
       const token = localStorage.getItem('access');

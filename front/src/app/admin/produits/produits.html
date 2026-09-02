@@ -24,6 +24,15 @@
       Actualiser
     </button>
 
+    <button
+      class="btn-refresh"
+      type="button"
+      (click)="nettoyerProduits()"
+      [disabled]="nettoyageEnCours"
+    >
+      Nettoyer sauf 61-64
+    </button>
+
   </div>
 
 

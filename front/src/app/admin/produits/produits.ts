@@ -43,6 +43,8 @@ export class Produits implements OnInit {
 
   afficherDetail = false;
 
+  nettoyageEnCours = false;
+
 
   /* ========================================================
      CONSTRUCTEUR
@@ -617,6 +619,28 @@ export class Produits implements OnInit {
 
       });
 
+  }
+
+  nettoyerProduits(): void {
+    const confirme = confirm(
+      'Supprimer tous les produits sauf les IDs 61, 62, 63 et 64 ? Les lignes de commande associées seront également supprimées.'
+    );
+    if (!confirme || this.nettoyageEnCours) {
+      return;
+    }
+
+    this.nettoyageEnCours = true;
+    this.adminProduits.nettoyerProduits().pipe(
+      finalize(() => this.nettoyageEnCours = false)
+    ).subscribe({
+      next: (resultat) => {
+        alert(`${resultat.produits_supprimes} produit(s) supprimé(s).`);
+        this.chargerProduits();
+      },
+      error: (error) => {
+        alert(error?.error?.detail || 'Impossible de nettoyer les produits.');
+      }
+    });
   }
 
 }
