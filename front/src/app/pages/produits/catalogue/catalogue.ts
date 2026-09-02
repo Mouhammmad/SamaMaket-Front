@@ -45,7 +45,13 @@ export class Catalogue implements OnInit {
 
   messagePanier = '';
 
-  filtres = {
+  filtres: {
+    categorie: number | null;
+    prixMin: number;
+    prixMax: number;
+    note: number | null;
+    vendeurVerifie: boolean;
+  } = {
 
     categorie: null,
 

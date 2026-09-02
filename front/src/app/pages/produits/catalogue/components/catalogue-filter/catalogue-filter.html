@@ -47,20 +47,22 @@
             type="range"
             min="0"
             max="150000"
+            aria-label="Prix maximum"
             [(ngModel)]="filtres.prixMax">
 
         <div class="prix">
 
             <input
                 type="number"
+                aria-label="Prix minimum"
                 [(ngModel)]="filtres.prixMin">
 
             <input
                 type="number"
+                aria-label="Prix maximum"
                 [(ngModel)]="filtres.prixMax">
 
         </div>
-
     </div>
 
     <div class="section">
