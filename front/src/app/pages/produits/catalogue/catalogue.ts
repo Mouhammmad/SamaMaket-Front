@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategorieService } from '../../../core/services/categorie';
 import { ProduitService } from '../../../core/services/produit';
 import { PanierService } from '../../../core/services/panier';
@@ -64,6 +64,7 @@ export class Catalogue implements OnInit {
     private produitService: ProduitService,
 
     private router: Router,
+    private route: ActivatedRoute,
     private categorieService: CategorieService,
     private panierService: PanierService,
     private favoriService: FavoriService,
@@ -73,8 +74,21 @@ export class Catalogue implements OnInit {
 
   ngOnInit(): void {
 
-    this.chargerProduits();
-     this.chargerCategories();
+    this.chargerCategories();
+    this.route.queryParams.subscribe((params) => {
+      const categorie = Number(params['categorie']);
+      const recherche = String(params['recherche'] || '').trim();
+      this.filtres.categorie = Number.isInteger(categorie) && categorie > 0
+        ? categorie
+        : null;
+      this.page = 1;
+      this.construireFiltresActifs();
+      if (recherche) {
+        this.rechercher(recherche);
+      } else {
+        this.chargerProduits();
+      }
+    });
 
   }
   chargerCategories(): void {
@@ -147,6 +161,8 @@ export class Catalogue implements OnInit {
   }
   rechercher(texte: string){
 
+    this.page = 1;
+
     if(!texte){
 
         this.chargerProduits();
@@ -155,17 +171,17 @@ export class Catalogue implements OnInit {
 
     }
 
-    this.produitService.rechercher(texte)
+    this.produitService.getProduits({ page: 1, recherche: texte })
 
     .subscribe({
 
         next:(response)=>{
 
-            this.produits=response.results;
+            this.produits=response.results || [];
 
-            this.totalProduits=response.count;
+            this.totalProduits=response.count || 0;
 
-            this.pages=response.total_pages;
+            this.pages=response.total_pages || 1;
             this.changeDetectorRef.markForCheck();
 
         }

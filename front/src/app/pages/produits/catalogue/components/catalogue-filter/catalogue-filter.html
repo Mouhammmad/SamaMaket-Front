@@ -21,7 +21,7 @@
         <button
             class="categorie"
             [class.active]="!filtres.categorie"
-            (click)="filtres.categorie=null">
+            (click)="filtres.categorie=null; appliquer()">
 
             Tous les produits
 
@@ -31,7 +31,7 @@
             class="categorie"
             *ngFor="let categorie of categories"
             [class.active]="filtres.categorie===categorie.id"
-            (click)="filtres.categorie=categorie.id">
+            (click)="filtres.categorie=categorie.id; appliquer()">
 
             {{ categorie.nom }}
 
