@@ -45,4 +45,9 @@ export class SidebarVendeur implements OnInit {
       window.location.href = commande;
     });
   }
+
+  deconnecter(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
