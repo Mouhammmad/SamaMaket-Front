@@ -71,6 +71,11 @@ font-weight:600;
 .promo{
 
 background:#ef4444;
+top:0;
+left:0;
+border-radius:0 0 10px 0;
+padding:8px 14px;
+box-shadow:0 2px 6px rgba(185,28,28,.25);
 
 }
 
@@ -106,6 +111,14 @@ box-shadow:0 2px 8px rgba(0,0,0,.1);
 
 }
 
+.favorite i{
+color:#64748b;
+}
+
+.favorite.active i{
+color:#dc2626;
+}
+
 .body{
 
 padding:18px;
@@ -120,6 +133,25 @@ color:#f59e0b;
 
 margin-bottom:8px;
 
+}
+
+.stars {
+display:inline-flex;
+gap:2px;
+margin-right:6px;
+}
+
+.stars span {
+color:#f59e0b;
+}
+
+.stars .empty-star {
+color:#d7dee8;
+}
+
+.rating strong {
+color:#334e68;
+margin-right:4px;
 }
 
 .rating span{

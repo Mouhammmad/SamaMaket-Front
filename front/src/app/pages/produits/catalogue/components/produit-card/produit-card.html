@@ -2,12 +2,9 @@
 
     <div class="image-container">
 
-        <div
-*ngIf="produit.promotion_active">
-
--{{ produit.promotion_active.valeur }}%
-
-</div>
+        <div class="badge promo" *ngIf="produit.promotion_active">
+            En promo -{{ produit.promotion_active.valeur }}%
+        </div>
         <span
             class="badge new"
             *ngIf="produit.est_nouveau">
@@ -17,9 +14,11 @@
         </span>
 
 <button
+class="favorite"
 (click)="toggleFavori(produit)"
-title="Ajouter aux favoris"
-aria-label="Ajouter aux favoris">
+[class.active]="produit.est_favori"
+title="Favori"
+[attr.aria-label]="produit.est_favori ? 'Retirer des favoris' : 'Ajouter aux favoris'">
 
 <i
 class="fa-solid"
@@ -54,14 +53,13 @@ produit.est_favori
     <div class="body">
 
         <div class="rating">
-
-            ⭐ {{ produit.note || 0 }}
-
-            <span>
-
-                ({{ produit.nombre_avis || 0 }})
-
+            <span class="stars" aria-label="Note du produit">
+                <span *ngFor="let pleine of getEtoiles()" [class.empty-star]="!pleine">
+                    ★
+                </span>
             </span>
+            <strong>{{ getNote() | number:'1.1-1' }}</strong>
+            <span>({{ getNombreAvis() }} avis)</span>
 
         </div>
 

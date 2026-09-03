@@ -45,6 +45,20 @@ export class ProduitCard {
     return !!this.produit?.ancien_prix;
 
   }
+
+  getNote(): number {
+    return Number(this.produit?.note_moyenne ?? this.produit?.note ?? 0);
+  }
+
+  getEtoiles(): boolean[] {
+    const note = Math.round(this.getNote());
+    return Array.from({ length: 5 }, (_, index) => index < note);
+  }
+
+  getNombreAvis(): number {
+    return Number(this.produit?.nombre_avis ?? 0);
+  }
+
 toggleFavori(produit:any){
 
     this.favoriService.toggle(
