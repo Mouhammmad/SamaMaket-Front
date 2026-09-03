@@ -22,7 +22,7 @@
   display: block;
   width: 180px;
   height: 105px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-radius: 8px;
 }
