@@ -12,7 +12,7 @@ justify-content:center;
 
 align-items:center;
 
-z-index:9999;
+z-index:9000;
 
 }
 
@@ -143,6 +143,23 @@ padding:12px 20px;
 border-radius:10px;
 
 cursor:pointer;
+
+}
+
+.delete{
+
+background:#b42318;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+.delete:hover{
+
+background:#8f1d14;
 
 }
 

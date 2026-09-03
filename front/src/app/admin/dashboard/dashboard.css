@@ -1,0 +1,55 @@
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+.vendeurs{
+
+    margin-top:40px;
+
+}
+
+.vendeurs h2{
+
+    margin-bottom:20px;
+
+}
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+    margin-top:40px;
+
+}
+
+.utilisateurs{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.vendeurs{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}

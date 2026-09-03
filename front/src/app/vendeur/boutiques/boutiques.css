@@ -10,6 +10,136 @@ margin-top:24px;
 
 }
 
+.boutique-edition {
+
+background:#ffffff;
+
+border:1px solid #e5e7eb;
+
+border-radius:12px;
+
+padding:20px;
+
+margin-top:24px;
+
+}
+
+.edition-heading {
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:20px;
+
+}
+
+.edition-kicker {
+
+color:#64748b;
+
+font-size:12px;
+
+font-weight:700;
+
+text-transform:uppercase;
+
+}
+
+.edition-heading h2 {
+
+margin:4px 0;
+
+font-size:20px;
+
+}
+
+.edition-heading p {
+
+margin:0;
+
+color:#64748b;
+
+}
+
+.logo-preview {
+
+width:72px;
+
+height:72px;
+
+border-radius:10px;
+
+object-fit:cover;
+
+border:1px solid #e2e8f0;
+
+}
+
+.edition-form {
+
+display:grid;
+
+grid-template-columns:repeat(2, minmax(0, 1fr));
+
+gap:16px;
+
+align-items:end;
+
+margin-top:20px;
+
+}
+
+.edition-form label {
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+font-weight:600;
+
+}
+
+.edition-form input {
+
+width:100%;
+
+padding:9px;
+
+border:1px solid #cbd5e1;
+
+border-radius:8px;
+
+background:#f8fafc;
+
+}
+
+.edition-form button {
+
+grid-column:1 / -1;
+
+justify-self:start;
+
+padding:10px 16px;
+
+border:0;
+
+border-radius:8px;
+
+background:#0f766e;
+
+color:#ffffff;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
 .sidebar{
 
 display:flex;
@@ -35,6 +165,25 @@ gap:20px;
 .contenu{
 
 grid-template-columns:1fr;
+
+}
+
+.edition-heading,
+.edition-form {
+
+grid-template-columns:1fr;
+
+}
+
+.edition-heading {
+
+align-items:flex-start;
+
+}
+
+.edition-form button {
+
+grid-column:auto;
 
 }
 

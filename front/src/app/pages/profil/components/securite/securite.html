@@ -49,11 +49,14 @@
 
     </div>
 
+    <div *ngIf="message" class="form-message">{{ message }}</div>
+
     <button
         class="btn btn-primary"
-        (click)="modifierMotDePasse()">
+        (click)="modifierMotDePasse()"
+        [disabled]="enCours">
 
-        Modifier le mot de passe
+        {{ enCours ? 'En cours...' : 'Modifier le mot de passe' }}
 
     </button>
 

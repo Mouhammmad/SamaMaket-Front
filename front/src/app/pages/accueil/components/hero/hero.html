@@ -24,12 +24,11 @@
         [(ngModel)]="query"
         (keyup.enter)="rechercher()">
 
-      <select aria-label="Sélectionner une catégorie">
+      <select aria-label="Sélectionner une catégorie" [(ngModel)]="categorie">
         <option value="">Toutes les catégories</option>
-        <option value="mode">Mode</option>
-        <option value="electronique">Électronique</option>
-        <option value="maison">Maison</option>
-        <option value="alimentation">Alimentation</option>
+        <option *ngFor="let item of categories" [ngValue]="item.id">
+          {{ item.nom }}
+        </option>
       </select>
 
       <button type="button" (click)="rechercher()">

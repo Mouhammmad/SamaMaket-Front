@@ -1,0 +1,180 @@
+<div class="vendeurs-page">
+
+  <!-- =====================================================
+       EN-TÊTE
+       ===================================================== -->
+
+  <app-vendeur-header></app-vendeur-header>
+
+
+  <!-- =====================================================
+       RECHERCHE
+       ===================================================== -->
+
+  <section class="recherche-section">
+
+    <app-vendeur-search
+      (rechercheChange)="rechercher($event)">
+    </app-vendeur-search>
+
+  </section>
+
+
+  <!-- =====================================================
+       FILTRES
+       ===================================================== -->
+
+  <section class="filtres-section">
+
+    <app-vendeurs-filtres
+      (filtresChange)="filtrerVille($event.ville)">
+    </app-vendeurs-filtres>
+
+  </section>
+
+
+  <!-- =====================================================
+       CONTENU
+       ===================================================== -->
+
+  <main class="vendeurs-content">
+
+
+    <!-- ===================================================
+         TITRE / NOMBRE
+         =================================================== -->
+
+    <div
+      class="resultats-header"
+      *ngIf="!chargement">
+
+      <div>
+
+        <h2>
+          Nos vendeurs
+        </h2>
+
+        <p>
+          Découvrez les boutiques présentes sur Sama Market.
+        </p>
+
+      </div>
+
+      <span class="nombre-vendeurs">
+
+        {{ nombreVendeurs }}
+
+        {{ nombreVendeurs > 1 ? 'vendeurs' : 'vendeur' }}
+
+      </span>
+
+    </div>
+
+
+    <!-- ===================================================
+         CHARGEMENT
+         =================================================== -->
+
+    <div
+      class="loading"
+      *ngIf="chargement">
+
+      <div class="spinner"></div>
+
+      <p>
+        Chargement des vendeurs...
+      </p>
+
+    </div>
+
+
+    <!-- ===================================================
+         ERREUR
+         =================================================== -->
+
+    <div
+      class="erreur"
+      *ngIf="!chargement && erreur">
+
+      <div class="erreur-icon">
+        ⚠
+      </div>
+
+      <h3>
+        Impossible de charger les vendeurs
+      </h3>
+
+      <p>
+        {{ messageErreur }}
+      </p>
+
+      <button
+        type="button"
+        (click)="chargerVendeurs()">
+
+        Réessayer
+
+      </button>
+
+    </div>
+
+
+    <!-- ===================================================
+         AUCUN VENDEUR
+         =================================================== -->
+
+    <div
+      class="aucun-resultat"
+      *ngIf="
+        !chargement &&
+        !erreur &&
+        boutiquesFiltrees.length === 0
+      ">
+
+      <div class="aucun-icon">
+        🏪
+      </div>
+
+      <h3>
+        Aucun vendeur trouvé
+      </h3>
+
+      <p>
+        Aucun vendeur ne correspond à votre recherche ou à vos filtres.
+      </p>
+
+      <button
+        type="button"
+        (click)="reinitialiserFiltres()">
+
+        Réinitialiser les filtres
+
+      </button>
+
+    </div>
+
+
+    <!-- ===================================================
+         GRILLE DES VENDEURS
+         =================================================== -->
+
+    <section
+      class="vendeurs-grid"
+      *ngIf="
+        !chargement &&
+        !erreur &&
+        boutiquesFiltrees.length > 0
+      ">
+
+      <app-vendeur-card
+        *ngFor="let boutique of boutiquesFiltrees"
+        [vendeur]="boutique"
+        (voirBoutique)="ouvrirBoutique($event)">
+      </app-vendeur-card>
+
+    </section>
+
+
+  </main>
+
+</div>

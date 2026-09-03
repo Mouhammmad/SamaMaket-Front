@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../../../../core/services/auth';
@@ -21,8 +21,10 @@ export class StatsCards implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {}
+  
 
   ngOnInit(): void {
     this.displayName = this.authService.getDisplayName();
@@ -37,9 +39,11 @@ export class StatsCards implements OnInit {
         this.ventes = this.formatCurrency(data?.revenue ?? 0);
         this.note = `${Number(data?.rating ?? 0).toFixed(1)} ★`;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }

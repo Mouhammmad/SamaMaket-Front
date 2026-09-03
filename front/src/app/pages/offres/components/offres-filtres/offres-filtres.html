@@ -1,0 +1,74 @@
+<div class="filtres">
+
+  <!-- Recherche -->
+  <div class="filtre recherche">
+
+    <label>
+      Rechercher
+    </label>
+
+    <input
+      type="text"
+      placeholder="Rechercher une offre..."
+      (input)="rechercher($event)"
+    >
+
+  </div>
+
+
+  <!-- Type de remise -->
+  <div class="filtre">
+
+    <label>
+      Type de remise
+    </label>
+
+    <select
+      (change)="changerTypeRemise($event)"
+    >
+
+      <option value="">
+        Toutes
+      </option>
+
+      <option value="pourcentage">
+        Pourcentage
+      </option>
+
+      <option value="montant_fixe">
+        Montant fixe
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- Boutique -->
+  <div class="filtre">
+
+    <label>
+      Boutique
+    </label>
+
+    <input
+      type="text"
+      placeholder="Nom de la boutique..."
+      (input)="rechercherBoutique($event)"
+    >
+
+  </div>
+
+
+  <!-- Réinitialiser -->
+  <button
+    type="button"
+    class="btn-reset"
+    (click)="reinitialiser()"
+  >
+
+    Réinitialiser
+
+  </button>
+
+</div>

@@ -1,0 +1,169 @@
+.filtres-container {
+  width: 100%;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================= */
+/* TITRE */
+/* ============================= */
+
+.filtres-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+
+  color: #102a43;
+
+  font-size: 16px;
+}
+
+
+/* ============================= */
+/* FORMULAIRE */
+/* ============================= */
+
+.filtres-form {
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+.filtre-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  flex: 1;
+
+  min-width: 180px;
+}
+
+.filtre-group label {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #334e68;
+}
+
+.filtre-group input,
+.filtre-group select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+
+  border: 1px solid #d9e2ec;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #102a43;
+
+  font-size: 14px;
+
+  transition: border-color 0.2s ease;
+}
+
+.filtre-group input:focus,
+.filtre-group select:focus {
+  border-color: #102a43;
+}
+
+
+/* ============================= */
+/* BOUTONS */
+/* ============================= */
+
+.filtre-actions {
+  display: flex;
+
+  gap: 8px;
+}
+
+.filtre-actions button {
+  padding: 11px 15px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.btn-appliquer {
+  border: none;
+
+  background: #102a43;
+
+  color: #ffffff;
+}
+
+.btn-appliquer:hover {
+  background: #163f63;
+}
+
+.btn-reset {
+  border: 1px solid #d9e2ec;
+
+  background: #ffffff;
+
+  color: #475569;
+}
+
+.btn-reset:hover {
+  background: #f8fafc;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  .filtres-form {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .filtre-group {
+    width: 100%;
+  }
+
+  .filtre-actions {
+    width: 100%;
+  }
+
+  .filtre-actions button {
+    flex: 1;
+  }
+
+}

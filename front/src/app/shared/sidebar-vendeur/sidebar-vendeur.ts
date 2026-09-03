@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../../core/services/auth';
+import { BoutiqueService } from '../../core/services/boutique';
 
 @Component({
   selector: 'app-sidebar-vendeur',
@@ -19,7 +19,7 @@ export class SidebarVendeur implements OnInit {
   constructor(
     public router: Router,
     private authService: AuthService,
-    private http: HttpClient
+    private boutiqueService: BoutiqueService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class SidebarVendeur implements OnInit {
   }
 
   chargerBoutique(): void {
-    this.http.get('/api/boutiques/ma/').subscribe({
+    this.boutiqueService.getMaBoutique().subscribe({
       next: (response: any) => {
         this.boutiqueNom = response?.nom || 'Ma boutique';
         this.boutiqueStatut = response?.nom ? 'Boutique active' : 'Aucune boutique';
@@ -44,5 +44,10 @@ export class SidebarVendeur implements OnInit {
     this.router.navigateByUrl(commande).catch(() => {
       window.location.href = commande;
     });
+  }
+
+  deconnecter(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

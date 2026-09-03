@@ -14,4 +14,8 @@ export class ClientSectionService {
     this.currentSection.next(section);
   }
 
+  getCurrentSection(): string {
+    return this.currentSection.value;
+  }
+
 }

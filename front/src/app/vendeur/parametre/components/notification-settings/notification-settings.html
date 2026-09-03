@@ -1,0 +1,220 @@
+<div class="settings-card">
+
+  <!-- HEADER -->
+
+  <div class="card-header">
+
+    <div class="header-icon">
+      🔔
+    </div>
+
+    <div>
+
+      <h2>
+        Notifications
+      </h2>
+
+      <p>
+        Choisissez les événements pour lesquels vous souhaitez recevoir des notifications.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTENU -->
+
+  <div class="settings-content">
+
+
+    <!-- COMMANDES -->
+
+    <div class="notification-option">
+
+      <div class="notification-left">
+
+        <div class="notification-icon commandes">
+          🛒
+        </div>
+
+        <div class="notification-info">
+
+          <strong>
+            Nouvelles commandes
+          </strong>
+
+          <p>
+            Recevoir une notification lorsqu'un client passe une nouvelle commande.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="switch"
+        [class.active]="notificationsCommandes"
+        (click)="changerCommandes()"
+        [attr.aria-pressed]="notificationsCommandes">
+
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- AVIS -->
+
+    <div class="notification-option">
+
+      <div class="notification-left">
+
+        <div class="notification-icon avis">
+          ⭐
+        </div>
+
+        <div class="notification-info">
+
+          <strong>
+            Nouveaux avis
+          </strong>
+
+          <p>
+            Recevoir une notification lorsqu'un client laisse un avis sur un produit.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="switch"
+        [class.active]="notificationsAvis"
+        (click)="changerAvis()"
+        [attr.aria-pressed]="notificationsAvis">
+
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    <div class="notification-option">
+
+      <div class="notification-left">
+
+        <div class="notification-icon messages">
+          💬
+        </div>
+
+        <div class="notification-info">
+
+          <strong>
+            Nouveaux messages
+          </strong>
+
+          <p>
+            Recevoir une notification lorsqu'un client vous contacte.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="switch"
+        [class.active]="notificationsMessages"
+        (click)="changerMessages()"
+        [attr.aria-pressed]="notificationsMessages">
+
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- RÉSUMÉ -->
+
+    <div class="notification-summary">
+
+      <div class="summary-icon">
+        🔔
+      </div>
+
+      <div>
+
+        <strong>
+          Notifications activées
+        </strong>
+
+        <p>
+
+          <span *ngIf="
+            notificationsCommandes ||
+            notificationsAvis ||
+            notificationsMessages
+          ">
+
+            Vous recevrez des notifications pour les événements sélectionnés.
+
+          </span>
+
+          <span *ngIf="
+            !notificationsCommandes &&
+            !notificationsAvis &&
+            !notificationsMessages
+          ">
+
+            Toutes les notifications sont actuellement désactivées.
+
+          </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTION -->
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="save-button"
+        [disabled]="enregistrement"
+        (click)="enregistrer()">
+
+        <span
+          class="button-spinner"
+          *ngIf="enregistrement">
+        </span>
+
+        <span *ngIf="!enregistrement">
+          Enregistrer
+        </span>
+
+        <span *ngIf="enregistrement">
+          Enregistrement...
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

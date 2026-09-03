@@ -1,8 +1,9 @@
 import { HttpBackend, HttpClient, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
+import { API_BASE_URL, toApiUrl } from '../api.config';
 
-const TOKEN_REFRESH_URL = '/api/token/refresh/';
+const TOKEN_REFRESH_URL = `${API_BASE_URL}/token/refresh/`;
 const PUBLIC_AUTH_SKIP_PATHS = [
   '/api/produits/categories/',
   '/api/categories/'
@@ -37,18 +38,19 @@ function isTokenExpired(token: string): boolean {
 }
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const apiUrl = toApiUrl(req.url);
+  const apiReq = apiUrl === req.url ? req : req.clone({ url: apiUrl });
   const token = localStorage.getItem('access');
   const refreshToken = localStorage.getItem('refresh');
-  const normalizedUrl = req.url.toLowerCase();
-  const isAuthRequest = normalizedUrl.includes('/api/comptes/login/') || normalizedUrl.includes('/api/comptes/register/') || normalizedUrl.includes('/api/token/refresh/');
+  const normalizedUrl = apiReq.url.toLowerCase();
+  const isAuthRequest = normalizedUrl.includes('/api/comptes/login/') || normalizedUrl.includes('/api/comptes/register/') || normalizedUrl.includes('/api/token/') || normalizedUrl.includes('/api/token/refresh/');
   const skipAuth = shouldSkipAuth(normalizedUrl);
   const isApiRequest = normalizedUrl.includes('/api/') || normalizedUrl.includes('127.0.0.1:8000') || normalizedUrl.includes('localhost:8000');
   const tokenExpired = token ? isTokenExpired(token) : false;
-  const hasValidJwt = !!token && !tokenExpired && parseJwt(token) !== null;
-  const attachAuth = hasValidJwt && !isAuthRequest && !skipAuth && isApiRequest;
+  const attachAuth = !!token && !isAuthRequest && !skipAuth && isApiRequest;
   const authReq = attachAuth
-    ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-    : req;
+    ? apiReq.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+    : apiReq;
 
   const http = new HttpClient(inject(HttpBackend));
 
@@ -64,7 +66,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           return throwError(() => new Error('No access token returned')); 
         }
         localStorage.setItem('access', newAccessToken);
-        const retryReq = req.clone({
+        const retryReq = apiReq.clone({
           setHeaders: {
             Authorization: `Bearer ${newAccessToken}`
           }
@@ -79,7 +81,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     );
   };
 
-  console.log(`[AuthInterceptor] ${req.method} ${req.url} attachAuth=${attachAuth} token=${!!token} expired=${tokenExpired} isAuthRequest=${isAuthRequest} skipAuth=${skipAuth} isApiRequest=${isApiRequest}`);
+  console.log(`[AuthInterceptor] ${apiReq.method} ${apiReq.url} attachAuth=${attachAuth} token=${!!token} expired=${tokenExpired} isAuthRequest=${isAuthRequest} skipAuth=${skipAuth} isApiRequest=${isApiRequest}`);
 
   if (tokenExpired && !isAuthRequest && !skipAuth && isApiRequest) {
     return refreshAccessToken();
@@ -87,7 +89,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      console.log(`[AuthInterceptor] error ${req.method} ${req.url} status=${error.status}`);
+      console.log(`[AuthInterceptor] error ${apiReq.method} ${apiReq.url} status=${error.status}`);
       if (error.status === 401 && !isAuthRequest && !skipAuth && isApiRequest) {
         return refreshAccessToken();
       }

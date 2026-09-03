@@ -1,0 +1,302 @@
+.parametres-page {
+  padding: 30px;
+  background: #f7f9fc;
+  min-height: 100vh;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #102a43;
+}
+
+.page-header p {
+  margin: 0;
+  color: #627d98;
+  font-size: 14px;
+}
+
+
+/* =========================
+   CARTE
+========================= */
+
+.settings-card {
+  background: #ffffff;
+  border: 1px solid #e6edf3;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(16, 42, 67, 0.04);
+}
+
+.card-header {
+  margin-bottom: 22px;
+}
+
+.card-header h2 {
+  margin: 0 0 6px;
+  color: #102a43;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.card-header p {
+  margin: 0;
+  color: #829ab1;
+  font-size: 13px;
+}
+
+
+/* =========================
+   FORMULAIRE
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334e68;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-size: 14px;
+  color: #243b53;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.1);
+}
+
+
+/* =========================
+   OPTIONS
+========================= */
+
+.setting-row,
+.security-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.setting-row:first-of-type,
+.security-item:first-of-type {
+  padding-top: 0;
+}
+
+.setting-row:last-child,
+.security-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.setting-row strong,
+.security-item strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #243b53;
+  font-size: 14px;
+}
+
+.setting-row p,
+.security-item p {
+  margin: 0;
+  max-width: 650px;
+  color: #829ab1;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 25px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #bcccdc;
+  border-radius: 25px;
+  transition: 0.25s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.25s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.switch input:checked + .slider {
+  background: #2f80ed;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(21px);
+}
+
+
+/* =========================
+   BOUTONS
+========================= */
+
+.secondary-button {
+  flex-shrink: 0;
+  border: 1px solid #d9e2ec;
+  background: #ffffff;
+  color: #243b53;
+  padding: 9px 18px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.secondary-button:hover {
+  background: #f0f4f8;
+  border-color: #bcccdc;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.save-button {
+  border: none;
+  background: #2f80ed;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.save-button:hover {
+  background: #2166c1;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .parametres-page {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full {
+    grid-column: auto;
+  }
+
+  .setting-row,
+  .security-item {
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .parametres-page {
+    padding: 15px;
+  }
+
+  .settings-card {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .setting-row,
+  .security-item {
+    flex-direction: column;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .save-button {
+    width: 100%;
+  }
+
+}

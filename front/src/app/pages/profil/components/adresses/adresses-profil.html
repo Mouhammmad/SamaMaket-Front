@@ -4,15 +4,15 @@
 
         <h2>Mes adresses</h2>
 
-        <button class="btn-add">
+        <button class="btn-add" (click)="ajouterAdresse()">
             <i class="bi bi-plus-lg"></i>
             Ajouter
         </button>
 
     </div>
 
-    <!-- Adresse principale -->
-    <div class="address-card">
+    <!-- Adresses dynamiques -->
+    <div *ngFor="let adresse of (adresses$ | async)" class="address-card">
 
         <div class="address-content">
 
@@ -22,47 +22,44 @@
 
             <div class="details">
 
-                <h4>Adresse principale</h4>
+                <h4>{{ adresse.titre }}</h4>
 
-                <p>Dakar, Plateau</p>
+                <p>{{ adresse.adresse }}</p>
 
-                <span>Sénégal</span>
+                <span>{{ adresse.ville }}, {{ adresse.pays }}</span>
+
+                <span *ngIf="adresse.principale" class="badge-principale">Principale</span>
 
             </div>
 
         </div>
 
-        <button class="btn-outline">
-            Modifier
-        </button>
+        <div class="address-actions">
+            <button class="btn-outline" (click)="supprimerAdresse(adresse.id, adresse.titre)">
+                Supprimer
+            </button>
+
+            <button class="btn-outline" *ngIf="!adresse.principale" (click)="definirParDefaut(adresse.id, adresse.titre)">
+                Définir par défaut
+            </button>
+        </div>
 
     </div>
 
-    <!-- Adresse de livraison -->
-    <div class="address-card">
-
-        <div class="address-content">
-
-            <div class="icon">
-                <i class="bi bi-geo-alt-fill"></i>
+    <!-- Confirmation Modal -->
+    <div *ngIf="showConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmation</h3>
             </div>
-
-            <div class="details">
-
-                <h4>Adresse de livraison</h4>
-
-                <p>Sacré-Cœur 3</p>
-
-                <span>Dakar, Sénégal</span>
-
+            <div class="modal-body">
+                <p>{{ confirmModalMessage }}</p>
             </div>
-
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">Annuler</button>
+                <button type="button" class="btn btn-primary" (click)="confirmerAction()">Confirmer</button>
+            </div>
         </div>
-
-        <button class="btn-outline">
-            Définir par défaut
-        </button>
-
     </div>
 
 </div>

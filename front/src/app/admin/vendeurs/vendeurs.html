@@ -1,0 +1,274 @@
+<div class="vendeurs-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Vendeurs</h1>
+
+      <p>
+        Gestion des vendeurs et de leurs boutiques
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- RECHERCHE -->
+
+  <div class="filters">
+
+    <input
+      type="text"
+      [(ngModel)]="recherche"
+      (input)="filtrer()"
+      placeholder="Rechercher un vendeur ou une boutique..."
+      class="search-input"
+    />
+
+
+    <select
+      [(ngModel)]="filtreStatut"
+      (change)="filtrer()"
+      aria-label="Filtrer les boutiques par statut"
+      class="status-filter"
+    >
+
+      <option value="tous">
+        Tous les vendeurs
+      </option>
+
+      <option value="approuve">
+        Boutiques approuvées
+      </option>
+
+      <option value="attente">
+        En attente
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- ERREUR -->
+
+  <div
+    class="error-message"
+    *ngIf="erreur"
+  >
+
+    {{ erreur }}
+
+  </div>
+
+
+  <!-- CHARGEMENT -->
+
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+
+    Chargement des vendeurs...
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <div
+    class="table-container"
+    *ngIf="!chargement"
+  >
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Boutique</th>
+
+          <th>Propriétaire</th>
+
+          <th>Email</th>
+
+          <th>Ville</th>
+
+          <th>Catégorie</th>
+
+          <th>Note</th>
+
+          <th>Statut</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let boutique of boutiquesFiltrees
+          "
+        >
+
+          <!-- BOUTIQUE -->
+
+          <td>
+
+            <strong>
+              {{ boutique.nom }}
+            </strong>
+
+          </td>
+
+
+          <!-- PROPRIÉTAIRE -->
+
+          <td>
+
+            {{ boutique.proprietaire }}
+
+          </td>
+
+
+          <!-- EMAIL -->
+
+          <td>
+
+            {{ boutique.email }}
+
+          </td>
+
+
+          <!-- VILLE -->
+
+          <td>
+
+            {{ boutique.ville }}
+
+          </td>
+
+
+          <!-- CATÉGORIE -->
+
+          <td>
+
+            {{ boutique.categorie }}
+
+          </td>
+
+
+          <!-- NOTE -->
+
+          <td>
+
+            ⭐ {{ boutique.note }}
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+            <span
+              class="status-badge"
+              [class.status-active]="boutique['apprové']"
+              [class.status-pending]="!boutique['apprové']"
+            >
+              {{ boutique['apprové'] ? 'Approuvé' : 'En attente' }}
+            </span>
+
+          </td>
+
+
+          <!-- ACTIONS -->
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                type="button"
+                class="action-button view"
+                title="Voir"
+                (click)="voirDetail(boutique)"
+              >
+                👁️
+              </button>
+
+              <button
+                *ngIf="!boutique['apprové']"
+                type="button"
+                class="action-button approve"
+                title="Approuver"
+                (click)="approuver(boutique)"
+              >
+                ✓
+              </button>
+
+              <button
+                *ngIf="boutique['apprové']"
+                type="button"
+                class="action-button reject"
+                title="Refuser"
+                (click)="refuser(boutique)"
+              >
+                ✕
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        <!-- AUCUN RÉSULTAT -->
+
+        <tr
+          *ngIf="
+            boutiquesFiltrees.length === 0
+          "
+        >
+
+          <td
+            colspan="8"
+            class="empty"
+          >
+
+            Aucun vendeur trouvé.
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div
+    class="table-footer"
+    *ngIf="!chargement"
+  >
+
+    {{ boutiquesFiltrees.length }}
+    vendeur(s)
+
+  </div>
+
+</div>

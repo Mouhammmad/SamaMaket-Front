@@ -21,7 +21,7 @@
         <button
             class="categorie"
             [class.active]="!filtres.categorie"
-            (click)="filtres.categorie=null">
+            (click)="filtres.categorie=null; appliquer()">
 
             Tous les produits
 
@@ -31,7 +31,7 @@
             class="categorie"
             *ngFor="let categorie of categories"
             [class.active]="filtres.categorie===categorie.id"
-            (click)="filtres.categorie=categorie.id">
+            (click)="filtres.categorie=categorie.id; appliquer()">
 
             {{ categorie.nom }}
 
@@ -47,20 +47,22 @@
             type="range"
             min="0"
             max="150000"
+            aria-label="Prix maximum"
             [(ngModel)]="filtres.prixMax">
 
         <div class="prix">
 
             <input
                 type="number"
+                aria-label="Prix minimum"
                 [(ngModel)]="filtres.prixMin">
 
             <input
                 type="number"
+                aria-label="Prix maximum"
                 [(ngModel)]="filtres.prixMax">
 
         </div>
-
     </div>
 
     <div class="section">

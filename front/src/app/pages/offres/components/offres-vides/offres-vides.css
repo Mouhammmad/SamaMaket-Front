@@ -1,0 +1,32 @@
+.etat-vide {
+  width: 100%;
+  padding: 55px 20px;
+  text-align: center;
+
+  border: 1px dashed #bcccdc;
+  border-radius: 18px;
+
+  background: #f8fafc;
+}
+
+.icone {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.etat-vide h3 {
+  margin: 0 0 8px;
+
+  color: #102a43;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.etat-vide p {
+  margin: 0;
+
+  color: #627d98;
+
+  font-size: 14px;
+}

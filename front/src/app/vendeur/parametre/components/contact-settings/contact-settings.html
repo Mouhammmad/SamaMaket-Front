@@ -1,0 +1,167 @@
+<div class="settings-card">
+
+  <!-- EN-TÊTE -->
+
+  <div class="card-header">
+
+    <div>
+
+      <h2>
+        Coordonnées de contact
+      </h2>
+
+      <p>
+        Indiquez comment vos clients peuvent contacter votre boutique.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- FORMULAIRE -->
+
+  <form
+    [formGroup]="formulaire"
+    (ngSubmit)="enregistrer()"
+    class="settings-form">
+
+
+    <!-- TÉLÉPHONE -->
+
+    <div class="form-group">
+
+      <label for="telephone">
+        Téléphone
+      </label>
+
+      <div class="input-wrapper">
+
+        <span class="input-icon">
+          📞
+        </span>
+
+        <input
+          id="telephone"
+          type="tel"
+          formControlName="telephone"
+          placeholder="Ex : +221 77 123 45 67"
+          [class.invalid]="telephone?.invalid && telephone?.touched">
+
+      </div>
+
+      <div
+        class="error"
+        *ngIf="telephone?.invalid && telephone?.touched">
+
+        Le numéro de téléphone ne doit pas dépasser 30 caractères.
+
+      </div>
+
+    </div>
+
+
+    <!-- EMAIL -->
+
+    <div class="form-group">
+
+      <label for="email">
+        Adresse email
+      </label>
+
+      <div class="input-wrapper">
+
+        <span class="input-icon">
+          ✉
+        </span>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Ex : contact@maboutique.com"
+          [class.invalid]="email?.invalid && email?.touched">
+
+      </div>
+
+      <div
+        class="error"
+        *ngIf="email?.invalid && email?.touched">
+
+        Veuillez saisir une adresse email valide.
+
+      </div>
+
+    </div>
+
+
+    <!-- WHATSAPP -->
+
+    <div class="form-group">
+
+      <label for="whatsapp">
+        WhatsApp
+      </label>
+
+      <div class="input-wrapper">
+
+        <span class="input-icon">
+          💬
+        </span>
+
+        <input
+          id="whatsapp"
+          type="tel"
+          formControlName="whatsapp"
+          placeholder="Ex : +221 77 123 45 67"
+          [class.invalid]="whatsapp?.invalid && whatsapp?.touched">
+
+      </div>
+
+      <div
+        class="help-text">
+
+        Ajoutez le numéro WhatsApp utilisé par votre boutique pour communiquer avec les clients.
+
+      </div>
+
+      <div
+        class="error"
+        *ngIf="whatsapp?.invalid && whatsapp?.touched">
+
+        Le numéro WhatsApp ne doit pas dépasser 30 caractères.
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTION -->
+
+    <div class="form-actions">
+
+      <button
+        type="submit"
+        class="save-button"
+        [disabled]="enregistrement">
+
+        <span
+          class="button-spinner"
+          *ngIf="enregistrement">
+        </span>
+
+        <span *ngIf="!enregistrement">
+          Enregistrer
+        </span>
+
+        <span *ngIf="enregistrement">
+          Enregistrement...
+        </span>
+
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

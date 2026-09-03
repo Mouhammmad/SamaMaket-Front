@@ -1,0 +1,140 @@
+.boutique-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.back-button {
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #102a43;
+  color: #fff;
+  cursor: pointer;
+}
+
+.loading,
+.error,
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: #627d98;
+}
+
+.boutique-header {
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.boutique-banner {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: #f3f4f6;
+}
+
+.boutique-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
+}
+
+.boutique-logo {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .12);
+}
+
+.boutique-info h1,
+.products-section h2 {
+  margin: 0 0 8px;
+  color: #102a43;
+}
+
+.boutique-info p {
+  margin: 4px 0;
+  color: #627d98;
+}
+
+.boutique-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 20px;
+}
+
+.follow-button,
+.contact-button {
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.follow-button {
+  background: #102a43;
+}
+
+.contact-button {
+  background: #147d92;
+}
+
+.follow-button:disabled,
+.contact-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.action-message {
+  margin: 0;
+  padding: 0 24px 20px;
+  color: #166534;
+}
+
+.boutique-stats {
+  display: flex;
+  gap: 24px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  color: #627d98;
+}
+
+.boutique-stats strong {
+  color: #102a43;
+}
+
+.products-section {
+  margin-top: 32px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 600px) {
+  .boutique-info,
+  .boutique-stats {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .boutique-banner {
+    height: 160px;
+  }
+
+  .boutique-actions {
+    flex-direction: column;
+  }
+}

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private api = 'http://127.0.0.1:8000/api/comptes/';
+  private api = '/api/comptes/';
+  private connectedSubject = new BehaviorSubject<boolean>(this.hasAccessToken());
+  connected$ = this.connectedSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -16,16 +18,25 @@ export class AuthService {
   }
 
   login(data: any): Observable<any> {
-    return this.http.post(this.api + 'login/', data);
+    return this.http.post('/api/token/', data);
   }
 
   logout() {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
     localStorage.removeItem('user');
+    this.connectedSubject.next(false);
+  }
+
+  refreshAuthState(): void {
+    this.connectedSubject.next(this.hasAccessToken());
   }
 
   estConnecte(): boolean {
+    return this.hasAccessToken();
+  }
+
+  private hasAccessToken(): boolean {
     return !!localStorage.getItem('access');
   }
 
@@ -68,7 +79,13 @@ export class AuthService {
 
   getUserRole(): string | null {
     const user = this.getUser();
-    return user ? user.role : null;
+    const role = user ? (user.role ?? user.user_role ?? user.roles?.[0]) : null;
+
+    if (typeof role !== 'string') {
+      return null;
+    }
+
+    return role.toUpperCase();
   }
 
   isVendor(): boolean {
@@ -76,7 +93,9 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.getUserRole() === 'ADMIN';
+    const user = this.getUser();
+    const role = this.getUserRole();
+    return role === 'ADMIN' || !!user?.is_staff || !!user?.is_superuser;
   }
 
   isCustomer(): boolean {

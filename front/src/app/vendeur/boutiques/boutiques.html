@@ -1,12 +1,51 @@
 <app-boutique-header
-    [boutique]="boutique">
-</app-boutique-header>
+    [boutique]="boutique"
+    [estSuivi]="estSuivi"
+    [chargementSuivi]="chargementSuivi"
+    (suivre)="toggleSuivi()"
+    (contacter)="contacter()"
+></app-boutique-header>
 
 <app-boutique-navigation
     [onglet]="onglet"
     [boutique]="boutique"
     (changer)="changerOnglet($event)">
 </app-boutique-navigation>
+
+<section class="boutique-edition">
+    <div class="edition-heading">
+        <div>
+            <span class="edition-kicker">Personnalisation</span>
+            <h2>Identité visuelle</h2>
+            <p>Modifiez le logo et la bannière affichés sur votre boutique.</p>
+        </div>
+        <img
+            class="logo-preview"
+            [src]="boutique?.logo || 'assets/images/boutique.png'"
+            alt="Aperçu du logo de la boutique">
+    </div>
+
+    <form [formGroup]="boutiqueForm" (ngSubmit)="enregistrer()" class="edition-form">
+        <label>
+            Logo
+            <input
+                type="file"
+                accept="image/*"
+                (change)="onLogoSelected($event)">
+        </label>
+
+        <label>
+            Bannière
+            <input
+                type="file"
+                accept="image/*"
+                (change)="onBanniereSelected($event)">
+        </label>
+
+        <button type="button" (click)="enregistrerImages()">Enregistrer les images</button>
+    </form>
+</section>
+
 <div class="contenu">
 
     <div class="sidebar">

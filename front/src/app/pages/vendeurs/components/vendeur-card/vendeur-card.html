@@ -1,0 +1,126 @@
+<div
+  class="vendeur-card"
+  *ngIf="vendeur"
+  (click)="ouvrirBoutique()">
+
+  <!-- IMAGE / LOGO -->
+  <div class="vendeur-image">
+
+    <img
+      [src]="
+        vendeur.logo_url ||
+        vendeur.logo ||
+        'assets/images/boutique.png'
+      "
+      [alt]="vendeur.nom">
+
+    <span
+      class="badge-verifie"
+      *ngIf="vendeur.verifie || vendeur['apprové']">
+
+      ✔ Vérifié
+
+    </span>
+
+  </div>
+
+
+  <!-- INFORMATIONS -->
+  <div class="vendeur-content">
+
+    <h3>
+
+      {{ vendeur.nom }}
+
+    </h3>
+
+
+    <p
+      class="ville"
+      *ngIf="vendeur.ville">
+
+      📍 {{ vendeur.ville }}
+
+    </p>
+
+
+    <p
+      class="description"
+      *ngIf="vendeur.description">
+
+      {{ vendeur.description }}
+
+    </p>
+
+
+    <!-- STATISTIQUES -->
+    <div class="vendeur-stats">
+
+      <div>
+
+        <strong>
+
+          {{ vendeur.note || 0 }}
+
+        </strong>
+
+        <span>
+
+          ⭐
+
+        </span>
+
+      </div>
+
+
+      <div>
+
+        <strong>
+
+          {{ vendeur.followers || vendeur.abonnes || 0 }}
+
+        </strong>
+
+        <span>
+
+          abonnés
+
+        </span>
+
+      </div>
+
+
+      <div>
+
+        <strong>
+
+          {{ vendeur.nombre_produits || vendeur.total_produits || 0 }}
+
+        </strong>
+
+        <span>
+
+          produits
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- BOUTON -->
+    <button
+      type="button"
+      class="btn-boutique"
+      (click)="$event.stopPropagation(); ouvrirBoutique()">
+
+      Voir la boutique
+
+      <span>→</span>
+
+    </button>
+
+  </div>
+
+</div>

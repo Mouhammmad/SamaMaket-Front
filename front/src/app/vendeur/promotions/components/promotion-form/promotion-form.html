@@ -1,13 +1,21 @@
-<form
-    [formGroup]="form"
-    (ngSubmit)="enregistrerPromotion()">
+<div class="overlay">
+  <div class="preview-card">
+    <button type="button" class="close" (click)="fermer.emit()">✕</button>
+    <h2 class="modal-title">{{ promotion ? 'Modifier la promotion' : 'Nouvelle promotion' }}</h2>
+
+    <form
+        [formGroup]="form"
+        (ngSubmit)="enregistrerPromotion()"
+        class="modal-form">
 
     <div class="field">
 
         <label>Code promotion</label>
 
         <input
-            formControlName="code">
+            formControlName="code"
+            aria-label="Code promotion"
+            placeholder="Code promotion">
 
     </div>
 
@@ -16,7 +24,8 @@
         <label>Type de remise</label>
 
         <select
-            formControlName="type_remise">
+            formControlName="type_remise"
+            aria-label="Type de remise">
 
             <option value="pourcentage">
 
@@ -40,7 +49,9 @@
 
         <input
             type="number"
-            formControlName="taux_remise">
+            formControlName="taux_remise"
+            aria-label="Valeur de remise"
+            placeholder="Valeur">
 
     </div>
     <div class="grid">
@@ -51,7 +62,8 @@
 
         <input
             type="date"
-            formControlName="date_debut">
+            formControlName="date_debut"
+            aria-label="Date de début">
 
     </div>
 
@@ -61,7 +73,8 @@
 
         <input
             type="date"
-            formControlName="date_fin">
+            formControlName="date_fin"
+            aria-label="Date de fin">
 
     </div>
 
@@ -73,6 +86,7 @@
     <input
         type="text"
         placeholder="Nom du produit..."
+        aria-label="Rechercher un produit"
         (input)="rechercherProduit($event)">
 
 </div>
@@ -119,7 +133,8 @@
                 (change)="toggleProduit($event, produit.id)">
 
             <img
-                [src]="produit.image_url || 'assets/images/default-product.png'">
+                [src]="produit.image_url || 'assets/images/default-product.png'"
+                [alt]="produit.nom">
 
             <div>
 
@@ -194,3 +209,5 @@
 
 </div>
 </form>
+  </div>
+</div>

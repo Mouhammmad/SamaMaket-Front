@@ -30,6 +30,21 @@
 .logo-market{
     color:#f97316;
 }
+
+.logo img,
+.brand img{
+    display:block;
+    width:165px;
+    height:78px;
+    object-fit:contain;
+    object-position:center;
+    border-radius:8px;
+}
+
+.brand img{
+    width:250px;
+    height:170px;
+}
 .auth-intro{
 
     text-align:center;
@@ -185,6 +200,7 @@
     padding:22px;
     border-radius:20px;
     background:rgba(255,255,255,.08);
+    -webkit-backdrop-filter:blur(10px);
     backdrop-filter:blur(10px);
     border:1px solid rgba(255,255,255,.12);
 
@@ -542,7 +558,7 @@ button:active{
 
     flex-direction:column;
     width:100%;
-    min-height:auto;
+    min-height:0;
 
 }
 
@@ -843,6 +859,7 @@ button:active{
 
     z-index:5;
 
+    -webkit-backdrop-filter:blur(12px);
     backdrop-filter:blur(12px);
 
     background:rgba(255,255,255,.96);

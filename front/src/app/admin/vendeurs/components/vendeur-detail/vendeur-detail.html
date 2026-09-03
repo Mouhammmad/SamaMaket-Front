@@ -1,0 +1,342 @@
+<div class="detail-page">
+
+  <!-- RETOUR -->
+
+  <button
+    type="button"
+    class="back-button"
+    (click)="retour()"
+  >
+    ← Retour aux vendeurs
+  </button>
+
+
+  <!-- CHARGEMENT -->
+
+  <div
+    class="loading"
+    *ngIf="chargement"
+  >
+    Chargement de la boutique...
+  </div>
+
+  <div
+    class="confirmation-overlay"
+    *ngIf="confirmationAction && boutique"
+    (click)="annulerConfirmation()"
+  >
+    <section
+      class="confirmation-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmation-title"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 id="confirmation-title">
+        {{ confirmationAction === 'approuver' ? 'Approuver la boutique ?' : 'Désactiver la boutique ?' }}
+      </h2>
+
+      <p>
+        {{ boutique.nom }}
+      </p>
+
+      <div class="confirmation-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          [disabled]="traitement"
+          (click)="annulerConfirmation()"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="button"
+          class="confirm-button"
+          [disabled]="traitement"
+          (click)="confirmerAction()"
+        >
+          {{ traitement ? 'Traitement...' : 'Confirmer' }}
+        </button>
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ERREUR -->
+
+  <div
+    class="error-message"
+    *ngIf="!chargement && erreur"
+  >
+    {{ erreur }}
+  </div>
+
+
+  <!-- CONTENU -->
+
+  <div
+    class="content"
+    *ngIf="!chargement && boutique"
+  >
+
+    <!-- HEADER -->
+
+    <div class="detail-header">
+
+      <div>
+
+        <h1>
+          Détail de la boutique
+        </h1>
+
+        <p>
+          Informations et gestion du vendeur
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROFIL BOUTIQUE -->
+
+    <div class="profile-card">
+
+      <div class="profile-main">
+
+        <div class="boutique-avatar">
+          🏪
+        </div>
+
+
+        <div class="profile-info">
+
+          <h2>
+            {{ boutique.nom }}
+          </h2>
+
+          <p class="owner">
+            👤 {{ boutique.proprietaire }}
+          </p>
+
+          <div class="badges">
+
+            <span class="category-badge">
+              {{ boutique.categorie }}
+            </span>
+
+            <span
+              class="status-badge"
+              [class.active]="boutique['apprové']"
+              [class.pending]="!boutique['apprové']"
+            >
+              {{ getStatutLabel() }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- INFORMATIONS -->
+
+    <div class="info-card">
+
+      <div class="card-title">
+
+        <h2>
+          Informations de la boutique
+        </h2>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span class="label">
+            Nom de la boutique
+          </span>
+
+          <strong>
+            {{ boutique.nom }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Propriétaire
+          </span>
+
+          <strong>
+            {{ boutique.proprietaire }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Email
+          </span>
+
+          <strong>
+            {{ boutique.email || 'Non renseigné' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Ville
+          </span>
+
+          <strong>
+            {{ boutique.ville || 'Non renseignée' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Catégorie
+          </span>
+
+          <strong>
+            {{ boutique.categorie }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="label">
+            Note
+          </span>
+
+          <strong>
+            ⭐ {{ boutique.note }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+
+    <div class="description-card">
+
+      <div class="card-title">
+
+        <h2>
+          Description
+        </h2>
+
+      </div>
+
+      <p>
+        {{ boutique.description || 'Aucune description renseignée.' }}
+      </p>
+
+    </div>
+
+
+    <!-- GESTION -->
+
+    <div class="actions-card">
+
+      <div class="card-title">
+
+        <h2>
+          Gestion de la boutique
+        </h2>
+
+        <p>
+          Actions administratives
+        </p>
+
+      </div>
+
+
+      <div class="actions-container">
+
+        <!-- APPROUVER -->
+
+        <button
+          *ngIf="!boutique['apprové']"
+          type="button"
+          class="action approve"
+          (click)="approuver()"
+        >
+
+          <span class="icon">
+            ✓
+          </span>
+
+          <span>
+
+            <strong>
+              Approuver la boutique
+            </strong>
+
+            <small>
+              Autoriser cette boutique à vendre sur la plateforme
+            </small>
+
+          </span>
+
+        </button>
+
+
+        <!-- DÉSACTIVER -->
+
+        <button
+          *ngIf="boutique['apprové']"
+          type="button"
+          class="action disable"
+          (click)="desactiver()"
+        >
+
+          <span class="icon">
+            ⛔
+          </span>
+
+          <span>
+
+            <strong>
+              Désactiver la boutique
+            </strong>
+
+            <small>
+              Retirer temporairement cette boutique de la plateforme
+            </small>
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

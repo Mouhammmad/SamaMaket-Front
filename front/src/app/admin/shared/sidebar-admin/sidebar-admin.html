@@ -1,0 +1,91 @@
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <img src="assets/images/logo.png" alt="Sama Market">
+
+        <small>Espace Administration</small>
+
+    </div>
+
+    <div class="shop-card">
+
+        <div class="avatar">
+            🛡️
+        </div>
+
+        <div>
+            <h4>{{ nomAdmin }}</h4>
+            <p>Administrateur</p>
+        </div>
+
+    </div>
+
+    <span class="title">PRINCIPAL</span>
+
+    <nav>
+
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-speedometer2"></i>
+            Dashboard
+        </a>
+
+        <a routerLink="/admin/utilisateurs" routerLinkActive="active">
+            <i class="bi bi-people"></i>
+            Utilisateurs
+        </a>
+
+        <a routerLink="/admin/vendeurs" routerLinkActive="active">
+            <i class="bi bi-shop"></i>
+            Vendeurs
+        </a>
+
+        <a routerLink="/admin/produits" routerLinkActive="active">
+            <i class="bi bi-box-seam"></i>
+            Produits
+        </a>
+
+    </nav>
+
+    <span class="title">ANALYSE</span>
+
+    <nav>
+
+        <a routerLink="/admin/commandes">
+            <i class="bi bi-bag-check"></i>
+            Commandes
+        </a>
+
+        <a routerLink="/admin/statistiques">
+            <i class="bi bi-graph-up-arrow"></i>
+            Statistiques
+        </a>
+
+    </nav>
+
+    <span class="title">SYSTÈME</span>
+
+    <nav>
+
+        <a routerLink="/admin/rapports">
+            <i class="bi bi-file-earmark-bar-graph"></i>
+            Rapports
+        </a>
+
+        <a routerLink="/admin/moderation">
+            <i class="bi bi-shield-check"></i>
+            Modération
+        </a>
+
+        <a routerLink="/admin/parametres">
+            <i class="bi bi-gear"></i>
+            Paramètres
+        </a>
+
+    </nav>
+
+    <button class="logout" type="button" (click)="deconnecter()">
+        Déconnexion
+    </button>
+
+</aside>

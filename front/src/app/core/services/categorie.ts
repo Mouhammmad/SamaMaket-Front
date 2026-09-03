@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Categorie } from '../models/categorie';
+import { toApiUrl } from '../api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategorieService {
 
-  private api = '/api/produits/categories/';
+  private api = toApiUrl('/api/produits/categories/');
 
   constructor(
     private http: HttpClient
@@ -25,6 +27,10 @@ export class CategorieService {
       })
     );
 
+  }
+
+  creerCategorie(nom: string): Observable<Categorie> {
+    return this.http.post<Categorie>(this.api, { nom });
   }
 
 }

@@ -14,20 +14,24 @@ export class PromotionTable {
 
   estPromotionActive(promotion: any): boolean {
     const valeur = promotion?.est_active ?? promotion?.est_actif;
+    const dateFin = promotion?.date_fin
+      ? new Date(`${promotion.date_fin}T23:59:59`).getTime()
+      : Number.POSITIVE_INFINITY;
+    const periodeValide = dateFin >= Date.now();
 
     if (typeof valeur === 'boolean') {
-      return valeur;
+      return valeur && periodeValide;
     }
 
     if (typeof valeur === 'string') {
-      return ['true', '1', 'yes', 'oui', 'active'].includes(valeur.toLowerCase());
+      return ['true', '1', 'yes', 'oui', 'active'].includes(valeur.toLowerCase()) && periodeValide;
     }
 
     if (typeof valeur === 'number') {
-      return valeur === 1;
+      return valeur === 1 && periodeValide;
     }
 
-    return Boolean(valeur);
+    return Boolean(valeur) && periodeValide;
   }
 
   @Output() modifier = new EventEmitter<any>();

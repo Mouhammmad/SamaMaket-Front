@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { VendeurProduits } from '../../core/services/vendeur-produits';
-import { PromotionService } from '../../core/services/promotion';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
+import { BoutiqueService } from '../../core/services/boutique';
+
 import { BoutiqueHeader } from './components/boutique-header/boutique-header';
 import { BoutiqueNavigation } from './components/boutique-navigation/boutique-navigation';
 import { BoutiqueInfos } from './components/boutique-infos/boutique-infos';
@@ -16,35 +20,15 @@ import { BoutiqueProduits } from './components/boutique-produits/boutique-produi
 import { BoutiqueApropos } from './components/boutique-apropos/boutique-apropos';
 import { BoutiqueAvis } from './components/boutique-avis/boutique-avis';
 import { BoutiquePromotions } from './components/boutique-promotions/boutique-promotions';
-@Injectable({
-  providedIn: 'root'
-})
-export class Boutique {
-
-  private api = '/api/boutiques/';
-
-  constructor(private http: HttpClient) {}
-
-  getMaBoutique(): Observable<any> {
-    return this.http.get(this.api + 'ma/');
-  }
-
-  creerBoutique(data: FormData): Observable<any> {
-    return this.http.post(this.api + 'create/', data);
-  }
-
-  modifierBoutique(data: FormData): Observable<any> {
-    return this.http.put(this.api + 'ma/', data);
-  }
-
-}
-
 @Component({
   selector: 'app-boutiques',
+
   standalone: true,
+
   imports: [
     CommonModule,
     ReactiveFormsModule,
+
     BoutiqueHeader,
     BoutiqueNavigation,
     BoutiqueInfos,
@@ -55,56 +39,374 @@ export class Boutique {
     BoutiqueAvis,
     BoutiquePromotions
   ],
+
   templateUrl: './boutiques.html',
+
   styleUrl: './boutiques.css'
 })
 export class Boutiques implements OnInit {
+
+  // ==========================================
+  // FORMULAIRE
+  // ==========================================
+
   boutiqueForm: FormGroup;
+
+
+  // ==========================================
+  // DONNÉES BOUTIQUE
+  // ==========================================
+
   boutique: any = null;
+
   onglet = 'produits';
+  // ==========================================
+// SUIVI DE LA BOUTIQUE
+// ==========================================
+
+estSuivi = false;
+
+chargementSuivi = false;
+
+
+  // ==========================================
+  // PRODUITS
+  // ==========================================
+
   produits: any[] = [];
-  promotions: any[] = [];
-  avis: any[] = [];
+
   chargementProduits = true;
+
+
+  // ==========================================
+  // AVIS
+  // ==========================================
+
+  avis: any[] = [];
+
+
+  // ==========================================
+  // PROMOTIONS
+  // ==========================================
+
+  promotions: any[] = [];
+
   chargementPromotions = true;
+
+
+  // ==========================================
+  // IMAGES
+  // ==========================================
+
   selectedBanniere?: File;
+
   selectedLogo?: File;
+
+
+  // ==========================================
+  // CONSTRUCTEUR
+  // ==========================================
+
   constructor(
+
     private fb: FormBuilder,
-    private boutiqueService: Boutique,
-    private produitService: VendeurProduits,
-    private promotionService: PromotionService
+
+    private http: HttpClient,
+
+    private boutiqueService: BoutiqueService,
   ) {
+
     this.boutiqueForm = this.fb.group({
-      nom: ['', Validators.required],
-      description: [''],
-      ville: [''],
-      telephone: [''],
-      email: ['', Validators.email]
+
+      nom: [
+        '',
+        Validators.required
+      ],
+
+      description: [
+        ''
+      ],
+
+      ville: [
+        ''
+      ],
+
+      telephone: [
+        ''
+      ],
+
+      email: [
+        '',
+        Validators.email
+      ]
+
     });
+
   }
+
+
+  // ==========================================
+  // INITIALISATION
+  // ==========================================
 
   ngOnInit(): void {
+
     this.chargerBoutique();
-    this.chargerProduits();
-    this.chargerPromotions();
+
   }
-  enregistrer(): void {
-    if (this.boutiqueForm.invalid) {
-      this.boutiqueForm.markAllAsTouched();
-      return;
-    
+
+
+  // ==========================================
+  // CHANGER D'ONGLET
+  // ==========================================
+
+  changerOnglet(tab: string): void {
+
+    this.onglet = tab;
+
+  }
+
+
+  // ==========================================
+  // SÉLECTION BANNIÈRE
+  // ==========================================
+
+  onBanniereSelected(event: Event): void {
+
+    const input =
+      event.target as HTMLInputElement;
+
+    if (input.files?.length) {
+
+      this.selectedBanniere =
+        input.files[0];
+
     }
-    
+
+  }
+
+
+  // ==========================================
+  // SÉLECTION LOGO
+  // ==========================================
+
+  onLogoSelected(event: Event): void {
+
+    const input =
+      event.target as HTMLInputElement;
+
+    if (input.files?.length) {
+
+      this.selectedLogo =
+        input.files[0];
+
+    }
+
+  }
+
+
+  // ==========================================
+  // CHARGER MA BOUTIQUE
+  // ==========================================
+
+  chargerBoutique(): void {
+
+    this.boutiqueService
+      .getMaBoutique()
+      .subscribe({
+
+        next: (response) => {
+
+          console.log(
+            'Boutique :',
+            response
+          );
+
+          this.boutique =
+            response;
+
+
+          // Remplir le formulaire
+          this.boutiqueForm.patchValue({
+
+            nom:
+              response.nom || '',
+
+            description:
+              response.description || '',
+
+            ville:
+              response.ville || '',
+
+            telephone:
+              response.telephone || '',
+
+            email:
+              response.email || ''
+
+          });
+
+
+          // Maintenant que nous avons
+          // l'identifiant de la boutique
+          this.chargerProduits();
+
+          this.chargerAvis();
+
+          this.chargerPromotions();
+          this.chargerStatutSuivi();
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Erreur boutique API :',
+            error
+          );
+
+          this.boutique = null;
+
+          this.produits = [];
+
+          this.avis = [];
+
+          this.promotions = [];
+
+          this.chargementProduits = false;
+
+          this.chargementPromotions = false;
+
+        }
+
+      });
+
+  }
+
+
+  // ==========================================
+  // ENREGISTRER LA BOUTIQUE
+  // ==========================================
+
+  enregistrer(): void {
+
+    if (
+      this.boutiqueForm.invalid
+    ) {
+
+      this.boutiqueForm
+        .markAllAsTouched();
+
+      return;
+
+    }
+
+
+    const data =
+      new FormData();
+
+
+    const values =
+      this.boutiqueForm.value;
+
+
+    Object.entries(values)
+      .forEach(
+        ([key, value]) => {
+
+          if (
+            value !== null &&
+            value !== undefined
+          ) {
+
+            data.append(
+              key,
+              String(value)
+            );
+
+          }
+
+        }
+      );
+
+
+    // Logo
+    if (this.selectedLogo) {
+
+      data.append(
+        'logo',
+        this.selectedLogo
+      );
+
+    }
+
+
+    // Bannière
+    if (this.selectedBanniere) {
+
+      data.append(
+        'banniere',
+        this.selectedBanniere
+      );
+
+    }
+
+
+    // Création ou modification
+    const request =
+      this.boutique
+
+        ? this.boutiqueService
+          .modifierBoutique(this.boutique.id, data)
+
+        : this.boutiqueService
+            .creerBoutique(data);
+
+
+    request.subscribe({
+
+      next: () => {
+
+        this.chargerBoutique();
+
+        alert(
+          'Boutique enregistrée avec succès.'
+        );
+
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Erreur enregistrement boutique :',
+          error
+        );
+
+        alert(
+          'Impossible d’enregistrer la boutique pour le moment.'
+        );
+
+      }
+
+    });
+
+  }
+
+  enregistrerImages(): void {
+
+    if (!this.boutique?.id) {
+      alert('La boutique doit être chargée avant de modifier ses images.');
+      return;
+    }
+
+    if (!this.selectedLogo && !this.selectedBanniere) {
+      alert('Sélectionnez au moins une image.');
+      return;
+    }
 
     const data = new FormData();
-    const values = this.boutiqueForm.value;
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        data.append(key, String(value));
-      }
-    });
     if (this.selectedLogo) {
       data.append('logo', this.selectedLogo);
     }
@@ -113,122 +415,403 @@ export class Boutiques implements OnInit {
       data.append('banniere', this.selectedBanniere);
     }
 
-    const request = this.boutique
-      ? this.boutiqueService.modifierBoutique(data)
-      : this.boutiqueService.creerBoutique(data);
-
-    request.subscribe({
-      next: () => {
-        this.chargerBoutique();
-        this.chargerProduits();
-        this.chargerPromotions();
-        alert('Boutique enregistrée avec succès.');
+    this.boutiqueService.modifierBoutique(this.boutique.id, data).subscribe({
+      next: (response) => {
+        this.boutique = response;
+        this.selectedLogo = undefined;
+        this.selectedBanniere = undefined;
+        alert('Images de la boutique enregistrées avec succès.');
       },
-      error: () => {
-        alert('Impossible d’enregistrer la boutique pour le moment.');
+      error: (error) => {
+        console.error('Erreur modification images boutique :', error);
+        alert(error.error?.detail || 'Impossible d’enregistrer les images.');
       }
     });
-  }
-  changerOnglet(tab: string){
-    this.onglet = tab;
-  }
-onBanniereSelected(event: Event): void {
-
-  const input = event.target as HTMLInputElement;
-
-  if (input.files?.length) {
-
-    this.selectedBanniere = input.files[0];
 
   }
+
+  contacter(): void {
+
+  if (!this.boutique?.id) {
+    return;
+  }
+
+  this.boutiqueService
+    .contacterBoutique(this.boutique.id)
+    .subscribe({
+
+      next: (response) => {
+
+        console.log(
+          'Conversation :',
+          response
+        );
+
+        const conversationId =
+          response.conversation.id;
+
+        console.log(
+          'Conversation ID :',
+          conversationId
+        );
+
+        // Pour le moment :
+        // on affiche simplement l'identifiant
+        // avant de créer l'interface de messagerie.
+
+        alert(
+          `Conversation ouverte avec ${this.boutique.nom}`
+        );
+
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Erreur contact boutique :',
+          error
+        );
+
+        if (error.status === 401) {
+
+          alert(
+            'Vous devez être connecté pour contacter cette boutique.'
+          );
+
+          return;
+        }
+
+        if (error.status === 400) {
+
+          alert(
+            error.error?.detail ||
+            'Impossible de contacter cette boutique.'
+          );
+
+          return;
+        }
+
+        alert(
+          'Une erreur est survenue lors de l’ouverture de la conversation.'
+        );
+
+      }
+
+    });
 
 }
-onLogoSelected(event: Event): void {
 
-  const input = event.target as HTMLInputElement;
 
-  if (input.files?.length) {
+  // ==========================================
+  // CHARGER LES PRODUITS
+  // ==========================================
 
-    this.selectedLogo = input.files[0];
+  chargerProduits(): void {
+
+    if (!this.boutique?.id) {
+
+      this.produits = [];
+
+      this.chargementProduits =
+        false;
+
+      return;
+
+    }
+
+
+    this.chargementProduits =
+      true;
+
+
+    this.boutiqueService
+
+      .getProduitsBoutique(
+        this.boutique.id
+      )
+
+      .subscribe({
+
+        next: (response: any) => {
+
+          const payload =
+            Array.isArray(response)
+
+              ? response
+
+              : response?.results
+                || response?.data
+                || [];
+
+
+          this.produits =
+            Array.isArray(payload)
+
+              ? payload
+
+              : [];
+
+
+          this.chargementProduits =
+            false;
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Produits boutique API error :',
+            error
+          );
+
+          this.produits = [];
+
+          this.chargementProduits =
+            false;
+
+        }
+
+      });
 
   }
 
-}
-chargerBoutique(): void {
 
-  this.boutiqueService.getMaBoutique().subscribe({
+  // ==========================================
+  // CHARGER LES AVIS
+  // ==========================================
+
+  chargerAvis(): void {
+
+    if (!this.boutique?.id) {
+
+      this.avis = [];
+
+      return;
+
+    }
+
+
+    this.boutiqueService
+
+      .getAvisBoutique(
+        this.boutique.id
+      )
+
+      .subscribe({
+
+        next: (response: any) => {
+
+          const payload =
+            Array.isArray(response)
+
+              ? response
+
+              : response?.results
+                || response?.data
+                || [];
+
+
+          this.avis =
+            Array.isArray(payload)
+
+              ? payload
+
+              : [];
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Avis boutique API error :',
+            error
+          );
+
+          this.avis = [];
+
+        }
+
+      });
+
+  }
+
+
+  // ==========================================
+  // CHARGER LES PROMOTIONS
+  // ==========================================
+
+  chargerPromotions(): void {
+
+    if (!this.boutique?.id) {
+
+      this.promotions = [];
+
+      this.chargementPromotions =
+        false;
+
+      return;
+
+    }
+
+
+    this.chargementPromotions =
+      true;
+
+
+    this.boutiqueService
+
+      .getPromotionsBoutique(
+        this.boutique.id
+      )
+
+      .subscribe({
+
+        next: (response: any) => {
+
+          const payload =
+            Array.isArray(response)
+
+              ? response
+
+              : response?.results
+                || response?.data
+                || [];
+
+
+          this.promotions =
+            Array.isArray(payload)
+
+              ? payload
+
+              : [];
+
+
+          this.chargementPromotions =
+            false;
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Promotions boutique API error :',
+            error
+          );
+
+          this.promotions = [];
+
+          this.chargementPromotions =
+            false;
+
+        }
+
+      });
+
+  }
+  // ==========================================
+// CHARGER LE STATUT DE SUIVI
+// ==========================================
+
+chargerStatutSuivi(): void {
+
+  if (!this.boutique?.id) {
+    this.estSuivi = false;
+    return;
+  }
+
+  this.boutiqueService
+    .getStatutSuivi(this.boutique.id)
+    .subscribe({
+
+      next: (response) => {
+
+        this.estSuivi = response.suivi;
+
+        // Synchroniser le nombre d'abonnés
+        if (this.boutique) {
+          this.boutique.followers = response.followers;
+          this.boutique.abonnes = response.followers;
+        }
+
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Erreur statut suivi :',
+          error
+        );
+
+        this.estSuivi = false;
+
+      }
+
+    });
+
+}
+
+
+// ==========================================
+// SUIVRE / NE PLUS SUIVRE
+// ==========================================
+
+toggleSuivi(): void {
+
+  if (!this.boutique?.id || this.chargementSuivi) {
+    return;
+  }
+
+  this.chargementSuivi = true;
+
+  const requete = this.estSuivi
+
+    ? this.boutiqueService
+        .nePlusSuivreBoutique(this.boutique.id)
+
+    : this.boutiqueService
+        .suivreBoutique(this.boutique.id);
+
+
+  requete.subscribe({
 
     next: (response) => {
 
-      console.log(response);
+      this.estSuivi = response.suivi;
 
-      this.boutique = response;
+      if (this.boutique) {
 
-      this.boutiqueForm.patchValue({
-        nom: response.nom || '',
-        description: response.description || '',
-        ville: response.ville || '',
-        telephone: response.telephone || '',
-        email: response.email || ''
-      });
+        this.boutique.followers =
+          response.followers;
+
+        this.boutique.abonnes =
+          response.followers;
+
+      }
+
+      this.chargementSuivi = false;
 
     },
 
-    error: () => {
-
-      this.boutique = null;
-
-    }
-
-  });
-
-}
-
-chargerProduits(): void {
-  this.chargementProduits = true;
-
-  this.produitService.getProduits().subscribe({
-    next: (response: any) => {
-      const payload = Array.isArray(response)
-        ? response
-        : response?.results || response?.data || [];
-
-      this.produits = Array.isArray(payload) ? payload : [];
-      window.setTimeout(() => {
-        this.chargementProduits = false;
-      });
-    },
     error: (error) => {
-      console.error('Produits API error', error);
-      this.produits = [];
-      window.setTimeout(() => {
-        this.chargementProduits = false;
-      });
+
+      console.error(
+        'Erreur suivi boutique :',
+        error
+      );
+
+      this.chargementSuivi = false;
+
+      alert(
+        'Impossible de modifier le suivi de cette boutique.'
+      );
+
     }
+
   });
+
 }
 
-chargerPromotions(): void {
-  this.chargementPromotions = true;
-
-  this.promotionService.getPromotions().subscribe({
-    next: (response: any) => {
-      const payload = Array.isArray(response)
-        ? response
-        : response?.results || response?.data || [];
-
-      this.promotions = Array.isArray(payload) ? payload : [];
-      window.setTimeout(() => {
-        this.chargementPromotions = false;
-      });
-    },
-    error: (error) => {
-      console.error('Promotions API error', error);
-      this.promotions = [];
-      window.setTimeout(() => {
-        this.chargementPromotions = false;
-      });
-    }
-  });
-}
 }

@@ -1,0 +1,215 @@
+<div class="settings-card">
+
+  <!-- ======================================================
+       EN-TÊTE
+       ====================================================== -->
+
+  <div class="card-header">
+
+    <div class="header-icon">
+      🚚
+    </div>
+
+    <div>
+
+      <h2>
+        Paramètres de livraison
+      </h2>
+
+      <p>
+        Configurez les zones, délais et frais de livraison de votre boutique.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       FORMULAIRE
+       ====================================================== -->
+
+  <form
+    [formGroup]="formulaire"
+    (ngSubmit)="enregistrer()"
+    class="settings-form">
+
+
+    <!-- ====================================================
+         ZONES DE LIVRAISON
+         ==================================================== -->
+
+    <div class="form-group">
+
+      <label for="zones_livraison">
+        Zones de livraison
+      </label>
+
+      <textarea
+        id="zones_livraison"
+        formControlName="zones_livraison"
+        rows="4"
+        placeholder="Ex : Dakar, Thiès, Rufisque, Pikine...">
+      </textarea>
+
+      <div class="help-text">
+
+        Indiquez les villes ou zones dans lesquelles vous livrez.
+
+      </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         DÉLAI
+         ==================================================== -->
+
+    <div class="form-group">
+
+      <label for="delai_livraison">
+        Délai de livraison
+      </label>
+
+      <input
+        id="delai_livraison"
+        type="text"
+        formControlName="delai_livraison"
+        placeholder="Ex : 2-4 jours"
+        [class.invalid]="
+          delaiLivraison?.invalid &&
+          delaiLivraison?.touched
+        ">
+
+      <div
+        class="error"
+        *ngIf="
+          delaiLivraison?.invalid &&
+          delaiLivraison?.touched
+        ">
+
+        Le délai ne doit pas dépasser 100 caractères.
+
+      </div>
+
+      <div class="help-text">
+
+        Exemple : 2-4 jours, 24-48 heures, Livraison le jour même...
+
+      </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         FRAIS
+         ==================================================== -->
+
+    <div class="form-group">
+
+      <label for="frais_livraison">
+        Frais de livraison
+      </label>
+
+      <div class="price-input">
+
+        <input
+          id="frais_livraison"
+          type="number"
+          min="0"
+          step="0.01"
+          formControlName="frais_livraison"
+          [class.invalid]="
+            fraisLivraison?.invalid &&
+            fraisLivraison?.touched
+          ">
+
+        <span>
+          FCFA
+        </span>
+
+      </div>
+
+      <div
+        class="error"
+        *ngIf="
+          fraisLivraison?.invalid &&
+          fraisLivraison?.touched
+        ">
+
+        Les frais de livraison doivent être supérieurs ou égaux à 0.
+
+      </div>
+
+      <div class="help-text">
+
+        Entrez 0 si la livraison est gratuite.
+
+      </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         APERÇU
+         ==================================================== -->
+
+    <div class="delivery-preview">
+
+      <div class="preview-icon">
+        🚚
+      </div>
+
+      <div class="preview-content">
+
+        <strong>
+          Aperçu de la livraison
+        </strong>
+
+        <p>
+          Livraison :
+          <span>
+            {{ formulaire.get('delai_livraison')?.value || 'Non définie' }}
+          </span>
+          —
+          <span>
+            {{ formulaire.get('frais_livraison')?.value || 0 }} FCFA
+          </span>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         ACTION
+         ==================================================== -->
+
+    <div class="form-actions">
+
+      <button
+        type="submit"
+        class="save-button"
+        [disabled]="enregistrement">
+
+        <span
+          class="button-spinner"
+          *ngIf="enregistrement">
+        </span>
+
+        <span *ngIf="!enregistrement">
+          Enregistrer
+        </span>
+
+        <span *ngIf="enregistrement">
+          Enregistrement...
+        </span>
+
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

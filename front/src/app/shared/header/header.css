@@ -16,8 +16,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     letter-spacing: 1px;
+}
+
+.logo img {
+    display: block;
+    width: 165px;
+    height: 78px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 8px;
 }
 
 .green {

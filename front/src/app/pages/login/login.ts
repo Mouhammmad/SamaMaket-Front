@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth';
+import { UtilisateurService } from '../../core/services/utilisateur';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class Login {
 
   constructor(
     private authService: AuthService,
+    private utilisateurService: UtilisateurService,
     private router: Router
   ) {}
 
@@ -36,31 +38,29 @@ export class Login {
 }).subscribe({
 
   next: (response: any) => {
-
-    console.log(response.user);
-    console.log(response.user.role);
+    if (!response?.access || !response?.refresh) {
+      this.erreur = 'Réponse de connexion invalide.';
+      this.chargement = false;
+      return;
+    }
 
     localStorage.setItem('access', response.access);
     localStorage.setItem('refresh', response.refresh);
-    localStorage.setItem('user', JSON.stringify(response.user));
+    this.authService.refreshAuthState();
 
-    if (response.user.role === 'VENDOR') {
-
-      this.router.navigate(['/vendeur']);
-
-    } else if (response.user.role === 'CUSTOMER') {
-
-      this.router.navigate(['/']);
-
-    } else if (response.user.role === 'ADMIN') {
-
-      this.router.navigate(['/admin']);
-
-    } else {
-
-      this.router.navigate(['/']);
-
+    if (response.user) {
+      this.finaliserConnexion(response.user);
+      return;
     }
+
+    this.utilisateurService.getProfil().subscribe({
+      next: (user) => this.finaliserConnexion(user),
+      error: () => {
+        this.authService.logout();
+        this.erreur = 'Impossible de récupérer votre profil.';
+        this.chargement = false;
+      }
+    });
 
   },
 
@@ -75,5 +75,22 @@ export class Login {
   }
 
 });
+  }
+
+  private finaliserConnexion(user: any): void {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.authService.refreshAuthState();
+    this.chargement = false;
+
+    switch (user?.role) {
+      case 'VENDOR':
+        this.router.navigate(['/vendeur']);
+        break;
+      case 'ADMIN':
+        this.router.navigate(['/admin']);
+        break;
+      default:
+        this.router.navigate(['/']);
+    }
   }
 }

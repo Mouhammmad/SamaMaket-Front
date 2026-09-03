@@ -1,21 +1,122 @@
-:host{
-
-display:block;
-
+:host {
+	display: block;
 }
 
-app-statistiques-cards,
+.stats-page {
+	width: 100%;
+	min-height: calc(100vh - 140px);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 28px;
+	color: #102a43;
+}
 
-app-statistiques-ventes,
+.stats-header {
+	margin-bottom: 20px;
+}
 
-app-statistiques-commandes,
+.stats-header h2 {
+	margin: 0 0 6px;
+	font-size: 28px;
+	font-weight: 700;
+}
 
-app-statistiques-produits,
+.stats-header p {
+	margin: 0;
+	color: #627d98;
+}
 
-app-statistiques-clients{
+.stats-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-bottom: 24px;
+}
 
-display:block;
+.stats-actions label {
+	color: #486581;
+	font-size: 14px;
+	font-weight: 600;
+}
 
-margin-top:24px;
+.stats-actions select {
+	min-width: 150px;
+	padding: 10px 12px;
+	border: 1px solid #bcccdc;
+	border-radius: 8px;
+	background: #fff;
+	color: #102a43;
+	cursor: pointer;
+}
 
+.stats-loading,
+.stats-empty {
+	display: flex;
+	min-height: 180px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	background: #fff;
+	color: #627d98;
+}
+
+.stats-content {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 18px;
+	margin-bottom: 24px;
+}
+
+.stats-card {
+	min-height: 120px;
+	padding: 20px;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 4px 14px rgba(16, 42, 67, .06);
+}
+
+.stats-card h3 {
+	margin: 0 0 14px;
+	color: #627d98;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.stats-card p {
+	margin: 0;
+	color: #102a43;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+app-statistiques-chart {
+	display: block;
+}
+
+@media (max-width: 900px) {
+	.stats-content {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 560px) {
+	.stats-page {
+		padding: 20px 16px;
+	}
+
+	.stats-actions {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.stats-actions select {
+		width: 100%;
+	}
+
+	.stats-content {
+		grid-template-columns: 1fr;
+	}
 }

@@ -1,0 +1,65 @@
+.user-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:16px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.avatar{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#5b4cf0;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:bold;
+
+    margin-right:15px;
+
+}
+
+.infos{
+
+    flex:1;
+
+}
+
+.infos small{
+
+    display:block;
+
+    color:#777;
+
+}
+
+.role{
+
+    background:#eef2ff;
+
+    color:#4338ca;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Catalogue } from './catalogue/catalogue';
@@ -20,7 +20,8 @@ export class Produits implements OnInit {
 
   constructor(
     private vendeurProduitsService: VendeurProduits,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +39,12 @@ export class Produits implements OnInit {
             ? response
             : [];
         this.chargementVendeurs = false;
+        this.changeDetectorRef.markForCheck();
       },
       error: () => {
         this.produitsVendeurs = [];
         this.chargementVendeurs = false;
+        this.changeDetectorRef.markForCheck();
       }
     });
   }

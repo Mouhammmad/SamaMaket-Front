@@ -16,14 +16,38 @@ export class Categories implements OnInit {
   constructor(private categorieService: CategorieService) {}
 
   ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  private loadCategories(): void {
     this.categorieService.getCategories().subscribe({
       next: (response) => {
-        this.categories = Array.isArray(response) ? response : response?.results || [];
+        const data = Array.isArray(response) ? response : response?.results || [];
+        this.categories = data.map((categorie: any) => ({
+          ...categorie,
+          nom: categorie?.nom || 'Catégorie',
+          icon: this.getIcon(categorie?.nom)
+        }));
+
+        if (!this.categories.length) {
+          this.categories = this.getFallbackCategories();
+        }
       },
       error: () => {
-        this.categories = [];
+        this.categories = this.getFallbackCategories();
       }
     });
+  }
+
+  private getFallbackCategories(): any[] {
+    return [
+      { id: 1, nom: 'Mode', icon: '👗' },
+      { id: 2, nom: 'Électronique', icon: '📱' },
+      { id: 3, nom: 'Alimentation', icon: '🥭' },
+      { id: 4, nom: 'Maison', icon: '🏠' },
+      { id: 5, nom: 'Beauté', icon: '✨' },
+      { id: 6, nom: 'Artisanat', icon: '🎨' }
+    ];
   }
 
   getIcon(nom: string): string {

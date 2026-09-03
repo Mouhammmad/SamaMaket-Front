@@ -2,16 +2,19 @@
 
     <h3>Produits populaires</h3>
 
-    <ul>
-
-        <li>🥇 Samsung Galaxy S25</li>
-
-        <li>🥈 AirPods Pro</li>
-
-        <li>🥉 Casque Bluetooth</li>
-
-        <li>📱 iPhone 15</li>
-
+    <ul *ngIf="products?.length; else noProducts" class="product-list">
+        <li *ngFor="let product of products; let i = index" class="product-item">
+            <img class="thumb" [src]="product.image_url || product.image || product.imageUrl" alt="{{ product.nom || product.name || 'Produit' }}" onerror="this.style.display='none'" />
+            <div class="info">
+                <span class="rank">{{ i + 1 }}.</span>
+                <span class="name">{{ product.nom || product.name || 'Produit' }}</span>
+                <span class="price">{{ product.prix || product.price || 0 }} FCFA</span>
+            </div>
+        </li>
     </ul>
+
+    <ng-template #noProducts>
+        <div class="empty">Aucun produit à afficher.</div>
+    </ng-template>
 
 </div>

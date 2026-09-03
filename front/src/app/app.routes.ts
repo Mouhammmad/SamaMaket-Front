@@ -1,31 +1,53 @@
 import { Routes } from '@angular/router';
 import { ClientLayout } from './layout/client-layout/client-layout';
 
+
+import { Produits as AdminProduits } from './admin/produits/produits';
+
+
+
 import { PublicLayout } from './layout/public-layout/public-layout';
 import { Panier } from './pages/panier/panier';
 import { Accueil } from './pages/accueil/accueil';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Produits } from './pages/produits/produits';
+import { Vendeurs } from './pages/vendeurs/vendeurs';
+import { BoutiqueDetail } from './pages/boutique-detail/boutique-detail';
+import { Offres } from './pages/offres/offres';
 import { Detail as ProduitDetail } from './pages/produits/detail/detail';
 import { Livraison } from './pages/livraison/livraison';
 import { Paiement } from './pages/paiement/paiement';
 import { Confirmation } from './pages/confirmation/confirmation';
-
+import { UtilisateurDetail } from './admin/utilisateur-detail/utilisateur-detail';
 import { VendeurLayout } from './layout/vendeur-layout/vendeur-layout';
-
+import { VendeurDetail } from './admin/vendeurs/components/vendeur-detail/vendeur-detail';
 import { Dashboard } from './vendeur/dashboard/dashboard';
 import { Produits as ProduitsVendeur } from './vendeur/produits/produits';
 import { Commandes } from './vendeur/commandes/commandes';
-import { Statistiques } from './vendeur/statistiques/statistiques';
+import { Statistiques as StatistiquesVendeur } from './vendeur/statistiques/statistiques';
 import { Boutiques } from './vendeur/boutiques/boutiques';
 import { Livraisons } from './vendeur/livraisons/livraisons';
 import { Avis } from './vendeur/avis/avis';
 import { Paiement as PaiementVendeur } from './vendeur/paiement/paiement';
 import { Parametre } from './vendeur/parametre/parametre';
+import { VendeurMessages } from './vendeur/messages/messages';
 import { vendeurGuard } from './core/guards/vendeur-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { Promotions } from './vendeur/promotions/promotions';
+import { AdminLayout } from './layout/admin-layout/admin-layout';
+import { Dashboard as DashboardAdmin } from './admin/dashboard/dashboard';
+import { AdminCommandes } from './admin/commandes/commandes';
+import { Utilisateurs } from './admin/utilisateurs/utilisateurs';
+import { Vendeurs as AdminVendeurs } from './admin/vendeurs/vendeurs';
+import { adminGuard } from './core/guards/admin-guard';
+import { AdminLogin } from './pages/admin-login/admin-login';
+
+import { Statistiques as StatistiquesAdmin } from './admin/statistiques/statistiques';
+import { Rapport } from './admin/rapports/rapports';
+
+import { Moderation } from './admin/moderation/moderation';
+import { Parametres } from './admin/parametres/parametres';
 export const routes: Routes = [
 
   {
@@ -41,6 +63,21 @@ export const routes: Routes = [
       {
         path: 'produits',
         component: Produits
+      },
+
+      {
+        path: 'vendeurs',
+        component: Vendeurs
+      },
+
+      {
+        path: 'boutique/:id',
+        component: BoutiqueDetail
+      },
+
+      {
+        path: 'offres',
+        component: Offres
       },
 
       {
@@ -67,7 +104,7 @@ export const routes: Routes = [
         path: 'confirmation/:id',
         component: Confirmation
       }
-
+    
     ]
   },
 
@@ -100,13 +137,18 @@ export const routes: Routes = [
     },
 
     {
+      path: 'messages',
+      component: VendeurMessages
+    },
+
+    {
       path: 'produits',
       component: ProduitsVendeur
     },
 
     {
       path: 'statistiques',
-      component: Statistiques
+      component: StatistiquesVendeur
     },
     {
       path: 'promotions',
@@ -153,13 +195,80 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/login',
+    component: AdminLogin
+  },
+
+  {
     path: 'register',
     component: Register
   },
 
   {
-    path: '**',
-    redirectTo: ''
-  }
+  path: 'admin',
+  component: AdminLayout,
+  canActivate: [adminGuard],
 
+  children: [
+
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full'
+    },
+
+    {
+      path: 'dashboard',
+      component: DashboardAdmin
+    },
+
+    {
+      path: 'utilisateurs',
+      component: Utilisateurs,
+      pathMatch: 'full'
+    },
+
+    {
+      path: 'utilisateurs/:id',
+      component: UtilisateurDetail
+    },
+
+    {
+      path: 'vendeurs',
+      component: AdminVendeurs
+    },
+
+    {
+      path: 'vendeurs/:id',
+      component: VendeurDetail
+    },
+
+    {
+      path: 'produits',
+      component: AdminProduits
+    },
+
+    {
+      path: 'commandes',
+      component: AdminCommandes
+    },
+    {
+  path: 'statistiques',
+  component: StatistiquesAdmin
+},
+{
+  path: 'rapports',
+  component: Rapport
+},
+{
+  path: 'moderation',
+  component: Moderation
+},
+{
+  path: 'parametres',
+  component: Parametres
+}
+
+  ]
+}
 ];

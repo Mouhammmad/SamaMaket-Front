@@ -53,6 +53,9 @@ export class Panier implements OnInit {
 
   ngOnInit(): void {
 
+    this.codePromo = localStorage.getItem('checkoutCodePromo') || '';
+    this.reduction = Number(localStorage.getItem('checkoutReduction') || 0);
+
     this.chargerPanier();
 
   }
@@ -67,7 +70,12 @@ export class Panier implements OnInit {
 
         this.panier = data || { articles: [] };
 
-        this.calculerTotal();
+        if (this.codePromo) {
+          this.revaliderCodePromo();
+        } else {
+          this.calculerTotal();
+        }
+
         this.cdr.detectChanges();
 
       },
@@ -191,8 +199,53 @@ export class Panier implements OnInit {
 
   appliquerCode(code: string): void {
 
-    console.log(code);
+    const promo = code?.toString().trim();
+    if (!promo) {
+      this.clearPromoCode();
+      return;
+    }
 
+    this.panierService.appliquerCodePromo(promo).subscribe({
+      next: (response: any) => {
+        this.codePromo = response?.code_promo || promo;
+        this.reduction = Number(response?.reduction || 0);
+        this.calculerTotal();
+        localStorage.setItem('checkoutCodePromo', this.codePromo);
+        localStorage.setItem('checkoutReduction', String(this.reduction));
+      },
+      error: (err: any) => {
+        this.clearPromoCode();
+        const message = err?.error?.erreur || err?.error?.detail || 'Code promo invalide';
+        alert(message);
+      }
+    });
+
+  }
+
+  clearPromoCode(): void {
+    this.codePromo = '';
+    this.reduction = 0;
+    this.calculerTotal();
+    localStorage.removeItem('checkoutCodePromo');
+    localStorage.removeItem('checkoutReduction');
+  }
+
+  revaliderCodePromo(): void {
+    if (!this.panier?.articles?.length) {
+      this.clearPromoCode();
+      return;
+    }
+
+    this.panierService.appliquerCodePromo(this.codePromo).subscribe({
+      next: (response: any) => {
+        this.reduction = Number(response?.reduction || 0);
+        this.calculerTotal();
+        localStorage.setItem('checkoutReduction', String(this.reduction));
+      },
+      error: () => {
+        this.clearPromoCode();
+      }
+    });
   }
 
   ajouterSuggestion(produit: any): void {

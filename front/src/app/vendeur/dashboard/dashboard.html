@@ -9,19 +9,19 @@
 
     <app-stats-cards></app-stats-cards>
 
-    <div class="dashboard-middle">
+    <div class="dashboard-grid">
 
-        <app-sales-chart></app-sales-chart>
+        <app-monthly-comparison [ventes]="salesData"></app-monthly-comparison>
 
-        <app-recent-activity></app-recent-activity>
+        <app-categories-chart [categories]="categoriesData"></app-categories-chart>
 
     </div>
 
     <div class="dashboard-bottom">
 
-        <app-recent-orders></app-recent-orders>
+        <app-recent-orders [orders]="recentOrders"></app-recent-orders>
 
-        <app-top-products></app-top-products>
+        <app-top-products [products]="topProducts"></app-top-products>
 
     </div>
 

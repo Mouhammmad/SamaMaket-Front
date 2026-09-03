@@ -1,8 +1,7 @@
 <header class="auth-header">
 
   <div class="logo">
-    <span class="logo-sama">SAMA</span>
-    <span class="logo-market">MARKET</span>
+    <img src="assets/images/logo.png" alt="Sama Market">
   </div>
 
   <a routerLink="/" class="back-home">
@@ -25,8 +24,7 @@
   <div class="register-wrapper">
     <div class="left-panel">
       <div class="brand">
-        <span class="brand-sama">SAMA</span>
-        <span class="brand-market">MARKET</span>
+        <img src="assets/images/logo.png" alt="Sama Market">
       </div>
 
     <div class="left-content">
@@ -140,6 +138,7 @@
               [(ngModel)]="password"
               name="password"
               placeholder="Créer un mot de passe"
+              minlength="8"
               required
             />
           </div>
@@ -152,6 +151,7 @@
               [(ngModel)]="confirmation"
               name="confirmation"
               placeholder="Confirmer"
+              minlength="8"
               required
             />
           </div>

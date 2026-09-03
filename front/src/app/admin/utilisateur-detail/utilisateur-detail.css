@@ -1,0 +1,352 @@
+.detail-page {
+  width: 100%;
+  padding: 28px 30px;
+  box-sizing: border-box;
+}
+
+
+/* ============================= */
+/* RETOUR */
+/* ============================= */
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #263f70;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 22px;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+.detail-header {
+  margin-bottom: 22px;
+}
+
+.detail-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 28px;
+}
+
+.detail-header p {
+  margin: 6px 0 0;
+  color: #8b95a7;
+  font-size: 14px;
+}
+
+
+/* ============================= */
+/* PROFIL */
+/* ============================= */
+
+.profile-card,
+.info-card,
+.actions-card {
+  background: #fff;
+  border: 1px solid #e2e7ee;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+
+.profile-card {
+  padding: 25px;
+}
+
+.profile-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #e9eef8;
+  color: #263f70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.profile-info h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 21px;
+}
+
+.username {
+  margin: 5px 0 10px;
+  color: #8b95a7;
+  font-size: 13px;
+}
+
+
+/* ============================= */
+/* BADGES */
+/* ============================= */
+
+.badges {
+  display: flex;
+  gap: 8px;
+}
+
+.role-badge,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* ROLE */
+
+.role-badge.customer {
+  background: #e9f1ff;
+  color: #3478d4;
+}
+
+.role-badge.vendor {
+  background: #fff1df;
+  color: #ee8a24;
+}
+
+.role-badge.admin {
+  background: #f0e2ff;
+  color: #8a38d6;
+}
+
+
+/* STATUT */
+
+.status-badge.active {
+  background: #e4f9ed;
+  color: #26a269;
+}
+
+.status-badge.suspended {
+  background: #ffe8e8;
+  color: #df4b4b;
+}
+
+
+/* ============================= */
+/* CARDS */
+/* ============================= */
+
+.info-card,
+.actions-card {
+  padding: 24px;
+}
+
+.card-title {
+  margin-bottom: 22px;
+}
+
+.card-title h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 18px;
+}
+
+.card-title p {
+  margin: 5px 0 0;
+  color: #8b95a7;
+  font-size: 13px;
+}
+
+
+/* ============================= */
+/* INFORMATIONS */
+/* ============================= */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+.info-item {
+  padding: 16px 10px;
+  border-top: 1px solid #edf0f4;
+}
+
+.info-item:nth-child(odd) {
+  margin-right: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: #8b95a7;
+  font-size: 12px;
+}
+
+.info-item strong {
+  color: #283348;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* ============================= */
+/* ACTIONS */
+/* ============================= */
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action {
+  width: 100%;
+  min-height: 65px;
+  border-radius: 8px;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  cursor: pointer;
+  background: white;
+  transition: 0.15s ease;
+}
+
+.action .icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.action span:not(.icon) {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.action strong {
+  font-size: 14px;
+}
+
+.action small {
+  font-size: 12px;
+}
+
+
+/* SUSPENDRE */
+
+.action.suspend {
+  border: 1px solid #f5d8c4;
+  color: #d76d1d;
+}
+
+.action.suspend .icon {
+  background: #fff1e8;
+}
+
+.action.suspend:hover {
+  background: #fffaf6;
+}
+
+
+/* REACTIVER */
+
+.action.activate {
+  border: 1px solid #cdebd9;
+  color: #248b5a;
+}
+
+.action.activate .icon {
+  background: #e6f8ee;
+}
+
+.action.activate:hover {
+  background: #f8fffb;
+}
+
+
+/* SUPPRIMER */
+
+.action.delete {
+  border: 1px solid #f0cccc;
+  color: #d34b4b;
+}
+
+.action.delete .icon {
+  background: #ffeaea;
+}
+
+.action.delete:hover {
+  background: #fff8f8;
+}
+
+
+/* ============================= */
+/* CHARGEMENT */
+/* ============================= */
+
+.loading {
+  padding: 60px;
+  text-align: center;
+  color: #7d8798;
+}
+
+
+/* ============================= */
+/* ERREUR */
+/* ============================= */
+
+.error-message {
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #ffe9e9;
+  color: #c93636;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 700px) {
+
+  .detail-page {
+    padding: 20px;
+  }
+
+  .profile-main {
+    align-items: flex-start;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-item:nth-child(odd) {
+    margin-right: 0;
+  }
+
+}
