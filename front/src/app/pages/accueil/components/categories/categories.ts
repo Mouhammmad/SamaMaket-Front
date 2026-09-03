@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategorieService } from '../../../../core/services/categorie';
@@ -13,7 +13,10 @@ import { CategorieService } from '../../../../core/services/categorie';
 export class Categories implements OnInit {
   categories: any[] = [];
 
-  constructor(private categorieService: CategorieService) {}
+  constructor(
+    private categorieService: CategorieService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -32,9 +35,11 @@ export class Categories implements OnInit {
         if (!this.categories.length) {
           this.categories = this.getFallbackCategories();
         }
+        this.changeDetectorRef.markForCheck();
       },
       error: () => {
         this.categories = this.getFallbackCategories();
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
