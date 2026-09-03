@@ -18,6 +18,15 @@
   color: #ffffff;
 }
 
+.footer-brand .brand-logo {
+  display: block;
+  width: 180px;
+  height: 105px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
 .footer-brand .brand span {
   color: #fb8b11;
 }

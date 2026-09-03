@@ -17,6 +17,15 @@
     margin-bottom:30px;
 }
 
+.logo img{
+    display:block;
+    width:180px;
+    height:105px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:8px;
+}
+
 .logo h2{
     margin:0;
     font-size:28px;

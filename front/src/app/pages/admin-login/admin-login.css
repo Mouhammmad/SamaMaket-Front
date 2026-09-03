@@ -12,6 +12,15 @@
   font-weight: 800;
 }
 
+.logo img {
+  display: block;
+  width: 145px;
+  height: 68px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
 .back-home {
   color: white;
   text-decoration: none;

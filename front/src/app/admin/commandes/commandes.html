@@ -537,7 +537,7 @@
                   *ngIf="ligne.produit.image_url || ligne.produit.image"
                   [src]="ligne.produit.image_url || ligne.produit.image"
                   [alt]="ligne.produit.nom"
-                  [title]="ligne.produit.nom"
+                  title="{{ ligne.produit.nom }}"
                 >
 
                 <span
