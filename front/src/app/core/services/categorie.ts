@@ -20,10 +20,13 @@ export class CategorieService {
 
     return this.http.get<any>(this.api).pipe(
       map((response) => {
-        if (Array.isArray(response)) {
-          return response;
-        }
-        return response?.results ?? [];
+        const categories = Array.isArray(response)
+          ? response
+          : response?.results ?? [];
+
+        return categories.filter(
+          (categorie: Categorie) => categorie.nom?.trim().toLowerCase() !== 'categorie test'
+        );
       })
     );
 
